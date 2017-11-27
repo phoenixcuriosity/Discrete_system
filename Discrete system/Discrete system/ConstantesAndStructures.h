@@ -7,6 +7,11 @@
 #include "SYSETATDiscret.h"
 
 
+
+enum { selectnothing, selectFCT, selectSYSETAT };
+
+
+
 typedef struct screen screen;
 struct screen {
 	
@@ -22,6 +27,8 @@ typedef struct var var;
 struct var {
 	FCTDiscret fct;
 	SYSETATDiscret sys;
+
+	unsigned int userRequest = 0;
 };
 
 

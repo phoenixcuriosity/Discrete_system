@@ -3,6 +3,10 @@
 
 class Factor{
 public:
+	Factor();
+	//Factor();
+	~Factor();
+
 
 
 private:

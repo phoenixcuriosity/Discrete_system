@@ -8,14 +8,13 @@
 class FCTDiscret{
 public:
 	FCTDiscret();
-	//FCTDiscret();
+	FCTDiscret(Factor&, Factor&);
 	~FCTDiscret();
 
 
 	// virtual int& operator [] (unsigned int); 
 	// virtual DynamicArray& operator = (const DynamicArray&);
 
-	virtual void SaisieFCT();
 	virtual void ModifFCT();
 
 	virtual std::ostream& affichageTextuel(std::ostream&) const;

@@ -1,0 +1,5 @@
+
+_________Init Success_________
+type 1 (Fct Discret) or 2 SYSETATDiscret
+
+You have select SYSETATDiscret

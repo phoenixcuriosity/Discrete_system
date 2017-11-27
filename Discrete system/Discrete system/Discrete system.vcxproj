@@ -78,8 +78,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Factor.cpp" />
     <ClCompile Include="FCTDiscret.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainLoop.cpp" />
     <ClCompile Include="SYSETATDiscret.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +89,7 @@
     <ClInclude Include="Factor.h" />
     <ClInclude Include="FCTDiscret.h" />
     <ClInclude Include="LIB.h" />
+    <ClInclude Include="mainLoop.h" />
     <ClInclude Include="SYSETATDiscret.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

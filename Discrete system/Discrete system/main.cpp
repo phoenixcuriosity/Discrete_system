@@ -1,5 +1,7 @@
 #include "ConstantesAndStructures.h"
 
+#include "mainLoop.h"
+
 int initfile(fichier& file);
 
 using namespace std;
@@ -8,9 +10,8 @@ int main(int argc, char *argv[]){
 	sysinfo information;
 	
 	
-	if (initfile(information.file)){
-		
-	}
+	if (initfile(information.file))
+		mainLoop(information);
 	else
 		return 0;
 
@@ -48,3 +49,4 @@ int initfile(fichier& file){
 
 	return 1;
 }
+

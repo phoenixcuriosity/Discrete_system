@@ -6,6 +6,10 @@ FCTDiscret::FCTDiscret()
 {
 }
 
+FCTDiscret::FCTDiscret(Factor& num, Factor& den) : _num(num), _den(den)
+{
+}
+
 FCTDiscret::~FCTDiscret()
 {
 }
@@ -13,10 +17,6 @@ FCTDiscret::~FCTDiscret()
 
 
 
-
-void FCTDiscret::SaisieFCT(){
-
-}
 void FCTDiscret::ModifFCT(){
 
 }
