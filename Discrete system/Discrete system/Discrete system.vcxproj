@@ -78,11 +78,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FCTDiscret.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SYSETATDiscret.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantesAndStructures.h" />
+    <ClInclude Include="Factor.h" />
+    <ClInclude Include="FCTDiscret.h" />
     <ClInclude Include="LIB.h" />
+    <ClInclude Include="SYSETATDiscret.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
