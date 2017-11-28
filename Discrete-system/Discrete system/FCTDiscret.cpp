@@ -17,6 +17,22 @@ FCTDiscret::~FCTDiscret()
 
 
 
+FCTDiscret& FCTDiscret::operator=(const FCTDiscret& a){
+	if (this != &a){
+		_num = a._num;
+		_den = a._den;
+		_deltaT = a._deltaT;
+	}
+	return *this;
+}
+bool FCTDiscret::operator==(const FCTDiscret& a){
+	if (this != &a)
+		return false;
+	return true;
+}
+
+
+
 void FCTDiscret::ModifFCT(){
 
 }

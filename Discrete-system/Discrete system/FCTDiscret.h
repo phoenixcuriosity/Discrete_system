@@ -13,7 +13,8 @@ public:
 
 
 	// virtual int& operator [] (unsigned int); 
-	// virtual DynamicArray& operator = (const DynamicArray&);
+	virtual FCTDiscret& operator = (const FCTDiscret&);
+	virtual bool operator ==(const FCTDiscret&);
 
 	virtual void ModifFCT();
 

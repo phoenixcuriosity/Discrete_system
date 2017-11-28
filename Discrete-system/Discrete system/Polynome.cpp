@@ -21,6 +21,36 @@ Polynome::~Polynome()
 }
 
 
+
+Polynome& Polynome::operator=(const Polynome& a){
+	if (this != &a){
+		if (_tab != nullptr)
+			delete  _tab;
+		_size = a._size;
+		_tab = a.allocate(a);
+	}
+	return *this;
+}
+
+
+bool operator==(const Polynome& a, const Polynome& b){
+	if (b.GETsize() == a.GETsize()){
+		for (unsigned int i = 0; i < a.GETsize(); i++){
+			if (b.GETcoefTab(i) != a.GETcoefTab(i))
+				return false;
+		}
+		return true;
+	}
+	else
+		return false;
+}
+Polynome operator+(Polynome& a, const Polynome& b){
+	Polynome resultat;
+	resultat = a.addition(a, b);
+	return resultat;
+}
+
+
 void Polynome::SETcoefTab(unsigned int index, double userValue) const {
 	_tab[index] = userValue;
 }
@@ -36,8 +66,23 @@ unsigned int Polynome::GETstringSize() const{
 	return _stringSize;
 }
 
+Polynome Polynome::addition(const Polynome& a, const Polynome& b){
+	unsigned int maxSize = max(a.GETsize(), b.GETsize());
+	unsigned int minSize = min(a.GETsize(), b.GETsize());
 
-
+	if (maxSize == a.GETsize()){
+		Polynome newPolynome(a);
+		for (unsigned int i = 0; i < minSize; i++)
+			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + b.GETcoefTab(i));
+		return newPolynome;
+	}
+	else{
+		Polynome newPolynome(b);
+		for (unsigned int i = 0; i < minSize; i++)
+			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + a.GETcoefTab(i));
+		return newPolynome;
+	}
+}
 void Polynome::grow(double userValue){
 	const unsigned int newSize = _size + 1;
 	double* newTab = allocate(newSize);
@@ -122,6 +167,10 @@ double* Polynome::allocate(const Polynome& P) const {
 void testPolynome() {
 	Polynome a(5);
 	Polynome b(a);
+	if (a == b)
+		cout << endl << "same";
+	else
+		cout << endl << "not the same";
 	cout << endl << "taille de a = " + to_string(a.GETsize());
 	b.SETcoefTab(2, 12.6);
 	cout << endl << "valeur de l'index " << 2 <<  "= " + to_string(b.GETcoefTab(2));
@@ -134,4 +183,16 @@ void testPolynome() {
 	cout << endl << "valeur de l'index " << 5 << "= " + to_string(a.GETcoefTab(5));
 	a.printOn();
 	b.printOn();
+	
+	if (a==b)
+		cout << endl << "same";
+	else
+		cout << endl << "not the same";
+	a = b;
+	if (a == b)
+		cout << endl << "same";
+	else
+		cout << endl << "not the same";
+	Polynome resultat = a + b;
+	resultat.printOn();
 }

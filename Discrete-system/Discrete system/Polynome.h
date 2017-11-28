@@ -11,12 +11,17 @@ public:
 	Polynome(const Polynome& P);
 	~Polynome();
 
+
+	Polynome& operator=(const Polynome&);
+	
+
 	virtual void SETcoefTab(unsigned int index, double userValue) const;
 
 	virtual unsigned int GETsize() const;
 	virtual double GETcoefTab(unsigned int index) const;
 	virtual unsigned int GETstringSize() const;
 
+	virtual Polynome addition(const Polynome& a, const Polynome& b);
 	virtual void grow(double);
 	virtual void shrink();
 	virtual void ModifPolynome(unsigned int index, double userValue);
@@ -38,6 +43,20 @@ private:
 
 
 
+bool operator==(const Polynome&, const Polynome&);
+Polynome operator+(const Polynome&, const Polynome&);
 
+
+
+
+template<class T>
+T max(const T a, const T b){
+	return (a>b) ? a : b;
+}
+
+template<class T>
+T min(const T a, const T b){
+	return (a<b) ? a : b;
+}
 
 #endif // !Polynome_H
