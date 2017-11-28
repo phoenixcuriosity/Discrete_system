@@ -11,15 +11,17 @@ public:
 	Polynome(const Polynome& P);
 	~Polynome();
 
-	virtual void SETsize(unsigned int size);
-	virtual void SETtab(double tab[]);
 	virtual void SETcoefTab(unsigned int index, double userValue) const;
 
 	virtual unsigned int GETsize() const;
-	//virtual double* GETtab() const;
 	virtual double GETcoefTab(unsigned int index) const;
+	virtual unsigned int GETstringSize() const;
 
-	virtual void ModifPolynome(unsigned int coef, double userValue);
+	virtual void grow(double);
+	virtual void shrink();
+	virtual void ModifPolynome(unsigned int index, double userValue);
+
+	virtual void printOn() const; // affiche de manière textuelle
 
 	friend void testPolynome();
 
@@ -31,6 +33,7 @@ protected:
 private:
 	unsigned int _size;
 	double* _tab;
+	mutable unsigned int _stringSize;
 };
 
 

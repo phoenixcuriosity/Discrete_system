@@ -17,7 +17,7 @@ public:
 
 	virtual void ModifFCT();
 
-	virtual std::ostream& affichageTextuel(std::ostream&) const;
+	virtual void affichageTextuel() const;
 
 	virtual void SETnum();
 	virtual void SETden();

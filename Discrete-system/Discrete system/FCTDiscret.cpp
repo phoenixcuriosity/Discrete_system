@@ -21,9 +21,20 @@ void FCTDiscret::ModifFCT(){
 
 }
 
-std::ostream & FCTDiscret::affichageTextuel(std::ostream & os) const{
-	//os << endl << "(" << _num << ")" << "/" << "(" << _den << ")";
-	return os;
+void FCTDiscret::affichageTextuel() const{
+	unsigned int stringSize = 0;
+	string barre = "";
+
+	if (_num.GETstringSize() > _den.GETstringSize())
+		stringSize = _num.GETstringSize();
+	else
+		stringSize = _den.GETstringSize();
+
+	_num.printOn();
+	for (unsigned int i = 0; i < stringSize; i++)
+		barre += "_";
+	cout << endl << barre;
+	_den.printOn();
 }
 
 
