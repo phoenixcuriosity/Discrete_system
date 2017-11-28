@@ -22,6 +22,7 @@ public:
 	virtual unsigned int GETstringSize() const;
 
 	virtual Polynome addition(const Polynome& a, const Polynome& b);
+	virtual Polynome soustraction(const Polynome& a, const Polynome& b);
 	virtual void grow(double);
 	virtual void shrink();
 	virtual void ModifPolynome(unsigned int index, double userValue);
@@ -45,7 +46,7 @@ private:
 
 bool operator==(const Polynome&, const Polynome&);
 Polynome operator+(const Polynome&, const Polynome&);
-
+Polynome operator-(const Polynome&, const Polynome&);
 
 
 
