@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DynamicArray.cpp" />
+    <ClCompile Include="FCTLoop.cpp" />
     <ClCompile Include="Polynome.cpp" />
     <ClCompile Include="FCTDiscret.cpp" />
     <ClCompile Include="init.cpp" />
@@ -92,6 +93,7 @@
   <ItemGroup>
     <ClInclude Include="ConstantesAndStructures.h" />
     <ClInclude Include="DynamicArray.h" />
+    <ClInclude Include="FCTLoop.h" />
     <ClInclude Include="Polynome.h" />
     <ClInclude Include="FCTDiscret.h" />
     <ClInclude Include="init.h" />

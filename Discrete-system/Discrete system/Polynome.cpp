@@ -54,10 +54,16 @@ Polynome operator-(Polynome& a, const Polynome& b){
 	resultat = a.soustraction(a, b);
 	return resultat;
 }
+Polynome operator*(Polynome& a, const Polynome& b){
+	Polynome resultat;
+	resultat = a.multiplication(a, b);
+	return resultat;
+}
 
 
-void Polynome::SETcoefTab(unsigned int index, double userValue) const {
-	_tab[index] = userValue;
+void Polynome::SETcoefTab(unsigned int index, double userValue){
+	if (index < _size)
+		_tab[index] = userValue;
 }
 
 unsigned int Polynome::GETsize() const {
@@ -68,6 +74,26 @@ double Polynome::GETcoefTab(unsigned int index) const {
 		return _tab[index];
 }
 unsigned int Polynome::GETstringSize() const{
+	string equation;
+	stringstream stream;
+	for (int i = _size - 1; i >= 0; i--){
+		if (_tab[i] < 0){
+			stream << " - " << fixed << setprecision(2) << abs(_tab[i]);
+			if (i > 1)
+				stream << "Z^" << i;
+			else if (i == 1)
+				stream << "Z";
+		}
+		else if (_tab[i] > 0){
+			stream << " + " << fixed << setprecision(2) << _tab[i];
+			if (i > 1)
+				stream << "Z^" << i;
+			else if (i == 1)
+				stream << "Z";
+		}
+	}
+	equation = stream.str();
+	_stringSize = equation.length();
 	return _stringSize;
 }
 
@@ -100,6 +126,16 @@ Polynome Polynome::soustraction(const Polynome& a, const Polynome& b){
 			newPolynome.SETcoefTab(i, a.GETcoefTab(i));
 		for (unsigned int i = 0; i < minSize; i++)
 			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - b.GETcoefTab(i));
+	}
+	return newPolynome;
+}
+Polynome Polynome::multiplication(const Polynome& a, const Polynome& b){
+	unsigned int maxSize = a.GETsize() + b.GETsize() - 1;
+	
+	Polynome newPolynome(maxSize);
+	for (int i = 0; i < a.GETsize(); i++){
+		for (int j = 0; j < b.GETsize(); j++)
+			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
 	}
 	return newPolynome;
 }
@@ -163,7 +199,7 @@ void Polynome::printOn() const{
 	}
 	equation = stream.str();
 	_stringSize = equation.length();
-	cout << endl << equation;
+	cout << equation;
 }
 
 
@@ -220,6 +256,10 @@ void testPolynome() {
 	soustraction1.printOn();
 	Polynome soustraction2 = addition - soustraction1;
 	soustraction2.printOn();
+
+	Polynome multiplication = a * b;
+	multiplication.printOn();
+
 	a = b;
 	if (a == b)
 		cout << endl << "same";

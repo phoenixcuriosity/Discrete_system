@@ -13,9 +13,12 @@ public:
 
 
 	Polynome& operator=(const Polynome&);
+	friend bool operator==(const Polynome&, const Polynome&);
+	friend Polynome operator+(const Polynome&, const Polynome&);
+	friend Polynome operator-(const Polynome&, const Polynome&);
+	friend Polynome operator*(const Polynome&, const Polynome&);
 	
-
-	virtual void SETcoefTab(unsigned int index, double userValue) const;
+	virtual void SETcoefTab(unsigned int index, double userValue);
 
 	virtual unsigned int GETsize() const;
 	virtual double GETcoefTab(unsigned int index) const;
@@ -23,6 +26,7 @@ public:
 
 	virtual Polynome addition(const Polynome& a, const Polynome& b);
 	virtual Polynome soustraction(const Polynome& a, const Polynome& b);
+	virtual Polynome multiplication(const Polynome& a, const Polynome& b);
 	virtual void grow(double);
 	virtual void shrink();
 	virtual void ModifPolynome(unsigned int index, double userValue);
@@ -30,6 +34,7 @@ public:
 	virtual void printOn() const; // affiche de manière textuelle
 
 	friend void testPolynome();
+	
 
 protected:
 	virtual double* allocate(unsigned int) const;
@@ -44,9 +49,9 @@ private:
 
 
 
-bool operator==(const Polynome&, const Polynome&);
-Polynome operator+(const Polynome&, const Polynome&);
-Polynome operator-(const Polynome&, const Polynome&);
+
+
+
 
 
 

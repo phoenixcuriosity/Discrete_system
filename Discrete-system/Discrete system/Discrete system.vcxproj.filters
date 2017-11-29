@@ -42,6 +42,9 @@
     <ClCompile Include="Polynome.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
+    <ClCompile Include="FCTLoop.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LIB.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="Polynome.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="FCTLoop.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,12 @@
 #include "mainLoop.h"
 
 #include "init.h"
+#include "FCTLoop.h"
 
 using namespace std;
 
 void mainLoop(sysinfo& information){
 	
-	unsigned int number = 0;
 	logfileconsole("_________Init Success_________");
 	logfileconsole("type 1 (Fct Discret) or 2 SYSETATDiscret\n");
 	cin >> information.variable.userRequest;
@@ -16,8 +16,7 @@ void mainLoop(sysinfo& information){
 		cin >> information.variable.userRequest;
 		break;
 	case selectFCT:
-		logfileconsole("You have select Fct Discret");
-		testPolynome();
+		FCTLoop();
 		
 		
 		

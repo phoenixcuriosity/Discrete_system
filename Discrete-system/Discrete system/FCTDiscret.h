@@ -8,13 +8,13 @@
 class FCTDiscret{
 public:
 	FCTDiscret();
-	FCTDiscret(Polynome&, Polynome&);
+	FCTDiscret(Polynome&, Polynome&, double deltaT);
 	~FCTDiscret();
 
 
 	// virtual int& operator [] (unsigned int); 
 	virtual FCTDiscret& operator = (const FCTDiscret&);
-	virtual bool operator ==(const FCTDiscret&);
+	friend bool operator ==(const FCTDiscret& a, const FCTDiscret& b);
 
 	virtual void ModifFCT();
 
@@ -25,6 +25,9 @@ public:
 
 	virtual Polynome GETnum() const;
 	virtual Polynome GETden() const;
+
+
+	friend void testFCTDiscret();
 
 
 private:
