@@ -18,20 +18,20 @@ public:
 	friend Polynome operator-(const Polynome&, const Polynome&);
 	friend Polynome operator*(const Polynome&, const Polynome&);
 	
-	virtual void SETcoefTab(unsigned int index, double userValue);
+	void SETcoefTab(unsigned int index, double userValue);
 
-	virtual unsigned int GETsize() const;
-	virtual double GETcoefTab(unsigned int index) const;
-	virtual unsigned int GETstringSize() const;
+	unsigned int GETsize() const;
+	double GETcoefTab(unsigned int index) const;
+	unsigned int GETstringSize() const;
 
-	virtual Polynome addition(const Polynome& a, const Polynome& b);
-	virtual Polynome soustraction(const Polynome& a, const Polynome& b);
-	virtual Polynome multiplication(const Polynome& a, const Polynome& b);
-	virtual void grow(double);
-	virtual void shrink();
-	virtual void ModifPolynome(unsigned int index, double userValue);
+	Polynome addition(const Polynome& a, const Polynome& b);
+	Polynome soustraction(const Polynome& a, const Polynome& b);
+	Polynome multiplication(const Polynome& a, const Polynome& b);
+	void grow(double);
+	void shrink();
+	void ModifPolynome(unsigned int index, double userValue);
 
-	virtual void printOn() const; // affiche de manière textuelle
+	void printOn() const;
 
 	friend void testPolynome();
 	

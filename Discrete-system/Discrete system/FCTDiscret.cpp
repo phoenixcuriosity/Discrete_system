@@ -2,7 +2,7 @@
 
 using namespace std;
 
-FCTDiscret::FCTDiscret()
+FCTDiscret::FCTDiscret() : _num(1), _den(1), _deltaT(1)
 {
 }
 
@@ -26,21 +26,23 @@ FCTDiscret& FCTDiscret::operator=(const FCTDiscret& a){
 	return *this;
 }
 bool operator==(const FCTDiscret& a, const FCTDiscret& b){
+	if (a.GETnum() == b.GETnum() && a.GETden() == b.GETden())
+		return true;
 	return false;
 }
-FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator+(FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat = resultat.addition(a, b);
+	resultat = a.addition(a, b);
 	return resultat;
 }
-FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator-(FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat = resultat.soustraction(a, b);
+	resultat = a.soustraction(a, b);
 	return resultat;
 }
-FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator*(FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat = resultat.multiplication(a, b);
+	resultat = a.multiplication(a, b);
 	return resultat;
 }
 
@@ -48,16 +50,22 @@ FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b){
 
 FCTDiscret FCTDiscret::addition(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
+	resultat.SETnum(a.GETnum().multiplication(a.GETnum(), b.GETden()));
+	resultat.SETnum(a.GETnum().addition(resultat.GETnum(), a.GETnum().multiplication(b.GETnum(), a.GETden())));
+	resultat.SETden(a.GETnum().multiplication(a.GETden(), b.GETden()));
 	return resultat;
 }
 FCTDiscret FCTDiscret::soustraction(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
+	resultat.SETnum(a.GETnum().multiplication(a.GETnum(), b.GETden()));
+	resultat.SETnum(a.GETnum().soustraction(resultat.GETnum(), a.GETnum().multiplication(b.GETnum(), a.GETden())));
+	resultat.SETden(a.GETnum().multiplication(a.GETden(), b.GETden()));
 	return resultat;
 }
 FCTDiscret FCTDiscret::multiplication(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum().multiplication(a.GETnum, b.GETnum));
-	resultat.SETden(a.GETden().multiplication(a.GETden, b.GETden));
+	resultat.SETnum(a.GETnum().multiplication(a.GETnum(), b.GETnum()));
+	resultat.SETden(a.GETden().multiplication(a.GETden(), b.GETden()));
 	return resultat;
 }
 
@@ -124,23 +132,41 @@ Polynome FCTDiscret::GETden() const{
 
 
 void testFCTDiscret(){
-	Polynome a(5);
-	a.SETcoefTab(3, 1);
-	a.SETcoefTab(1, 69.1);
+	Polynome a(3);
+	a.SETcoefTab(2, 1);
+	a.SETcoefTab(1, 2);
 	Polynome b(a);
-
-	cout << endl << "taille de a = " + to_string(a.GETsize());
-	b.SETcoefTab(2, 12.6);
-	cout << endl << "valeur de l'index " << 2 << "= " + to_string(b.GETcoefTab(2));
-	a.grow(2.3);
-
-	a.SETcoefTab(0, -0.9);
-	a.SETcoefTab(4, -6534.69461354);
-	b.SETcoefTab(0, 96.36);
-	b.SETcoefTab(1, -619);
+	b.SETcoefTab(2, 2);
+	a.grow(2);
+	a.SETcoefTab(0, 51);
+	a.SETcoefTab(1, -512);
+	b.SETcoefTab(0, 1);
+	
 
 	cout << endl;
-	FCTDiscret fct(b, a, 10.3);
-	fct.affichageTextuel();
+	FCTDiscret fct1(b, a, 10.3);
+	b.SETcoefTab(0, 7.3);
+	b.SETcoefTab(1, -91);
+	FCTDiscret fct2(a, b, 10.3);
+	fct1.affichageTextuel();
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	fct2.affichageTextuel();
+	cout << endl;
+	cout << endl << "multiplication de a * b, Fonctions de transfert :";
+	cout << endl;
+	FCTDiscret fctmultiplication = fct1 * fct2;
+	fctmultiplication.affichageTextuel();
+	cout << endl;
+	cout << endl << "addition de a + b,  Fonctions de transfert :";
+	cout << endl;
+	FCTDiscret fctaddition = fct1 + fct2;
+	fctaddition.affichageTextuel();
+	cout << endl;
+	cout << endl << "soustraction de a - b,  Fonctions de transfert :";
+	cout << endl;
+	FCTDiscret fctsoustraction = fct1 - fct2;
+	fctsoustraction.affichageTextuel();
 	cout << endl;
 }

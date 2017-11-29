@@ -19,19 +19,19 @@ public:
 	friend FCTDiscret operator-(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator*(const FCTDiscret&, const FCTDiscret&);
 
-	virtual FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b);
-	virtual FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
-	virtual FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
+	FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b);
+	FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
+	FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
 
-	virtual void ModifFCT();
+	void ModifFCT();
 
-	virtual void affichageTextuel() const;
+	void affichageTextuel() const;
 
-	virtual void SETnum(const Polynome &a);
-	virtual void SETden(const Polynome &a);
+	void SETnum(const Polynome &a);
+	void SETden(const Polynome &a);
 
-	virtual Polynome GETnum() const;
-	virtual Polynome GETden() const;
+	Polynome GETnum() const;
+	Polynome GETden() const;
 
 
 

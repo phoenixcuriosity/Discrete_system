@@ -23,6 +23,9 @@ Polynome::~Polynome()
 
 
 Polynome& Polynome::operator=(const Polynome& a){
+	/*
+		si le polynome n'est pas le meme que celui testé alors le polynome prend les valeurs des attributs de a
+	*/
 	if (this != &a){
 		if (_tab != nullptr)
 			delete  _tab;
@@ -34,6 +37,9 @@ Polynome& Polynome::operator=(const Polynome& a){
 
 
 bool operator==(const Polynome& a, const Polynome& b){
+	/*
+		test coef par coef si le polynome est identique
+	*/
 	if (b.GETsize() == a.GETsize()){
 		for (unsigned int i = 0; i < a.GETsize(); i++){
 			if (b.GETcoefTab(i) != a.GETcoefTab(i))
@@ -45,23 +51,23 @@ bool operator==(const Polynome& a, const Polynome& b){
 		return false;
 }
 Polynome operator+(Polynome& a, const Polynome& b){
-	Polynome resultat;
-	resultat = a.addition(a, b);
+	Polynome resultat = a.addition(a, b);
 	return resultat;
 }
 Polynome operator-(Polynome& a, const Polynome& b){
-	Polynome resultat;
-	resultat = a.soustraction(a, b);
+	Polynome resultat = a.soustraction(a, b);
 	return resultat;
 }
 Polynome operator*(Polynome& a, const Polynome& b){
-	Polynome resultat;
-	resultat = a.multiplication(a, b);
+	Polynome resultat = a.multiplication(a, b);
 	return resultat;
 }
 
 
 void Polynome::SETcoefTab(unsigned int index, double userValue){
+	/*
+		affecte la valeur userValue à l'adresse index de _tab
+	*/
 	if (index < _size)
 		_tab[index] = userValue;
 }
@@ -74,6 +80,9 @@ double Polynome::GETcoefTab(unsigned int index) const {
 		return _tab[index];
 }
 unsigned int Polynome::GETstringSize() const{
+	/*
+		calcul la place en byte (= nombre de caractère) pour afficher le polynome sur la console
+	*/
 	string equation;
 	stringstream stream;
 	for (int i = _size - 1; i >= 0; i--){
@@ -98,6 +107,9 @@ unsigned int Polynome::GETstringSize() const{
 }
 
 Polynome Polynome::addition(const Polynome& a, const Polynome& b){
+	/*
+	addition de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
+	*/
 	unsigned int maxSize = max(a.GETsize(), b.GETsize());
 	unsigned int minSize = min(a.GETsize(), b.GETsize());
 
@@ -117,6 +129,9 @@ Polynome Polynome::addition(const Polynome& a, const Polynome& b){
 }
 
 Polynome Polynome::soustraction(const Polynome& a, const Polynome& b){
+	/*
+		soustraction de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
+	*/
 	unsigned int maxSize = max(a.GETsize(), b.GETsize());
 	unsigned int minSize = min(a.GETsize(), b.GETsize());
 
@@ -130,6 +145,9 @@ Polynome Polynome::soustraction(const Polynome& a, const Polynome& b){
 	return newPolynome;
 }
 Polynome Polynome::multiplication(const Polynome& a, const Polynome& b){
+	/*
+		multiplication de 2 polynomes
+	*/
 	unsigned int maxSize = a.GETsize() + b.GETsize() - 1;
 	
 	Polynome newPolynome(maxSize);
@@ -144,6 +162,9 @@ Polynome Polynome::multiplication(const Polynome& a, const Polynome& b){
 
 
 void Polynome::grow(double userValue){
+	/*
+		créer un nouveau tableau ayant une case de plus avec la nouvelle valeur de l'utilisateur
+	*/
 	const unsigned int newSize = _size + 1;
 	double* newTab = allocate(newSize);
 
@@ -179,6 +200,9 @@ void Polynome::ModifPolynome(unsigned int index, double userValue) {
 
 
 void Polynome::printOn() const{
+	/*
+		affiche le polynome en z d'ordre décroissant
+	*/
 	string equation;
 	stringstream stream;
 	for (int i = _size - 1; i >= 0; i--){
@@ -242,30 +266,32 @@ void testPolynome() {
 
 	cout << endl << "taille de a = " + to_string(a.GETsize());
 	cout << endl << "valeur de l'index " << 5 << "= " + to_string(a.GETcoefTab(5));
+	cout << endl << "Polynome a = ";
 	a.printOn();
+	cout << endl << "Polynome b = ";
 	b.printOn();
 	if (a==b)
 		cout << endl << "same";
 	else
 		cout << endl << "not the same";
 	
+	cout << endl << "addition de a + b = ";
 	Polynome addition = a + b;
 	addition.printOn();
 
+	cout << endl << "soustraction de a - b = ";
 	Polynome soustraction1 = a - b;
 	soustraction1.printOn();
+	cout << endl << "addition de addition - soustraction1 = ";
 	Polynome soustraction2 = addition - soustraction1;
 	soustraction2.printOn();
-
+	cout << endl << "multiplication de a * b = ";
 	Polynome multiplication = a * b;
 	multiplication.printOn();
-
 	a = b;
 	if (a == b)
 		cout << endl << "same";
 	else
 		cout << endl << "not the same";
-
-	
-
+	cout << endl;
 }

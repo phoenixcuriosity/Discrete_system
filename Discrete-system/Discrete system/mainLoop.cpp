@@ -17,18 +17,9 @@ void mainLoop(sysinfo& information){
 		break;
 	case selectFCT:
 		FCTLoop();
-		
-		
-		
-		
 		break;
 	case selectSYSETAT:
 		logfileconsole("You have select SYSETATDiscret");
-		
-		
-		
-		
-		
 		break;
 	}
 }
