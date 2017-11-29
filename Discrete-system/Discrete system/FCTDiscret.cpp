@@ -28,7 +28,38 @@ FCTDiscret& FCTDiscret::operator=(const FCTDiscret& a){
 bool operator==(const FCTDiscret& a, const FCTDiscret& b){
 	return false;
 }
+FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret resultat;
+	resultat = resultat.addition(a, b);
+	return resultat;
+}
+FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret resultat;
+	resultat = resultat.soustraction(a, b);
+	return resultat;
+}
+FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret resultat;
+	resultat = resultat.multiplication(a, b);
+	return resultat;
+}
 
+
+
+FCTDiscret FCTDiscret::addition(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret resultat;
+	return resultat;
+}
+FCTDiscret FCTDiscret::soustraction(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret resultat;
+	return resultat;
+}
+FCTDiscret FCTDiscret::multiplication(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret resultat;
+	resultat.SETnum(a.GETnum().multiplication(a.GETnum, b.GETnum));
+	resultat.SETden(a.GETden().multiplication(a.GETden, b.GETden));
+	return resultat;
+}
 
 
 void FCTDiscret::ModifFCT(){
@@ -75,11 +106,11 @@ void FCTDiscret::affichageTextuel() const{
 }
 
 
-void FCTDiscret::SETnum(){
-
+void FCTDiscret::SETnum(const Polynome &a){
+	_num = a;
 }
-void FCTDiscret::SETden(){
-
+void FCTDiscret::SETden(const Polynome &a){
+	_den = a;
 }
 
 

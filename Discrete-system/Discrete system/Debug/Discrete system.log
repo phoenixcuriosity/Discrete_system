@@ -1,20 +1,24 @@
-﻿La génération a démarré 29/11/2017 12:13:36.
-     1>Projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Build cible(s)).
+﻿La génération a démarré 29/11/2017 12:50:26.
+     1>Projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Rebuild cible(s)).
      1>ClCompile:
-         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt FCTDiscret.cpp
+         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DynamicArray.cpp FCTLoop.cpp Polynome.cpp FCTDiscret.cpp init.cpp main.cpp mainLoop.cpp SYSETATDiscret.cpp
+         SYSETATDiscret.cpp
+         mainLoop.cpp
+         main.cpp
+         init.cpp
          FCTDiscret.cpp
-       Link:
-         I:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.exe" /INCREMENTAL /NOLOGO /LIBPATH:"SDL2-2.0.6\lib\x86" SDL2.lib SDL2main.lib SDL2_ttf.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.lib" /MACHINE:X86 Debug\DynamicArray.obj
-         Debug\FCTLoop.obj
-         Debug\Polynome.obj
-         Debug\FCTDiscret.obj
-         Debug\init.obj
-         Debug\main.obj
-         Debug\mainLoop.obj
-         Debug\SYSETATDiscret.obj
-         Discrete system.vcxproj -> C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.exe
-     1>Génération du projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" terminée (Build cible(s)).
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\fctdiscret.cpp(59): error C3867: &'FCTDiscret::GETnum' : liste d'arguments manquante dans l'appel de fonction ; utilisez 'FCTDiscret::GETnum' pour créer un pointeur vers membre
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\fctdiscret.cpp(60): error C3867: &'FCTDiscret::GETden' : liste d'arguments manquante dans l'appel de fonction ; utilisez 'FCTDiscret::GETden' pour créer un pointeur vers membre
+         Polynome.cpp
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(136): warning C4018: '<' : incompatibilité signed/unsigned
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(137): warning C4018: '<' : incompatibilité signed/unsigned
+         FCTLoop.cpp
+         DynamicArray.cpp
+         Génération de code en cours...
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(75): warning C4715: 'Polynome::GETcoefTab' : les chemins de contrôle ne retournent pas tous une valeur
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(117): warning C4715: 'Polynome::addition' : les chemins de contrôle ne retournent pas tous une valeur
+     1>Génération du projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" terminée (Rebuild cible(s)) -- ÉCHEC.
 
-La génération a réussi.
+ÉCHEC de la build.
 
-Temps écoulé 00:00:00.71
+Temps écoulé 00:00:03.70
