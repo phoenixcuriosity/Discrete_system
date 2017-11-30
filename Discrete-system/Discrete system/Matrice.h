@@ -7,13 +7,16 @@ class Matrice{
 public:
 	Matrice(){};
 	Matrice(unsigned int lenght, unsigned int height);
-	Matrice(double** tab);
 	Matrice(double** tab, unsigned int lenght, unsigned int height);
+	Matrice(const Matrice& M);
 	~Matrice();
+	
+	void SETthiscoef(unsigned int, unsigned int, double);
+	double GETthiscoef(unsigned int, unsigned int)const;
 
 	void ones();
 
-	void printOn();
+	void printOn()const;
 
 	friend void testMatrice();
 

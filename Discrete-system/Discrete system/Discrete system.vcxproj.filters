@@ -30,9 +30,6 @@
     <ClCompile Include="FCTDiscret.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
-    <ClCompile Include="SYSETATDiscret.cpp">
-      <Filter>Fichiers sources\Class</Filter>
-    </ClCompile>
     <ClCompile Include="init.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -42,7 +39,13 @@
     <ClCompile Include="FCTLoop.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Vecteur.cpp">
+      <Filter>Fichiers sources\Class</Filter>
+    </ClCompile>
     <ClCompile Include="Matrice.cpp">
+      <Filter>Fichiers sources\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="SYSETATDiscret.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,12 +59,6 @@
     <ClInclude Include="mainLoop.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="TemplateDynamicArray.h">
-      <Filter>Fichiers d%27en-tête\Class</Filter>
-    </ClInclude>
-    <ClInclude Include="SYSETATDiscret.h">
-      <Filter>Fichiers d%27en-tête\Class</Filter>
-    </ClInclude>
     <ClInclude Include="FCTDiscret.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
@@ -74,7 +71,13 @@
     <ClInclude Include="FCTLoop.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Vecteur.h">
+      <Filter>Fichiers d%27en-tête\Class</Filter>
+    </ClInclude>
     <ClInclude Include="Matrice.h">
+      <Filter>Fichiers d%27en-tête\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="SYSETATDiscret.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
   </ItemGroup>

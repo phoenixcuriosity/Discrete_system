@@ -10,6 +10,7 @@
 const unsigned int SCREEN_WIDTH = 720;
 const unsigned int SCREEN_HEIGHT = 480;
 
+
 enum { selectnothing, selectFCT, selectSYSETAT };
 
 

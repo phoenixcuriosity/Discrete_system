@@ -2,12 +2,14 @@
 
 using namespace std;
 
-
+Polynome::Polynome() : _size(1), _tab(allocate(1)), _stringSize(0)
+{
+}
 Polynome::Polynome(unsigned int size) : _size(size), _tab(allocate(size)), _stringSize(0)
 {
 }
 
-Polynome::Polynome(unsigned int size, double tab[]) : _size(size), _tab(tab), _stringSize(0)
+Polynome::Polynome(unsigned int size, double tab[]) : _size(size), _tab(allocate(size,tab)), _stringSize(0)
 {
 }
 Polynome::Polynome(const Polynome& P) : _size(P._size), _tab(allocate(P)), _stringSize(0)
@@ -16,8 +18,10 @@ Polynome::Polynome(const Polynome& P) : _size(P._size), _tab(allocate(P)), _stri
 
 Polynome::~Polynome()
 {	
-	if(_tab != nullptr)
+	if (_tab != nullptr) {
 		delete  _tab;
+		_tab = nullptr;
+	}
 }
 
 
@@ -33,6 +37,10 @@ Polynome& Polynome::operator=(const Polynome& a){
 		_tab = a.allocate(a);
 	}
 	return *this;
+}
+double Polynome::operator[](unsigned int index) {
+	if (index < _size)
+		return _tab[index];
 }
 
 
@@ -239,6 +247,15 @@ double* Polynome::allocate(unsigned int size) const {
 		buffer[i] = 0;
 	return buffer;
 }
+double* Polynome::allocate(unsigned int size, double* tab) const {
+	/*
+	alloue un tableau de taille size de type double initialisé à 0
+	*/
+	double* buffer = new double[size];
+	for (unsigned int i = 0; i < size; i++)
+		buffer[i] = tab[i];
+	return buffer;
+}
 double* Polynome::allocate(const Polynome& P) const {
 	double* buffer = new double[P._size];
 	for (unsigned int i = 0; i < P._size; i++)
@@ -249,6 +266,7 @@ double* Polynome::allocate(const Polynome& P) const {
 
 
 void testPolynome() {
+	cout << endl << "___TEST POLYNOME___";
 	Polynome a(5);
 	a.SETcoefTab(3, 1);
 	a.SETcoefTab(1, 69.1);

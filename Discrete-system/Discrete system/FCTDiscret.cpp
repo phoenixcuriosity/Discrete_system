@@ -2,7 +2,7 @@
 
 using namespace std;
 
-FCTDiscret::FCTDiscret() : _num(1), _den(1), _deltaT(1)
+FCTDiscret::FCTDiscret() : _num(), _den(), _deltaT(1)
 {
 }
 
@@ -132,6 +132,7 @@ Polynome FCTDiscret::GETden() const{
 
 
 void testFCTDiscret(){
+	cout << endl << "___TEST FCTDiscret___";
 	Polynome a(3);
 	a.SETcoefTab(2, 1);
 	a.SETcoefTab(1, 2);

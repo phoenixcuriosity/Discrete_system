@@ -2,19 +2,8 @@
 
 using namespace std;
 
-SYSETATDiscret::SYSETATDiscret()
-{
-}
-SYSETATDiscret::SYSETATDiscret(Matrice& A, Matrice& B, Matrice& C)
-: _A(A), _B(B), _C(C), _deltaT(1), _x(allocate(2))
-{
-}
-SYSETATDiscret::SYSETATDiscret(Matrice& A, Matrice& B, Matrice& C, double deltaT)
-: _A(A), _B(B), _C(C), _deltaT(deltaT)
-{
-}
-SYSETATDiscret::SYSETATDiscret(Matrice& A, Matrice& B, Matrice& C, Matrice& D, double deltaT, double x[])
-: _A(A), _B(B), _C(C), _D(D), _deltaT(deltaT), _x(allocate(x))
+SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
+: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT), _x(allocate(a._x))
 {
 }
 SYSETATDiscret::~SYSETATDiscret()
@@ -37,3 +26,7 @@ double* SYSETATDiscret::allocate(const double* P) const {
 		buffer[i] = P[i];
 	return buffer;
 }
+
+
+
+void calculx();

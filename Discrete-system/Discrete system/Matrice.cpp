@@ -6,15 +6,24 @@ using namespace std;
 Matrice::Matrice(unsigned int lenght, unsigned int height) : _tab(allocate(lenght, height)), _lenght(lenght), _height(height)
 {
 }
-Matrice::Matrice(double** tab)
+Matrice::Matrice(double** tab, unsigned int lenght, unsigned int height)
+: _tab(tab), _lenght(lenght), _height(height)
 {
 }
-Matrice::Matrice(double** tab, unsigned int lenght, unsigned int height)
+Matrice::Matrice(const Matrice& M)
+:_tab(allocate(M)), _lenght(M._lenght), _height(M._height)
 {
 }
 Matrice::~Matrice()
 {
-
+	if (_tab != nullptr) {
+		for (unsigned int i = 0; i < _lenght; i++) {
+			delete _tab[i];
+			_tab[i] = nullptr;
+		}
+		delete _tab;
+		_tab = nullptr;
+	}
 }
 
 
@@ -45,34 +54,59 @@ double** Matrice::allocate(const Matrice& P) const {
 }
 
 
+void Matrice::SETthiscoef(unsigned int i, unsigned int j, double userValue) {
+	_tab[i][j] = userValue;
+}
+double Matrice::GETthiscoef(unsigned int i, unsigned int j)const {
+	return _tab[i][j];
+}
+
 void Matrice::ones(){
-	if (_lenght == _height){
-		for (unsigned int i = 0; i < _lenght; i++){
-			for (unsigned int j = 0; j < _height; j++){
-				_tab[i][j] = 1;
-			}
+	for (unsigned int i = 0; i < _lenght; i++){
+		for (unsigned int j = 0; j < _height; j++){
+			_tab[i][j] = 1;
 		}
 	}
 }
 
-void Matrice::printOn(){
-	for (unsigned int i = 0; i < _height; i++){
+void Matrice::printOn()const{
+	for (unsigned int i = 0; i < _lenght; i++){
 		cout << endl << "|";
-		for (unsigned int j = 0; j < _lenght; j++)
-			cout << _tab[i][j];
+		for (unsigned int j = 0; j < _height; j++)
+			cout << " " << _tab[i][j];
 		cout << "|";
 	}
 }
 
 void testMatrice(){
+	cout << endl << "___TEST MATRICE___";
+	cout << endl << "(uniquement pour matrice carre)";
 	Matrice A(5, 5);
-	cout << endl << "Matrice A : ";
+	cout << endl << endl << "Matrice A, constructeur par value1: ";
 	A.printOn();
 	Matrice B(A);
 	B.ones();
-	cout << endl << "Matrice B : ";
+	cout << endl << endl << "Matrice B constructeur par recopie : ";
 	B.printOn();
-	Matrice C(2, 5);
-	cout << endl << "Matrice C : ";
+	B.SETthiscoef(0, 0, 3);
+	B.SETthiscoef(1, 4, 0.1);
+	B.SETthiscoef(2, 1, -0.96);
+	cout << endl << endl << "coef de la matrice B a l'index 2,1 = " << B.GETthiscoef(2, 1);
+	cout << endl << endl << "Matrice B modifie : ";
+	B.printOn();
+	cout << endl << endl;
+
+	
+	double** a = new double*[3];
+	for (unsigned int i = 0; i < 3; i++)
+		a[i] = new double[3];
+
+	for (unsigned int i = 0; i < 3; i++){
+		for (unsigned int j = 0; j < 3; j++)
+			a[i][j] = 2;
+	}
+	Matrice C(a, 3 ,3);
+	cout << endl << "Matrice C, constructeur par value2: : ";
 	C.printOn();
+	cout << endl << endl;
 }

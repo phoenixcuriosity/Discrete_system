@@ -5,7 +5,7 @@
 
 class Polynome {
 public:
-	Polynome() {};
+	Polynome();
 	Polynome(unsigned int size);
 	Polynome(unsigned int size, double tab[]);
 	Polynome(const Polynome& P);
@@ -13,6 +13,7 @@ public:
 
 
 	Polynome& operator=(const Polynome&);
+	double operator[](unsigned int index);
 	friend bool operator==(const Polynome&, const Polynome&);
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
@@ -38,6 +39,7 @@ public:
 
 protected:
 	virtual double* allocate(unsigned int) const;
+	virtual double* allocate(unsigned int, double*) const;
 	virtual double* allocate(const Polynome& P) const;
 	
 

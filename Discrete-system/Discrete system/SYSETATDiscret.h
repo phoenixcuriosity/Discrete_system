@@ -3,16 +3,17 @@
 
 #include "LIB.h"
 #include "Matrice.h"
+#include "Vecteur.h"
 
 
 class SYSETATDiscret{
 public:
-	SYSETATDiscret();
-	SYSETATDiscret(Matrice&, Matrice&, Matrice&);
-	SYSETATDiscret(Matrice&, Matrice&, Matrice&, double);
-	SYSETATDiscret(Matrice&, Matrice&, Matrice&, Matrice&, double, double[]);
+	SYSETATDiscret() {};
+	SYSETATDiscret(const SYSETATDiscret&);
 	~SYSETATDiscret();
 
+
+	void calculx();
 
 protected:
 	virtual double* allocate(unsigned int) const;
@@ -20,7 +21,9 @@ protected:
 
 
 private:
-	Matrice _A, _B, _C, _D;
+	Matrice _A;
+	Vecteur _B, _C;
+	double _D;
 	double _deltaT;
 	double* _x;
 };
