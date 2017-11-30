@@ -8,7 +8,7 @@
 
 class SYSETATDiscret{
 public:
-	SYSETATDiscret() {};
+	SYSETATDiscret();
 	SYSETATDiscret(const SYSETATDiscret&);
 	~SYSETATDiscret();
 

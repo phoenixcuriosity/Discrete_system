@@ -2,6 +2,7 @@
 #define FCTLoop_H
 
 #include "ConstantesAndStructures.h"
-void FCTLoop();
-
+void FCTLoop(sysinfo& information);
+void createNum(sysinfo& information);
+void createDen(sysinfo& information);
 #endif

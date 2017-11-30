@@ -28,6 +28,7 @@ public:
 	Polynome addition(const Polynome& a, const Polynome& b);
 	Polynome soustraction(const Polynome& a, const Polynome& b);
 	Polynome multiplication(const Polynome& a, const Polynome& b);
+	void editsize(unsigned int);
 	void grow(double);
 	void shrink();
 	void ModifPolynome(unsigned int index, double userValue);

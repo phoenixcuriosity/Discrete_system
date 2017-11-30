@@ -2,6 +2,10 @@
 
 using namespace std;
 
+SYSETATDiscret::SYSETATDiscret()
+: _A(), _B(), _C(), _D(0), _deltaT(1), _x(allocate(2))
+{
+}
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
 : _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT), _x(allocate(a._x))
 {

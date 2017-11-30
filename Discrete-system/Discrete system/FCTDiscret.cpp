@@ -74,7 +74,7 @@ void FCTDiscret::ModifFCT(){
 
 }
 
-void FCTDiscret::affichageTextuel() const{
+void FCTDiscret::printOn() const{
 	unsigned int stringSize = 0;
 	string barre = "";
 	string middle = "";
@@ -149,25 +149,25 @@ void testFCTDiscret(){
 	b.SETcoefTab(0, 7.3);
 	b.SETcoefTab(1, -91);
 	FCTDiscret fct2(a, b, 10.3);
-	fct1.affichageTextuel();
+	cout << endl << "Fct1 constructeur par valeur:" << endl;
+	fct1.printOn();
 	cout << endl;
-	cout << endl;
-	cout << endl;
-	fct2.affichageTextuel();
+	cout << endl << "Fct2 constructeur par recopie:" << endl;
+	fct2.printOn();
 	cout << endl;
 	cout << endl << "multiplication de a * b, Fonctions de transfert :";
 	cout << endl;
 	FCTDiscret fctmultiplication = fct1 * fct2;
-	fctmultiplication.affichageTextuel();
+	fctmultiplication.printOn();
 	cout << endl;
 	cout << endl << "addition de a + b,  Fonctions de transfert :";
 	cout << endl;
 	FCTDiscret fctaddition = fct1 + fct2;
-	fctaddition.affichageTextuel();
+	fctaddition.printOn();
 	cout << endl;
 	cout << endl << "soustraction de a - b,  Fonctions de transfert :";
 	cout << endl;
 	FCTDiscret fctsoustraction = fct1 - fct2;
-	fctsoustraction.affichageTextuel();
+	fctsoustraction.printOn();
 	cout << endl;
 }

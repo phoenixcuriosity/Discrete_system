@@ -5,7 +5,7 @@
 
 
 bool initfile(fichier& file);
-bool initsdl(SDL_Window*&, SDL_Renderer*&, TTF_Font*[]);
+//bool initsdl(SDL_Window*&, SDL_Renderer*&, TTF_Font*[]);
 void logfileconsole(const std::string &msg);
 
 

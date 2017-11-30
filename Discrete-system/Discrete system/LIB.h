@@ -13,9 +13,6 @@
 #include <stdexcept>
 #include <iomanip>
 
-#include "SDL2-2.0.6/include/SDL.h"
-#include "SDL2-2.0.6/include/SDL_ttf.h"
-#include "SDL2-2.0.6/include/SDL_image.h"
 
 
 #endif

@@ -11,25 +11,10 @@ const unsigned int SCREEN_WIDTH = 720;
 const unsigned int SCREEN_HEIGHT = 480;
 
 
-enum { selectnothing, selectFCT, selectSYSETAT };
+enum { selectnothing, selectFCT, selectSYSETAT , exitProgram};
+enum { nothing, createNumDen, editFCT, displayFCT, previousMenuFCT };
 
 
-
-
-typedef struct texture texture;
-struct texture {
-	TTF_Font *font[80];
-};
-
-
-
-
-typedef struct screen screen;
-struct screen {
-	SDL_Window *window = nullptr;
-	SDL_Renderer *renderer = nullptr;
-	texture allTextures;
-};
 typedef struct fichier fichier;
 struct fichier {
 	const std::string log = "bin/log/log.txt";
@@ -39,7 +24,7 @@ struct fichier {
 };
 typedef struct var var;
 struct var {
-	//FCTDiscret fct;
+	FCTDiscret fct;
 	//SYSETATDiscret sys;
 
 	unsigned int userRequest = 0;
@@ -49,7 +34,6 @@ struct var {
 
 typedef struct sysinfo sysinfo;
 struct sysinfo {
-	screen ecran;
 	fichier file;
 	var variable;
 };

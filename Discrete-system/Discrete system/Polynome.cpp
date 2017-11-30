@@ -167,7 +167,18 @@ Polynome Polynome::multiplication(const Polynome& a, const Polynome& b){
 }
 
 
+void Polynome::editsize(unsigned int size){
+	const unsigned int newSize = size;
+	double* newTab = allocate(newSize);
 
+	for (unsigned int i = 0; i < _size; i++)
+		newTab[i] = _tab[i];
+
+	delete _tab;
+
+	_size = newSize;
+	_tab = newTab;
+}
 
 void Polynome::grow(double userValue){
 	/*
@@ -288,10 +299,10 @@ void testPolynome() {
 	a.printOn();
 	cout << endl << "Polynome b = ";
 	b.printOn();
-	if (a==b)
-		cout << endl << "same";
+	if (a == b)
+		cout << endl << "polynomes identique : a et b";
 	else
-		cout << endl << "not the same";
+		cout << endl << "polynomes different : a et b";
 	
 	cout << endl << "addition de a + b = ";
 	Polynome addition = a + b;
@@ -308,8 +319,8 @@ void testPolynome() {
 	multiplication.printOn();
 	a = b;
 	if (a == b)
-		cout << endl << "same";
+		cout << endl << "polynomes identique : a et b";
 	else
-		cout << endl << "not the same";
+		cout << endl << "polynomes different : a et b";
 	cout << endl;
 }

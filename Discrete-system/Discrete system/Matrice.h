@@ -5,7 +5,7 @@
 
 class Matrice{
 public:
-	Matrice(){};
+	Matrice();
 	Matrice(unsigned int lenght, unsigned int height);
 	Matrice(double** tab, unsigned int lenght, unsigned int height);
 	Matrice(const Matrice& M);

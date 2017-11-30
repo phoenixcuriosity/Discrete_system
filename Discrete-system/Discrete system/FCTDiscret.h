@@ -25,7 +25,7 @@ public:
 
 	void ModifFCT();
 
-	void affichageTextuel() const;
+	void printOn() const;
 
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);

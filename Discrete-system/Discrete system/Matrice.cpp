@@ -2,7 +2,9 @@
 
 using namespace std;
 
-
+Matrice::Matrice() : _tab(allocate(2, 2)), _lenght(2), _height(2)
+{
+}
 Matrice::Matrice(unsigned int lenght, unsigned int height) : _tab(allocate(lenght, height)), _lenght(lenght), _height(height)
 {
 }
