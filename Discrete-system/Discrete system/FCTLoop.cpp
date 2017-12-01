@@ -9,6 +9,7 @@ using namespace std;
 
 void FCTLoop(sysinfo& information){
 	unsigned int request = 0;
+	double deltaT = 0;
 	bool continuer = true;
 	
 	while (continuer){
@@ -19,6 +20,11 @@ void FCTLoop(sysinfo& information){
 		cin >> request;
 		switch (request){
 		case createNumDen:
+			cout << "Init deltaT = " << information.variable.fct.GETdeltaT() << "s";
+			logfileconsole("deltaT of FCT? : ");
+			cin >> deltaT;
+			information.variable.fct.SETdeltaT(deltaT);
+			cout << "New deltaT = " << information.variable.fct.GETdeltaT() << "s";
 			createNum(information);
 			createDen(information);
 			logfileconsole("You have created with SUCCESS the FCT, Yeah!!! You did it!!!");
@@ -44,11 +50,13 @@ void createNum(sysinfo& information){
 	logfileconsole("You have selected to create Num");
 	logfileconsole("order of FCT? : ");
 	cin >> order;
-	information.variable.fct.GETnum().editsize(order);
+	information.variable.fct.GETnumToEdit().editsize(order);
+	cout << "________order = " << information.variable.fct.GETnum().GETsize();
 	for (unsigned int i = 0; i <= order; i++){
 		logfileconsole("coef n:" + to_string(i) + " = ");
 		cin >> coef;
-		information.variable.fct.GETnum().SETcoefTab(i, coef);
+		information.variable.fct.GETnumToEdit().SETcoefTab(i, coef);
+		cout << "________Coef = " << information.variable.fct.GETnum().GETcoefTab(i);
 	}
 	logfileconsole("You create the Num");
 }
@@ -59,11 +67,11 @@ void createDen(sysinfo& information){
 	logfileconsole("You have selected to create Den");
 	logfileconsole("order of FCT? : ");
 	cin >> order;
-	information.variable.fct.GETden().editsize(order);
+	information.variable.fct.GETdenToEdit().editsize(order);
 	for (unsigned int i = 0; i <= order; i++){
 		logfileconsole("coef n:" + to_string(i) + " = ");
 		cin >> coef;
-		information.variable.fct.GETden().SETcoefTab(i, coef);
+		information.variable.fct.GETdenToEdit().SETcoefTab(i, coef);
 	}
 	logfileconsole("You create the Den");
 }

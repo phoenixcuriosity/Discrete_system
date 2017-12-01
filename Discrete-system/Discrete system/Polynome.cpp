@@ -168,15 +168,17 @@ Polynome Polynome::multiplication(const Polynome& a, const Polynome& b){
 
 
 void Polynome::editsize(unsigned int size){
-	const unsigned int newSize = size;
-	double* newTab = allocate(newSize);
-
+	
+	double* newTab = allocate(size);
+	cout << "_______" << size;
 	for (unsigned int i = 0; i < _size; i++)
 		newTab[i] = _tab[i];
 
 	delete _tab;
+	_tab = nullptr;
 
-	_size = newSize;
+	_size = size;
+	cout << "_______" << _size;
 	_tab = newTab;
 }
 
@@ -323,4 +325,11 @@ void testPolynome() {
 	else
 		cout << endl << "polynomes different : a et b";
 	cout << endl;
+	Polynome Z;
+	cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	Z.grow(6.8);
+	cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	Z.editsize(6);
+	cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	cout << endl << endl;
 }

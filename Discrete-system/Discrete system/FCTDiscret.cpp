@@ -18,6 +18,9 @@ FCTDiscret::~FCTDiscret()
 
 
 FCTDiscret& FCTDiscret::operator=(const FCTDiscret& a){
+	/*
+		si la fct n'est pas de la meme forme alors on prend les attributs de a
+	*/
 	if (this != &a){
 		_num = a._num;
 		_den = a._den;
@@ -75,6 +78,10 @@ void FCTDiscret::ModifFCT(){
 }
 
 void FCTDiscret::printOn() const{
+	/*
+		affiche sur la console : en haut le num, puis la barre de fraction et enfin le den
+		affichage selon la taille de la chaine de caratere la plus longue
+	*/
 	unsigned int stringSize = 0;
 	string barre = "";
 	string middle = "";
@@ -120,7 +127,9 @@ void FCTDiscret::SETnum(const Polynome &a){
 void FCTDiscret::SETden(const Polynome &a){
 	_den = a;
 }
-
+void FCTDiscret::SETdeltaT(double deltaT){
+	_deltaT = deltaT;
+}
 
 
 Polynome FCTDiscret::GETnum() const{
@@ -129,7 +138,15 @@ Polynome FCTDiscret::GETnum() const{
 Polynome FCTDiscret::GETden() const{
 	return _den;
 }
-
+Polynome FCTDiscret::GETnumToEdit(){
+	return _num;
+}
+Polynome FCTDiscret::GETdenToEdit(){
+	return _den;
+}
+double FCTDiscret::GETdeltaT(){
+	return _deltaT;
+}
 
 void testFCTDiscret(){
 	cout << endl << "___TEST FCTDiscret___";

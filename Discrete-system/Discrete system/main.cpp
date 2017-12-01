@@ -10,7 +10,6 @@ int main(int argc, char *argv[]){
 	sysinfo information;
 	
 	if (initfile(information.file)) {
-		//if(initsdl(information.ecran.window, information.ecran.renderer, information.ecran.allTextures.font))
 		mainLoop(information);
 	}
 	else

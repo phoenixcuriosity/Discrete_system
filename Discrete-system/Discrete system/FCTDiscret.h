@@ -12,7 +12,6 @@ public:
 	~FCTDiscret();
 
 
-	// virtual int& operator [] (unsigned int); 
 	virtual FCTDiscret& operator = (const FCTDiscret&);
 	friend bool operator ==(const FCTDiscret& a, const FCTDiscret& b);
 	friend FCTDiscret operator+(const FCTDiscret&, const FCTDiscret&);
@@ -29,10 +28,13 @@ public:
 
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);
+	void SETdeltaT(double);
 
 	Polynome GETnum() const;
 	Polynome GETden() const;
-
+	Polynome GETnumToEdit();
+	Polynome GETdenToEdit();
+	double GETdeltaT();
 
 
 	friend void testFCTDiscret();

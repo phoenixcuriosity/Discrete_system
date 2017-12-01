@@ -1,5 +1,2 @@
 
 _________Init Success_________
-type 1 (Fct Discret)
- or type 2 SYSETATDiscret
- or type 3 to exit the program
