@@ -18,9 +18,9 @@ public:
 	friend FCTDiscret operator-(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator*(const FCTDiscret&, const FCTDiscret&);
 
-	FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b);
-	FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
-	FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
+	friend FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b);
+	friend FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
+	friend FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
 
 	void ModifFCT();
 

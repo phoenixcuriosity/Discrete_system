@@ -35,40 +35,40 @@ bool operator==(const FCTDiscret& a, const FCTDiscret& b){
 }
 FCTDiscret operator+(FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat = a.addition(a, b);
+	resultat = addition(a, b);
 	return resultat;
 }
 FCTDiscret operator-(FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat = a.soustraction(a, b);
+	resultat = soustraction(a, b);
 	return resultat;
 }
 FCTDiscret operator*(FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat = a.multiplication(a, b);
+	resultat = multiplication(a, b);
 	return resultat;
 }
 
 
 
-FCTDiscret FCTDiscret::addition(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum().multiplication(a.GETnum(), b.GETden()));
-	resultat.SETnum(a.GETnum().addition(resultat.GETnum(), a.GETnum().multiplication(b.GETnum(), a.GETden())));
-	resultat.SETden(a.GETnum().multiplication(a.GETden(), b.GETden()));
+	resultat.SETnum(a.GETnum() * b.GETden());
+	resultat.SETnum(resultat.GETnum() + b.GETnum() * a.GETden());
+	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
 }
-FCTDiscret FCTDiscret::soustraction(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum().multiplication(a.GETnum(), b.GETden()));
-	resultat.SETnum(a.GETnum().soustraction(resultat.GETnum(), a.GETnum().multiplication(b.GETnum(), a.GETden())));
-	resultat.SETden(a.GETnum().multiplication(a.GETden(), b.GETden()));
+	resultat.SETnum(a.GETnum() * b.GETden());
+	resultat.SETnum(resultat.GETnum() - b.GETnum() * a.GETden());
+	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
 }
-FCTDiscret FCTDiscret::multiplication(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum().multiplication(a.GETnum(), b.GETnum()));
-	resultat.SETden(a.GETden().multiplication(a.GETden(), b.GETden()));
+	resultat.SETnum(a.GETnum() * b.GETnum());
+	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
 }
 

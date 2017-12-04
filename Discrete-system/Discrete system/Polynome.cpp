@@ -59,15 +59,15 @@ bool operator==(const Polynome& a, const Polynome& b){
 		return false;
 }
 Polynome operator+(Polynome& a, const Polynome& b){
-	Polynome resultat = a.addition(a, b);
+	Polynome resultat = addition(a, b);
 	return resultat;
 }
 Polynome operator-(Polynome& a, const Polynome& b){
-	Polynome resultat = a.soustraction(a, b);
+	Polynome resultat = soustraction(a, b);
 	return resultat;
 }
 Polynome operator*(Polynome& a, const Polynome& b){
-	Polynome resultat = a.multiplication(a, b);
+	Polynome resultat = multiplication(a, b);
 	return resultat;
 }
 
@@ -114,7 +114,7 @@ unsigned int Polynome::GETstringSize() const{
 	return _stringSize;
 }
 
-Polynome Polynome::addition(const Polynome& a, const Polynome& b){
+Polynome addition(const Polynome& a, const Polynome& b){
 	/*
 	addition de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
 	*/
@@ -128,7 +128,7 @@ Polynome Polynome::addition(const Polynome& a, const Polynome& b){
 		return newPolynome;
 	}
 
-	else if (maxSize == b.GETsize()){
+	else{
 		Polynome newPolynome(b);
 		for (unsigned int i = 0; i < minSize; i++)
 			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + a.GETcoefTab(i));
@@ -136,7 +136,7 @@ Polynome Polynome::addition(const Polynome& a, const Polynome& b){
 	}
 }
 
-Polynome Polynome::soustraction(const Polynome& a, const Polynome& b){
+Polynome soustraction(const Polynome& a, const Polynome& b){
 	/*
 		soustraction de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
 	*/
@@ -152,7 +152,7 @@ Polynome Polynome::soustraction(const Polynome& a, const Polynome& b){
 	}
 	return newPolynome;
 }
-Polynome Polynome::multiplication(const Polynome& a, const Polynome& b){
+Polynome multiplication(const Polynome& a, const Polynome& b){
 	/*
 		multiplication de 2 polynomes
 	*/

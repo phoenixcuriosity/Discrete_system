@@ -20,7 +20,7 @@ Matrice::~Matrice()
 {
 	if (_tab != nullptr) {
 		for (unsigned int i = 0; i < _lenght; i++) {
-			delete _tab[i];
+			delete[] _tab[i];
 			_tab[i] = nullptr;
 		}
 		delete _tab;

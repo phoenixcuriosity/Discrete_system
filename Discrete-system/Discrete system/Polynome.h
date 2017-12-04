@@ -25,9 +25,9 @@ public:
 	double GETcoefTab(unsigned int index) const;
 	unsigned int GETstringSize() const;
 
-	Polynome addition(const Polynome& a, const Polynome& b);
-	Polynome soustraction(const Polynome& a, const Polynome& b);
-	Polynome multiplication(const Polynome& a, const Polynome& b);
+	friend Polynome addition(const Polynome& a, const Polynome& b);
+	friend Polynome soustraction(const Polynome& a, const Polynome& b);
+	friend Polynome multiplication(const Polynome& a, const Polynome& b);
 	void editsize(unsigned int);
 	void grow(double);
 	void shrink();
