@@ -14,7 +14,7 @@ void mainLoop(sysinfo& information){
 	testMatrice();
 	testVecteur();
 	
-	/*
+	
 	while (continuer){
 		logfileconsole("type 1 (Fct Discret)\n or type 2 SYSETATDiscret\n or type 3 to exit the program\n");
 		cin >> information.variable.userRequest;
@@ -30,6 +30,5 @@ void mainLoop(sysinfo& information){
 			break;
 		}
 	}
-	*/
 }
 

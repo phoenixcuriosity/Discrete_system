@@ -3,8 +3,6 @@
 using namespace std;
 
 #include "init.h"
-#include "Matrice.h"
-#include "Vecteur.h"
 
 
 void FCTLoop(sysinfo& information){
@@ -50,13 +48,13 @@ void createNum(sysinfo& information){
 	logfileconsole("You have selected to create Num");
 	logfileconsole("order of FCT? : ");
 	cin >> order;
-	information.variable.fct.GETnumToEdit().editsize(order);
+	information.variable.fct.SETnum(order);
 	cout << "________order = " << information.variable.fct.GETnum().GETsize();
 	for (unsigned int i = 0; i <= order; i++){
 		logfileconsole("coef n:" + to_string(i) + " = ");
 		cin >> coef;
-		information.variable.fct.GETnumToEdit().SETcoefTab(i, coef);
-		cout << "________Coef = " << information.variable.fct.GETnum().GETcoefTab(i);
+		information.variable.fct.SETnumThisCoef(i, coef);
+		cout << "________Coef n:" << i << " = " << information.variable.fct.GETnum().GETcoefTab(i);
 	}
 	logfileconsole("You create the Num");
 }
@@ -67,11 +65,11 @@ void createDen(sysinfo& information){
 	logfileconsole("You have selected to create Den");
 	logfileconsole("order of FCT? : ");
 	cin >> order;
-	information.variable.fct.GETdenToEdit().editsize(order);
+	information.variable.fct.SETden(order);
 	for (unsigned int i = 0; i <= order; i++){
 		logfileconsole("coef n:" + to_string(i) + " = ");
 		cin >> coef;
-		information.variable.fct.GETdenToEdit().SETcoefTab(i, coef);
+		information.variable.fct.SETdenThisCoef(i, coef);
 	}
 	logfileconsole("You create the Den");
 }

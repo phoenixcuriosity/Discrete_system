@@ -11,14 +11,13 @@ public:
 	Polynome(const Polynome& P);
 	~Polynome();
 
-
 	Polynome& operator=(const Polynome&);
 	double operator[](unsigned int index);
 	friend bool operator==(const Polynome&, const Polynome&);
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
 	friend Polynome operator*(const Polynome&, const Polynome&);
-	
+
 	void SETcoefTab(unsigned int index, double userValue);
 
 	unsigned int GETsize() const;
@@ -30,7 +29,6 @@ public:
 	friend Polynome multiplication(const Polynome& a, const Polynome& b);
 	void editsize(unsigned int);
 	void grow(double);
-	void shrink();
 	void ModifPolynome(unsigned int index, double userValue);
 
 	void printOn() const;
@@ -42,8 +40,8 @@ protected:
 	virtual double* allocate(unsigned int) const;
 	virtual double* allocate(unsigned int, double*) const;
 	virtual double* allocate(const Polynome& P) const;
-	
 
+	bool assertIndex(unsigned int) const;
 private:
 	unsigned int _size;
 	double* _tab;

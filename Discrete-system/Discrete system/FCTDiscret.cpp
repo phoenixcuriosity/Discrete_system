@@ -10,6 +10,10 @@ FCTDiscret::FCTDiscret(Polynome& num, Polynome& den, double deltaT) : _num(num),
 {
 }
 
+FCTDiscret::FCTDiscret(const FCTDiscret& F) : _num(F.GETnum()), _den(F.GETden()), _deltaT(F.GETdeltaT())
+{
+}
+
 FCTDiscret::~FCTDiscret()
 {
 }
@@ -33,17 +37,19 @@ bool operator==(const FCTDiscret& a, const FCTDiscret& b){
 		return true;
 	return false;
 }
-FCTDiscret operator+(FCTDiscret& a, const FCTDiscret& b){
+
+
+FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
 	resultat = addition(a, b);
 	return resultat;
 }
-FCTDiscret operator-(FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
 	resultat = soustraction(a, b);
 	return resultat;
 }
-FCTDiscret operator*(FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
 	resultat = multiplication(a, b);
 	return resultat;
@@ -130,6 +136,18 @@ void FCTDiscret::SETden(const Polynome &a){
 void FCTDiscret::SETdeltaT(double deltaT){
 	_deltaT = deltaT;
 }
+void FCTDiscret::SETnumOrder(unsigned int order) {
+	_num.editsize(order);
+}
+void FCTDiscret::SETdenOrder(unsigned int order) {
+	_den.editsize(order);
+}
+void FCTDiscret::SETnumThisCoef(unsigned int index, double userValue) {
+	_num.SETcoefTab(index, userValue);
+}
+void FCTDiscret::SETdenThisCoef(unsigned int index, double userValue) {
+	_den.SETcoefTab(index, userValue);
+}
 
 
 Polynome FCTDiscret::GETnum() const{
@@ -138,13 +156,7 @@ Polynome FCTDiscret::GETnum() const{
 Polynome FCTDiscret::GETden() const{
 	return _den;
 }
-Polynome FCTDiscret::GETnumToEdit(){
-	return _num;
-}
-Polynome FCTDiscret::GETdenToEdit(){
-	return _den;
-}
-double FCTDiscret::GETdeltaT(){
+double FCTDiscret::GETdeltaT()const{
 	return _deltaT;
 }
 
@@ -186,5 +198,13 @@ void testFCTDiscret(){
 	cout << endl;
 	FCTDiscret fctsoustraction = fct1 - fct2;
 	fctsoustraction.printOn();
+	cout << endl;
+
+	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETsize();
+	fct1.SETnumOrder(5);
+	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETsize();
+	fct1.SETnumThisCoef(4, 5.6);
+	cout << endl << "Fct1 :" << endl;
+	fct1.printOn();
 	cout << endl;
 }

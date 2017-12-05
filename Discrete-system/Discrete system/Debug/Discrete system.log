@@ -1,23 +1,12 @@
-﻿La génération a démarré 02/12/2017 00:12:24.
-     1>Projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Rebuild cible(s)).
+﻿La génération a démarré 05/12/2017 13:26:58.
+     1>Projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
-         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt FCTLoop.cpp Matrice.cpp Polynome.cpp FCTDiscret.cpp init.cpp main.cpp mainLoop.cpp SYSETATDiscret.cpp Vecteur.cpp
-         Vecteur.cpp
-         SYSETATDiscret.cpp
-         mainLoop.cpp
-         main.cpp
-         init.cpp
-         FCTDiscret.cpp
+         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Polynome.cpp
          Polynome.cpp
-     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(162): warning C4018: '<' : incompatibilité signed/unsigned
-     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(163): warning C4018: '<' : incompatibilité signed/unsigned
-         Matrice.cpp
-         FCTLoop.cpp
-         Génération de code en cours...
-     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(89): warning C4715: 'Polynome::GETcoefTab' : les chemins de contrôle ne retournent pas tous une valeur
-     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\polynome.cpp(44): warning C4715: 'Polynome::operator[]' : les chemins de contrôle ne retournent pas tous une valeur
+     1>c:\users\robin\documents\github\discrete-system\discrete system\polynome.cpp(171): warning C4018: '<' : incompatibilité signed/unsigned
+     1>c:\users\robin\documents\github\discrete-system\discrete system\polynome.cpp(172): warning C4018: '<' : incompatibilité signed/unsigned
        Link:
-         I:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.lib" /MACHINE:X86 Debug\FCTLoop.obj
+         I:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Robin\Documents\GitHub\Discrete-system\Debug\Discrete system.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Debug\Discrete system.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Debug\Discrete system.lib" /MACHINE:X86 Debug\FCTLoop.obj
          Debug\Matrice.obj
          Debug\Polynome.obj
          Debug\FCTDiscret.obj
@@ -26,12 +15,9 @@
          Debug\mainLoop.obj
          Debug\SYSETATDiscret.obj
          Debug\Vecteur.obj
-     1>FCTDiscret.obj : error LNK2019: symbole externe non résolu "class Polynome __cdecl operator+(class Polynome const &,class Polynome const &)" (??H@YA?AVPolynome@@ABV0@0@Z) référencé dans la fonction "class FCTDiscret __cdecl addition(class FCTDiscret const &,class FCTDiscret const &)" (?addition@@YA?AVFCTDiscret@@ABV1@0@Z)
-     1>FCTDiscret.obj : error LNK2019: symbole externe non résolu "class Polynome __cdecl operator-(class Polynome const &,class Polynome const &)" (??G@YA?AVPolynome@@ABV0@0@Z) référencé dans la fonction "class FCTDiscret __cdecl soustraction(class FCTDiscret const &,class FCTDiscret const &)" (?soustraction@@YA?AVFCTDiscret@@ABV1@0@Z)
-     1>FCTDiscret.obj : error LNK2019: symbole externe non résolu "class Polynome __cdecl operator*(class Polynome const &,class Polynome const &)" (??D@YA?AVPolynome@@ABV0@0@Z) référencé dans la fonction "class FCTDiscret __cdecl addition(class FCTDiscret const &,class FCTDiscret const &)" (?addition@@YA?AVFCTDiscret@@ABV1@0@Z)
-     1>C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.exe : fatal error LNK1120: 3 externes non résolus
-     1>Génération du projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" terminée (Rebuild cible(s)) -- ÉCHEC.
+         Discrete system.vcxproj -> C:\Users\Robin\Documents\GitHub\Discrete-system\Debug\Discrete system.exe
+     1>Génération du projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete system\Discrete system.vcxproj" terminée (Build cible(s)).
 
-ÉCHEC de la build.
+La génération a réussi.
 
-Temps écoulé 00:00:03.69
+Temps écoulé 00:00:00.76

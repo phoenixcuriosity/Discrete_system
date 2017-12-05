@@ -29,6 +29,60 @@ Matrice::~Matrice()
 }
 
 
+
+
+Matrice& Matrice::operator=(const Matrice& M) {
+	if (this != &M) {
+		if (_tab != nullptr)
+			delete  _tab;
+		_lenght = M._lenght;
+		_height = M._height;
+		_tab = allocate(M);
+	}
+	return *this;
+}
+/**/
+bool operator==(const Matrice& A, const Matrice& B) {
+	if (A._lenght == B._lenght && A._height == B._height){
+		for (unsigned int i = 0; i < A._lenght; i++){
+			for (unsigned int j = 0; j < B._lenght; j++){
+				if (A._tab[i][j] != B._tab[i][j])
+					return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+Matrice operator+(const Matrice& a, const Matrice& b) {
+	Matrice resultat = addition(a, b);
+	return resultat;
+}
+Matrice operator-(const Matrice& a, const Matrice& b) {
+	Matrice resultat = soustraction(a, b);
+	return resultat;
+}
+Matrice operator*(const Matrice& a, const Matrice& b) {
+	Matrice resultat = multiplication(a, b);
+	return resultat;
+}
+
+
+Matrice addition(const Matrice&, const Matrice&) {
+	Matrice addition;
+	return addition;
+}
+Matrice soustraction(const Matrice&, const Matrice&) {
+	Matrice soustraction;
+	return soustraction;
+}
+Matrice multiplication(const Matrice&, const Matrice&) {
+	Matrice multiplication;
+	return multiplication;
+}
+
+
+
 double** Matrice::allocate(unsigned int lenght, unsigned int height) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
@@ -57,10 +111,13 @@ double** Matrice::allocate(const Matrice& P) const {
 
 
 void Matrice::SETthiscoef(unsigned int i, unsigned int j, double userValue) {
-	_tab[i][j] = userValue;
+	if (assertIndex(i, j))
+		_tab[i][j] = userValue;
 }
 double Matrice::GETthiscoef(unsigned int i, unsigned int j)const {
-	return _tab[i][j];
+	if (assertIndex(i, j))
+		return _tab[i][j];
+	return 0;
 }
 
 void Matrice::ones(){
@@ -80,9 +137,19 @@ void Matrice::printOn()const{
 	}
 }
 
+bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
+	if (lenght <= _lenght && height <= _height)
+		return true;
+	else {
+		cout << endl << "Matrice : assertIndex false";
+		return false;
+	}
+}
+
+
+
 void testMatrice(){
 	cout << endl << "___TEST MATRICE___";
-	cout << endl << "(uniquement pour matrice carre)";
 	Matrice A(5, 5);
 	cout << endl << endl << "Matrice A, constructeur par value1: ";
 	A.printOn();

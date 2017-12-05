@@ -9,6 +9,7 @@ class FCTDiscret{
 public:
 	FCTDiscret();
 	FCTDiscret(Polynome&, Polynome&, double deltaT);
+	FCTDiscret(const FCTDiscret&);
 	~FCTDiscret();
 
 
@@ -29,12 +30,14 @@ public:
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);
 	void SETdeltaT(double);
+	void SETnumOrder(unsigned int);
+	void SETdenOrder(unsigned int);
+	void SETnumThisCoef(unsigned int, double);
+	void SETdenThisCoef(unsigned int, double);
 
 	Polynome GETnum() const;
 	Polynome GETden() const;
-	Polynome GETnumToEdit();
-	Polynome GETdenToEdit();
-	double GETdeltaT();
+	double GETdeltaT() const;
 
 
 	friend void testFCTDiscret();
