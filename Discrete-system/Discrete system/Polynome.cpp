@@ -43,8 +43,11 @@ double Polynome::operator[](unsigned int index) {
 		return _tab[index];
 	return 0;
 }
-
-
+/*
+ostream& operator << (ostream& os, const Polynome& P){
+	return os << P.printOn();
+}
+*/
 bool operator==(const Polynome& a, const Polynome& b){
 	/*
 		test coef par coef si le polynome est identique
@@ -218,12 +221,12 @@ void Polynome::ModifPolynome(unsigned int index, double userValue) {
 
 
 
-void Polynome::printOn() const{
+ostream& Polynome::printOn() const{
 	/*
 		affiche le polynome en z d'ordre décroissant
 	*/
 	string equation;
-	stringstream stream;
+	ostringstream stream;
 	for (int i = _size - 1; i >= 0; i--){
 		if (_tab[i] < 0){
 			stream << " - " << fixed << setprecision(2) << abs(_tab[i]);
@@ -243,6 +246,7 @@ void Polynome::printOn() const{
 	equation = stream.str();
 	_stringSize = equation.length();
 	cout << equation;
+	return stream;
 }
 
 

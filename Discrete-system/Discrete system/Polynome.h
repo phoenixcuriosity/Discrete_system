@@ -13,6 +13,7 @@ public:
 
 	Polynome& operator=(const Polynome&);
 	double operator[](unsigned int index);
+	std::ostream& operator<<(std::ostream&);
 	friend bool operator==(const Polynome&, const Polynome&);
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
@@ -31,7 +32,7 @@ public:
 	void grow(double);
 	void ModifPolynome(unsigned int index, double userValue);
 
-	void printOn() const;
+	std::ostream& printOn() const;
 
 	friend void testPolynome();
 	

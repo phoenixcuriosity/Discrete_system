@@ -41,7 +41,6 @@ Matrice& Matrice::operator=(const Matrice& M) {
 	}
 	return *this;
 }
-/**/
 bool operator==(const Matrice& A, const Matrice& B) {
 	if (A._lenght == B._lenght && A._height == B._height){
 		for (unsigned int i = 0; i < A._lenght; i++){
@@ -68,16 +67,37 @@ Matrice operator*(const Matrice& a, const Matrice& b) {
 }
 
 
-Matrice addition(const Matrice&, const Matrice&) {
-	Matrice addition;
+Matrice addition(const Matrice& A, const Matrice& B) {
+	Matrice addition(A._lenght, A._height);
+	if (assertSize(A._lenght, A._height, B._lenght, B._height)){
+		for (unsigned int i = 0; i < A._lenght; i++){
+			for (unsigned int j = 0; j < A._height; j++)
+				addition.SETthiscoef(i, j, A.GETthiscoef(i, j) + B.GETthiscoef(i, j));
+		}
+	}
 	return addition;
 }
-Matrice soustraction(const Matrice&, const Matrice&) {
-	Matrice soustraction;
+Matrice soustraction(const Matrice& A, const Matrice& B) {
+	Matrice soustraction(A._lenght, A._height);
+	if (assertSize(A._lenght, A._height, B._lenght, B._height)){
+		for (unsigned int i = 0; i < A._lenght; i++){
+			for (unsigned int j = 0; j < A._height; j++)
+				soustraction.SETthiscoef(i, j, A.GETthiscoef(i, j) - B.GETthiscoef(i, j));
+		}
+	}
 	return soustraction;
 }
-Matrice multiplication(const Matrice&, const Matrice&) {
-	Matrice multiplication;
+Matrice multiplication(const Matrice& A, const Matrice& B) {
+	double somme = 0;
+	Matrice multiplication(A._lenght, B._height);
+	for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._lenght, iA < A._lenght; iMulti++, iA++){
+		for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++){
+			somme = 0;
+			for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._lenght; jA++, iB++)
+				somme += A.GETthiscoef(iA, jA) + B.GETthiscoef(iB, jB);
+			multiplication.SETthiscoef(iMulti, jMulti, somme);
+		}
+	}
 	return multiplication;
 }
 
@@ -145,7 +165,14 @@ bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
 		return false;
 	}
 }
-
+bool assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB, unsigned int heightB){
+	if (lenghtA == lenghtB && heightA == heightB)
+		return true;
+	else {
+		cout << endl << "Matrice : assertSize false";
+		return false;
+	}
+}
 
 
 void testMatrice(){
@@ -177,5 +204,33 @@ void testMatrice(){
 	Matrice C(a, 3 ,3);
 	cout << endl << "Matrice C, constructeur par value2: : ";
 	C.printOn();
+	cout << endl;
+
+	Matrice D(3, 3);
+	D.ones();
+	Matrice E(D);
+	Matrice F = D + E;
+	cout << endl << "Matrice F : D + E = ";
+	F.printOn();
+
+	Matrice G = F - E;
+	cout << endl << "Matrice G : F - E = ";
+	G.printOn();
+
+	Matrice H = F * F;
+	cout << endl << "Matrice H : F * F = ";
+	H.printOn();
+
+	/*
+	Matrice VL(1, 5);
+	VL.ones();
+	cout << endl << "Matrice VL : ligne = ";
+	VL.printOn();
+
+	Matrice VC(5, 1);
+	VC.ones();
+	cout << endl << "Matrice VC : colonne = ";
+	VC.printOn();
+	*/
 	cout << endl << endl;
 }
