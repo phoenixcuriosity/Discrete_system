@@ -88,6 +88,7 @@
     <ClCompile Include="init.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainLoop.cpp" />
+    <ClCompile Include="Signal.cpp" />
     <ClCompile Include="SYSETATDiscret.cpp" />
     <ClCompile Include="Vecteur.cpp" />
   </ItemGroup>
@@ -100,6 +101,7 @@
     <ClInclude Include="init.h" />
     <ClInclude Include="LIB.h" />
     <ClInclude Include="mainLoop.h" />
+    <ClInclude Include="Signal.h" />
     <ClInclude Include="SYSETATDiscret.h" />
     <ClInclude Include="Vecteur.h" />
   </ItemGroup>

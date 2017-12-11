@@ -94,7 +94,7 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 		for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++){
 			somme = 0;
 			for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._lenght; jA++, iB++)
-				somme += A.GETthiscoef(iA, jA) + B.GETthiscoef(iB, jB);
+				somme += A.GETthiscoef(iA, jA) * B.GETthiscoef(iB, jB);
 			multiplication.SETthiscoef(iMulti, jMulti, somme);
 		}
 	}
@@ -218,8 +218,27 @@ void testMatrice(){
 	G.printOn();
 
 	Matrice H = F * F;
-	cout << endl << "Matrice H : F * F = ";
+	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
 	H.printOn();
+
+	cout << endl << "nouvelle matrice F avec le coef 0,2 = 3";
+	F.SETthiscoef(0, 2, 3);
+	F.printOn();
+	H = F * F;
+	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
+	H.printOn();
+
+	F = C + D;
+	cout << endl << "nouvelle matrice F = C + D";
+	F.printOn();
+	H = F * F;
+	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
+	H.printOn();
+	/*
+	Matrice I = A * H;
+	cout << endl << "Matrice I : A(5x5) * H(3x3) = ";
+	I.printOn();
+	*/
 
 	/*
 	Matrice VL(1, 5);
