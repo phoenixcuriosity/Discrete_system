@@ -13,7 +13,7 @@ public:
 
 	Polynome& operator=(const Polynome&);
 	double operator[](unsigned int index);
-	std::ostream& operator<<(std::ostream&);
+	friend std::ostream& operator<<(std::ostream& os, const Polynome&);
 	friend bool operator==(const Polynome&, const Polynome&);
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
@@ -32,7 +32,7 @@ public:
 	void grow(double);
 	void ModifPolynome(unsigned int index, double userValue);
 
-	std::ostream& printOn() const;
+	std::string printOn() const;
 
 	friend void testPolynome();
 	
@@ -48,13 +48,6 @@ private:
 	double* _tab;
 	mutable unsigned int _stringSize;
 };
-
-
-
-
-
-
-
 
 
 template<class T>

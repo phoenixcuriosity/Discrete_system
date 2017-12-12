@@ -23,7 +23,7 @@ Matrice::~Matrice()
 			delete[] _tab[i];
 			_tab[i] = nullptr;
 		}
-		delete _tab;
+		delete[] _tab;
 		_tab = nullptr;
 	}
 }
@@ -90,14 +90,18 @@ Matrice soustraction(const Matrice& A, const Matrice& B) {
 Matrice multiplication(const Matrice& A, const Matrice& B) {
 	double somme = 0;
 	Matrice multiplication(A._lenght, B._height);
-	for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._lenght, iA < A._lenght; iMulti++, iA++){
-		for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++){
-			somme = 0;
-			for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._lenght; jA++, iB++)
-				somme += A.GETthiscoef(iA, jA) * B.GETthiscoef(iB, jB);
-			multiplication.SETthiscoef(iMulti, jMulti, somme);
+	if (A._lenght == B._height) {
+		for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._lenght, iA < A._lenght; iMulti++, iA++) {
+			for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++) {
+				somme = 0;
+				for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._lenght; jA++, iB++)
+					somme += A.GETthiscoef(iA, jA) * B.GETthiscoef(iB, jB);
+				multiplication.SETthiscoef(iMulti, jMulti, somme);
+			}
 		}
 	}
+	else
+		cout << endl << "___________Matrice : Error multiplication : A._lenght != B._height";
 	return multiplication;
 }
 
@@ -107,8 +111,9 @@ double** Matrice::allocate(unsigned int lenght, unsigned int height) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
 	*/
+
 	double** buffer = new double*[lenght];
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int i = 0; i < lenght; i++)
 		buffer[i] = new double[height];
 
 	for (unsigned int i = 0; i < lenght; i++){
@@ -119,7 +124,7 @@ double** Matrice::allocate(unsigned int lenght, unsigned int height) const {
 }
 double** Matrice::allocate(const Matrice& P) const {
 	double** buffer = new double*[P._lenght];
-	for (unsigned int i = 0; i < P._height; i++)
+	for (unsigned int i = 0; i < P._lenght; i++)
 		buffer[i] = new double[P._height];
 
 	for (unsigned int i = 0; i < P._lenght; i++){
@@ -234,11 +239,8 @@ void testMatrice(){
 	H = F * F;
 	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
 	H.printOn();
-	/*
-	Matrice I = A * H;
-	cout << endl << "Matrice I : A(5x5) * H(3x3) = ";
-	I.printOn();
-	*/
+	
+	//Matrice J(3, 5);
 
 	/*
 	Matrice VL(1, 5);

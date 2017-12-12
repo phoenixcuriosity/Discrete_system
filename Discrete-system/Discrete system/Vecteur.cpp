@@ -57,5 +57,4 @@ void testVecteur() {
 	cout << "Vecteur D constructeur par valeur2:" << endl;
 	D.printOn();
 	cout << endl;
-
 }

@@ -43,11 +43,10 @@ double Polynome::operator[](unsigned int index) {
 		return _tab[index];
 	return 0;
 }
-/*
-ostream& operator << (ostream& os, const Polynome& P){
-	return os << P.printOn();
+std::ostream& operator << (std::ostream& os, const Polynome& s){
+	return os << s.printOn();
 }
-*/
+
 bool operator==(const Polynome& a, const Polynome& b){
 	/*
 		test coef par coef si le polynome est identique
@@ -221,7 +220,7 @@ void Polynome::ModifPolynome(unsigned int index, double userValue) {
 
 
 
-ostream& Polynome::printOn() const{
+string Polynome::printOn() const{
 	/*
 		affiche le polynome en z d'ordre décroissant
 	*/
@@ -246,7 +245,7 @@ ostream& Polynome::printOn() const{
 	equation = stream.str();
 	_stringSize = equation.length();
 	cout << equation;
-	return stream;
+	return equation;
 }
 
 
@@ -283,7 +282,7 @@ bool Polynome::assertIndex(unsigned int index)const {
 	if (index <= _size)
 		return true;
 	else {
-		cout << endl << "Polynome : assertIndex false";
+		cout << endl << "_______Polynome : assertIndex false";
 		return false;
 	}
 }
@@ -336,14 +335,14 @@ void testPolynome() {
 		cout << endl << "polynomes identique : a et b";
 	else
 		cout << endl << "polynomes different : a et b";
-	cout << endl;
 	Polynome Z;
-	cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	cout << endl << endl << "taille de Z = " + to_string(Z.GETsize());
 	Z.grow(6.8);
 	cout << endl << "taille de Z = " + to_string(Z.GETsize());
 	Z.editsize(6);
 	cout << endl << "taille de Z = " + to_string(Z.GETsize());
 	Z.editsize(5);
 	cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	cout << endl << "redefinition de l'operateur << ,  Z = " << Z;
 	cout << endl << endl;
 }
