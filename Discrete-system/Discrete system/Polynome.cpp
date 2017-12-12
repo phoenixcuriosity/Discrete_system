@@ -44,7 +44,7 @@ double Polynome::operator[](unsigned int index) {
 	return 0;
 }
 std::ostream& operator << (std::ostream& os, const Polynome& s){
-	return os << s.printOn();
+	return os << s.printOn(false);
 }
 
 bool operator==(const Polynome& a, const Polynome& b){

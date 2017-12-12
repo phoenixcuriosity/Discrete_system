@@ -13,6 +13,7 @@ public:
 	
 	Matrice& operator=(const Matrice&);
 	friend bool operator==(const Matrice&, const Matrice&);
+	friend std::ostream& operator<<(std::ostream&, const Matrice&);
 	friend Matrice operator+(const Matrice&, const Matrice&);
 	friend Matrice operator-(const Matrice&, const Matrice&);
 	friend Matrice operator*(const Matrice&, const Matrice&);
@@ -26,7 +27,7 @@ public:
 
 	void ones();
 
-	void printOn()const;
+	std::string printOn(bool on = true)const;
 
 	friend void testMatrice();
 

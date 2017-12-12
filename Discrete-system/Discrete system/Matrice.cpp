@@ -53,6 +53,9 @@ bool operator==(const Matrice& A, const Matrice& B) {
 	}
 	return false;
 }
+std::ostream& operator<<(std::ostream& os, const Matrice& s){
+	return os << s.printOn(false);
+}
 Matrice operator+(const Matrice& a, const Matrice& b) {
 	Matrice resultat = addition(a, b);
 	return resultat;
@@ -153,13 +156,19 @@ void Matrice::ones(){
 	}
 }
 
-void Matrice::printOn()const{
+string Matrice::printOn(bool on)const{
+	ostringstream stream;
+	string matrice = "";
 	for (unsigned int i = 0; i < _lenght; i++){
-		cout << endl << "|";
+		stream << endl << "|";
 		for (unsigned int j = 0; j < _height; j++)
-			cout << " " << _tab[i][j];
-		cout << "|";
+			stream << " " << _tab[i][j];
+		stream << "|";
 	}
+	matrice = stream.str();
+	if (on)
+		cout << matrice;
+	return matrice;
 }
 
 bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
@@ -234,11 +243,11 @@ void testMatrice(){
 	H.printOn();
 
 	F = C + D;
-	cout << endl << "nouvelle matrice F = C + D";
-	F.printOn();
+	cout << endl << "nouvelle matrice F = C + D" << F;
+	
 	H = F * F;
-	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
-	H.printOn();
+	cout << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
+	
 	
 	//Matrice J(3, 5);
 
