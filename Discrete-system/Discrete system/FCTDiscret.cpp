@@ -37,7 +37,9 @@ bool operator==(const FCTDiscret& a, const FCTDiscret& b){
 		return true;
 	return false;
 }
-
+std::ostream& operator<<(std::ostream& os, const FCTDiscret& s){
+	return os << s.printOn(false);
+}
 
 FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b){
 	FCTDiscret resultat;
@@ -83,47 +85,47 @@ void FCTDiscret::ModifFCT(){
 
 }
 
-void FCTDiscret::printOn() const{
+string FCTDiscret::printOn(bool on) const{
 	/*
 		affiche sur la console : en haut le num, puis la barre de fraction et enfin le den
 		affichage selon la taille de la chaine de caratere la plus longue
 	*/
 	unsigned int stringSize = 0;
-	string barre = "";
-	string middle = "";
+	string equation;
+	stringstream stream;
 
 	if (_num.GETstringSize() > _den.GETstringSize()){
 		stringSize = _num.GETstringSize();
-		_num.printOn();
+		stream << _num.printOn(false) << endl;
 		for (unsigned int i = 0; i < stringSize; i++)
-			barre += "-";
-		cout << endl << barre;
+			stream << "-";
+		stream << endl;
 		for (unsigned int i = 0; i < ((_num.GETstringSize() / 2) - (_den.GETstringSize() / 2)); i++)
-			middle += " ";
-		cout << endl << middle;
-		_den.printOn();
+			stream << " ";
+		stream << _den.printOn(false);
+		equation = stream.str();
 	}
 	else if (_num.GETstringSize() < _den.GETstringSize()){
 		stringSize = _den.GETstringSize();
 		for (unsigned int i = 0; i < ((_den.GETstringSize() / 2) - (_num.GETstringSize() / 2)); i++)
-			middle += " ";
-		cout << middle;
-		_num.printOn();
+			stream << " ";
+		stream << _num.printOn(false) << endl;
 		for (unsigned int i = 0; i < stringSize; i++)
-			barre += "-";
-		cout << endl << barre;
-		cout << endl;
-		_den.printOn();
+			stream << "-";
+		stream << endl << _den.printOn(false);
+		equation = stream.str();
 	}
 	else{
 		stringSize = _num.GETstringSize();
-		_num.printOn();
+		stream << _num.printOn(false) << endl;
 		for (unsigned int i = 0; i < stringSize; i++)
-			barre += "-";
-		cout << endl << barre;
-		cout << endl;
-		_den.printOn();
+			stream << "-";
+		stream << endl << _den.printOn(false);
+		equation = stream.str();
 	}
+	if (on)
+		cout << equation;
+	return equation;
 }
 
 
@@ -207,4 +209,5 @@ void testFCTDiscret(){
 	cout << endl << "Fct1 :" << endl;
 	fct1.printOn();
 	cout << endl;
+	cout << "Fct1 avec l'operateur << Fct1 = " << endl << fct1 << endl << endl;
 }

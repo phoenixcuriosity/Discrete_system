@@ -32,7 +32,7 @@ public:
 	void grow(double);
 	void ModifPolynome(unsigned int index, double userValue);
 
-	std::string printOn() const;
+	std::string printOn(bool on = true) const;
 
 	friend void testPolynome();
 	

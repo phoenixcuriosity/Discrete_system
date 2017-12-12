@@ -15,6 +15,7 @@ public:
 
 	virtual FCTDiscret& operator = (const FCTDiscret&);
 	friend bool operator ==(const FCTDiscret& a, const FCTDiscret& b);
+	friend std::ostream& operator<<(std::ostream&, const FCTDiscret&);
 	friend FCTDiscret operator+(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator-(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator*(const FCTDiscret&, const FCTDiscret&);
@@ -25,7 +26,7 @@ public:
 
 	void ModifFCT();
 
-	void printOn() const;
+	std::string printOn(bool on = true) const;
 
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);

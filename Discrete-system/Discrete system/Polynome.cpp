@@ -220,7 +220,7 @@ void Polynome::ModifPolynome(unsigned int index, double userValue) {
 
 
 
-string Polynome::printOn() const{
+string Polynome::printOn(bool on) const{
 	/*
 		affiche le polynome en z d'ordre décroissant
 	*/
@@ -244,7 +244,8 @@ string Polynome::printOn() const{
 	}
 	equation = stream.str();
 	_stringSize = equation.length();
-	cout << equation;
+	if (on)
+		cout << equation;
 	return equation;
 }
 
