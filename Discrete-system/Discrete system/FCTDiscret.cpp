@@ -206,8 +206,8 @@ void testFCTDiscret(){
 	fct1.SETnumOrder(5);
 	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETsize();
 	fct1.SETnumThisCoef(4, 5.6);
+	fct1.SETnumThisCoef(3, -5.6);
 	cout << endl << "Fct1 :" << endl;
 	fct1.printOn();
-	cout << endl;
-	cout << "Fct1 avec l'operateur << Fct1 = " << endl << fct1 << endl << endl;
+	cout << endl << "Fct1 avec l'operateur << Fct1 = " << endl << fct1 << endl << endl;
 }

@@ -344,6 +344,7 @@ void testPolynome() {
 	cout << endl << "taille de Z = " + to_string(Z.GETsize());
 	Z.editsize(5);
 	cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	Z.SETcoefTab(4, -3.2);
 	cout << endl << "redefinition de l'operateur << ,  Z = " << Z;
 	cout << endl << endl;
 }

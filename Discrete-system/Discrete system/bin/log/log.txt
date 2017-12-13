@@ -3,3 +3,18 @@ _________Init Success_________
 type 1 (Fct Discret)
  or type 2 SYSETATDiscret
  or type 3 to exit the program
+
+You have selected Fct Discret
+type 1 to create the num and the den
+or type 2 to edit the FCT or type 3 to display the FCT
+or type 4 to return to previous menu : 
+deltaT of FCT? : 
+You have selected to create Num
+order of FCT? : 
+coef n:0 = 
+coef n:1 = 
+coef n:2 = 
+coef n:3 = 
+You create the Num
+You have selected to create Den
+order of FCT? : 
