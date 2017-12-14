@@ -189,6 +189,13 @@ Matrice transposistion(const Matrice& A){
 	}
 	return resultat;
 }
+void Matrice::zero(){
+	for (unsigned int i = 0; i < _length; i++){
+		for (unsigned int j = 0; j < _height; j++){
+			_tab[i][j] = 0;
+		}
+	}
+}
 void Matrice::ones(){
 	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
@@ -196,7 +203,47 @@ void Matrice::ones(){
 		}
 	}
 }
-void Matrice::editsize(unsigned int lenght, unsigned int height) {
+void Matrice::editsize(unsigned int length, unsigned int height) {
+
+	double** buffer = new double*[length];
+	for (unsigned int i = 0; i < length; i++)
+		buffer[i] = new double[height];
+
+	unsigned int maxLength = maxM(_length, length);
+	unsigned int maxHeight = maxM(_height, height);
+	unsigned int minLength = minM(_length, length);
+	unsigned int minHeight = minM(_height, height);
+	
+	for (unsigned int i = 0; i < minLength; i++) {
+		for (unsigned int j = 0; j < minHeight; j++)
+			buffer[i][j] = _tab[i][j];
+	}
+
+	if (length >= _length && height >= _height){
+		for (unsigned int i = 0; i < maxLength; i++) {
+			for (unsigned int j = 0; j < maxHeight; j++){
+				if (i >= minLength || j >= minHeight)
+					buffer[i][j] = 0;
+			}
+		}
+	}
+	else if (length >= _length && height <= _height){
+		for (unsigned int i = 0; i < maxLength; i++) {
+			for (unsigned int j = 0; j < minHeight; j++){
+				if (i >= minLength)
+					buffer[i][j] = 0;
+			}
+		}
+	}
+	else if (length <= _length && height >= _height){
+		for (unsigned int i = 0; i < minLength; i++) {
+			for (unsigned int j = 0; j < maxHeight; j++){
+				if (j >= minHeight)
+					buffer[i][j] = 0;
+			}
+		}
+	}
+
 	if (_tab != nullptr) {
 		for (unsigned int i = 0; i < _length; i++) {
 			delete[] _tab[i];
@@ -206,17 +253,39 @@ void Matrice::editsize(unsigned int lenght, unsigned int height) {
 		_tab = nullptr;
 	}
 
-	double** buffer = new double*[lenght];
-	for (unsigned int i = 0; i < lenght; i++)
-		buffer[i] = new double[height];
-
-	for (unsigned int i = 0; i < lenght; i++) {
-		for (unsigned int j = 0; j < height; j++)
-			buffer[i][j] = 0;
-	}
 	_tab = buffer;
-	_length = lenght;
+	_length = length;
 	_height = height;
+}
+void Matrice::growOneLOneC(){
+	
+	double** buffer = new double*[_length + 1];
+	for (unsigned int i = 0; i < _length + 1; i++)
+		buffer[i] = new double[_height + 1];
+
+	for (unsigned int i = 0; i < _length; i++) {
+		for (unsigned int j = 0; j < _height; j++)
+			buffer[i][j] = _tab[i][j];
+	}
+	for (unsigned int i = 0; i < _length + 1; i++) {
+		for (unsigned int j = 0; j < _height + 1; j++){
+			if (i == _length || j == _height)
+				buffer[i][j] = 0;
+		}
+	}
+
+	if (_tab != nullptr) {
+		for (unsigned int i = 0; i < _length; i++) {
+			delete[] _tab[i];
+			_tab[i] = nullptr;
+		}
+		delete[] _tab;
+		_tab = nullptr;
+	}
+
+	_tab = buffer;
+	_length++;
+	_height++;
 }
 
 string Matrice::printOn(bool on)const{
@@ -321,8 +390,9 @@ void testMatrice(){
 	J.editsize(5, 1);
 	cout << endl << "J(5x1)" << J;
 
-	K.editsize(3, 4);
 	K.ones();
+	K.editsize(3, 4);
+	
 	K.SETthiscoef(0, 0, 3.6), K.SETthiscoef(0, 1, -3.6), K.SETthiscoef(0, 2, 3.6);
 	cout << endl << "Matrice K :" << K;
 	Matrice L = transposistion(K);
@@ -330,6 +400,10 @@ void testMatrice(){
 
 	J.editsize(1, 1);
 	cout << endl << "J(1x1)" << J;
+	J.growOneLOneC();
+	cout << endl << "J grow :" << J;
+	K.growOneLOneC();
+	cout << endl << "K grow :" << K;
 	
 	cout << endl << endl;
 }

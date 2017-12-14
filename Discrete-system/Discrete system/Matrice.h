@@ -33,8 +33,10 @@ public:
 	friend Matrice multiplication(double, const Matrice&);
 
 	friend Matrice transposistion(const Matrice&);
+	void zero();
 	void ones();
 	void editsize(unsigned int, unsigned int);
+	void growOneLOneC();
 
 	std::string printOn(bool on = true)const;
 
@@ -52,6 +54,24 @@ private:
 	double** _tab;
 	mutable unsigned int _stringSize;
 };
+
+
+template<class T>
+T maxM(const T a, const T b){
+	if (a > b)
+		return a;
+	else
+		return b;
+}
+template<class T>
+T minM(const T a, const T b){
+	if (a < b)
+		return a;
+	else
+		return b;
+}
+
+
 
 
 #endif
