@@ -169,10 +169,11 @@ void testFCTDiscret(){
 	a.SETcoefTab(1, 2);
 	Polynome b(a);
 	b.SETcoefTab(2, 2);
+	b.SETcoefTab(0, 1);
+
 	a.grow(2);
 	a.SETcoefTab(0, 51);
 	a.SETcoefTab(1, -512);
-	b.SETcoefTab(0, 1);
 	
 
 	cout << endl;
@@ -202,9 +203,9 @@ void testFCTDiscret(){
 	fctsoustraction.printOn();
 	cout << endl;
 
-	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETsize();
+	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
 	fct1.SETnumOrder(5);
-	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETsize();
+	cout << endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
 	fct1.SETnumThisCoef(4, 5.6);
 	fct1.SETnumThisCoef(3, -5.6);
 	cout << endl << "Fct1 :" << endl;

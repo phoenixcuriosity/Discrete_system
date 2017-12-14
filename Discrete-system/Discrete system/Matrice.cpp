@@ -2,24 +2,24 @@
 
 using namespace std;
 
-Matrice::Matrice() : _tab(allocate(2, 2)), _lenght(2), _height(2)
+Matrice::Matrice() : _tab(allocate(2, 2)), _length(2), _height(2)
 {
 }
-Matrice::Matrice(unsigned int lenght, unsigned int height) : _tab(allocate(lenght, height)), _lenght(lenght), _height(height)
+Matrice::Matrice(unsigned int lenght, unsigned int height) : _tab(allocate(lenght, height)), _length(lenght), _height(height)
 {
 }
 Matrice::Matrice(double** tab, unsigned int lenght, unsigned int height)
-: _tab(tab), _lenght(lenght), _height(height)
+: _tab(tab), _length(lenght), _height(height)
 {
 }
 Matrice::Matrice(const Matrice& M)
-:_tab(allocate(M)), _lenght(M._lenght), _height(M._height)
+:_tab(allocate(M)), _length(M._length), _height(M._height)
 {
 }
 Matrice::~Matrice()
 {
 	if (_tab != nullptr) {
-		for (unsigned int i = 0; i < _lenght; i++) {
+		for (unsigned int i = 0; i < _length; i++) {
 			delete[] _tab[i];
 			_tab[i] = nullptr;
 		}
@@ -35,16 +35,16 @@ Matrice& Matrice::operator=(const Matrice& M) {
 	if (this != &M) {
 		if (_tab != nullptr)
 			delete  _tab;
-		_lenght = M._lenght;
+		_length = M._length;
 		_height = M._height;
 		_tab = allocate(M);
 	}
 	return *this;
 }
 bool operator==(const Matrice& A, const Matrice& B) {
-	if (A._lenght == B._lenght && A._height == B._height){
-		for (unsigned int i = 0; i < A._lenght; i++){
-			for (unsigned int j = 0; j < B._lenght; j++){
+	if (A._length == B._length && A._height == B._height){
+		for (unsigned int i = 0; i < A._length; i++){
+			for (unsigned int j = 0; j < B._length; j++){
 				if (A._tab[i][j] != B._tab[i][j])
 					return false;
 			}
@@ -71,9 +71,9 @@ Matrice operator*(const Matrice& a, const Matrice& b) {
 
 
 Matrice addition(const Matrice& A, const Matrice& B) {
-	Matrice addition(A._lenght, A._height);
-	if (assertSize(A._lenght, A._height, B._lenght, B._height)){
-		for (unsigned int i = 0; i < A._lenght; i++){
+	Matrice addition(A._length, A._height);
+	if (assertSize(A._length, A._height, B._length, B._height)){
+		for (unsigned int i = 0; i < A._length; i++){
 			for (unsigned int j = 0; j < A._height; j++)
 				addition.SETthiscoef(i, j, A.GETthiscoef(i, j) + B.GETthiscoef(i, j));
 		}
@@ -81,9 +81,9 @@ Matrice addition(const Matrice& A, const Matrice& B) {
 	return addition;
 }
 Matrice soustraction(const Matrice& A, const Matrice& B) {
-	Matrice soustraction(A._lenght, A._height);
-	if (assertSize(A._lenght, A._height, B._lenght, B._height)){
-		for (unsigned int i = 0; i < A._lenght; i++){
+	Matrice soustraction(A._length, A._height);
+	if (assertSize(A._length, A._height, B._length, B._height)){
+		for (unsigned int i = 0; i < A._length; i++){
 			for (unsigned int j = 0; j < A._height; j++)
 				soustraction.SETthiscoef(i, j, A.GETthiscoef(i, j) - B.GETthiscoef(i, j));
 		}
@@ -92,12 +92,12 @@ Matrice soustraction(const Matrice& A, const Matrice& B) {
 }
 Matrice multiplication(const Matrice& A, const Matrice& B) {
 	double somme = 0;
-	Matrice multiplication(A._lenght, B._height);
-	if (A._lenght == B._height) {
-		for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._lenght, iA < A._lenght; iMulti++, iA++) {
+	Matrice multiplication(A._length, B._height);
+	if (A._length == B._height) {
+		for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._length, iA < A._length; iMulti++, iA++) {
 			for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++) {
 				somme = 0;
-				for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._lenght; jA++, iB++)
+				for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._length; jA++, iB++)
 					somme += A.GETthiscoef(iA, jA) * B.GETthiscoef(iB, jB);
 				multiplication.SETthiscoef(iMulti, jMulti, somme);
 			}
@@ -110,27 +110,28 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 
 
 
-double** Matrice::allocate(unsigned int lenght, unsigned int height) const {
+double** Matrice::allocate(unsigned int length, unsigned int height) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
 	*/
 
-	double** buffer = new double*[lenght];
-	for (unsigned int i = 0; i < lenght; i++)
+	double** buffer = new double*[length];
+	for (unsigned int i = 0; i < length; i++)
 		buffer[i] = new double[height];
 
-	for (unsigned int i = 0; i < lenght; i++){
+	for (unsigned int i = 0; i < length; i++){
 		for (unsigned int j = 0; j < height; j++)
 			buffer[i][j] = 0;
 	}
 	return buffer;
 }
 double** Matrice::allocate(const Matrice& P) const {
-	double** buffer = new double*[P._lenght];
-	for (unsigned int i = 0; i < P._lenght; i++)
+
+	double** buffer = new double*[P._length];
+	for (unsigned int i = 0; i < P._length; i++)
 		buffer[i] = new double[P._height];
 
-	for (unsigned int i = 0; i < P._lenght; i++){
+	for (unsigned int i = 0; i < P._length; i++){
 		for (unsigned int j = 0; j < P._height; j++)
 			buffer[i][j] = P._tab[i][j];
 	}
@@ -147,23 +148,51 @@ double Matrice::GETthiscoef(unsigned int i, unsigned int j)const {
 		return _tab[i][j];
 	return 0;
 }
+unsigned int Matrice::GETlength()const {
+	return _length;
+}
+unsigned int Matrice::GETheight()const {
+	return _height;
+}
 
 void Matrice::ones(){
-	for (unsigned int i = 0; i < _lenght; i++){
+	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
 			_tab[i][j] = 1;
 		}
 	}
 }
+void Matrice::editsize(unsigned int lenght, unsigned int height) {
+	if (_tab != nullptr) {
+		for (unsigned int i = 0; i < _length; i++) {
+			delete[] _tab[i];
+			_tab[i] = nullptr;
+		}
+		delete[] _tab;
+		_tab = nullptr;
+	}
+
+	double** buffer = new double*[lenght];
+	for (unsigned int i = 0; i < lenght; i++)
+		buffer[i] = new double[height];
+
+	for (unsigned int i = 0; i < lenght; i++) {
+		for (unsigned int j = 0; j < height; j++)
+			buffer[i][j] = 0;
+	}
+	_tab = buffer;
+	_length = lenght;
+	_height = height;
+}
 
 string Matrice::printOn(bool on)const{
 	ostringstream stream;
 	string matrice = "";
-	for (unsigned int i = 0; i < _lenght; i++){
+	for (unsigned int i = 0; i < _length; i++){
 		stream << endl << "|";
 		for (unsigned int j = 0; j < _height; j++)
 			stream << " " << _tab[i][j];
-		stream << "|";
+		stream << " |";
 	}
 	matrice = stream.str();
 	if (on)
@@ -172,7 +201,7 @@ string Matrice::printOn(bool on)const{
 }
 
 bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
-	if (lenght <= _lenght && height <= _height)
+	if (lenght <= _length && height <= _height)
 		return true;
 	else {
 		cout << endl << "Matrice : assertIndex false";
@@ -248,19 +277,18 @@ void testMatrice(){
 	H = F * F;
 	cout << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	
+	Matrice K;
+	cout << endl << "Matrice K constructeur par defaut:" << K;
+	K.editsize(3, 3);
+	cout << endl << "Matrice K : K.editsize(3, 3) :" << K;
+	Matrice J(1, 5);
+	cout << endl << "J(1x5)" << J;
+
+	J.editsize(5, 1);
+	cout << endl << "J(5x1)" << J;
+
+	J.editsize(1, 1);
+	cout << endl << "J(1x1)" << J;
 	
-	//Matrice J(3, 5);
-
-	/*
-	Matrice VL(1, 5);
-	VL.ones();
-	cout << endl << "Matrice VL : ligne = ";
-	VL.printOn();
-
-	Matrice VC(5, 1);
-	VC.ones();
-	cout << endl << "Matrice VC : colonne = ";
-	VC.printOn();
-	*/
 	cout << endl << endl;
 }

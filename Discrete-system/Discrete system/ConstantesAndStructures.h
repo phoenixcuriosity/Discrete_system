@@ -23,7 +23,7 @@ typedef struct var var;
 struct var {
 	FCTDiscret fct;
 	//SYSETATDiscret sys;
-
+	Matrice A, B, C, D;
 	unsigned int userRequest = 0;
 };
 

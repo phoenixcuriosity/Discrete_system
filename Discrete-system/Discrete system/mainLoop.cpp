@@ -12,7 +12,6 @@ void mainLoop(sysinfo& information){
 	testPolynome();
 	testFCTDiscret();
 	testMatrice();
-	testVecteur();
 	
 	
 	while (continuer){

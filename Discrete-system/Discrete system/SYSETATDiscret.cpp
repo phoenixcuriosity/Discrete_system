@@ -3,7 +3,7 @@
 using namespace std;
 
 SYSETATDiscret::SYSETATDiscret()
-: _A(), _B(), _C(), _D(0), _deltaT(1), _x(allocate(2))
+: _A(), _B(), _C(), _D(), _deltaT(1), _x(allocate(2))
 {
 }
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)

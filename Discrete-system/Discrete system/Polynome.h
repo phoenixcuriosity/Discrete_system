@@ -6,8 +6,8 @@
 class Polynome {
 public:
 	Polynome();
-	Polynome(unsigned int size);
-	Polynome(unsigned int size, double tab[]);
+	Polynome(unsigned int);
+	Polynome(unsigned int, double tab[]);
 	Polynome(const Polynome& P);
 	~Polynome();
 
@@ -21,7 +21,7 @@ public:
 
 	void SETcoefTab(unsigned int index, double userValue);
 
-	unsigned int GETsize() const;
+	unsigned int GETorder() const;
 	double GETcoefTab(unsigned int index) const;
 	unsigned int GETstringSize() const;
 
@@ -44,7 +44,7 @@ protected:
 
 	bool assertIndex(unsigned int) const;
 private:
-	unsigned int _size;
+	unsigned int _order;
 	double* _tab;
 	mutable unsigned int _stringSize;
 };

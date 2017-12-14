@@ -3,7 +3,6 @@
 
 #include "LIB.h"
 #include "Matrice.h"
-#include "Vecteur.h"
 
 
 class SYSETATDiscret{
@@ -21,9 +20,7 @@ protected:
 
 
 private:
-	Matrice _A;
-	Vecteur _B, _C;
-	double _D;
+	Matrice _A, _B, _C, _D;
 	double _deltaT;
 	double* _x;
 };

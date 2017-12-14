@@ -90,7 +90,6 @@
     <ClCompile Include="mainLoop.cpp" />
     <ClCompile Include="Signal.cpp" />
     <ClCompile Include="SYSETATDiscret.cpp" />
-    <ClCompile Include="Vecteur.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantesAndStructures.h" />
@@ -103,7 +102,6 @@
     <ClInclude Include="mainLoop.h" />
     <ClInclude Include="Signal.h" />
     <ClInclude Include="SYSETATDiscret.h" />
-    <ClInclude Include="Vecteur.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
