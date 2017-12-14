@@ -22,8 +22,7 @@ struct fichier {
 typedef struct var var;
 struct var {
 	FCTDiscret fct;
-	//SYSETATDiscret sys;
-	Matrice A, B, C, D;
+	SYSETATDiscret sys;
 	unsigned int userRequest = 0;
 };
 

@@ -98,24 +98,7 @@ unsigned int Polynome::GETstringSize() const{
 		calcul la place en byte (= nombre de caractère) pour afficher le polynome sur la console
 	*/
 	string equation;
-	stringstream stream;
-	for (int i = _order; i >= 0; i--){
-		if (_tab[i] < 0){
-			stream << " - " << fixed << setprecision(2) << abs(_tab[i]);
-			if (i > 1)
-				stream << "Z^" << i;
-			else if (i == 1)
-				stream << "Z";
-		}
-		else if (_tab[i] > 0){
-			stream << " + " << fixed << setprecision(2) << _tab[i];
-			if (i > 1)
-				stream << "Z^" << i;
-			else if (i == 1)
-				stream << "Z";
-		}
-	}
-	equation = stream.str();
+	equation = this->printOn(false);
 	_stringSize = equation.length();
 	return _stringSize;
 }

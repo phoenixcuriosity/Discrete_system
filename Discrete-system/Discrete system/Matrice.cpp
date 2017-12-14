@@ -2,18 +2,22 @@
 
 using namespace std;
 
-Matrice::Matrice() : _tab(allocate(2, 2)), _length(2), _height(2)
+Matrice::Matrice() : _tab(allocate(2, 2)), _length(2), _height(2), _stringSize(0)
 {
 }
-Matrice::Matrice(unsigned int lenght, unsigned int height) : _tab(allocate(lenght, height)), _length(lenght), _height(height)
+Matrice::Matrice(double) : _tab(allocate(2, 2)), _length(2), _height(2), _stringSize(0)
+{
+}
+Matrice::Matrice(unsigned int lenght, unsigned int height)
+: _tab(allocate(lenght, height)), _length(lenght), _height(height), _stringSize(0)
 {
 }
 Matrice::Matrice(double** tab, unsigned int lenght, unsigned int height)
-: _tab(tab), _length(lenght), _height(height)
+: _tab(tab), _length(lenght), _height(height), _stringSize(0)
 {
 }
 Matrice::Matrice(const Matrice& M)
-:_tab(allocate(M)), _length(M._length), _height(M._height)
+: _tab(allocate(M)), _length(M._length), _height(M._height), _stringSize(0)
 {
 }
 Matrice::~Matrice()
@@ -68,6 +72,10 @@ Matrice operator*(const Matrice& a, const Matrice& b) {
 	Matrice resultat = multiplication(a, b);
 	return resultat;
 }
+Matrice operator*(double a, const Matrice& b) {
+	Matrice resultat = multiplication(a, b);
+	return resultat;
+}
 
 
 Matrice addition(const Matrice& A, const Matrice& B) {
@@ -105,6 +113,14 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 	}
 	else
 		cout << endl << "___________Matrice : Error multiplication : A._lenght != B._height";
+	return multiplication;
+}
+Matrice multiplication(double A, const Matrice& B) {
+	Matrice multiplication(B.GETlength(), B.GETheight());
+	for (unsigned int iB = 0; iB < B.GETlength(); iB++) {
+		for (unsigned int jB = 0; jB < B.GETheight(); jB++)
+			multiplication.SETthiscoef(iB, jB, A * B.GETthiscoef(iB, jB));
+	}
 	return multiplication;
 }
 
@@ -154,7 +170,25 @@ unsigned int Matrice::GETlength()const {
 unsigned int Matrice::GETheight()const {
 	return _height;
 }
+unsigned int Matrice::GETstringSize() const{
+	/*
+	
+	*/
+	string equation;
+	equation = this->printOn();
+	_stringSize = equation.length();
+	return _stringSize;
+}
 
+
+Matrice transposistion(const Matrice& A){
+	Matrice resultat(A.GETheight(), A.GETlength());
+	for (unsigned int i = 0; i < resultat.GETlength(); i++){
+		for (unsigned int j = 0; j < resultat.GETheight(); j++)
+			resultat.SETthiscoef(i, j, A.GETthiscoef(j, i));
+	}
+	return resultat;
+}
 void Matrice::ones(){
 	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
@@ -286,6 +320,13 @@ void testMatrice(){
 
 	J.editsize(5, 1);
 	cout << endl << "J(5x1)" << J;
+
+	K.editsize(3, 4);
+	K.ones();
+	K.SETthiscoef(0, 0, 3.6), K.SETthiscoef(0, 1, -3.6), K.SETthiscoef(0, 2, 3.6);
+	cout << endl << "Matrice K :" << K;
+	Matrice L = transposistion(K);
+	cout << endl << "L transposee de J" << L;
 
 	J.editsize(1, 1);
 	cout << endl << "J(1x1)" << J;

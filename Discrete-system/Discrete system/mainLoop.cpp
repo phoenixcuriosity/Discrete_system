@@ -12,8 +12,21 @@ void mainLoop(sysinfo& information){
 	testPolynome();
 	testFCTDiscret();
 	testMatrice();
+
+	information.variable.fct.SETnumOrder(1);
+	information.variable.fct.SETnumThisCoef(0, 57);
+	information.variable.fct.SETnumThisCoef(1, -4.2);
+	information.variable.fct.SETdenOrder(3);
+	information.variable.fct.SETdenThisCoef(0, 3.2);
+	information.variable.fct.SETdenThisCoef(1, -6.3);
+	information.variable.fct.SETdenThisCoef(2, 3.2);
+	information.variable.fct.SETdenThisCoef(3, 0.6);
+	cout << endl << "fct = " << endl << information.variable.fct;
+
+	information.variable.sys.calculABCD(information.variable.fct);
+	cout << endl << information.variable.sys;
 	
-	
+	/*
 	while (continuer){
 		logfileconsole("type 1 (Fct Discret)\n or type 2 SYSETATDiscret\n or type 3 to exit the program\n");
 		cin >> information.variable.userRequest;
@@ -29,5 +42,6 @@ void mainLoop(sysinfo& information){
 			break;
 		}
 	}
+	*/
 }
 

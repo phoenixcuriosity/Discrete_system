@@ -3,6 +3,7 @@
 
 #include "LIB.h"
 #include "Matrice.h"
+#include "FCTDiscret.h"
 
 
 class SYSETATDiscret{
@@ -11,18 +12,35 @@ public:
 	SYSETATDiscret(const SYSETATDiscret&);
 	~SYSETATDiscret();
 
+	friend std::ostream& operator<<(std::ostream&, const SYSETATDiscret&);
 
-	void calculx();
+	void SETA(const Matrice&);
+	void SETB(const Matrice&);
+	void SETC(const Matrice&);
+	void SETD(const Matrice&);
+	void SETdeltaT(double);
+	void SETeditSizeA(unsigned int, unsigned int);
+	void SETeditSizeB(unsigned int, unsigned int);
+	void SETeditSizeC(unsigned int, unsigned int);
+	void SETeditSizeD(unsigned int, unsigned int);
+	void SETthisCoefA(unsigned int, unsigned int, double);
+	void SETthisCoefB(unsigned int, unsigned int, double);
+	void SETthisCoefC(unsigned int, unsigned int, double);
+	void SETthisCoefD(unsigned int, unsigned int, double);
+	Matrice GETA()const;
+	Matrice GETB()const;
+	Matrice GETC()const;
+	Matrice GETD()const;
+	double GETdeltaT()const;
 
-protected:
-	virtual double* allocate(unsigned int) const;
-	virtual double* allocate(const double*) const;
+	void calculABCD(const FCTDiscret&);
+
+	std::string printOn(bool on = true)const;
 
 
 private:
 	Matrice _A, _B, _C, _D;
 	double _deltaT;
-	double* _x;
 };
 
 #endif // !SYSETATDiscret_H
