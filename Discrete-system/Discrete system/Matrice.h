@@ -47,6 +47,7 @@ protected:
 	virtual double** allocate(const Matrice&) const;
 
 	bool assertIndex(unsigned int, unsigned int)const;
+	bool assertRange(unsigned int, unsigned int)const;
 	friend bool assertSize(unsigned int, unsigned int, unsigned int, unsigned int);
 private:
 	unsigned int _length;

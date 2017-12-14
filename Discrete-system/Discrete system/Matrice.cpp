@@ -130,14 +130,16 @@ double** Matrice::allocate(unsigned int length, unsigned int height) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
 	*/
+	double** buffer;
+	if (assertRange(length, height)){
+		buffer = new double*[length];
+		for (unsigned int i = 0; i < length; i++)
+			buffer[i] = new double[height];
 
-	double** buffer = new double*[length];
-	for (unsigned int i = 0; i < length; i++)
-		buffer[i] = new double[height];
-
-	for (unsigned int i = 0; i < length; i++){
-		for (unsigned int j = 0; j < height; j++)
-			buffer[i][j] = 0;
+		for (unsigned int i = 0; i < length; i++){
+			for (unsigned int j = 0; j < height; j++)
+				buffer[i][j] = 0;
+		}
 	}
 	return buffer;
 }
@@ -204,58 +206,59 @@ void Matrice::ones(){
 	}
 }
 void Matrice::editsize(unsigned int length, unsigned int height) {
+	if (assertRange(length, height)){
+		double** buffer = new double*[length];
+		for (unsigned int i = 0; i < length; i++)
+			buffer[i] = new double[height];
 
-	double** buffer = new double*[length];
-	for (unsigned int i = 0; i < length; i++)
-		buffer[i] = new double[height];
+		unsigned int maxLength = maxM(_length, length);
+		unsigned int maxHeight = maxM(_height, height);
+		unsigned int minLength = minM(_length, length);
+		unsigned int minHeight = minM(_height, height);
 
-	unsigned int maxLength = maxM(_length, length);
-	unsigned int maxHeight = maxM(_height, height);
-	unsigned int minLength = minM(_length, length);
-	unsigned int minHeight = minM(_height, height);
-	
-	for (unsigned int i = 0; i < minLength; i++) {
-		for (unsigned int j = 0; j < minHeight; j++)
-			buffer[i][j] = _tab[i][j];
-	}
-
-	if (length >= _length && height >= _height){
-		for (unsigned int i = 0; i < maxLength; i++) {
-			for (unsigned int j = 0; j < maxHeight; j++){
-				if (i >= minLength || j >= minHeight)
-					buffer[i][j] = 0;
-			}
-		}
-	}
-	else if (length >= _length && height <= _height){
-		for (unsigned int i = 0; i < maxLength; i++) {
-			for (unsigned int j = 0; j < minHeight; j++){
-				if (i >= minLength)
-					buffer[i][j] = 0;
-			}
-		}
-	}
-	else if (length <= _length && height >= _height){
 		for (unsigned int i = 0; i < minLength; i++) {
-			for (unsigned int j = 0; j < maxHeight; j++){
-				if (j >= minHeight)
-					buffer[i][j] = 0;
+			for (unsigned int j = 0; j < minHeight; j++)
+				buffer[i][j] = _tab[i][j];
+		}
+
+		if (length >= _length && height >= _height){
+			for (unsigned int i = 0; i < maxLength; i++) {
+				for (unsigned int j = 0; j < maxHeight; j++){
+					if (i >= minLength || j >= minHeight)
+						buffer[i][j] = 0;
+				}
 			}
 		}
-	}
-
-	if (_tab != nullptr) {
-		for (unsigned int i = 0; i < _length; i++) {
-			delete[] _tab[i];
-			_tab[i] = nullptr;
+		else if (length >= _length && height <= _height){
+			for (unsigned int i = 0; i < maxLength; i++) {
+				for (unsigned int j = 0; j < minHeight; j++){
+					if (i >= minLength)
+						buffer[i][j] = 0;
+				}
+			}
 		}
-		delete[] _tab;
-		_tab = nullptr;
-	}
+		else if (length <= _length && height >= _height){
+			for (unsigned int i = 0; i < minLength; i++) {
+				for (unsigned int j = 0; j < maxHeight; j++){
+					if (j >= minHeight)
+						buffer[i][j] = 0;
+				}
+			}
+		}
 
-	_tab = buffer;
-	_length = length;
-	_height = height;
+		if (_tab != nullptr) {
+			for (unsigned int i = 0; i < _length; i++) {
+				delete[] _tab[i];
+				_tab[i] = nullptr;
+			}
+			delete[] _tab;
+			_tab = nullptr;
+		}
+
+		_tab = buffer;
+		_length = length;
+		_height = height;
+	}
 }
 void Matrice::growOneLOneC(){
 	
@@ -308,6 +311,14 @@ bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
 		return true;
 	else {
 		cout << endl << "Matrice : assertIndex false";
+		return false;
+	}
+}
+bool Matrice::assertRange(unsigned int length, unsigned int height)const {
+	if (length > 0 && length < 10000 && height > 0 && height < 10000)
+		return true;
+	else {
+		cout << endl << "__________Matrice : editsize : Range error";
 		return false;
 	}
 }
