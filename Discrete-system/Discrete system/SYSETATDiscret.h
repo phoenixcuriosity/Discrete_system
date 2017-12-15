@@ -19,10 +19,7 @@ public:
 	void SETB(const Matrice&);
 	void SETC(const Matrice&);
 	void SETD(const Matrice&);
-	void SETx0(const Matrice&);
-	void SETdx(const Matrice&);
 	void SETdeltaT(double);
-	void SETx0(double);
 	void SETeditSizeA(unsigned int, unsigned int);
 	void SETeditSizeB(unsigned int, unsigned int);
 	void SETeditSizeC(unsigned int, unsigned int);
@@ -35,8 +32,6 @@ public:
 	Matrice GETB()const;
 	Matrice GETC()const;
 	Matrice GETD()const;
-	Matrice GETx0()const;
-	Matrice GETdx()const;
 	double GETdeltaT()const;
 	
 
@@ -47,7 +42,7 @@ public:
 
 
 private:
-	Matrice _A, _B, _C, _D, _x0, _dx;
+	Matrice _A, _B, _C, _D;
 	double _deltaT;
 };
 

@@ -1,13 +1,15 @@
 #include "SYSETATDiscret.h"
 
+
+
 using namespace std;
 
 SYSETATDiscret::SYSETATDiscret()
-: _A(), _B(), _C(), _D(), _deltaT(1), _x0(), _dx()
+: _A(), _B(), _C(), _D(), _deltaT(1)
 {
 }
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
-: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT), _x0(), _dx()
+: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT)
 {
 }
 SYSETATDiscret::~SYSETATDiscret()
@@ -33,12 +35,6 @@ void SYSETATDiscret::SETD(const Matrice& Z){
 }
 void SYSETATDiscret::SETdeltaT(double deltaT){
 	_deltaT = deltaT;
-}
-void SYSETATDiscret::SETx0(const Matrice& Z) {
-	_x0 = Z;
-}
-void SYSETATDiscret::SETdx(const Matrice& Z) {
-	_dx = Z;
 }
 void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height){
 	_A.editsize(length, height);
@@ -78,12 +74,6 @@ Matrice SYSETATDiscret::GETD()const{
 }
 double SYSETATDiscret::GETdeltaT()const{
 	return _deltaT;
-}
-Matrice SYSETATDiscret::GETx0()const {
-	return _x0;
-}
-Matrice SYSETATDiscret::GETdx()const {
-	return _dx;
 }
 
 
@@ -136,21 +126,32 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 
 
 void SYSETATDiscret::simulation() {
+	const std::string reponseTemporelle = "bin/SaveAndLoad/ReponseTemporelle.txt";
+	ofstream reponse(reponseTemporelle);
+	ostringstream repy;
+	ostringstream repdx;
+	string rep;
+		
 
-	_x0.editsize(_A.GETlength(), 1);
-	_dx.editsize(_A.GETlength(), 1);
+	Matrice x0(_A.GETlength(), 1), dx(_A.GETlength(), 1), y(1, 1);
 
-	cout << endl << "x0 = " << _x0;
-	cout << endl << "dx = " << _dx;
+	for (unsigned int i = 0; i < 10; i++){
+		dx = _A * x0 + _B * 3;
+		y = _C * x0 + _D * 3;
+		x0 = dx;
+		repdx << endl << "dx(" << i << ") = " << dx;
+		repy << endl << "y(" << i << ") = " << y.GETthiscoef(0, 0);
+	}
 
-	Matrice y(1, 1);
-
-	_dx = _A * _x0 + _B * 3;
-	y = _C * _x0 + _D * 3;
-
-	cout << endl << "dx = " << _dx;
-	cout << endl << "y = " << y;
-
+	rep = repy.str();
+	cout << rep;
+	if (reponse) {
+		reponse << rep;
+	}
+	else
+		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << reponseTemporelle;
+	rep = repdx.str();
+	cout << rep;
 }
 
 string SYSETATDiscret::printOn(bool on)const{

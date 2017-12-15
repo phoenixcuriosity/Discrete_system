@@ -107,6 +107,7 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 				multiplication.SETthiscoef(iMulti, jMulti, somme);
 			}
 		}
+		return multiplication;
 	}
 	else if (A._length == 1 && A._height == 1) {
 		Matrice multiplication(B.GETlength(), B.GETheight());

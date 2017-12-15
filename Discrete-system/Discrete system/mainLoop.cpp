@@ -32,6 +32,7 @@ void mainLoop(sysinfo& information){
 	tabJury(information.variable.fct);
 
 	information.variable.sys.simulation();
+
 	
 	/*
 	while (continuer){
