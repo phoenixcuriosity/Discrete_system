@@ -21,10 +21,12 @@ void mainLoop(sysinfo& information){
 	information.variable.fct.SETdenThisCoef(1, -6.3);
 	information.variable.fct.SETdenThisCoef(2, 3.2);
 	information.variable.fct.SETdenThisCoef(3, 0.6);
+	//information.variable.fct.SETdenOrder(4);
 	cout << endl << "fct = " << endl << information.variable.fct;
 
 	information.variable.sys.calculABCD(information.variable.fct);
 	cout << endl << information.variable.sys;
+	tabJury(information.variable.fct);
 	
 	/*
 	while (continuer){

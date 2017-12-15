@@ -1,8 +1,11 @@
-﻿La génération a démarré 14/12/2017 23:39:52.
+﻿La génération a démarré 15/12/2017 11:47:41.
      1>Projet "C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
-         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Matrice.cpp
-         Matrice.cpp
+         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt FCTDiscret.cpp
+         FCTDiscret.cpp
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\fctdiscret.cpp(168): warning C4018: '<=' : incompatibilité signed/unsigned
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\fctdiscret.cpp(185): warning C4018: '<=' : incompatibilité signed/unsigned
+     1>c:\users\robin\documents\github\discrete-system\discrete-system\discrete system\fctdiscret.cpp(190): warning C4018: '<=' : incompatibilité signed/unsigned
        Link:
          I:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Robin\Documents\GitHub\Discrete-system\Discrete-system\Debug\Discrete system.lib" /MACHINE:X86 Debug\FCTLoop.obj
          Debug\Matrice.obj
@@ -18,4 +21,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:00.65
+Temps écoulé 00:00:00.64

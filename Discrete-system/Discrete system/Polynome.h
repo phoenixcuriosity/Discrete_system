@@ -18,6 +18,7 @@ public:
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
 	friend Polynome operator*(const Polynome&, const Polynome&);
+	friend Polynome operator*(double, const Polynome&);
 
 	void SETcoefTab(unsigned int index, double userValue);
 
@@ -28,9 +29,9 @@ public:
 	friend Polynome addition(const Polynome& a, const Polynome& b);
 	friend Polynome soustraction(const Polynome& a, const Polynome& b);
 	friend Polynome multiplication(const Polynome& a, const Polynome& b);
+	friend Polynome multiplication(double, const Polynome&);
 	void editsize(unsigned int);
 	void grow(double);
-	void ModifPolynome(unsigned int index, double userValue);
 
 	std::string printOn(bool on = true) const;
 
@@ -58,6 +59,21 @@ T max(const T a, const T b){
 template<class T>
 T min(const T a, const T b){
 	return (a<b) ? a : b;
+}
+
+template<class T>
+T maxP(const T a, const T b){
+	if (a > b)
+		return a;
+	else
+		return b;
+}
+template<class T>
+T minP(const T a, const T b){
+	if (a < b)
+		return a;
+	else
+		return b;
 }
 
 #endif // !Polynome_H

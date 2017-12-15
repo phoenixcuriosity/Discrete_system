@@ -3,6 +3,7 @@
 
 #include "LIB.h"
 #include "Polynome.h"
+#include "Matrice.h"
 
 
 class FCTDiscret{
@@ -40,6 +41,7 @@ public:
 	Polynome GETden() const;
 	double GETdeltaT() const;
 
+	friend void tabJury(const FCTDiscret& a);
 
 	friend void testFCTDiscret();
 

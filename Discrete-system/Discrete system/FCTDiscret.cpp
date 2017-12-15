@@ -162,6 +162,77 @@ double FCTDiscret::GETdeltaT()const{
 	return _deltaT;
 }
 
+
+void tabJury(const FCTDiscret& a){
+	Polynome den(a.GETden().GETorder());
+	for (int i = 0, j = a.GETden().GETorder(); i <= a.GETden().GETorder(), j >= 0; i++, j--)
+		den.SETcoefTab(i, a.GETden().GETcoefTab(j));
+	if (den.GETcoefTab(den.GETorder()) < 0)
+		den = - 1 * den;
+
+	Polynome ligne1(den);
+	
+
+	Matrice Jury(2, a.GETden().GETorder() + 1);
+	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
+		Jury.SETthiscoef(0, i, ligne1.GETcoefTab(i));
+	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
+		Jury.SETthiscoef(1, i, a.GETden().GETcoefTab(i));
+
+	Polynome ligne2(ligne1);
+	while (ligne2.GETorder() > 2){
+		ligne2.editsize(ligne2.GETorder() - 1);
+		for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+			ligne2.SETcoefTab(i, (ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i)));
+		Jury.editsize(Jury.GETlength() + 2, a.GETden().GETorder() + 1);
+		for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
+			Jury.SETthiscoef(2, i, ligne2.GETcoefTab(i));
+		for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+			Jury.SETthiscoef(3, i, ligne2.GETcoefTab(j));
+		ligne1 = ligne2;
+	}
+	cout << endl << endl << "tableau de Jury = " << Jury;
+
+	double somme = 0;
+	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++){
+		somme += a.GETden().GETcoefTab(i);
+	}
+
+	bool condition = false;
+	cout << endl << endl << "D(1) = " << somme;
+	if (somme > 0){
+		cout << "	Ok";
+		condition = true;
+	}
+	else{
+		cout << "non Ok";
+		condition = false;
+	}
+		
+
+	cout << endl << "Q0 = " << abs(ligne2.GETcoefTab(0));
+	if (abs(ligne2.GETcoefTab(0) > abs(ligne2.GETcoefTab(2)))){
+		cout << " > Q2 = " << abs(ligne2.GETcoefTab(2)) << "	Ok";
+		condition = true;
+	}
+	else{
+		cout << " < Q2 = " << abs(ligne2.GETcoefTab(2)) << "	non Ok";
+		condition = false;
+	}
+
+
+	if (condition)
+		cout << endl << "Le systeme est stable";
+	else
+		cout << endl << "Le systeme est instable";
+
+	cout << endl;
+}
+
+
+
+
+
 void testFCTDiscret(){
 	cout << endl << "___TEST FCTDiscret___";
 	Polynome a(3);

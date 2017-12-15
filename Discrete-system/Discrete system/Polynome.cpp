@@ -73,6 +73,10 @@ Polynome operator*(const Polynome& a, const Polynome& b){
 	Polynome resultat = multiplication(a, b);
 	return resultat;
 }
+Polynome operator*(double a, const Polynome& b){
+	Polynome resultat = multiplication(a, b);
+	return resultat;
+}
 
 
 void Polynome::SETcoefTab(unsigned int index, double userValue){
@@ -81,7 +85,6 @@ void Polynome::SETcoefTab(unsigned int index, double userValue){
 	*/
 	if (assertIndex(index)) {
 		_tab[index] = userValue;
-		// cout << endl << "coeftab =" << _tab[index];
 	}
 }
 
@@ -133,15 +136,15 @@ Polynome soustraction(const Polynome& a, const Polynome& b){
 
 	Polynome newPolynome(maxSize);
 	if (a.GETorder() == maxSize){
-		for (unsigned int i = 0; i < maxSize; i++)
+		for (unsigned int i = 0; i <= maxSize; i++)
 			newPolynome.SETcoefTab(i, a.GETcoefTab(i));
-		for (unsigned int i = 0; i < minSize; i++)
+		for (unsigned int i = 0; i <= minSize; i++)
 			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - b.GETcoefTab(i));
 	}
 	else {
-		for (unsigned int i = 0; i < maxSize; i++)
+		for (unsigned int i = 0; i <= maxSize; i++)
 			newPolynome.SETcoefTab(i, b.GETcoefTab(i));
-		for (unsigned int i = 0; i < minSize; i++)
+		for (unsigned int i = 0; i <= minSize; i++)
 			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - a.GETcoefTab(i));
 	}
 	return newPolynome;
@@ -150,13 +153,22 @@ Polynome multiplication(const Polynome& a, const Polynome& b){
 	/*
 		multiplication de 2 polynomes
 	*/
-	unsigned int maxSize = a.GETorder() + b.GETorder() - 1;
+	unsigned int maxSize = a.GETorder() + b.GETorder();
 	
 	Polynome newPolynome(maxSize);
-	for (int i = 0; i < a.GETorder(); i++){
-		for (int j = 0; j < b.GETorder(); j++)
+	for (int i = 0; i <= a.GETorder(); i++){
+		for (int j = 0; j <= b.GETorder(); j++)
 			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
 	}
+	return newPolynome;
+}
+Polynome multiplication(double a, const Polynome& b){
+	/*
+	multiplication de 2 polynomes
+	*/
+	Polynome newPolynome(b);
+	for (int j = 0; j <= b.GETorder(); j++)
+		newPolynome.SETcoefTab(j, a * newPolynome.GETcoefTab(j));
 	return newPolynome;
 }
 
@@ -164,7 +176,9 @@ Polynome multiplication(const Polynome& a, const Polynome& b){
 void Polynome::editsize(unsigned int order){
 	
 	double* newTab = allocate(order);
-	for (unsigned int i = 0; i <= order; i++)
+	unsigned int minSize = minP(order, _order);
+
+	for (unsigned int i = 0; i <= minSize; i++)
 		newTab[i] = _tab[i];
 
 	if (order > _order) {
@@ -192,11 +206,6 @@ void Polynome::grow(double userValue){
 	delete[] _tab;
 
 	_tab = newTab;
-}
-
-void Polynome::ModifPolynome(unsigned int index, double userValue) {
-	if (assertIndex(index))
-		_tab[index] = userValue;
 }
 
 
@@ -281,12 +290,9 @@ void testPolynome() {
 	cout << endl << "taille de a = " + to_string(a.GETorder());
 	b.SETcoefTab(2, 12.6);
 	cout << endl << "valeur de l'index " << 2 <<  "= " + to_string(b.GETcoefTab(2));
-	a.grow(2.3);
 
-	a.SETcoefTab(0, -0.9);
-	a.SETcoefTab(4, -6534.69461354);
-	b.SETcoefTab(0, 96.36);
-	b.SETcoefTab(1, -619);
+	a.SETcoefTab(0, -0.9), a.SETcoefTab(4, -6534.69461354), a.grow(2.3);
+	b.SETcoefTab(0, 96.36), b.SETcoefTab(1, -619);
 
 	cout << endl << "taille de a = " + to_string(a.GETorder());
 	cout << endl << "valeur de l'index " << 5 << "= " + to_string(a.GETcoefTab(5));

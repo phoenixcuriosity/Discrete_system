@@ -130,7 +130,7 @@ double** Matrice::allocate(unsigned int length, unsigned int height) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
 	*/
-	double** buffer;
+	double** buffer = nullptr;
 	if (assertRange(length, height)){
 		buffer = new double*[length];
 		for (unsigned int i = 0; i < length; i++)
@@ -177,7 +177,7 @@ unsigned int Matrice::GETstringSize() const{
 	
 	*/
 	string equation;
-	equation = this->printOn();
+	equation = this->printOn(false);
 	_stringSize = equation.length();
 	return _stringSize;
 }
@@ -407,7 +407,7 @@ void testMatrice(){
 	K.SETthiscoef(0, 0, 3.6), K.SETthiscoef(0, 1, -3.6), K.SETthiscoef(0, 2, 3.6);
 	cout << endl << "Matrice K :" << K;
 	Matrice L = transposistion(K);
-	cout << endl << "L transposee de J" << L;
+	cout << endl << "L transposee de K" << L;
 
 	J.editsize(1, 1);
 	cout << endl << "J(1x1)" << J;
