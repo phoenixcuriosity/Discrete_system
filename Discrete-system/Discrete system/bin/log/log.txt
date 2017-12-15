@@ -1,2 +1,3 @@
 
 _________Init Success_________
+_________START PROGRAM_________

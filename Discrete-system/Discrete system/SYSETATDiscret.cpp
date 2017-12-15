@@ -3,11 +3,11 @@
 using namespace std;
 
 SYSETATDiscret::SYSETATDiscret()
-: _A(), _B(), _C(), _D(), _deltaT(1)
+: _A(), _B(), _C(), _D(), _deltaT(1), _x0(), _dx()
 {
 }
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
-: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT)
+: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT), _x0(), _dx()
 {
 }
 SYSETATDiscret::~SYSETATDiscret()
@@ -33,6 +33,12 @@ void SYSETATDiscret::SETD(const Matrice& Z){
 }
 void SYSETATDiscret::SETdeltaT(double deltaT){
 	_deltaT = deltaT;
+}
+void SYSETATDiscret::SETx0(const Matrice& Z) {
+	_x0 = Z;
+}
+void SYSETATDiscret::SETdx(const Matrice& Z) {
+	_dx = Z;
 }
 void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height){
 	_A.editsize(length, height);
@@ -72,6 +78,12 @@ Matrice SYSETATDiscret::GETD()const{
 }
 double SYSETATDiscret::GETdeltaT()const{
 	return _deltaT;
+}
+Matrice SYSETATDiscret::GETx0()const {
+	return _x0;
+}
+Matrice SYSETATDiscret::GETdx()const {
+	return _dx;
 }
 
 
@@ -120,6 +132,25 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 	}
 	else
 		cout << endl << "______Order of Num >= Order of Den";
+}
+
+
+void SYSETATDiscret::simulation() {
+
+	_x0.editsize(_A.GETlength(), 1);
+	_dx.editsize(_A.GETlength(), 1);
+
+	cout << endl << "x0 = " << _x0;
+	cout << endl << "dx = " << _dx;
+
+	Matrice y(1, 1);
+
+	_dx = _A * _x0 + _B * 3;
+	y = _C * _x0 + _D * 3;
+
+	cout << endl << "dx = " << _dx;
+	cout << endl << "y = " << y;
+
 }
 
 string SYSETATDiscret::printOn(bool on)const{

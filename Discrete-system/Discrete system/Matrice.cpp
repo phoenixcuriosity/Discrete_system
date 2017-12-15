@@ -5,7 +5,7 @@ using namespace std;
 Matrice::Matrice() : _tab(allocate(2, 2)), _length(2), _height(2), _stringSize(0)
 {
 }
-Matrice::Matrice(double) : _tab(allocate(2, 2)), _length(2), _height(2), _stringSize(0)
+Matrice::Matrice(double userValue) : _tab(allocate(1, 1, userValue)), _length(1), _height(1), _stringSize(0)
 {
 }
 Matrice::Matrice(unsigned int lenght, unsigned int height)
@@ -72,10 +72,6 @@ Matrice operator*(const Matrice& a, const Matrice& b) {
 	Matrice resultat = multiplication(a, b);
 	return resultat;
 }
-Matrice operator*(double a, const Matrice& b) {
-	Matrice resultat = multiplication(a, b);
-	return resultat;
-}
 
 
 Matrice addition(const Matrice& A, const Matrice& B) {
@@ -100,8 +96,9 @@ Matrice soustraction(const Matrice& A, const Matrice& B) {
 }
 Matrice multiplication(const Matrice& A, const Matrice& B) {
 	double somme = 0;
-	Matrice multiplication(A._length, B._height);
-	if (A._length == B._height) {
+	
+	if (A._height == B._length) {
+		Matrice multiplication(A._length, B._height);
 		for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._length, iA < A._length; iMulti++, iA++) {
 			for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++) {
 				somme = 0;
@@ -111,18 +108,30 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 			}
 		}
 	}
-	else
-		cout << endl << "___________Matrice : Error multiplication : A._lenght != B._height";
-	return multiplication;
-}
-Matrice multiplication(double A, const Matrice& B) {
-	Matrice multiplication(B.GETlength(), B.GETheight());
-	for (unsigned int iB = 0; iB < B.GETlength(); iB++) {
-		for (unsigned int jB = 0; jB < B.GETheight(); jB++)
-			multiplication.SETthiscoef(iB, jB, A * B.GETthiscoef(iB, jB));
+	else if (A._length == 1 && A._height == 1) {
+		Matrice multiplication(B.GETlength(), B.GETheight());
+		for (unsigned int iB = 0; iB < B.GETlength(); iB++) {
+			for (unsigned int jB = 0; jB < B.GETheight(); jB++)
+				multiplication.SETthiscoef(iB, jB, A.GETthiscoef(0,0) * B.GETthiscoef(iB, jB));
+		}
+		return multiplication;
 	}
-	return multiplication;
+	else if (B._length == 1 && B._height == 1) {
+		Matrice multiplication(A.GETlength(), A.GETheight());
+		for (unsigned int iA = 0; iA < A.GETlength(); iA++) {
+			for (unsigned int jA = 0; jA < A.GETheight(); jA++)
+				multiplication.SETthiscoef(iA, jA, B.GETthiscoef(0, 0) * A.GETthiscoef(iA, jA));
+		}
+		return multiplication;
+	}
+	else {
+		Matrice multiplication(1, 1);
+		cout << endl << "___________Matrice : Error multiplication : A._lenght != B._height";
+		return multiplication;
+	}
+	
 }
+
 
 
 
@@ -139,6 +148,23 @@ double** Matrice::allocate(unsigned int length, unsigned int height) const {
 		for (unsigned int i = 0; i < length; i++){
 			for (unsigned int j = 0; j < height; j++)
 				buffer[i][j] = 0;
+		}
+	}
+	return buffer;
+}
+double** Matrice::allocate(unsigned int length, unsigned int height, double userValue) const {
+	/*
+	alloue un tableau de taille size de type double initialisé à 0
+	*/
+	double** buffer = nullptr;
+	if (assertRange(length, height)) {
+		buffer = new double*[length];
+		for (unsigned int i = 0; i < length; i++)
+			buffer[i] = new double[height];
+
+		for (unsigned int i = 0; i < length; i++) {
+			for (unsigned int j = 0; j < height; j++)
+				buffer[i][j] = userValue;
 		}
 	}
 	return buffer;
@@ -416,5 +442,8 @@ void testMatrice(){
 	K.growOneLOneC();
 	cout << endl << "K grow :" << K;
 	
+	Matrice M = 2 * K;
+	cout << endl << "M = 2 * K" << M;
+
 	cout << endl << endl;
 }

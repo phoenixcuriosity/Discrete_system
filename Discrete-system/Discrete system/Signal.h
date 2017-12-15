@@ -9,7 +9,7 @@ public:
 	~Signal();
 
 private:
-	double _duree, _amplitude, _frequence;
+	unsigned int _nbech;
 	double* _tab;
 };
 
@@ -18,21 +18,35 @@ class Impulsion : public Signal{
 public:
 	Impulsion();
 	~Impulsion();
+
+private:
+	double _amplitude;
 };
 class Echelon : public Signal{
 public:
 	Echelon();
 	~Echelon();
+
+private:
+	double _amplitude;
 };
 class Rampe : public Signal{
 public:
 	Rampe();
 	~Rampe();
+
+private:
+	double _slope;
 };
 class Sinus : public Signal{
 public:
 	Sinus();
 	~Sinus();
+
+private:
+	double _amplitude;
+	double _w;
+	double _dephasage;
 };
 
 

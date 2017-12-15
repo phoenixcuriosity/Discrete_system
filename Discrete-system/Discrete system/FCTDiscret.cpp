@@ -170,58 +170,96 @@ void tabJury(const FCTDiscret& a){
 	if (den.GETcoefTab(den.GETorder()) < 0)
 		den = - 1 * den;
 
-	Polynome ligne1(den);
 	
+	
+	Polynome ligne1(a.GETden());
+	Polynome ligne2(a.GETden());
 
 	Matrice Jury(2, a.GETden().GETorder() + 1);
 	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
-		Jury.SETthiscoef(0, i, ligne1.GETcoefTab(i));
+		Jury.SETthiscoef(0, i, a.GETden().GETcoefTab(i));
 	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
-		Jury.SETthiscoef(1, i, a.GETden().GETcoefTab(i));
-
-	Polynome ligne2(ligne1);
+		Jury.SETthiscoef(1, i, den.GETcoefTab(i));
+	
 	while (ligne2.GETorder() > 2){
 		ligne2.editsize(ligne2.GETorder() - 1);
 		for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
-			ligne2.SETcoefTab(i, (ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i)));
-		Jury.editsize(Jury.GETlength() + 2, a.GETden().GETorder() + 1);
-		for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
-			Jury.SETthiscoef(2, i, ligne2.GETcoefTab(i));
-		for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
-			Jury.SETthiscoef(3, i, ligne2.GETcoefTab(j));
+			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
+		
+		if (ligne2.GETorder() > 2) {
+			Jury.editsize(Jury.GETlength() + 2, a.GETden().GETorder() + 1);
+			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
+				Jury.SETthiscoef(Jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
+			for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
+		}
+		else {
+			Jury.editsize(Jury.GETlength() + 1, a.GETden().GETorder() + 1);
+			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
+				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(i));
+		}
 		ligne1 = ligne2;
 	}
 	cout << endl << endl << "tableau de Jury = " << Jury;
 
-	double somme = 0;
-	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++){
-		somme += a.GETden().GETcoefTab(i);
-	}
 
-	bool condition = false;
-	cout << endl << endl << "D(1) = " << somme;
+
+	unsigned int condition = 0;
+
+	/*
+		condition abs(a0) < an
+	*/
+	cout << endl << endl << "abs(a0) = " << abs(a.GETden().GETcoefTab(0));
+	if(abs(a.GETden().GETcoefTab(0)) < a.GETden().GETcoefTab(a.GETden().GETorder())){
+		cout << " < a" << a.GETden().GETorder() << " = " << a.GETden().GETcoefTab(a.GETden().GETorder()) << "	Ok";
+		condition++;
+	}
+	else
+		cout << " > a" << a.GETden().GETorder() << " = " << a.GETden().GETcoefTab(a.GETden().GETorder()) << "	non Ok";
+
+
+	/*
+	condition D(1) > 0
+	*/
+	double somme = 0;
+	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
+		somme += a.GETden().GETcoefTab(i);
+	
+	cout << endl << "D(1) = " << somme;
 	if (somme > 0){
 		cout << "	Ok";
-		condition = true;
+		condition++;
 	}
-	else{
+	else
 		cout << "non Ok";
-		condition = false;
+
+	/*
+	condition D(-1) > 0 si n pair et ondition D(-1) < 0 si n impair
+	*/
+	somme = 0;
+	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
+		somme += a.GETden().GETcoefTab(i) * pow(-1, i);
+	cout << endl << "D(-1) = " << somme;
+	if ((somme > 0 && (a.GETden().GETorder()%2) == 0) || (somme < 0 && (a.GETden().GETorder() % 2) == 1)) {
+		cout << "	Ok";
+		condition++;
 	}
+	else
+		cout << "	non Ok";
 		
 
+	/*
+		condition Q0 > Q2
+	*/
 	cout << endl << "Q0 = " << abs(ligne2.GETcoefTab(0));
-	if (abs(ligne2.GETcoefTab(0) > abs(ligne2.GETcoefTab(2)))){
+	if (abs(ligne2.GETcoefTab(0)) > abs(ligne2.GETcoefTab(2))){
 		cout << " > Q2 = " << abs(ligne2.GETcoefTab(2)) << "	Ok";
-		condition = true;
+		condition++;
 	}
-	else{
+	else
 		cout << " < Q2 = " << abs(ligne2.GETcoefTab(2)) << "	non Ok";
-		condition = false;
-	}
 
-
-	if (condition)
+	if (condition == 4)
 		cout << endl << "Le systeme est stable";
 	else
 		cout << endl << "Le systeme est instable";

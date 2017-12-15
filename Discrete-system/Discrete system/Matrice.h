@@ -18,7 +18,6 @@ public:
 	friend Matrice operator+(const Matrice&, const Matrice&);
 	friend Matrice operator-(const Matrice&, const Matrice&);
 	friend Matrice operator*(const Matrice&, const Matrice&);
-	friend Matrice operator*(double, const Matrice&);
 
 
 	void SETthiscoef(unsigned int, unsigned int, double);
@@ -30,7 +29,6 @@ public:
 	friend Matrice addition(const Matrice&, const Matrice&);
 	friend Matrice soustraction(const Matrice&, const Matrice&);
 	friend Matrice multiplication(const Matrice&, const Matrice&);
-	friend Matrice multiplication(double, const Matrice&);
 
 	friend Matrice transposistion(const Matrice&);
 	void zero();
@@ -44,6 +42,7 @@ public:
 
 protected:
 	virtual double** allocate(unsigned int, unsigned int) const;
+	virtual double** allocate(unsigned int, unsigned int, double) const;
 	virtual double** allocate(const Matrice&) const;
 
 	bool assertIndex(unsigned int, unsigned int)const;

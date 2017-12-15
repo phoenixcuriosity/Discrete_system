@@ -13,20 +13,25 @@ void mainLoop(sysinfo& information){
 	testFCTDiscret();
 	testMatrice();
 
+	logfileconsole("_________START PROGRAM_________");
+
 	information.variable.fct.SETnumOrder(1);
 	information.variable.fct.SETnumThisCoef(0, 57);
 	information.variable.fct.SETnumThisCoef(1, -4.2);
-	information.variable.fct.SETdenOrder(3);
-	information.variable.fct.SETdenThisCoef(0, 3.2);
-	information.variable.fct.SETdenThisCoef(1, -6.3);
-	information.variable.fct.SETdenThisCoef(2, 3.2);
-	information.variable.fct.SETdenThisCoef(3, 0.6);
-	//information.variable.fct.SETdenOrder(4);
-	cout << endl << "fct = " << endl << information.variable.fct;
+	information.variable.fct.SETdenOrder(4);
+	information.variable.fct.SETdenThisCoef(0, 3);
+	information.variable.fct.SETdenThisCoef(1, 2);
+	information.variable.fct.SETdenThisCoef(2, 1);
+	information.variable.fct.SETdenThisCoef(3, 1);
+	information.variable.fct.SETdenThisCoef(4, 1);
+	
+	cout << endl << endl << endl << "fct = " << endl << information.variable.fct;
 
 	information.variable.sys.calculABCD(information.variable.fct);
 	cout << endl << information.variable.sys;
 	tabJury(information.variable.fct);
+
+	information.variable.sys.simulation();
 	
 	/*
 	while (continuer){
