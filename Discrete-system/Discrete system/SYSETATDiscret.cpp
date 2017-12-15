@@ -1,15 +1,24 @@
+/*
+Discret_system
+author : SAUTER Robin
+2017 - 2018
+version:0.16
+
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+*/
+
 #include "SYSETATDiscret.h"
-
-
 
 using namespace std;
 
 SYSETATDiscret::SYSETATDiscret()
-: _A(), _B(), _C(), _D(), _deltaT(1)
+: _A(), _B(), _C(), _D(), _nbech(1)
 {
 }
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
-: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _deltaT(a._deltaT)
+: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _nbech(a._nbech)
 {
 }
 SYSETATDiscret::~SYSETATDiscret()
@@ -33,8 +42,8 @@ void SYSETATDiscret::SETC(const Matrice& Z){
 void SYSETATDiscret::SETD(const Matrice& Z){
 	_D = Z;
 }
-void SYSETATDiscret::SETdeltaT(double deltaT){
-	_deltaT = deltaT;
+void SYSETATDiscret::SETnbech(unsigned int nbech){
+	_nbech = nbech;
 }
 void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height){
 	_A.editsize(length, height);
@@ -72,8 +81,8 @@ Matrice SYSETATDiscret::GETC()const{
 Matrice SYSETATDiscret::GETD()const{
 	return _D;
 }
-double SYSETATDiscret::GETdeltaT()const{
-	return _deltaT;
+unsigned int SYSETATDiscret::GETnbech()const{
+	return _nbech;
 }
 
 
@@ -131,11 +140,9 @@ void SYSETATDiscret::simulation() {
 	ostringstream repy;
 	ostringstream repdx;
 	string rep;
-		
-
 	Matrice x0(_A.GETlength(), 1), dx(_A.GETlength(), 1), y(1, 1);
 
-	for (unsigned int i = 0; i < 10; i++){
+	for (unsigned int i = 0; i < _nbech; i++){
 		dx = _A * x0 + _B * 3;
 		y = _C * x0 + _D * 3;
 		x0 = dx;
@@ -150,8 +157,8 @@ void SYSETATDiscret::simulation() {
 	}
 	else
 		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << reponseTemporelle;
-	rep = repdx.str();
-	cout << rep;
+	//rep = repdx.str();
+	//cout << rep;
 }
 
 string SYSETATDiscret::printOn(bool on)const{

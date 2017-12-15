@@ -1,3 +1,14 @@
+/*
+Discret_system
+author : SAUTER Robin
+2017 - 2018
+version:0.16
+
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+*/
+
 #ifndef SYSETATDiscret_H
 #define SYSETATDiscret_H
 
@@ -19,7 +30,7 @@ public:
 	void SETB(const Matrice&);
 	void SETC(const Matrice&);
 	void SETD(const Matrice&);
-	void SETdeltaT(double);
+	void SETnbech(unsigned int);
 	void SETeditSizeA(unsigned int, unsigned int);
 	void SETeditSizeB(unsigned int, unsigned int);
 	void SETeditSizeC(unsigned int, unsigned int);
@@ -32,7 +43,7 @@ public:
 	Matrice GETB()const;
 	Matrice GETC()const;
 	Matrice GETD()const;
-	double GETdeltaT()const;
+	unsigned int GETnbech()const;
 	
 
 	void calculABCD(const FCTDiscret&);
@@ -43,7 +54,7 @@ public:
 
 private:
 	Matrice _A, _B, _C, _D;
-	double _deltaT;
+	unsigned int _nbech;
 };
 
 #endif // !SYSETATDiscret_H

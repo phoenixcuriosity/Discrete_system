@@ -1,3 +1,14 @@
+/*
+Discret_system
+author : SAUTER Robin
+2017 - 2018
+version:0.16
+
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+*/
+
 #include "init.h"
 
 
@@ -33,6 +44,7 @@ bool initfile(fichier& file) {
 		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << file.load;
 		return false;
 	}
+	logfileconsole("Created by SAUTER Robin");
 
 	return true;
 }

@@ -1,3 +1,15 @@
+/*
+Discret_system
+author : SAUTER Robin
+2017 - 2018
+version:0.16
+
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+*/
+
+
 #include "mainLoop.h"
 
 #include "init.h"
@@ -19,15 +31,16 @@ void mainLoop(sysinfo& information){
 	information.variable.fct.SETnumThisCoef(0, 57);
 	information.variable.fct.SETnumThisCoef(1, -4.2);
 	information.variable.fct.SETdenOrder(4);
-	information.variable.fct.SETdenThisCoef(0, 3);
+	information.variable.fct.SETdenThisCoef(0, 1);
 	information.variable.fct.SETdenThisCoef(1, 2);
 	information.variable.fct.SETdenThisCoef(2, 1);
 	information.variable.fct.SETdenThisCoef(3, 1);
-	information.variable.fct.SETdenThisCoef(4, 1);
+	information.variable.fct.SETdenThisCoef(4, 3);
 	
 	cout << endl << endl << endl << "fct = " << endl << information.variable.fct;
 
 	information.variable.sys.calculABCD(information.variable.fct);
+	information.variable.sys.SETnbech(100);
 	cout << endl << information.variable.sys;
 	tabJury(information.variable.fct);
 
