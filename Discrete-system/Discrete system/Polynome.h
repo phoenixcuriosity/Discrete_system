@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16-A
+version:0.17
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -17,7 +17,8 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 class Polynome {
 public:
 	Polynome();
-	Polynome(unsigned int);
+	Polynome(unsigned int); // attention : Polynome a((unsigned int)2) est la seule façon de créer un polynome d'ordre 2
+	Polynome(double); // cast
 	Polynome(unsigned int, double tab[]);
 	Polynome(const Polynome& P);
 	~Polynome();
@@ -51,6 +52,7 @@ public:
 
 protected:
 	virtual double* allocate(unsigned int) const;
+	virtual double* Polynome::allocate(unsigned int size, double userValue) const;
 	virtual double* allocate(unsigned int, double*) const;
 	virtual double* allocate(const Polynome& P) const;
 

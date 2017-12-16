@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16-A
+version:0.17
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -17,7 +17,9 @@ using namespace std;
 FCTDiscret::FCTDiscret() : _num(), _den(), _deltaT(1)
 {
 }
-
+FCTDiscret::FCTDiscret(double userValue) : _num(allocate(userValue)), _den(allocate(1.0)), _deltaT(1)
+{
+}
 FCTDiscret::FCTDiscret(Polynome& num, Polynome& den, double deltaT) : _num(num), _den(den), _deltaT(deltaT)
 {
 }
@@ -299,6 +301,31 @@ void tabJury(const FCTDiscret& a){
 
 
 
+void closeLoop(const FCTDiscret& a, const FCTDiscret& b){
+	FCTDiscret num;
+	FCTDiscret den;
+
+
+	num = a * b;
+	den = 1.0 + a * b * 1.0;
+
+	//cout << endl << "CloseLoop = " << endl << num << endl << endl << den;
+
+	FCTDiscret resultat;
+	resultat.SETnum(num.GETnum() * num.GETden());
+	resultat.SETden(den.GETnum() * num.GETden());
+
+	cout << endl << endl << resultat << endl;
+	
+}
+
+
+
+
+Polynome FCTDiscret::allocate(double userValue) const{
+	Polynome a(userValue);
+	return a;
+}
 
 
 void testFCTDiscret(){
@@ -306,7 +333,7 @@ void testFCTDiscret(){
 	ostringstream stream;
 
 	stream << endl << "___TEST FCTDiscret___";
-	Polynome a(3);
+	Polynome a((unsigned int)3);
 	a.SETcoefTab(2, 1), a.SETcoefTab(1, 2);
 	Polynome b(a);
 	b.SETcoefTab(2, 2), b.SETcoefTab(0, 1);
@@ -330,6 +357,11 @@ void testFCTDiscret(){
 	stream << endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
 	fct1.SETnumThisCoef(4, 5.6), fct1.SETnumThisCoef(3, -5.6);
 	stream << endl << "Fct1 :" << endl << fct1 << endl << endl;
+	FCTDiscret integ;
+	integ.SETnumOrder(0), integ.SETnumThisCoef(0, 1);
+	integ.SETdenOrder(1), integ.SETdenThisCoef(1, 1);
+	stream << endl << "integ = " << endl << integ << endl;
+	stream << endl << "integ * fct1 = " << endl << (integ * fct1) << endl;
 
 	fctdiscret = stream.str();
 	cout << fctdiscret;

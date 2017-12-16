@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16-A
+version:0.17
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -19,7 +19,9 @@ Polynome::Polynome() : _order(1), _tab(allocate(1)), _stringSize(0)
 Polynome::Polynome(unsigned int size) : _order(size), _tab(allocate(size)), _stringSize(0)
 {
 }
-
+Polynome::Polynome(double userValue) : _order(0), _tab(allocate(0, userValue)), _stringSize(0)
+{
+}
 Polynome::Polynome(unsigned int size, double tab[]) : _order(size), _tab(allocate(size,tab)), _stringSize(0)
 {
 }
@@ -124,15 +126,17 @@ Polynome addition(const Polynome& a, const Polynome& b){
 	unsigned int maxSize = max(a.GETorder(), b.GETorder());
 	unsigned int minSize = min(a.GETorder(), b.GETorder());
 
+	
+
 	if (maxSize == a.GETorder()){
 		Polynome newPolynome(a);
-		for (unsigned int i = 0; i < minSize; i++)
+		for (unsigned int i = 0; i <= minSize; i++)
 			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + b.GETcoefTab(i));
 		return newPolynome;
 	}
 	else{
 		Polynome newPolynome(b);
-		for (unsigned int i = 0; i < minSize; i++)
+		for (unsigned int i = 0; i <= minSize; i++)
 			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + a.GETcoefTab(i));
 		return newPolynome;
 	}
@@ -263,6 +267,15 @@ double* Polynome::allocate(unsigned int size) const {
 		buffer[i] = 0.0;
 	return buffer;
 }
+double* Polynome::allocate(unsigned int size, double userValue) const {
+	/*
+	alloue un tableau de taille size de type double initialisé à 0
+	*/
+	double* buffer = new double[size + 1];
+	for (unsigned int i = 0; i <= size; i++)
+		buffer[i] = userValue;
+	return buffer;
+}
 double* Polynome::allocate(unsigned int size, double* tab) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
@@ -297,7 +310,7 @@ void testPolynome() {
 
 
 	stream << endl << "___TEST POLYNOME___";
-	Polynome a(5);
+	Polynome a((unsigned int)5);
 	a.SETcoefTab(3, 1);
 	a.SETcoefTab(1, 69.1);
 	Polynome b(a);
@@ -340,7 +353,9 @@ void testPolynome() {
 	stream << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.SETcoefTab(4, -3.2);
 	stream << endl << "redefinition de l'operateur << ,  Z = " << Z;
-	stream << endl << endl;
+	stream << endl << "Z * 2 = " << Z * 2.0;
+	stream << endl << "Z + 2 = " << Z + 2.0;
+	stream << endl << "Z - 2 = " << Z - 2.0 << endl << endl;
 
 	polynome = stream.str();
 	cout << polynome;

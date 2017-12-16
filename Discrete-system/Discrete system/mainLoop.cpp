@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16-A
+version:0.17
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -26,20 +26,20 @@ void mainLoop(sysinfo& information){
 	testMatrice();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 16-A");
+	logfileconsole("version: 17");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it");
 
 	information.variable.fct.SETnumOrder(1);
-	information.variable.fct.SETnumThisCoef(0, 57);
-	information.variable.fct.SETnumThisCoef(1, -4.2);
-	information.variable.fct.SETdenOrder(6);
-	information.variable.fct.SETdenThisCoef(0, 2);
+	information.variable.fct.SETnumThisCoef(0, 1);
+	information.variable.fct.SETnumThisCoef(1, -0.63);
+	information.variable.fct.SETdenOrder(2);
+	information.variable.fct.SETdenThisCoef(0, 0);
 	information.variable.fct.SETdenThisCoef(1, -0.6);
-	information.variable.fct.SETdenThisCoef(2, -1);
-	information.variable.fct.SETdenThisCoef(3, 1);
-	information.variable.fct.SETdenThisCoef(4, 0.01);
-	information.variable.fct.SETdenThisCoef(5, -0.359);
-	information.variable.fct.SETdenThisCoef(6, 5);
+	information.variable.fct.SETdenThisCoef(2, 1);
+	//information.variable.fct.SETdenThisCoef(3, 1);
+	//information.variable.fct.SETdenThisCoef(4, 0.01);
+	//information.variable.fct.SETdenThisCoef(5, -0.359);
+	//information.variable.fct.SETdenThisCoef(6, 5);
 	
 	cout << endl << endl << endl << "fct = " << endl << information.variable.fct;
 
@@ -49,7 +49,7 @@ void mainLoop(sysinfo& information){
 	tabJury(information.variable.fct);
 
 	information.variable.sys.simulation(information.file.reponseTemporelle);
-
+	closeLoop(information.variable.fct, information.variable.fct);
 	
 	/*
 	while (continuer){

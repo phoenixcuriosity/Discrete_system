@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16-A
+version:0.17
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -20,6 +20,7 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 class FCTDiscret{
 public:
 	FCTDiscret();
+	FCTDiscret(double); // cast
 	FCTDiscret(Polynome&, Polynome&, double deltaT);
 	FCTDiscret(const FCTDiscret&);
 	~FCTDiscret();
@@ -53,9 +54,12 @@ public:
 	double GETdeltaT() const;
 
 	friend void tabJury(const FCTDiscret& a);
+	friend void closeLoop(const FCTDiscret& a, const FCTDiscret& b);
 
 	friend void testFCTDiscret();
 
+protected:
+	virtual Polynome allocate(double) const;
 
 private:
 	Polynome _num;
