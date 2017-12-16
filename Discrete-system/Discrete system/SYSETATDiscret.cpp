@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16
+version:0.16-A
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -134,29 +134,29 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 }
 
 
-void SYSETATDiscret::simulation() {
-	const std::string reponseTemporelle = "bin/SaveAndLoad/ReponseTemporelle.txt";
-	ofstream reponse(reponseTemporelle);
+void SYSETATDiscret::simulation(const std::string& namefile) {
+	ofstream reponse(namefile);
 	ostringstream repy;
 	ostringstream repdx;
 	string rep;
 	Matrice x0(_A.GETlength(), 1), dx(_A.GETlength(), 1), y(1, 1);
 
 	for (unsigned int i = 0; i < _nbech; i++){
-		dx = _A * x0 + _B * 3;
-		y = _C * x0 + _D * 3;
+		dx = _A * x0 + _B * 10;
+		y = _C * x0 + _D * 10;
 		x0 = dx;
 		repdx << endl << "dx(" << i << ") = " << dx;
-		repy << endl << "y(" << i << ") = " << y.GETthiscoef(0, 0);
+		repy << endl << y.GETthiscoef(0, 0);
 	}
 
 	rep = repy.str();
 	cout << rep;
 	if (reponse) {
+		reponse << "nbech:" << _nbech;
 		reponse << rep;
 	}
 	else
-		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << reponseTemporelle;
+		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << namefile;
 	//rep = repdx.str();
 	//cout << rep;
 }

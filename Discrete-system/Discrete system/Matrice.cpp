@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16
+version:0.16-A
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -13,7 +13,7 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 using namespace std;
 
-Matrice::Matrice() : _tab(allocate(2, 2)), _length(2), _height(2), _stringSize(0)
+Matrice::Matrice() : _tab(allocate(1, 1)), _length(1), _height(1), _stringSize(0)
 {
 }
 Matrice::Matrice(double userValue) : _tab(allocate(1, 1, userValue)), _length(1), _height(1), _stringSize(0)
@@ -371,23 +371,21 @@ bool assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB
 
 
 void testMatrice(){
-	cout << endl << "___TEST MATRICE___";
+	ostringstream stream;
+	string matrice = "";
+
+	stream << endl << "___TEST MATRICE___";
 	Matrice A(5, 5);
-	cout << endl << endl << "Matrice A, constructeur par value1: ";
-	A.printOn();
+	stream << endl << endl << "Matrice A, constructeur par value1: " << A;
 	Matrice B(A);
 	B.ones();
-	cout << endl << endl << "Matrice B constructeur par recopie : ";
-	B.printOn();
+	stream << endl << endl << "Matrice B constructeur par recopie : " << B;
 	B.SETthiscoef(0, 0, 3);
 	B.SETthiscoef(1, 4, 0.1);
 	B.SETthiscoef(2, 1, -0.96);
-	cout << endl << endl << "coef de la matrice B a l'index 2,1 = " << B.GETthiscoef(2, 1);
-	cout << endl << endl << "Matrice B modifie : ";
-	B.printOn();
-	cout << endl << endl;
+	stream << endl << endl << "coef de la matrice B a l'index 2,1 = " << B.GETthiscoef(2, 1);
+	stream << endl << endl << "Matrice B modifie : " << B << endl << endl;
 
-	
 	double** a = new double*[3];
 	for (unsigned int i = 0; i < 3; i++)
 		a[i] = new double[3];
@@ -397,65 +395,52 @@ void testMatrice(){
 			a[i][j] = 2;
 	}
 	Matrice C(a, 3 ,3);
-	cout << endl << "Matrice C, constructeur par value2: : ";
-	C.printOn();
-	cout << endl;
-
+	stream << endl << "Matrice C, constructeur par value2: : " << C << endl;
 	Matrice D(3, 3);
 	D.ones();
 	Matrice E(D);
 	Matrice F = D + E;
-	cout << endl << "Matrice F : D + E = ";
-	F.printOn();
-
+	stream << endl << "Matrice F : D + E = " << F;
 	Matrice G = F - E;
-	cout << endl << "Matrice G : F - E = ";
-	G.printOn();
-
+	stream << endl << "Matrice G : F - E = " << G;
 	Matrice H = F * F;
-	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
-	H.printOn();
-
-	cout << endl << "nouvelle matrice F avec le coef 0,2 = 3";
+	stream << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	F.SETthiscoef(0, 2, 3);
-	F.printOn();
+	stream << endl << "nouvelle matrice F avec le coef 0,2 = 3" << F;
 	H = F * F;
-	cout << endl << "Matrice H : F(3x3) * F(3x3) = ";
-	H.printOn();
-
+	stream << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	F = C + D;
-	cout << endl << "nouvelle matrice F = C + D" << F;
-	
+	stream << endl << "nouvelle matrice F = C + D" << F;
 	H = F * F;
-	cout << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
-	
+	stream << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	Matrice K;
-	cout << endl << "Matrice K constructeur par defaut:" << K;
+	stream << endl << "Matrice K constructeur par defaut:" << K;
 	K.editsize(3, 3);
-	cout << endl << "Matrice K : K.editsize(3, 3) :" << K;
+	stream << endl << "Matrice K : K.editsize(3, 3) :" << K;
 	Matrice J(1, 5);
-	cout << endl << "J(1x5)" << J;
-
+	stream << endl << "J(1x5)" << J;
 	J.editsize(5, 1);
-	cout << endl << "J(5x1)" << J;
+	stream << endl << "J(5x1)" << J;
 
 	K.ones();
 	K.editsize(3, 4);
 	
 	K.SETthiscoef(0, 0, 3.6), K.SETthiscoef(0, 1, -3.6), K.SETthiscoef(0, 2, 3.6);
-	cout << endl << "Matrice K :" << K;
+	stream << endl << "Matrice K :" << K;
 	Matrice L = transposistion(K);
-	cout << endl << "L transposee de K" << L;
+	stream << endl << "L transposee de K" << L;
 
 	J.editsize(1, 1);
-	cout << endl << "J(1x1)" << J;
+	stream << endl << "J(1x1)" << J;
 	J.growOneLOneC();
-	cout << endl << "J grow :" << J;
+	stream << endl << "J grow :" << J;
 	K.growOneLOneC();
-	cout << endl << "K grow :" << K;
+	stream << endl << "K grow :" << K;
 	
 	Matrice M = 2 * K;
-	cout << endl << "M = 2 * K" << M;
+	stream << endl << "M = 2 * K" << M;
+	stream << endl << endl;
 
-	cout << endl << endl;
+	matrice = stream.str();
+	cout << matrice;
 }

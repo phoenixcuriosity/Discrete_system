@@ -48,6 +48,9 @@
     <ClCompile Include="Signal.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
+    <ClCompile Include="representation.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LIB.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Signal.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="representation.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

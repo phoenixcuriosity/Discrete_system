@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.16
+version:0.16-A
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -292,57 +292,56 @@ bool Polynome::assertIndex(unsigned int index)const {
 
 
 void testPolynome() {
-	cout << endl << "___TEST POLYNOME___";
+	string polynome;
+	ostringstream stream;
+
+
+	stream << endl << "___TEST POLYNOME___";
 	Polynome a(5);
 	a.SETcoefTab(3, 1);
 	a.SETcoefTab(1, 69.1);
 	Polynome b(a);
 
-	cout << endl << "taille de a = " + to_string(a.GETorder());
+	stream << endl << "taille de a = " + to_string(a.GETorder());
 	b.SETcoefTab(2, 12.6);
-	cout << endl << "valeur de l'index " << 2 <<  "= " + to_string(b.GETcoefTab(2));
+	stream << endl << "valeur de l'index " << 2 << "= " + to_string(b.GETcoefTab(2));
 
 	a.SETcoefTab(0, -0.9), a.SETcoefTab(4, -6534.69461354), a.grow(2.3);
 	b.SETcoefTab(0, 96.36), b.SETcoefTab(1, -619);
 
-	cout << endl << "taille de a = " + to_string(a.GETorder());
-	cout << endl << "valeur de l'index " << 5 << "= " + to_string(a.GETcoefTab(5));
-	cout << endl << "Polynome a = ";
-	a.printOn();
-	cout << endl << "Polynome b = ";
-	b.printOn();
+	stream << endl << "taille de a = " + to_string(a.GETorder());
+	stream << endl << "valeur de l'index " << 5 << "= " + to_string(a.GETcoefTab(5));
+	stream << endl << "Polynome a = " << a;
+	stream << endl << "Polynome b = " << b;
 	if (a == b)
-		cout << endl << "polynomes identique : a et b";
+		stream << endl << "polynomes identique : a et b";
 	else
-		cout << endl << "polynomes different : a et b";
+		stream << endl << "polynomes different : a et b";
 	
-	cout << endl << "addition de a + b = ";
+	
 	Polynome addition = a + b;
-	addition.printOn();
-
-	cout << endl << "soustraction de a - b = ";
+	stream << endl << "addition de a + b = " << addition;
 	Polynome soustraction1 = a - b;
-	soustraction1.printOn();
-	cout << endl << "addition de addition - soustraction1 = ";
+	stream << endl << "soustraction de a - b = " << soustraction1;
 	Polynome soustraction2 = addition - soustraction1;
-	soustraction2.printOn();
-	cout << endl << "multiplication de a * b = ";
+	stream << endl << "addition de addition - soustraction1 = " << soustraction2;
 	Polynome multiplication = a * b;
-	multiplication.printOn();
+	stream << endl << "multiplication de a * b = " << multiplication;
 	a = b;
 	if (a == b)
-		cout << endl << "polynomes identique : a et b";
+		stream << endl << "polynomes identique : a et b";
 	else
-		cout << endl << "polynomes different : a et b";
+		stream << endl << "polynomes different : a et b";
 	Polynome Z;
-	cout << endl << endl << "taille de Z = " + to_string(Z.GETorder());
-	//Z.grow(6.8);
-	//cout << endl << "taille de Z = " + to_string(Z.GETsize());
+	stream << endl << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.editsize(6);
-	cout << endl << "taille de Z = " + to_string(Z.GETorder());
+	stream << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.editsize(5);
-	cout << endl << "taille de Z = " + to_string(Z.GETorder());
+	stream << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.SETcoefTab(4, -3.2);
-	cout << endl << "redefinition de l'operateur << ,  Z = " << Z;
-	cout << endl << endl;
+	stream << endl << "redefinition de l'operateur << ,  Z = " << Z;
+	stream << endl << endl;
+
+	polynome = stream.str();
+	cout << polynome;
 }
