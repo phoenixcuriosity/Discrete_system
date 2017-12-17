@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.17
+last modification on this file on version:0.18
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -30,7 +30,6 @@ public:
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
 	friend Polynome operator*(const Polynome&, const Polynome&);
-	friend Polynome operator*(double, const Polynome&);
 
 	void SETcoefTab(unsigned int index, double userValue);
 

@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.17
+last modification on this file on version:0.18
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -26,7 +26,7 @@ void mainLoop(sysinfo& information){
 	testMatrice();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 17");
+	logfileconsole("version: 18");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it");
 
 	information.variable.fct.SETnumOrder(1);
@@ -40,6 +40,8 @@ void mainLoop(sysinfo& information){
 	//information.variable.fct.SETdenThisCoef(4, 0.01);
 	//information.variable.fct.SETdenThisCoef(5, -0.359);
 	//information.variable.fct.SETdenThisCoef(6, 5);
+
+	
 	
 	cout << endl << endl << endl << "fct = " << endl << information.variable.fct;
 
@@ -49,7 +51,14 @@ void mainLoop(sysinfo& information){
 	tabJury(information.variable.fct);
 
 	information.variable.sys.simulation(information.file.reponseTemporelle);
-	closeLoop(information.variable.fct, information.variable.fct);
+
+	FCTDiscret interg;
+	interg.SETnumOrder(0), interg.SETnumThisCoef(0, 1);
+	interg.SETdenOrder(1), interg.SETdenThisCoef(1, 1);
+	FCTDiscret openLoop = information.variable.fct * interg;
+	FCTDiscret returnLoop = -1.0;
+
+	closeLoop(openLoop, returnLoop);
 	
 	/*
 	while (continuer){

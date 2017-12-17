@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.17
+last modification on this file on version:0.18
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -185,7 +185,7 @@ void tabJury(const FCTDiscret& a){
 	for (int i = 0, j = a.GETden().GETorder(); i <= a.GETden().GETorder(), j >= 0; i++, j--)
 		den.SETcoefTab(i, a.GETden().GETcoefTab(j));
 	if (den.GETcoefTab(den.GETorder()) < 0)
-		den = - 1 * den;
+		den = - 1.0 * den;
 
 	
 	
@@ -301,13 +301,13 @@ void tabJury(const FCTDiscret& a){
 
 
 
-void closeLoop(const FCTDiscret& a, const FCTDiscret& b){
+void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop){
 	FCTDiscret num;
 	FCTDiscret den;
 
 
-	num = a * b;
-	den = 1.0 + a * b * 1.0;
+	num = openLoop;
+	den = 1.0 + openLoop * returnLoop;
 
 	//cout << endl << "CloseLoop = " << endl << num << endl << endl << den;
 
@@ -315,7 +315,7 @@ void closeLoop(const FCTDiscret& a, const FCTDiscret& b){
 	resultat.SETnum(num.GETnum() * num.GETden());
 	resultat.SETden(den.GETnum() * num.GETden());
 
-	cout << endl << endl << resultat << endl;
+	cout << endl << endl << "CloseLoop" << endl << resultat << endl;
 	
 }
 

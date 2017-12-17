@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-version:0.17
+last modification on this file on version:0.18
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -83,10 +83,6 @@ Polynome operator-(const Polynome& a, const Polynome& b){
 	return resultat;
 }
 Polynome operator*(const Polynome& a, const Polynome& b){
-	Polynome resultat = multiplication(a, b);
-	return resultat;
-}
-Polynome operator*(double a, const Polynome& b){
 	Polynome resultat = multiplication(a, b);
 	return resultat;
 }
@@ -175,15 +171,6 @@ Polynome multiplication(const Polynome& a, const Polynome& b){
 		for (int j = 0; j <= b.GETorder(); j++)
 			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
 	}
-	return newPolynome;
-}
-Polynome multiplication(double a, const Polynome& b){
-	/*
-	multiplication de 2 polynomes
-	*/
-	Polynome newPolynome(b);
-	for (int j = 0; j <= b.GETorder(); j++)
-		newPolynome.SETcoefTab(j, a * newPolynome.GETcoefTab(j));
 	return newPolynome;
 }
 
