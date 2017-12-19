@@ -51,6 +51,9 @@
     <ClCompile Include="representation.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Complexe.cpp">
+      <Filter>Fichiers sources\Class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LIB.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="representation.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Complexe.h">
+      <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

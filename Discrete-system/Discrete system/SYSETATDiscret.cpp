@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18-A
+last modification on this file on version:0.19
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -14,11 +14,11 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 using namespace std;
 
 SYSETATDiscret::SYSETATDiscret()
-: _A(), _B(), _C(), _D(), _nbech(1)
+: _A(), _B(), _C(), _D(), _Te(1)
 {
 }
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
-: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _nbech(a._nbech)
+: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _Te(a._Te)
 {
 }
 SYSETATDiscret::~SYSETATDiscret()
@@ -42,8 +42,8 @@ void SYSETATDiscret::SETC(const Matrice& Z){
 void SYSETATDiscret::SETD(const Matrice& Z){
 	_D = Z;
 }
-void SYSETATDiscret::SETnbech(unsigned int nbech){
-	_nbech = nbech;
+void SYSETATDiscret::SETTe(unsigned int nbech){
+	_Te = nbech;
 }
 void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height){
 	_A.editsize(length, height);
@@ -81,8 +81,8 @@ Matrice SYSETATDiscret::GETC()const{
 Matrice SYSETATDiscret::GETD()const{
 	return _D;
 }
-unsigned int SYSETATDiscret::GETnbech()const{
-	return _nbech;
+unsigned int SYSETATDiscret::GETTe()const{
+	return _Te;
 }
 
 
@@ -134,21 +134,20 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 }
 
 
-void SYSETATDiscret::simulation(const std::string& namefile) {
+void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signal) {
 	ofstream reponse(namefile);
 	ostringstream repy;
 	ostringstream repdx;
 	string rep;
 	Matrice x0(_A.GETlength(), 1), dx(_A.GETlength(), 1), y(1, 1);
 
-	double echelon = 10.0;
 
-	for (unsigned int i = 0; i < _nbech; i++){
-		dx = _A * x0 + _B * echelon;
-		y = _C * x0 + _D * echelon;
+
+	for (unsigned int i = 0; i < signal.GETnbech(); i++){
+		dx = _A * x0 + _B * signal.GETthiscoef(i);
+		y = _C * x0 + _D * signal.GETthiscoef(i);
 		x0 = dx;
-		repdx << endl << "dx(" << i << ") = " << dx;
-		repy << endl << i << " , " << echelon << " , " << y.GETthiscoef(0, 0);
+		repy << endl << i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
 	}
 
 	rep = repy.str();
@@ -158,8 +157,6 @@ void SYSETATDiscret::simulation(const std::string& namefile) {
 	}
 	else
 		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << namefile;
-	//rep = repdx.str();
-	//cout << rep;
 }
 
 string SYSETATDiscret::printOn(bool on)const{

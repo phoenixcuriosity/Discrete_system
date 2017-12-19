@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Complexe.cpp" />
     <ClCompile Include="FCTLoop.cpp" />
     <ClCompile Include="Matrice.cpp" />
     <ClCompile Include="Polynome.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="SYSETATDiscret.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Complexe.h" />
     <ClInclude Include="ConstantesAndStructures.h" />
     <ClInclude Include="FCTLoop.h" />
     <ClInclude Include="Matrice.h" />

@@ -15,6 +15,8 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 #include "init.h"
 #include "FCTLoop.h"
 #include "representation.h"
+#include "Signal.h"
+#include "Complexe.h"
 
 using namespace std;
 
@@ -25,20 +27,21 @@ void mainLoop(sysinfo& information){
 	testPolynome();
 	testFCTDiscret();
 	testMatrice();
+	testComplexe();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 18");
+	logfileconsole("version: 19");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it");
 
 	information.variable.fct.SETnumOrder(1);
 	information.variable.fct.SETnumThisCoef(0, 1);
 	information.variable.fct.SETnumThisCoef(1, -0.63);
-	information.variable.fct.SETdenOrder(2);
+	information.variable.fct.SETdenOrder(4);
 	information.variable.fct.SETdenThisCoef(0, 0);
 	information.variable.fct.SETdenThisCoef(1, -0.6);
 	information.variable.fct.SETdenThisCoef(2, 1);
-	//information.variable.fct.SETdenThisCoef(3, 1);
-	//information.variable.fct.SETdenThisCoef(4, 0.01);
+	information.variable.fct.SETdenThisCoef(3, 0.01);
+	information.variable.fct.SETdenThisCoef(4, 2);
 	//information.variable.fct.SETdenThisCoef(5, -0.359);
 	//information.variable.fct.SETdenThisCoef(6, 5);
 
@@ -47,11 +50,13 @@ void mainLoop(sysinfo& information){
 	cout << endl << endl << endl << "fct = " << endl << information.variable.fct;
 
 	information.variable.sys.calculABCD(information.variable.fct);
-	information.variable.sys.SETnbech(100);
+	information.variable.sys.SETTe(100);
 	cout << endl << information.variable.sys;
-	tabJury(information.variable.fct);
+	information.variable.fct.tabJury();
 
-	information.variable.sys.simulation(information.file.reponseTemporelle);
+	Echelon E(50, 10.0);
+
+	information.variable.sys.simulation(information.file.reponseTemporelle, E);
 
 	FCTDiscret interg;
 	interg.SETnumOrder(0), interg.SETnumThisCoef(0, 1);
@@ -61,7 +66,7 @@ void mainLoop(sysinfo& information){
 
 	closeLoop(openLoop, returnLoop);
 
-	representation(information);
+	//representation(information);
 	
 	/*
 	while (continuer){

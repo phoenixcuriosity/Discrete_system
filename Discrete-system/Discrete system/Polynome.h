@@ -44,14 +44,14 @@ public:
 	void editsize(unsigned int);
 	void grow(double);
 
-	std::string printOn(bool on = true) const;
+	std::string printOn(bool = true) const;
 
 	friend void testPolynome();
 	
 
 protected:
 	virtual double* allocate(unsigned int) const;
-	virtual double* Polynome::allocate(unsigned int size, double userValue) const;
+	virtual double* allocate(unsigned int size, double userValue) const;
 	virtual double* allocate(unsigned int, double*) const;
 	virtual double* allocate(const Polynome& P) const;
 

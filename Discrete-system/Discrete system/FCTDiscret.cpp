@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.19
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -177,33 +177,33 @@ double FCTDiscret::GETdeltaT()const{
 }
 
 
-void tabJury(const FCTDiscret& a){
+bool FCTDiscret::tabJury(){
 	string tableauJury;
 	ostringstream stream;
 
-	Polynome den(a.GETden().GETorder());
-	for (int i = 0, j = a.GETden().GETorder(); i <= a.GETden().GETorder(), j >= 0; i++, j--)
-		den.SETcoefTab(i, a.GETden().GETcoefTab(j));
+	Polynome den(_den.GETorder());
+	for (int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j >= 0; i++, j--)
+		den.SETcoefTab(i, _den.GETcoefTab(j));
 	if (den.GETcoefTab(den.GETorder()) < 0)
 		den = - 1.0 * den;
 
 	
 	
-	Polynome ligne1(a.GETden());
-	Polynome ligne2(a.GETden());
+	Polynome ligne1(_den);
+	Polynome ligne2(_den);
 
 	Matrice Jury;
-	if (a.GETden().GETorder() > 2){
-		Jury.editsize(2, a.GETden().GETorder() + 1);
-		for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
-			Jury.SETthiscoef(0, i, a.GETden().GETcoefTab(i));
-		for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
+	if (_den.GETorder() > 2){
+		Jury.editsize(2, _den.GETorder() + 1);
+		for (unsigned int i = 0; i <= _den.GETorder(); i++)
+			Jury.SETthiscoef(0, i, _den.GETcoefTab(i));
+		for (unsigned int i = 0; i <= _den.GETorder(); i++)
 			Jury.SETthiscoef(1, i, den.GETcoefTab(i));
 	}
 	else{
-		Jury.editsize(1, a.GETden().GETorder() + 1);
-		for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
-			Jury.SETthiscoef(0, i, a.GETden().GETcoefTab(i));
+		Jury.editsize(1, _den.GETorder() + 1);
+		for (unsigned int i = 0; i <= _den.GETorder(); i++)
+			Jury.SETthiscoef(0, i, _den.GETcoefTab(i));
 	}
 	
 	while (ligne2.GETorder() > 2){
@@ -212,14 +212,14 @@ void tabJury(const FCTDiscret& a){
 			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
 		
 		if (ligne2.GETorder() > 2) {
-			Jury.editsize(Jury.GETlength() + 2, a.GETden().GETorder() + 1);
+			Jury.editsize(Jury.GETlength() + 2, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
 				Jury.SETthiscoef(Jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
 			for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
 				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
 		}
 		else {
-			Jury.editsize(Jury.GETlength() + 1, a.GETden().GETorder() + 1);
+			Jury.editsize(Jury.GETlength() + 1, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
 				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(i));
 		}
@@ -234,21 +234,21 @@ void tabJury(const FCTDiscret& a){
 	/*
 		condition abs(a0) < an
 	*/
-	stream << endl << endl << "abs(a0) = " << abs(a.GETden().GETcoefTab(0));
-	if(abs(a.GETden().GETcoefTab(0)) < a.GETden().GETcoefTab(a.GETden().GETorder())){
-		stream << " < a" << a.GETden().GETorder() << " = " << a.GETden().GETcoefTab(a.GETden().GETorder()) << "	Ok";
+	stream << endl << endl << "abs(a0) = " << abs(_den.GETcoefTab(0));
+	if (abs(_den.GETcoefTab(0)) < _den.GETcoefTab(_den.GETorder())){
+		stream << " < a" << _den.GETorder() << " = " << _den.GETcoefTab(_den.GETorder()) << "	Ok";
 		condition++;
 	}
 	else
-		stream << " > a" << a.GETden().GETorder() << " = " << a.GETden().GETcoefTab(a.GETden().GETorder()) << "	non Ok";
+		stream << " > a" << _den.GETorder() << " = " << _den.GETcoefTab(_den.GETorder()) << "	non Ok";
 
 
 	/*
 	condition D(1) > 0
 	*/
 	double somme = 0;
-	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
-		somme += a.GETden().GETcoefTab(i);
+	for (unsigned int i = 0; i <= _den.GETorder(); i++)
+		somme += _den.GETcoefTab(i);
 	
 	stream << endl << "D(1) = " << somme;
 	if (somme > 0){
@@ -262,17 +262,17 @@ void tabJury(const FCTDiscret& a){
 	condition D(-1) > 0 si n pair et ondition D(-1) < 0 si n impair
 	*/
 	somme = 0;
-	for (unsigned int i = 0; i <= a.GETden().GETorder(); i++)
-		somme += a.GETden().GETcoefTab(i) * pow(-1, i);
+	for (unsigned int i = 0; i <= _den.GETorder(); i++)
+		somme += _den.GETcoefTab(i) * pow(-1, i);
 	stream << endl << "D(-1) = " << somme;
-	if ((somme > 0 && (a.GETden().GETorder()%2) == 0) || (somme < 0 && (a.GETden().GETorder() % 2) == 1)) {
+	if ((somme > 0 && (_den.GETorder() % 2) == 0) || (somme < 0 && (_den.GETorder() % 2) == 1)) {
 		stream << "	Ok";
 		condition++;
 	}
 	else
 		stream << "	non Ok";
 		
-	if (a.GETden().GETorder() > 2){
+	if (_den.GETorder() > 2){
 		/*
 		condition Q0 > Q2
 		*/
@@ -289,14 +289,20 @@ void tabJury(const FCTDiscret& a){
 	}
 	
 
-	if (condition == 4)
+	if (condition == 4){
 		stream << endl << "Le systeme est stable";
-	else
+		stream << endl;
+		tableauJury = stream.str();
+		cout << tableauJury;
+		return true;
+	}
+	else{
 		stream << endl << "Le systeme est instable";
-
-	stream << endl;
-	tableauJury = stream.str();
-	cout << tableauJury;
+		stream << endl;
+		tableauJury = stream.str();
+		cout << tableauJury;
+		return false;
+	}
 }
 
 
