@@ -14,6 +14,7 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 #include "init.h"
 #include "FCTLoop.h"
+#include "representation.h"
 
 using namespace std;
 
@@ -59,6 +60,8 @@ void mainLoop(sysinfo& information){
 	FCTDiscret returnLoop = -1.0;
 
 	closeLoop(openLoop, returnLoop);
+
+	representation(information);
 	
 	/*
 	while (continuer){

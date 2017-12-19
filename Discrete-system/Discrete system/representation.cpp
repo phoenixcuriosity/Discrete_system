@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.18-A
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -14,17 +14,15 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 using namespace std;
 
 void representation(sysinfo& information){
-	unsigned int nbech = 0;
-	string destroy = "";
+	string ligne;
 
 	ifstream reponse(information.file.reponseTemporelle);
 	if (reponse) {
-		reponse >> destroy;
-		if (destroy.compare("nbech:") == 0){
-			reponse >> nbech;
+		
+
+		while (getline(reponse, ligne)){
+			cout << ligne << endl;
 		}
-		else
-			cout << endl << "ERREUR: Impossible d'utiliser le fichier : " << information.file.reponseTemporelle << ", le premier mot n'ai pas 'nbech:'";
 	}
 	else
 		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << information.file.reponseTemporelle;

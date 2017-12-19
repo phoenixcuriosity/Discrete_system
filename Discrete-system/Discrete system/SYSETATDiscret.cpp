@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.18-A
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -141,18 +141,19 @@ void SYSETATDiscret::simulation(const std::string& namefile) {
 	string rep;
 	Matrice x0(_A.GETlength(), 1), dx(_A.GETlength(), 1), y(1, 1);
 
+	double echelon = 10.0;
+
 	for (unsigned int i = 0; i < _nbech; i++){
-		dx = _A * x0 + _B * 10;
-		y = _C * x0 + _D * 10;
+		dx = _A * x0 + _B * echelon;
+		y = _C * x0 + _D * echelon;
 		x0 = dx;
 		repdx << endl << "dx(" << i << ") = " << dx;
-		repy << endl << y.GETthiscoef(0, 0);
+		repy << endl << i << " , " << echelon << " , " << y.GETthiscoef(0, 0);
 	}
 
 	rep = repy.str();
 	cout << rep;
 	if (reponse) {
-		reponse << "nbech:" << _nbech;
 		reponse << rep;
 	}
 	else
