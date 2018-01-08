@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -50,7 +50,7 @@ public:
 	~Echelon();
 
 	virtual void SETamplitude(double);
-	virtual unsigned int GETamplitude()const;
+	virtual double GETamplitude()const;
 
 private:
 	double _amplitude;

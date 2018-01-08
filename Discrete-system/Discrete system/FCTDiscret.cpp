@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.19
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -350,13 +350,13 @@ void testFCTDiscret(){
 	b.SETcoefTab(1, -91);
 	FCTDiscret fct2(a, b, 10.3);
 	stream << endl << endl << "Fct1 constructeur par valeur:" << endl << fct1 << endl;
-	cout << endl << "Fct2 constructeur par recopie:" << endl << fct2 << endl;
+	stream << endl << "Fct2 constructeur par recopie:" << endl << fct2 << endl;
 	FCTDiscret fctmultiplication = fct1 * fct2;
-	stream << endl << "multiplication de a * b, Fonctions de transfert :" << endl << fctmultiplication << endl;
+	stream << endl << "multiplication de fct1 * fct2, Fonctions de transfert :" << endl << fctmultiplication << endl;
 	FCTDiscret fctaddition = fct1 + fct2;
-	stream << endl << "addition de a + b,  Fonctions de transfert :" << fctaddition << endl;
+	stream << endl << "addition de fct1 + fct2,  Fonctions de transfert :" << endl << fctaddition << endl;
 	FCTDiscret fctsoustraction = fct1 - fct2;
-	stream << endl << "soustraction de a - b,  Fonctions de transfert :" << fctsoustraction << endl;
+	stream << endl << "soustraction de fct1 - fct2,  Fonctions de transfert :" << endl << fctsoustraction << endl;
 	
 	stream << endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
 	fct1.SETnumOrder(5);
@@ -368,6 +368,11 @@ void testFCTDiscret(){
 	integ.SETdenOrder(1), integ.SETdenThisCoef(1, 1);
 	stream << endl << "integ = " << endl << integ << endl;
 	stream << endl << "integ * fct1 = " << endl << (integ * fct1) << endl;
+
+	FCTDiscret openLoop = fct1 * integ;
+	FCTDiscret returnLoop = -1.0;
+
+	closeLoop(openLoop, returnLoop);
 
 	fctdiscret = stream.str();
 	cout << fctdiscret;

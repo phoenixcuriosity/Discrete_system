@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.19
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -43,13 +43,15 @@ public:
 	Matrice GETB()const;
 	Matrice GETC()const;
 	Matrice GETD()const;
-	unsigned int GETTe()const;
+	double GETTe()const;
 	
 
 	void calculABCD(const FCTDiscret&);
-	void simulation(const std::string&, const Signal&);
+	void simulation(const std::string&, const Signal&, Matrice&);
 
 	std::string printOn(bool on = true)const;
+
+	friend void testSYSETATDiscret();
 
 
 private:

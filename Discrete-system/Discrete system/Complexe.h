@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.19
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -26,9 +26,10 @@ public:
 	friend Complexe operator+(const Complexe&, const Complexe&);
 	friend Complexe operator-(const Complexe&, const Complexe&);
 	friend Complexe operator*(const Complexe&, const Complexe&);
+	friend Complexe operator/(const Complexe&, const Complexe&);
 
-	friend unsigned int module(const Complexe&);
-	friend int arg(const Complexe&);
+	friend double module(const Complexe&);
+	friend double arg(const Complexe&);
 
 
 	void SETRe(double);

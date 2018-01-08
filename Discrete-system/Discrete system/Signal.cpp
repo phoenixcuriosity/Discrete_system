@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.19
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -103,6 +103,6 @@ Echelon::~Echelon()
 void Echelon::SETamplitude(double amplitude){
 	_amplitude = amplitude;
 }
-unsigned int Echelon::GETamplitude()const{
+double Echelon::GETamplitude()const{
 	return _amplitude;
 }

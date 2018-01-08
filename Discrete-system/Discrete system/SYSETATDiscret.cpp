@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.19
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -81,7 +81,7 @@ Matrice SYSETATDiscret::GETC()const{
 Matrice SYSETATDiscret::GETD()const{
 	return _D;
 }
-unsigned int SYSETATDiscret::GETTe()const{
+double SYSETATDiscret::GETTe()const{
 	return _Te;
 }
 
@@ -134,12 +134,11 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 }
 
 
-void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signal) {
+void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signal, Matrice& x0) {
 	ofstream reponse(namefile);
 	ostringstream repy;
-	ostringstream repdx;
 	string rep;
-	Matrice x0(_A.GETlength(), 1), dx(_A.GETlength(), 1), y(1, 1);
+	Matrice dx(_A.GETlength(), 1), y(1, 1);
 
 
 
@@ -173,4 +172,37 @@ string SYSETATDiscret::printOn(bool on)const{
 	if (on)
 		cout << equation;
 	return equation;
+}
+
+
+void testSYSETATDiscret(){
+	cout << endl << "___TEST SYSETATDiscret___";
+
+
+	FCTDiscret fct;
+	fct.SETnumOrder(1);
+	fct.SETnumThisCoef(0, 1);
+	fct.SETnumThisCoef(1, -0.63);
+	fct.SETdenOrder(4);
+	fct.SETdenThisCoef(0, 0);
+	fct.SETdenThisCoef(1, -0.6);
+	fct.SETdenThisCoef(2, 1);
+	fct.SETdenThisCoef(3, 0.01);
+	fct.SETdenThisCoef(4, 2);
+	//fct.SETdenThisCoef(5, -0.359);
+	//fct.SETdenThisCoef(6, 5);
+	cout << endl << endl << endl << "fct = " << endl << fct;
+
+	SYSETATDiscret sys;
+	sys.calculABCD(fct);
+	sys.SETTe(100);
+	cout << endl << sys;
+	fct.tabJury();
+
+	Echelon E(50, 10.0);
+	Matrice x0(sys.GETA().GETlength(), 1);
+
+	sys.simulation("bin/SaveAndLoad/ReponseTemporelle.txt", E, x0);
+
+
 }

@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.19
+last modification on this file on version:0.20
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -60,13 +60,19 @@ Complexe operator*(const Complexe& a, const Complexe& b){
 	resultat.SETIm(2 * a.GETRe() * b.GETIm());
 	return resultat;
 }
+Complexe operator/(const Complexe& a, const Complexe& b) {
+	Complexe resultat;
+	resultat.SETRe((a.GETRe() * b.GETRe() + a.GETIm() * b.GETIm()) / (pow(b.GETRe(), 2) + pow(b.GETIm(), 2)));
+	resultat.SETIm((a.GETIm() * b.GETRe() + a.GETRe() * b.GETIm()) / (pow(b.GETRe(), 2) + pow(b.GETIm(), 2)));
+	return resultat;
+}
 
-unsigned int module(const Complexe& a){
-	unsigned int module = sqrt(pow(a.GETRe(), 2) + pow(a.GETIm(), 2));
+double module(const Complexe& a){
+	double module = sqrt(pow(a.GETRe(), 2) + pow(a.GETIm(), 2));
 	return module;
 }
-int arg(const Complexe& a){
-	int argument = 0;
+double arg(const Complexe& a){
+	double argument = 0;
 	argument = atan(a.GETIm() / a.GETRe()) * (180 / Pi);
 	if (a.GETRe() < 0)
 		argument += Pi;
@@ -118,7 +124,7 @@ void testComplexe(){
 
 	stream << endl << "___TEST COMPLEXE___";
 
-	Complexe a(2, 2);
+	Complexe a(3, 2);
 	Complexe b(-0.3, 3);
 
 
@@ -127,8 +133,9 @@ void testComplexe(){
 	stream << endl << "Complexe a + b = " << a + b;
 	stream << endl << "Complexe a - b = " << a - b;
 	stream << endl << "Complexe a * b = " << a * b;
+	stream << endl << "Complexe a / b = " << a / b;
 	stream << endl << "Module de a = " << module(a);
-	stream << endl << "arg de a = " << arg(a);
+	stream << endl << "arg de a = " << arg(a) << endl << endl;
 
 	texte = stream.str();
 	cout << texte;
