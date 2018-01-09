@@ -24,9 +24,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="mainLoop.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="FCTDiscret.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
     <ClCompile Include="Polynome.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
-    <ClCompile Include="FCTLoop.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Matrice.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
@@ -47,9 +41,6 @@
     </ClCompile>
     <ClCompile Include="Signal.cpp">
       <Filter>Fichiers sources\Class</Filter>
-    </ClCompile>
-    <ClCompile Include="representation.cpp">
-      <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Complexe.cpp">
       <Filter>Fichiers sources\Class</Filter>
@@ -62,12 +53,6 @@
     <ClInclude Include="LIB.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ConstantesAndStructures.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="mainLoop.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="FCTDiscret.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
@@ -77,9 +62,6 @@
     <ClInclude Include="Polynome.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
-    <ClInclude Include="FCTLoop.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Matrice.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
@@ -88,9 +70,6 @@
     </ClInclude>
     <ClInclude Include="Signal.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
-    </ClInclude>
-    <ClInclude Include="representation.h">
-      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Complexe.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>

@@ -4,3 +4,7 @@ _________Init Success_________
 _________START PROGRAM_________
 version: 21
 This is a free software, you can redistribute it and/or modify it
+
+type 1 (Fct Discret)
+ or type 2 SYSETATDiscret
+ or type 3 to exit the program

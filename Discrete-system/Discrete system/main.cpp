@@ -2,26 +2,26 @@
 	Discret_system
 	author : SAUTER Robin
 	2017 - 2018
-	last modification on this file on version:0.18
+	last modification on this file on version:0.22
 	
 	This library is free software; you can redistribute it and/or modify it
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
 */
 
-#include "ConstantesAndStructures.h"
+
 
 #include "init.h"
-#include "mainLoop.h"
+#include "IHM.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]){
+	IHM ihm;
+	fichier file;
 	
-	sysinfo information;
-	
-	if (initfile(information.file)) {
-		mainLoop(information);
+	if (initfile(file)) {
+		mainLoop(ihm);
 	}
 	else
 		return 0;

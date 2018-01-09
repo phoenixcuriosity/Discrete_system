@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.21
+last modification on this file on version:0.22
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -14,19 +14,39 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 #define IHM_H
 
 #include "LIB.h"
-#include "ConstantesAndStructures.h"
+#include "FCTDiscret.h"
+#include "SYSETATDiscret.h"
+#include "Signal.h"
+#include "Complexe.h"
+
+
+
+
+enum { selectnothing, selectFCT, selectSYSETAT, exitProgram };
+enum { nothing, createNumDen, editFCT, displayFCT, previousMenuFCT };
+
+
 
 class IHM{
 public:
 	IHM();
 	~IHM();
 
+
+	friend void mainLoop(IHM& ihm);
+	friend void FCTLoop(IHM& ihm);
+	friend void createNum(IHM& ihm);
+	friend void createDen(IHM& ihm);
+
 	void SETfct(FCTDiscret* fct);
 	void SETsys(SYSETATDiscret* sys);
+	void SETuserRequest(unsigned int userRequest);
 	FCTDiscret* GETfct()const;
 	SYSETATDiscret* GETsys()const;
+	unsigned int GETuserRequest()const;
 
 	friend void testIHM();
+	friend void logfileconsole(const std::string& msg);
 
 private:
 	FCTDiscret* _fct;

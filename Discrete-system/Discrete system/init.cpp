@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.22
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -10,7 +10,6 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 */
 
 #include "init.h"
-
 
 
 using namespace std;
@@ -47,15 +46,4 @@ bool initfile(fichier& file) {
 	logfileconsole("Created by SAUTER Robin");
 
 	return true;
-}
-
-void logfileconsole(const std::string &msg) {
-	const string logtxt = "bin/log/log.txt";
-	ofstream log(logtxt, ios::app);
-	if (log) {
-		cout << endl << msg;
-		log << endl << msg;
-	}
-	else
-		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << logtxt;
 }

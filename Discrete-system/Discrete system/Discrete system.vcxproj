@@ -82,30 +82,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Complexe.cpp" />
-    <ClCompile Include="FCTLoop.cpp" />
     <ClCompile Include="IHM.cpp" />
     <ClCompile Include="Matrice.cpp" />
     <ClCompile Include="Polynome.cpp" />
     <ClCompile Include="FCTDiscret.cpp" />
     <ClCompile Include="init.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mainLoop.cpp" />
-    <ClCompile Include="representation.cpp" />
     <ClCompile Include="Signal.cpp" />
     <ClCompile Include="SYSETATDiscret.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Complexe.h" />
-    <ClInclude Include="ConstantesAndStructures.h" />
-    <ClInclude Include="FCTLoop.h" />
     <ClInclude Include="IHM.h" />
     <ClInclude Include="Matrice.h" />
     <ClInclude Include="Polynome.h" />
     <ClInclude Include="FCTDiscret.h" />
     <ClInclude Include="init.h" />
     <ClInclude Include="LIB.h" />
-    <ClInclude Include="mainLoop.h" />
-    <ClInclude Include="representation.h" />
     <ClInclude Include="Signal.h" />
     <ClInclude Include="SYSETATDiscret.h" />
   </ItemGroup>
