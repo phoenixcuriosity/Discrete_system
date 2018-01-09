@@ -17,6 +17,7 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 #include "representation.h"
 #include "Signal.h"
 #include "Complexe.h"
+#include "IHM.h"
 
 using namespace std;
 
@@ -24,15 +25,18 @@ void mainLoop(sysinfo& information){
 	bool continuer = true;
 	logfileconsole("_________Init Success_________");
 	
-	testPolynome();
-	testFCTDiscret();
-	testMatrice();
-	testComplexe();
-	testSYSETATDiscret();
+	//testPolynome();
+	//testFCTDiscret();
+	//testMatrice();
+	//testComplexe();
+	//testSYSETATDiscret();
+	testIHM();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 20");
+	logfileconsole("version: 21");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
+
+	
 
 	
 	//representation(information);

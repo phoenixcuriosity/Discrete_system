@@ -88,6 +88,10 @@ double SYSETATDiscret::GETTe()const{
 
 
 void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
+	/*
+		Calcul des matrices A, B, C et D
+		un test au début est effectué pour vérifier l'ordre des polynomes et éviter de diviser par 0
+	*/
 	unsigned int realOrderDen = 0;
 	unsigned int realOrderNum = 0;
 
@@ -135,6 +139,10 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 
 
 void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signal, Matrice& x0) {
+	/*
+		simulation du système d'état avec un signal en entré et une matrice x0
+		calcul echantillion par echantillion le signal de sorti
+	*/
 	ofstream reponse(namefile);
 	ostringstream repy;
 	string rep;

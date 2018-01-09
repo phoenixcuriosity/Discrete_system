@@ -173,6 +173,10 @@ double FCTDiscret::GETdeltaT()const{
 
 
 bool FCTDiscret::tabJury(){
+	/*
+		calcul du critère de Jury permettant de statuer sur la stabilité du système
+		tableau de Jury -> Matrice pouvant changer de taille en fonction de l'ordre du den
+	*/
 	string tableauJury;
 	ostringstream stream;
 
@@ -301,6 +305,10 @@ bool FCTDiscret::tabJury(){
 }
 
 bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
+	/*
+		Diagramme de Bode en gain et phase
+	*/
+
 	ofstream reponse("bin/SaveAndLoad/Bode.txt");
 	string texte;
 	ostringstream stream;

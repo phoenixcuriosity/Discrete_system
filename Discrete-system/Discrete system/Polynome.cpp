@@ -284,7 +284,7 @@ bool Polynome::assertIndex(unsigned int index)const {
 	if (index <= _order)
 		return true;
 	else {
-		cout << endl << "_______Polynome : assertIndex false";
+		cout << endl << "_______Polynome : assertIndex false : index = " << index;
 		return false;
 	}
 }

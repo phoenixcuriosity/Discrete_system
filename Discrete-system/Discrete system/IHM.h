@@ -18,22 +18,19 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 class IHM{
 public:
-	IHM(){};
-	~IHM(){};
+	IHM();
+	~IHM();
 
-	void SETfct(const FCTDiscret& fct);
-	void SETsys(const SYSETATDiscret& sys);
-	FCTDiscret GETfct()const;
-	SYSETATDiscret GETsys()const;
+	void SETfct(FCTDiscret* fct);
+	void SETsys(SYSETATDiscret* sys);
+	FCTDiscret* GETfct()const;
+	SYSETATDiscret* GETsys()const;
 
-	FCTDiscret MODIFfct();
-	SYSETATDiscret MODIFsys();
-
-protected:
+	friend void testIHM();
 
 private:
-	FCTDiscret _fct;
-	SYSETATDiscret _sys;
+	FCTDiscret* _fct;
+	SYSETATDiscret* _sys;
 };
 
 
