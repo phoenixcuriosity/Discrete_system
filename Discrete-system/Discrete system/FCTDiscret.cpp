@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.20
+last modification on this file on version:0.21
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -92,11 +92,6 @@ FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b){
 	resultat.SETnum(a.GETnum() * b.GETnum());
 	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
-}
-
-
-void FCTDiscret::ModifFCT(){
-
 }
 
 string FCTDiscret::printOn(bool on) const{
@@ -303,6 +298,32 @@ bool FCTDiscret::tabJury(){
 		cout << tableauJury;
 		return false;
 	}
+}
+
+bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
+	ofstream reponse("bin/SaveAndLoad/Bode.txt");
+	string texte;
+	ostringstream stream;
+
+	double amplitude = wMax - wMin;
+	double increment = amplitude / nbpoint;
+	double gain = 0, phase = 0;
+	Complexe Z, c, cnum, cden;
+
+	for (double i = wMin; i <= wMax; i += 0.1){
+		Z = tfReIm(1, i * _deltaT);
+		cnum = tfPolynomeComplexe(_num, Z);
+		cden = tfPolynomeComplexe(_den, Z);
+		c = cnum / cden;
+		gain = 20 * log10(module(c));
+		phase = - arg(c);
+		stream << endl << "w = " << i << " , gain = " << gain << " , phase = " << phase;
+
+	}
+	texte = stream.str();
+	reponse << texte;
+	cout << texte;
+	return true;
 }
 
 

@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.20
+last modification on this file on version:0.21
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -16,6 +16,9 @@ const double Pi = 3.14159265358979323846;
 
 
 Complexe::Complexe() : _Re(0), _Im(0)
+{
+}
+Complexe::Complexe(double Re) : _Re(Re), _Im(0)
 {
 }
 Complexe::Complexe(double Re, double Im) : _Re(Re), _Im(Im)
@@ -72,11 +75,50 @@ double module(const Complexe& a){
 	return module;
 }
 double arg(const Complexe& a){
+	/*
+		argument en degré
+	*/
 	double argument = 0;
 	argument = atan(a.GETIm() / a.GETRe()) * (180 / Pi);
 	if (a.GETRe() < 0)
 		argument += Pi;
 	return argument;
+}
+Complexe tfReIm(double module, double arg){
+	/*
+		arg en degré en entré
+	*/
+	double Re = module * cos(arg * (Pi / 180));
+	double Im = module * sin(arg * (Pi / 180));
+	Complexe c(Re, Im);
+	return c;
+}
+Complexe Complexe::power(unsigned int power){
+	/*
+		calcul du complexe puissance power
+	*/
+	if (power == 1)
+		return *this;
+	else if (power > 1){
+		Complexe c(*this);
+		for (unsigned int i = 1; i < power; i++){
+			c = c * *this;
+		}
+		return c;
+	}
+	else{
+		Complexe c(1, 0);
+		return c;
+	}
+}
+Complexe tfPolynomeComplexe(const Polynome& P, Complexe& Z){
+	/*
+		calcul du complexe à partir du polynome et de Z transformé en complexe
+	*/
+	Complexe c;
+	for (unsigned int j = 0; j <= P.GETorder(); j++)
+		c = P.GETcoefTab(j) * Z.power(j) + c;
+	return c;
 }
 
 
@@ -124,8 +166,9 @@ void testComplexe(){
 
 	stream << endl << "___TEST COMPLEXE___";
 
-	Complexe a(3, 2);
-	Complexe b(-0.3, 3);
+	Complexe a(2, 3);
+	Complexe b(1, 1);
+	Complexe c;
 
 
 	stream << endl << "Complexe a = " << a;
@@ -135,7 +178,11 @@ void testComplexe(){
 	stream << endl << "Complexe a * b = " << a * b;
 	stream << endl << "Complexe a / b = " << a / b;
 	stream << endl << "Module de a = " << module(a);
-	stream << endl << "arg de a = " << arg(a) << endl << endl;
+	stream << endl << "arg de a = " << arg(a);
+	stream << endl << "Module de b = " << module(b);
+	stream << endl << "arg de b = " << arg(b);
+	stream << endl << "tfReIm du module et arg de b = " << tfReIm(module(b), arg(b));
+	stream << endl << "Puissance 3 de a = " << a.power(3) << endl << endl;
 
 	texte = stream.str();
 	cout << texte;

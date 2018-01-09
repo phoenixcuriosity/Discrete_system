@@ -198,11 +198,24 @@ void testSYSETATDiscret(){
 	sys.SETTe(100);
 	cout << endl << sys;
 	fct.tabJury();
+	cout << endl << "BODE" << endl;
+	fct.Bode(0.1, 10, 100);
+
+	/*
+	FCTDiscret fct2;
+	fct2.SETnumOrder(1);
+	fct2.SETnumThisCoef(1, 1);
+	fct2.SETdenOrder(1);
+	fct2.SETdenThisCoef(0, -1);
+	fct2.SETdenThisCoef(1, 1);
+	cout << endl << fct2;
+	fct2.Bode(0.1, 10, 100);
+	*/
 
 	Echelon E(50, 10.0);
 	Matrice x0(sys.GETA().GETlength(), 1);
+	x0.SETthiscoef(0, 0, 0.1);
 
+	cout << endl << endl << endl << "Reponse temporelle avec E = 10.0" << endl;
 	sys.simulation("bin/SaveAndLoad/ReponseTemporelle.txt", E, x0);
-
-
 }

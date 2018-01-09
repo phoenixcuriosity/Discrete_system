@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.20
+last modification on this file on version:0.21
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -19,6 +19,7 @@ public:
 	Signal();
 	Signal(unsigned int);
 	Signal(unsigned int, double);
+	Signal(unsigned int, double*);
 	~Signal();
 
 
@@ -58,7 +59,10 @@ private:
 class Rampe : public Signal{
 public:
 	Rampe();
+	Rampe(unsigned int nbech, double slope);
 	~Rampe();
+
+	double* calculAmplitude(unsigned int nbech, double slope);
 
 private:
 	double _slope;

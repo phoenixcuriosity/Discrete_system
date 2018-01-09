@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.20
+last modification on this file on version:0.21
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -24,8 +24,15 @@ Signal::Signal(unsigned int size) : _tab(allocate(size)), _nbech(size)
 Signal::Signal(unsigned int size, double userValue) : _tab(allocate(size, userValue)), _nbech(size)
 {
 }
+Signal::Signal(unsigned int size, double* tab) : _tab(tab), _nbech(size)
+{
+}
 Signal::~Signal()
 {
+	if (_tab != nullptr) {
+		delete   _tab;
+		_tab = nullptr;
+	}
 }
 
 void Signal::SETnbech(unsigned int nbech){
@@ -89,7 +96,7 @@ double* Signal::allocate(unsigned int size, double userValue) const {
 
 
 
-Echelon::Echelon() : Signal(), _amplitude(1)
+Echelon::Echelon() : _amplitude(1)
 {
 }
 Echelon::Echelon(unsigned int nbech, double amplitude) : Signal(nbech, amplitude), _amplitude(amplitude)
@@ -105,4 +112,30 @@ void Echelon::SETamplitude(double amplitude){
 }
 double Echelon::GETamplitude()const{
 	return _amplitude;
+}
+
+
+
+
+
+
+
+Rampe::Rampe()
+{
+}
+Rampe::Rampe(unsigned int nbech, double slope):Signal(nbech, calculAmplitude(nbech, slope)), _slope(slope)
+{
+}
+Rampe::~Rampe()
+{
+}
+
+double* Rampe::calculAmplitude(unsigned int nbech, double slope){
+	double somme = 0;
+	double* buffer = new double[nbech];
+	for (unsigned int i = 0; i < nbech; i++){
+		buffer[i] = somme;
+		somme += slope;
+	}
+	return buffer;
 }

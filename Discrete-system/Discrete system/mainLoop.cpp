@@ -31,10 +31,10 @@ void mainLoop(sysinfo& information){
 	testSYSETATDiscret();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 19");
+	logfileconsole("version: 20");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
-
+	
 	//representation(information);
 	
 	/*
