@@ -2,7 +2,7 @@
 Created by SAUTER Robin
 _________Init Success_________
 _________START PROGRAM_________
-version: 21
+version: 22
 This is a free software, you can redistribute it and/or modify it
 
 type 1 (Fct Discret)

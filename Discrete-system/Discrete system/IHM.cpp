@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.22
+last modification on this file on version:0.23
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -38,7 +38,7 @@ void mainLoop(IHM& ihm){
 	//testIHM();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 22");
+	logfileconsole("version: 23");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
@@ -61,12 +61,14 @@ void FCTLoop(IHM& ihm){
 	unsigned int request = 0;
 	double deltaT = 0;
 	bool continuer = true;
+	FCTDiscret test;
 
 	while (continuer){
 		logfileconsole("You have selected Fct Discret");
 		logfileconsole("type 1 to create the num and the den");
 		logfileconsole("or type 2 to edit the FCT or type 3 to display the FCT");
-		logfileconsole("or type 4 to return to previous menu : ");
+		logfileconsole("or type 4 for Jury or type 5 for Bode");
+		logfileconsole("or type 6 to return to previous menu : ");
 		cin >> request;
 		switch (request){
 		case createNumDen:
@@ -83,10 +85,28 @@ void FCTLoop(IHM& ihm){
 			cout << endl << endl;
 			break;
 		case editFCT:
+			modifFCT(ihm);
 			break;
 		case displayFCT:
-			logfileconsole("FCT\n");
-			ihm.GETfct()->printOn();
+			if (*ihm.GETfct() == test)
+				logfileconsole("FCT doesn't exist");
+			else{
+				logfileconsole("FCT\n");
+				ihm.GETfct()->printOn();
+			}
+			break;
+		case jury:
+			if (*ihm.GETfct() == test)
+				logfileconsole("FCT doesn't exist");
+			else{
+				ihm.GETfct()->tabJury();
+			}
+			break;
+		case bode:
+			if (*ihm.GETfct() == test)
+				logfileconsole("FCT doesn't exist");
+			else
+				diagBode(ihm);	
 			break;
 		case previousMenuFCT:
 			continuer = false;
@@ -94,7 +114,39 @@ void FCTLoop(IHM& ihm){
 		}
 	}
 }
+void modifFCT(IHM& ihm){
+	unsigned int request = 0;
+	double deltaT = 0;
+	unsigned int order = 0;
+	double coef = 0;
+	bool continuer = true;
 
+	while (continuer){
+		logfileconsole("You have selected edit FCT");
+		logfileconsole("type 1 to edit the num and the den");
+		logfileconsole("or type 2 to edit the den or type 3 to edit deltaT");
+		logfileconsole("or type 4 to return to previous menu : ");
+		cin >> request;
+		switch (request){
+		case editnum:
+			createNum(ihm);
+			break;
+		case editden:
+			createDen(ihm);
+			break;
+		case editdeltaT:
+			cout << "Init deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
+			logfileconsole("deltaT of FCT? : ");
+			cin >> deltaT;
+			ihm.GETfct()->SETdeltaT(deltaT);
+			cout << "New deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
+			break;
+		case previousMenuEditFCT:
+			continuer = false;
+			break;
+		}
+	}
+}
 void createNum(IHM& ihm){
 	unsigned int order = 0;
 	double coef = 0;
@@ -103,9 +155,11 @@ void createNum(IHM& ihm){
 	logfileconsole("order of FCT? : ");
 	cin >> order;
 	ihm.GETfct()->SETnum(order);
+	logfileconsole("new order = " + to_string(order));
 	for (unsigned int i = 0; i <= order; i++){
 		logfileconsole("coef n:" + to_string(i) + " = ");
 		cin >> coef;
+		logfileconsole("new coef n:" + to_string(i) + " = " + to_string(coef));
 		ihm.GETfct()->SETnumThisCoef(i, coef);
 	}
 	logfileconsole("You create the Num");
@@ -118,12 +172,35 @@ void createDen(IHM& ihm){
 	logfileconsole("order of FCT? : ");
 	cin >> order;
 	ihm.GETfct()->SETden(order);
+	logfileconsole("new order = " + to_string(order));
 	for (unsigned int i = 0; i <= order; i++){
 		logfileconsole("coef n:" + to_string(i) + " = ");
 		cin >> coef;
+		logfileconsole("new coef n:" + to_string(i) + " = " + to_string(coef));
 		ihm.GETfct()->SETdenThisCoef(i, coef);
 	}
 	logfileconsole("You create the Den");
+}
+void diagBode(IHM& ihm){
+	double wMin = 0, wMax = 0;
+	unsigned int nbpoint = 0;
+	logfileconsole("Bode");
+	logfileconsole("wMin ? : ");
+	cin >> wMin;
+	logfileconsole("new wMin = " + to_string(wMin));
+	logfileconsole("wMax ? : ");
+	cin >> wMax;
+	logfileconsole("new wMax = " + to_string(wMax));
+	logfileconsole("nbpoint ? : ");
+	cin >> nbpoint;
+	logfileconsole("new nbpoint = " + to_string(nbpoint));
+
+	ihm.GETfct()->Bode(wMin, wMax, nbpoint);
+}
+
+
+void SYSLoop(IHM& ihm){
+
 }
 
 

@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.22
+last modification on this file on version:0.23
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -23,7 +23,8 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 
 enum { selectnothing, selectFCT, selectSYSETAT, exitProgram };
-enum { nothing, createNumDen, editFCT, displayFCT, previousMenuFCT };
+enum { nothing, createNumDen, editFCT, displayFCT, jury, bode,previousMenuFCT };
+enum { nothingtoedit, editnum, editden, editdeltaT, previousMenuEditFCT };
 
 
 
@@ -34,16 +35,19 @@ public:
 
 
 	friend void mainLoop(IHM& ihm);
+
 	friend void FCTLoop(IHM& ihm);
+	friend void modifFCT(IHM& ihm);
 	friend void createNum(IHM& ihm);
 	friend void createDen(IHM& ihm);
+	friend void diagBode(IHM& ihm);
+
+	friend void SYSLoop(IHM& ihm);
 
 	void SETfct(FCTDiscret* fct);
 	void SETsys(SYSETATDiscret* sys);
-	void SETuserRequest(unsigned int userRequest);
 	FCTDiscret* GETfct()const;
 	SYSETATDiscret* GETsys()const;
-	unsigned int GETuserRequest()const;
 
 	friend void testIHM();
 	friend void logfileconsole(const std::string& msg);
