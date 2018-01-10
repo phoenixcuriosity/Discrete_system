@@ -2,9 +2,77 @@
 Created by SAUTER Robin
 _________Init Success_________
 _________START PROGRAM_________
-version: 22
+version: 23
 This is a free software, you can redistribute it and/or modify it
 
+type 1 (Fct Discret)
+ or type 2 SYSETATDiscret
+ or type 3 to exit the program
+
+You have selected Fct Discret
+type 1 to create the num and the den
+or type 2 to edit the FCT or type 3 to display the FCT
+or type 4 for Jury or type 5 for Bode
+or type 6 to return to previous menu : 
+deltaT of FCT? : 
+You have selected to create Num
+order of FCT? : 
+new order = 1
+coef n:0 = 
+new coef n:0 = 0.000000
+coef n:1 = 
+new coef n:1 = 1.000000
+You create the Num
+You have selected to create Den
+order of FCT? : 
+new order = 3
+coef n:0 = 
+new coef n:0 = -0.020000
+coef n:1 = 
+new coef n:1 = 0.300000
+coef n:2 = 
+new coef n:2 = 1.000000
+coef n:3 = 
+new coef n:3 = 1.000000
+You create the Den
+You have created with SUCCESS the FCT, Yeah!!! You did it!!!
+Now try to diplay it
+You have selected Fct Discret
+type 1 to create the num and the den
+or type 2 to edit the FCT or type 3 to display the FCT
+or type 4 for Jury or type 5 for Bode
+or type 6 to return to previous menu : 
+FCT
+
+You have selected Fct Discret
+type 1 to create the num and the den
+or type 2 to edit the FCT or type 3 to display the FCT
+or type 4 for Jury or type 5 for Bode
+or type 6 to return to previous menu : 
+You have selected Fct Discret
+type 1 to create the num and the den
+or type 2 to edit the FCT or type 3 to display the FCT
+or type 4 for Jury or type 5 for Bode
+or type 6 to return to previous menu : 
+FCT
+
+You have selected Fct Discret
+type 1 to create the num and the den
+or type 2 to edit the FCT or type 3 to display the FCT
+or type 4 for Jury or type 5 for Bode
+or type 6 to return to previous menu : 
+type 1 (Fct Discret)
+ or type 2 SYSETATDiscret
+ or type 3 to exit the program
+
+You have select SYSETATDiscret
+type 1 to edit A, B, C, D
+or type 2 to compute A, B, C, D or type 3 to simulate
+or type 4 to return to previous menu : 
+You have select SYSETATDiscret
+type 1 to edit A, B, C, D
+or type 2 to compute A, B, C, D or type 3 to simulate
+or type 4 to return to previous menu : 
 type 1 (Fct Discret)
  or type 2 SYSETATDiscret
  or type 3 to exit the program

@@ -28,7 +28,11 @@ SYSETATDiscret::~SYSETATDiscret()
 std::ostream& operator<<(std::ostream& os, const SYSETATDiscret& s){
 	return os << s.printOn(false);
 }
-
+bool operator ==(const SYSETATDiscret& a, const SYSETATDiscret& b){
+	if (a.GETA() == b.GETA() && a.GETB() == b.GETB() && a.GETC() == b.GETC() && a.GETD() == b.GETD() && a.GETTe() == b.GETTe())
+		return true;
+	return false;
+}
 
 void SYSETATDiscret::SETA(const Matrice& Z){
 	_A = Z;

@@ -25,6 +25,7 @@ public:
 	~SYSETATDiscret();
 
 	friend std::ostream& operator<<(std::ostream&, const SYSETATDiscret&);
+	friend bool operator ==(const SYSETATDiscret&, const SYSETATDiscret&);
 
 	void SETA(const Matrice&);
 	void SETB(const Matrice&);

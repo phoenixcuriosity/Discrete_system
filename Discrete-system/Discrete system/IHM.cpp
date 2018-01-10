@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.23
+last modification on this file on version:0.23-A
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -30,12 +30,18 @@ void mainLoop(IHM& ihm){
 	unsigned int request = 0;
 	logfileconsole("_________Init Success_________");
 
+	/*
+		Test des différentes classe du projet
+
+	*/
+	
 	//testPolynome();
 	//testFCTDiscret();
 	//testMatrice();
 	//testComplexe();
 	//testSYSETATDiscret();
 	//testIHM();
+
 
 	logfileconsole("_________START PROGRAM_________");
 	logfileconsole("version: 23");
@@ -49,7 +55,7 @@ void mainLoop(IHM& ihm){
 			FCTLoop(ihm);
 			break;
 		case selectSYSETAT:
-			logfileconsole("You have select SYSETATDiscret");
+			SYSLoop(ihm);
 			break;
 		case exitProgram:
 			continuer = false;
@@ -200,7 +206,41 @@ void diagBode(IHM& ihm){
 
 
 void SYSLoop(IHM& ihm){
+	
+	unsigned int request = 0;
+	bool continuer = true;
+	FCTDiscret test;
+	SYSETATDiscret Test;
 
+	while (continuer){
+		logfileconsole("You have select SYSETATDiscret");
+		logfileconsole("type 1 to edit A, B, C, D");
+		logfileconsole("or type 2 to compute A, B, C, D or type 3 to simulate");
+		logfileconsole("or type 4 to return to previous menu : ");
+		cin >> request;
+		switch (request){
+		case editMatrice:
+
+			break;
+		case calculMatriceABCD:
+			if (*ihm.GETfct() == test)
+				logfileconsole("FCT doesn't exist");
+			else{
+				ihm.GETsys()->calculABCD(*ihm.GETfct());
+				ihm.GETsys()->printOn();
+			}
+		case simulationTemporelle:
+			if (*ihm.GETsys() == Test)
+				logfileconsole("A,B,C,D doesn't exist");
+			else{
+				//ihm.GETsys()->simulation();
+			}
+			break;
+		case previousMenuSYS:
+			continuer = false;
+			break;
+		}
+	}
 }
 
 
