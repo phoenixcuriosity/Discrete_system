@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.24
+last modification on this file on version:0.25
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -42,11 +42,11 @@ void mainLoop(IHM& ihm){
 	//testMatrice();
 	//testComplexe();
 	//testSYSETATDiscret();
+	//testSignal();
 	//testIHM();
 
-
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 24");
+	logfileconsole("version: 25");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
@@ -73,7 +73,7 @@ void FCTLoop(IHM& ihm){
 
 	while (continuer){
 		logfileconsole("You have selected Fct Discret");
-		logfileconsole("type 1 to create the num and the den");
+		logfileconsole("type 1 to create the numerator and the denominator");
 		logfileconsole("or type 2 to edit the FCT \nor type 3 to display the FCT");
 		logfileconsole("or type 4 for Jury \nor type 5 for Bode");
 		logfileconsole("or type 6 to return to previous menu : ");
@@ -123,8 +123,8 @@ void modifFCT(IHM& ihm){
 
 	while (continuer){
 		logfileconsole("You have selected edit FCT");
-		logfileconsole("type 1 to edit the num and the den");
-		logfileconsole("or type 2 to edit the den \nor type 3 to edit deltaT");
+		logfileconsole("type 1 to edit the numerator");
+		logfileconsole("or type 2 to edit the denominator \nor type 3 to edit deltaT");
 		logfileconsole("or type 4 to return to previous menu : ");
 		cin >> request;
 		switch (request){
@@ -148,11 +148,14 @@ void modifFCT(IHM& ihm){
 	}
 }
 void createNum(IHM& ihm){
-	unsigned int order = 0;
+	/*
+		Création du numérateur avec un test pour vérifier l'ordre à la fin
+	*/
+	unsigned int order = 0, realOrderNum = 0;
 	double coef = 0;
 
-	logfileconsole("You have selected to create Num");
-	logfileconsole("order of FCT? : ");
+	logfileconsole("You have selected to create Numerator");
+	logfileconsole("order of numerator? : ");
 	cin >> order;
 	ihm.GETfct()->SETnum(order);
 	logfileconsole("new order = " + to_string(order));
@@ -162,14 +165,24 @@ void createNum(IHM& ihm){
 		logfileconsole("new coef n:" + to_string(i) + " = " + to_string(coef));
 		ihm.GETfct()->SETnumThisCoef(i, coef);
 	}
-	logfileconsole("You create the Num");
+	for (int i = order; i >= 0; i--){
+		if (ihm.GETfct()->GETnum().GETcoefTab(i) != 0){
+			realOrderNum = i;
+			break;
+		}
+	}
+	ihm.GETfct()->SETnumOrder(realOrderNum);
+	logfileconsole("You have created the numerator, order : " + to_string(realOrderNum));
 }
 void createDen(IHM& ihm){
-	unsigned int order = 0;
+	/*
+		Création du dénominateur avec un test pour vérifier l'ordre à la fin
+	*/
+	unsigned int order = 0, realOrderDen = 0;
 	double coef = 0;
 
-	logfileconsole("You have selected to create Den");
-	logfileconsole("order of FCT? : ");
+	logfileconsole("You have selected to create Denominator");
+	logfileconsole("order of denominator? : ");
 	cin >> order;
 	ihm.GETfct()->SETden(order);
 	logfileconsole("new order = " + to_string(order));
@@ -179,7 +192,14 @@ void createDen(IHM& ihm){
 		logfileconsole("new coef n:" + to_string(i) + " = " + to_string(coef));
 		ihm.GETfct()->SETdenThisCoef(i, coef);
 	}
-	logfileconsole("You create the Den");
+	for (int i = order; i >= 0; i--){
+		if (ihm.GETfct()->GETden().GETcoefTab(i) != 0){
+			realOrderDen = i;
+			break;
+		}
+	}
+	ihm.GETfct()->SETdenOrder(realOrderDen);
+	logfileconsole("You have created the denominator, order : " + to_string(realOrderDen));
 }
 void diagBode(IHM& ihm){
 	double wMin = 0, wMax = 0;
@@ -194,7 +214,6 @@ void diagBode(IHM& ihm){
 	logfileconsole("nbpoint ? : ");
 	cin >> nbpoint;
 	logfileconsole("new nbpoint = " + to_string(nbpoint));
-
 	ihm.GETfct()->Bode(wMin, wMax, nbpoint);
 }
 
@@ -274,7 +293,7 @@ void simulationLoop(IHM& ihm){
 	cout << endl << "condition initial : x0 " << endl << x0;
 	while (continuer){
 		logfileconsole("type 1 for a default initial condition");
-		logfileconsole("or type 2 to edit initial condition");
+		logfileconsole("or type 2 to edit initial condition : ");
 		cin >> request;
 		switch (request){
 		case 1:
@@ -340,7 +359,7 @@ void testIHM(){
 
 	ihm.GETsys()->calculABCD(*ihm.GETfct());
 	ihm.GETsys()->SETTe(100);
-	ihm.GETsys()->printOn();
+	cout << endl << *ihm.GETsys();
 	ihm.GETfct()->tabJury();
 	cout << endl << "BODE" << endl;
 	ihm.GETfct()->Bode(0.1, 10, 100);

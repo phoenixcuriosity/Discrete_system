@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.21
+last modification on this file on version:0.25
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -14,7 +14,7 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 #include "LIB.h"
 
-class Signal{ // classe abstraite -> impossible de créer un d'objet Signal
+class Signal{ // classe abstraite -> impossible d'instancier un d'objet Signal
 public:
 	Signal();
 	Signal(unsigned int);
@@ -22,14 +22,16 @@ public:
 	Signal(unsigned int, double*);
 	~Signal();
 
+	friend std::ostream& operator<<(std::ostream&, const Signal&);
 
 	virtual void SETnbech(unsigned int);
 	virtual void SETthiscoef(unsigned int, double);
 	virtual double GETthiscoef(unsigned int)const;
 	virtual unsigned int GETnbech()const;
-	//virtual unsigned int shape()const = 0;
 
-	virtual std::string printOn(bool on = true);
+	virtual std::string printOn(bool on = true)const = 0;
+
+	friend void testSignal();
 
 
 protected:
@@ -53,6 +55,8 @@ public:
 	virtual void SETamplitude(double);
 	virtual double GETamplitude()const;
 
+	virtual std::string printOn(bool on = true)const;
+
 private:
 	double _amplitude;
 };
@@ -62,7 +66,12 @@ public:
 	Rampe(unsigned int nbech, double slope);
 	~Rampe();
 
+	virtual void SETslope(double);
+	virtual double GETslope()const;
+
 	double* calculAmplitude(unsigned int nbech, double slope);
+
+	virtual std::string printOn(bool on = true)const;
 
 private:
 	double _slope;

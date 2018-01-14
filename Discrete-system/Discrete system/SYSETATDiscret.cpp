@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.20
+last modification on this file on version:0.25
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -94,43 +94,28 @@ double SYSETATDiscret::GETTe()const{
 void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 	/*
 		Calcul des matrices A, B, C et D
-		un test au début est effectué pour vérifier l'ordre des polynomes et éviter de diviser par 0
 	*/
-	unsigned int realOrderDen = 0;
-	unsigned int realOrderNum = 0;
 
-	for (int i = fct.GETden().GETorder(); i >= 0; i--){
-		if (fct.GETden().GETcoefTab(i) != 0){
-			realOrderDen = i;
-			break;
+	if (fct.GETden().GETorder() > fct.GETnum().GETorder()){
+		_A.editsize(fct.GETden().GETorder(), fct.GETden().GETorder());
+		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
+			_A.SETthiscoef(fct.GETden().GETorder() - 1, i,
+				-(fct.GETden().GETcoefTab(i) / fct.GETden().GETcoefTab(fct.GETden().GETorder())));
 		}
-	}
-	for (int i = fct.GETnum().GETorder(); i >= 0; i--){
-		if (fct.GETnum().GETcoefTab(i) != 0){
-			realOrderNum = i;
-			break;
-		}
-	}
-	if (realOrderDen > realOrderNum){
-		_A.editsize(realOrderDen, realOrderDen);
-		for (unsigned int i = 0; i < realOrderDen; i++) {
-			_A.SETthiscoef(realOrderDen - 1, i,
-				-(fct.GETden().GETcoefTab(i) / fct.GETden().GETcoefTab(realOrderDen)));
-		}
-		for (unsigned int i = 0; i < realOrderDen; i++) {
-			for (unsigned int j = 1; j < realOrderDen; j++) {
+		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
+			for (unsigned int j = 1; j < fct.GETden().GETorder(); j++) {
 				_A.SETthiscoef(i, j, 1);
 				i++;
 			}
 		}
 		
 
-		_B.editsize(realOrderDen, 1);
-		_B.SETthiscoef(_B.GETlength() - 1, 0, 1 / fct.GETden().GETcoefTab(realOrderDen));
+		_B.editsize(fct.GETden().GETorder(), 1);
+		_B.SETthiscoef(_B.GETlength() - 1, 0, 1 / fct.GETden().GETcoefTab(fct.GETden().GETorder()));
 		
 
-		_C.editsize(1, realOrderDen);
-		for (unsigned int i = 0; i <= realOrderNum; i++) {
+		_C.editsize(1, fct.GETden().GETorder());
+		for (unsigned int i = 0; i <= fct.GETnum().GETorder(); i++) {
 			_C.SETthiscoef(0, i, fct.GETnum().GETcoefTab(i));
 		}
 		
@@ -138,7 +123,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 		_D.editsize(1, 1);
 	}
 	else
-		cout << endl << "______Order of Num >= Order of Den";
+		cout << endl << "______Order of Num = " << fct.GETden().GETorder() << "  >= Order of Den = " << fct.GETnum().GETorder();
 }
 
 

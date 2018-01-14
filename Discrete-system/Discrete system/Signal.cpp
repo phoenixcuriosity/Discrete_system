@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.24
+last modification on this file on version:0.25
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -33,6 +33,10 @@ Signal::~Signal()
 		delete   _tab;
 		_tab = nullptr;
 	}
+}
+
+std::ostream& operator<<(std::ostream& os, const Signal& s){
+	return os << s.printOn(false);
 }
 
 void Signal::SETnbech(unsigned int nbech){
@@ -66,15 +70,6 @@ bool Signal::assertIndex(unsigned int index)const {
 	}
 }
 
-std::string Signal::printOn(bool on){
-	string equation = "";
-	ostringstream stream;
-
-	if (on)
-		cout << equation;
-	return equation = stream.str();
-}
-
 double* Signal::allocate(unsigned int size) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
@@ -92,6 +87,23 @@ double* Signal::allocate(unsigned int size, double userValue) const {
 	for (unsigned int i = 0; i < size; i++)
 		buffer[i] = userValue;
 	return buffer;
+}
+
+void testSignal(){
+	ostringstream stream;
+	string texte = "";
+
+	stream << endl << endl << "___TEST Signal___" << endl << endl;
+
+	Echelon step(10, 5);
+	stream << endl << "Echelon de " << step.GETnbech() << " echantillons d'amplitude " << step.GETamplitude() << step << endl;
+
+	Rampe ramp(10, 2);
+	stream << "Rampe de " << ramp.GETnbech() << " echantillons de pente " << ramp.GETslope() << ramp << endl;
+
+
+	texte = stream.str();
+	cout << texte;
 }
 
 
@@ -122,20 +134,45 @@ double Echelon::GETamplitude()const{
 	return _amplitude;
 }
 
+std::string Echelon::printOn(bool on)const{
+	ostringstream stream;
+	string texte = "";
+	for (unsigned int i = 0; i < this->GETnbech(); i++){
+		stream << endl << i << " , " << _amplitude;
+	}
+	texte = stream.str();
+	if (on)
+		cout << texte;
+	return texte;
+}
 
 
 
 
 
 
-Rampe::Rampe()
+
+Rampe::Rampe() : Signal(), _slope(0)
 {
 }
-Rampe::Rampe(unsigned int nbech, double slope):Signal(nbech, calculAmplitude(nbech, slope)), _slope(slope)
+Rampe::Rampe(unsigned int nbech, double slope): Signal(nbech, calculAmplitude(nbech, slope)), _slope(slope)
 {
 }
 Rampe::~Rampe()
 {
+}
+
+
+void Rampe::SETslope(double slope){
+	_slope = slope;
+	double somme = 0;
+	for (unsigned int i = 0; i < this->GETnbech(); i++){
+		this->SETthiscoef(i, somme);
+		somme += slope;
+	}	
+}
+double Rampe::GETslope()const{
+	return _slope;
 }
 
 double* Rampe::calculAmplitude(unsigned int nbech, double slope){
@@ -146,4 +183,16 @@ double* Rampe::calculAmplitude(unsigned int nbech, double slope){
 		somme += slope;
 	}
 	return buffer;
+}
+
+std::string Rampe::printOn(bool on)const{
+	ostringstream stream;
+	string texte = "";
+	for (unsigned int i = 0; i < this->GETnbech(); i++){
+		stream << endl << i << " , " << this->GETthiscoef(i);
+	}
+	texte = stream.str();
+	if (on)
+		cout << texte;
+	return texte;
 }
