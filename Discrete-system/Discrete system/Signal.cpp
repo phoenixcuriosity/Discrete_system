@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.21
+last modification on this file on version:0.24
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -37,6 +37,12 @@ Signal::~Signal()
 
 void Signal::SETnbech(unsigned int nbech){
 	_nbech = nbech;
+	double* buffer = new double[nbech];
+	for (unsigned int i = 0; i < nbech; i++)
+		buffer[i] = 0.0;
+
+	delete _tab;
+	_tab = buffer;
 }
 void Signal::SETthiscoef(unsigned int index, double userValue){
 	if (assertIndex(index))
@@ -109,6 +115,8 @@ Echelon::~Echelon()
 
 void Echelon::SETamplitude(double amplitude){
 	_amplitude = amplitude;
+	for (unsigned int i = 0; i < this->GETnbech(); i++)
+		this->SETthiscoef(i, amplitude);
 }
 double Echelon::GETamplitude()const{
 	return _amplitude;

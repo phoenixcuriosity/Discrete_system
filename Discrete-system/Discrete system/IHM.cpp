@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.23-A
+last modification on this file on version:0.24
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -13,15 +13,17 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 using namespace std;
 
-IHM::IHM() : _fct(0), _sys(0)
+IHM::IHM() : _fct(0), _sys(0), _step(0)
 {
 	_fct = new FCTDiscret;
 	_sys = new SYSETATDiscret;
+	_step = new Echelon;
 }
 IHM::~IHM()
 {
 	delete _fct;
 	delete _sys;
+	delete _step;
 }
 
 
@@ -31,7 +33,7 @@ void mainLoop(IHM& ihm){
 	logfileconsole("_________Init Success_________");
 
 	/*
-		Test des différentes classe du projet
+		Test des différentes classes du projet
 
 	*/
 	
@@ -44,11 +46,11 @@ void mainLoop(IHM& ihm){
 
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 23");
+	logfileconsole("version: 24");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
-		logfileconsole("type 1 (Fct Discret)\n or type 2 SYSETATDiscret\n or type 3 to exit the program\n");
+		logfileconsole("type 1 Fct Discret\n or type 2 SYSETATDiscret\n or type 3 to exit the program\n");
 		cin >> request;
 		switch (request){
 		case selectFCT:
@@ -72,13 +74,12 @@ void FCTLoop(IHM& ihm){
 	while (continuer){
 		logfileconsole("You have selected Fct Discret");
 		logfileconsole("type 1 to create the num and the den");
-		logfileconsole("or type 2 to edit the FCT or type 3 to display the FCT");
-		logfileconsole("or type 4 for Jury or type 5 for Bode");
+		logfileconsole("or type 2 to edit the FCT \nor type 3 to display the FCT");
+		logfileconsole("or type 4 for Jury \nor type 5 for Bode");
 		logfileconsole("or type 6 to return to previous menu : ");
 		cin >> request;
 		switch (request){
 		case createNumDen:
-
 			cout << "Init deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
 			logfileconsole("deltaT of FCT? : ");
 			cin >> deltaT;
@@ -94,24 +95,17 @@ void FCTLoop(IHM& ihm){
 			modifFCT(ihm);
 			break;
 		case displayFCT:
-			if (*ihm.GETfct() == test)
-				logfileconsole("FCT doesn't exist");
-			else{
+			if (assertFCT(*ihm.GETfct(), test)){
 				logfileconsole("FCT\n");
-				ihm.GETfct()->printOn();
+				cout << endl << *ihm.GETfct();
 			}
 			break;
 		case jury:
-			if (*ihm.GETfct() == test)
-				logfileconsole("FCT doesn't exist");
-			else{
+			if (assertFCT(*ihm.GETfct(), test))
 				ihm.GETfct()->tabJury();
-			}
 			break;
 		case bode:
-			if (*ihm.GETfct() == test)
-				logfileconsole("FCT doesn't exist");
-			else
+			if (assertFCT(*ihm.GETfct(), test))
 				diagBode(ihm);	
 			break;
 		case previousMenuFCT:
@@ -130,7 +124,7 @@ void modifFCT(IHM& ihm){
 	while (continuer){
 		logfileconsole("You have selected edit FCT");
 		logfileconsole("type 1 to edit the num and the den");
-		logfileconsole("or type 2 to edit the den or type 3 to edit deltaT");
+		logfileconsole("or type 2 to edit the den \nor type 3 to edit deltaT");
 		logfileconsole("or type 4 to return to previous menu : ");
 		cin >> request;
 		switch (request){
@@ -213,9 +207,9 @@ void SYSLoop(IHM& ihm){
 	SYSETATDiscret Test;
 
 	while (continuer){
-		logfileconsole("You have select SYSETATDiscret");
+		logfileconsole("You have selected SYSETATDiscret");
 		logfileconsole("type 1 to edit A, B, C, D");
-		logfileconsole("or type 2 to compute A, B, C, D or type 3 to simulate");
+		logfileconsole("or type 2 to compute A, B, C, D \nor type 3 to simulate");
 		logfileconsole("or type 4 to return to previous menu : ");
 		cin >> request;
 		switch (request){
@@ -223,17 +217,16 @@ void SYSLoop(IHM& ihm){
 
 			break;
 		case calculMatriceABCD:
-			if (*ihm.GETfct() == test)
-				logfileconsole("FCT doesn't exist");
-			else{
+			if (assertFCT(*ihm.GETfct(),test)){
 				ihm.GETsys()->calculABCD(*ihm.GETfct());
-				ihm.GETsys()->printOn();
+				cout << endl << *ihm.GETsys();
 			}
+			break;
 		case simulationTemporelle:
 			if (*ihm.GETsys() == Test)
 				logfileconsole("A,B,C,D doesn't exist");
 			else{
-				//ihm.GETsys()->simulation();
+				simulationLoop(ihm);
 			}
 			break;
 		case previousMenuSYS:
@@ -241,6 +234,64 @@ void SYSLoop(IHM& ihm){
 			break;
 		}
 	}
+}
+void simulationLoop(IHM& ihm){
+	unsigned int request = 0;
+	bool continuer = true;
+	double amplitude = 0;
+	unsigned int nbech = 0;
+
+	logfileconsole("You have selected simulation");
+	logfileconsole("What type of Input ?");
+	while (continuer){
+		logfileconsole("type 1 for a step");
+		logfileconsole("or type 2 for a ramp \nor type 3 for a sinus : ");
+		cin >> request;
+		switch (request){
+		case stepInput:
+			logfileconsole("number of samples : ");
+			cin >> nbech;
+			ihm.GETstep()->SETnbech(nbech);
+			cout << "new number of samples = " << ihm.GETstep()->GETnbech();
+			logfileconsole("Amplitude : ");
+			cin >> amplitude;
+			ihm.GETstep()->SETamplitude(amplitude);
+			cout << "new amplitude = " << ihm.GETstep()->GETamplitude();
+			continuer = false;
+			break;
+		case rampInput:
+
+			break;
+		case sinusInput:
+			
+			break;
+		}
+	}
+	request = 0;
+	continuer = true;
+	double coef = 0;
+	Matrice x0(ihm.GETsys()->GETA().GETlength(), 1);
+	cout << endl << "condition initial : x0 " << endl << x0;
+	while (continuer){
+		logfileconsole("type 1 for a default initial condition");
+		logfileconsole("or type 2 to edit initial condition");
+		cin >> request;
+		switch (request){
+		case 1:
+			continuer = false;
+			break;
+		case 2:
+			for (unsigned int i = 0; i < ihm.GETsys()->GETA().GETlength(); i++){
+				cout << endl << "coef n: " << i << ",0 = ";
+				cin >> coef;
+				x0.SETthiscoef(i, 0, coef);
+			}
+			cout << endl << "new x0 :" << endl << x0;
+			continuer = false;
+			break;
+		}
+	}
+	ihm.GETsys()->simulation("bin/SaveAndLoad/ReponseTemporelle.txt", *ihm.GETstep(), x0);
 }
 
 
@@ -252,13 +303,27 @@ void IHM::SETfct(FCTDiscret* fct){
 void IHM::SETsys(SYSETATDiscret* sys){
 	_sys = sys;
 }
+void IHM::SETstep(Echelon* step){
+	_step = step;
+}
 FCTDiscret* IHM::GETfct()const{
 	return _fct;
 }
 SYSETATDiscret* IHM::GETsys()const{
 	return _sys;
 }
+Echelon* IHM::GETstep()const{
+	return _step;
+}
 
+
+bool assertFCT(const FCTDiscret fct, const FCTDiscret test){
+	if (fct == test){
+		logfileconsole("_____FCT doesn't exist");
+		return false;
+	}
+	return true;
+}
 
 void testIHM(){
 	cout << endl << endl << "___TEST IHM___" << endl << endl;

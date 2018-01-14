@@ -152,6 +152,9 @@ void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signa
 	string rep;
 	Matrice dx(_A.GETlength(), 1), y(1, 1);
 
+	cout << endl << signal.GETthiscoef(0);
+	cout << endl << signal.GETthiscoef(10);
+
 
 
 	for (unsigned int i = 0; i < signal.GETnbech(); i++){
