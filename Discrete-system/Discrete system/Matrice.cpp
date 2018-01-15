@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.26
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -182,7 +182,9 @@ double** Matrice::allocate(unsigned int length, unsigned int height, double user
 	return buffer;
 }
 double** Matrice::allocate(const Matrice& P) const {
-
+	/*
+		recopie de l'allocation de la matrice P
+	*/
 	double** buffer = new double*[P._length];
 	for (unsigned int i = 0; i < P._length; i++)
 		buffer[i] = new double[P._height];
@@ -210,18 +212,12 @@ unsigned int Matrice::GETlength()const {
 unsigned int Matrice::GETheight()const {
 	return _height;
 }
-unsigned int Matrice::GETstringSize() const{
-	/*
-	
-	*/
-	string equation;
-	equation = this->printOn(false);
-	_stringSize = equation.length();
-	return _stringSize;
-}
 
 
 Matrice transposistion(const Matrice& A){
+	/*
+		transpose la matrice
+	*/
 	Matrice resultat(A.GETheight(), A.GETlength());
 	for (unsigned int i = 0; i < resultat.GETlength(); i++){
 		for (unsigned int j = 0; j < resultat.GETheight(); j++)
@@ -230,6 +226,9 @@ Matrice transposistion(const Matrice& A){
 	return resultat;
 }
 void Matrice::zero(){
+	/*
+		Ramplit la matrice de 0
+	*/
 	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
 			_tab[i][j] = 0;
@@ -237,6 +236,9 @@ void Matrice::zero(){
 	}
 }
 void Matrice::ones(){
+	/*
+		Ramplit la matrice de 1
+	*/
 	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
 			_tab[i][j] = 1;
@@ -244,6 +246,10 @@ void Matrice::ones(){
 	}
 }
 void Matrice::editsize(unsigned int length, unsigned int height) {
+	/*
+		Permet de changer la taille d'une matrice en gardant les coefficients existant
+	*/
+
 	if (assertRange(length, height)){
 		double** buffer = new double*[length];
 		for (unsigned int i = 0; i < length; i++)
@@ -299,7 +305,9 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 	}
 }
 void Matrice::growOneLOneC(){
-	
+	/*
+		fait grandir la matrice de 1 ligne et une colonne en gardant les coefficients existant
+	*/
 	double** buffer = new double*[_length + 1];
 	for (unsigned int i = 0; i < _length + 1; i++)
 		buffer[i] = new double[_height + 1];
@@ -329,7 +337,7 @@ void Matrice::growOneLOneC(){
 	_height++;
 }
 
-string Matrice::printOn(bool on)const{
+const string Matrice::printOn(bool on)const{
 	ostringstream stream;
 	string matrice = "";
 	for (unsigned int i = 0; i < _length; i++){
@@ -348,7 +356,7 @@ bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
 	if (lenght <= _length && height <= _height)
 		return true;
 	else {
-		cout << endl << "Matrice : assertIndex false";
+		cout << endl << "__________Matrice : assertIndex false";
 		return false;
 	}
 }
@@ -364,7 +372,7 @@ bool assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB
 	if (lenghtA == lenghtB && heightA == heightB)
 		return true;
 	else {
-		cout << endl << "Matrice : assertSize false";
+		cout << endl << "__________Matrice : assertSize false";
 		return false;
 	}
 }

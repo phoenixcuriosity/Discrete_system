@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.21
+last modification on this file on version:0.26
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -94,7 +94,7 @@ FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b){
 	return resultat;
 }
 
-string FCTDiscret::printOn(bool on) const{
+const string FCTDiscret::printOn(bool on) const{
 	/*
 		affiche sur la console : en haut le num, puis la barre de fraction et enfin le den
 		affichage selon la taille de la chaine de caratere la plus longue
@@ -224,7 +224,7 @@ bool FCTDiscret::tabJury(){
 		}
 		ligne1 = ligne2;
 	}
-	stream << endl << endl << "tableau de Jury = " << Jury;
+	stream << endl << endl << "table of Jury = " << Jury;
 
 
 
@@ -239,7 +239,7 @@ bool FCTDiscret::tabJury(){
 		condition++;
 	}
 	else
-		stream << " > a" << _den.GETorder() << " = " << _den.GETcoefTab(_den.GETorder()) << "	non Ok";
+		stream << " > a" << _den.GETorder() << " = " << _den.GETcoefTab(_den.GETorder()) << "	Not Ok";
 
 
 	/*
@@ -255,7 +255,7 @@ bool FCTDiscret::tabJury(){
 		condition++;
 	}
 	else
-		stream << "non Ok";
+		stream << "Not Ok";
 
 	/*
 	condition D(-1) > 0 si n pair et ondition D(-1) < 0 si n impair
@@ -269,7 +269,7 @@ bool FCTDiscret::tabJury(){
 		condition++;
 	}
 	else
-		stream << "	non Ok";
+		stream << "	Not Ok";
 		
 	if (_den.GETorder() > 2){
 		/*
@@ -281,7 +281,7 @@ bool FCTDiscret::tabJury(){
 			condition++;
 		}
 		else
-			stream << " < Q2 = " << abs(ligne2.GETcoefTab(2)) << "	non Ok";
+			stream << " < Q2 = " << abs(ligne2.GETcoefTab(2)) << "	Not Ok";
 	}
 	else{
 		condition++;
@@ -289,14 +289,12 @@ bool FCTDiscret::tabJury(){
 	
 
 	if (condition == 4){
-		stream << endl << "Le systeme est stable";
 		stream << endl;
 		tableauJury = stream.str();
 		cout << tableauJury;
 		return true;
 	}
 	else{
-		stream << endl << "Le systeme est instable";
 		stream << endl;
 		tableauJury = stream.str();
 		cout << tableauJury;
@@ -309,7 +307,7 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 		Diagramme de Bode en gain et phase
 	*/
 
-	ofstream reponse("bin/SaveAndLoad/Bode.txt");
+	ofstream reponse("Bode.txt");
 	string texte;
 	ostringstream stream;
 
@@ -318,14 +316,14 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 	double gain = 0, phase = 0;
 	Complexe Z, c, cnum, cden;
 
-	for (double i = wMin; i <= wMax; i += 0.1){
+	for (double i = wMin; i <= wMax; i += increment){
 		Z = tfReIm(1, i * _deltaT);
 		cnum = tfPolynomeComplexe(_num, Z);
 		cden = tfPolynomeComplexe(_den, Z);
 		c = cnum / cden;
 		gain = 20 * log10(module(c));
 		phase = - arg(c);
-		stream << endl << "w = " << i << " , gain = " << gain << " , phase = " << phase;
+		stream << endl << i << " , " << gain << " , " << phase;
 
 	}
 	texte = stream.str();

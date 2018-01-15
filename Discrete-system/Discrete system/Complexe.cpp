@@ -139,7 +139,7 @@ double Complexe::GETIm()const{
 
 
 
-string Complexe::printOn(bool on)const{
+const string Complexe::printOn(bool on)const{
 	string texte;
 	ostringstream stream;
 

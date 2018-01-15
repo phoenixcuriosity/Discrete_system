@@ -43,7 +43,7 @@ public:
 	double GETRe()const;
 	double GETIm()const;
 
-	std::string printOn(bool on = true)const;
+	const std::string printOn(bool on = true)const;
 
 	friend void testComplexe();
 

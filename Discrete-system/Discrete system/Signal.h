@@ -29,7 +29,7 @@ public:
 	virtual double GETthiscoef(unsigned int)const;
 	virtual unsigned int GETnbech()const;
 
-	virtual std::string printOn(bool on = true)const = 0;
+	virtual const std::string printOn(bool on = true)const = 0;
 
 	friend void testSignal();
 
@@ -55,7 +55,7 @@ public:
 	virtual void SETamplitude(double);
 	virtual double GETamplitude()const;
 
-	virtual std::string printOn(bool on = true)const;
+	virtual const std::string printOn(bool on = true)const;
 
 private:
 	double _amplitude;
@@ -71,7 +71,7 @@ public:
 
 	double* calculAmplitude(unsigned int nbech, double slope);
 
-	virtual std::string printOn(bool on = true)const;
+	virtual const std::string printOn(bool on = true)const;
 
 private:
 	double _slope;

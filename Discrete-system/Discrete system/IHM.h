@@ -49,9 +49,11 @@ public:
 	void SETfct(FCTDiscret* fct);
 	void SETsys(SYSETATDiscret* sys);
 	void SETstep(Echelon* step);
+	void SETramp(Rampe* ramp);
 	FCTDiscret* GETfct()const;
 	SYSETATDiscret* GETsys()const;
 	Echelon* GETstep()const;
+	Rampe* GETramp()const;
 
 	friend bool assertFCT(const FCTDiscret fct, const FCTDiscret test);
 
@@ -62,6 +64,7 @@ private:
 	FCTDiscret* _fct;
 	SYSETATDiscret* _sys;
 	Echelon* _step;
+	Rampe* _ramp;
 };
 
 

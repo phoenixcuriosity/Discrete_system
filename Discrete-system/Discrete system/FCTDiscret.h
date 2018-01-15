@@ -38,7 +38,7 @@ public:
 	friend FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
 	friend FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
 
-	std::string printOn(bool on = true) const;
+	const std::string printOn(bool on = true) const;
 
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);

@@ -197,7 +197,10 @@ void testSYSETATDiscret(){
 	sys.calculABCD(fct);
 	sys.SETTe(100);
 	cout << endl << sys;
-	fct.tabJury();
+	if (fct.tabJury())
+		cout << endl << "the system is stable";
+	else
+		cout << endl << "the system is unstable";
 	cout << endl << "BODE" << endl;
 	fct.Bode(0.1, 10, 100);
 
@@ -217,5 +220,5 @@ void testSYSETATDiscret(){
 	x0.SETthiscoef(0, 0, 0.1);
 
 	cout << endl << endl << endl << "Reponse temporelle avec E = 10.0" << endl;
-	sys.simulation("bin/SaveAndLoad/ReponseTemporelle.txt", E, x0);
+	sys.simulation("ReponseTemporelle.txt", E, x0);
 }

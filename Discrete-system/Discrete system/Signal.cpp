@@ -134,7 +134,7 @@ double Echelon::GETamplitude()const{
 	return _amplitude;
 }
 
-std::string Echelon::printOn(bool on)const{
+const std::string Echelon::printOn(bool on)const{
 	ostringstream stream;
 	string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
@@ -185,7 +185,7 @@ double* Rampe::calculAmplitude(unsigned int nbech, double slope){
 	return buffer;
 }
 
-std::string Rampe::printOn(bool on)const{
+const std::string Rampe::printOn(bool on)const{
 	ostringstream stream;
 	string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){

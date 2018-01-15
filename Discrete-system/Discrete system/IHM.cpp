@@ -2,7 +2,7 @@
 Discret_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.25
+last modification on this file on version:0.26
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -13,17 +13,31 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 using namespace std;
 
-IHM::IHM() : _fct(0), _sys(0), _step(0)
+IHM::IHM() : _fct(0), _sys(0), _step(0), _ramp(0)
 {
 	_fct = new FCTDiscret;
 	_sys = new SYSETATDiscret;
 	_step = new Echelon;
+	_ramp = new Rampe;
 }
 IHM::~IHM()
-{
-	delete _fct;
-	delete _sys;
-	delete _step;
+{	
+	if (_fct != nullptr){
+		delete _fct;
+		_fct = nullptr;
+	}
+	if (_sys != nullptr){
+		delete _sys;
+		_sys = nullptr;
+	}
+	if (_step != nullptr){
+		delete _step;
+		_step = nullptr;
+	}
+	if (_ramp != nullptr){
+		delete _ramp;
+		_ramp = nullptr;
+	}
 }
 
 
@@ -46,11 +60,12 @@ void mainLoop(IHM& ihm){
 	//testIHM();
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 25");
+	logfileconsole("version: 26");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
-		logfileconsole("type 1 Fct Discret\n or type 2 SYSETATDiscret\n or type 3 to exit the program\n");
+		logfileconsole("Main menu");
+		logfileconsole("type 1 menu Fct Discret\n or type 2 menu Discrete System\n or type 3 to exit the program\n");
 		cin >> request;
 		switch (request){
 		case selectFCT:
@@ -72,7 +87,7 @@ void FCTLoop(IHM& ihm){
 	FCTDiscret test;
 
 	while (continuer){
-		logfileconsole("You have selected Fct Discret");
+		logfileconsole("Menu Fct Discret");
 		logfileconsole("type 1 to create the numerator and the denominator");
 		logfileconsole("or type 2 to edit the FCT \nor type 3 to display the FCT");
 		logfileconsole("or type 4 for Jury \nor type 5 for Bode");
@@ -101,8 +116,12 @@ void FCTLoop(IHM& ihm){
 			}
 			break;
 		case jury:
-			if (assertFCT(*ihm.GETfct(), test))
-				ihm.GETfct()->tabJury();
+			if (assertFCT(*ihm.GETfct(), test)){
+				if (ihm.GETfct()->tabJury())
+					logfileconsole("the system is stable\n");
+				else
+					logfileconsole("the system is unstable\n");
+			}	
 			break;
 		case bode:
 			if (assertFCT(*ihm.GETfct(), test))
@@ -122,7 +141,7 @@ void modifFCT(IHM& ihm){
 	bool continuer = true;
 
 	while (continuer){
-		logfileconsole("You have selected edit FCT");
+		logfileconsole("Menu edit FCT");
 		logfileconsole("type 1 to edit the numerator");
 		logfileconsole("or type 2 to edit the denominator \nor type 3 to edit deltaT");
 		logfileconsole("or type 4 to return to previous menu : ");
@@ -226,7 +245,7 @@ void SYSLoop(IHM& ihm){
 	SYSETATDiscret Test;
 
 	while (continuer){
-		logfileconsole("You have selected SYSETATDiscret");
+		logfileconsole("Menu Discrete System");
 		logfileconsole("type 1 to edit A, B, C, D");
 		logfileconsole("or type 2 to compute A, B, C, D \nor type 3 to simulate");
 		logfileconsole("or type 4 to return to previous menu : ");
@@ -255,53 +274,60 @@ void SYSLoop(IHM& ihm){
 	}
 }
 void simulationLoop(IHM& ihm){
-	unsigned int request = 0;
+	unsigned int requestInput = 0, requestInitial = 0;;
 	bool continuer = true;
-	double amplitude = 0;
+	double amplitude = 0, slope = 0;
 	unsigned int nbech = 0;
 
 	logfileconsole("You have selected simulation");
+
+	
+
 	logfileconsole("What type of Input ?");
 	while (continuer){
 		logfileconsole("type 1 for a step");
 		logfileconsole("or type 2 for a ramp \nor type 3 for a sinus : ");
-		cin >> request;
-		switch (request){
+		cin >> requestInput;
+		switch (requestInput){
 		case stepInput:
 			logfileconsole("number of samples : ");
 			cin >> nbech;
 			ihm.GETstep()->SETnbech(nbech);
-			cout << "new number of samples = " << ihm.GETstep()->GETnbech();
 			logfileconsole("Amplitude : ");
 			cin >> amplitude;
 			ihm.GETstep()->SETamplitude(amplitude);
-			cout << "new amplitude = " << ihm.GETstep()->GETamplitude();
 			continuer = false;
 			break;
 		case rampInput:
-
+			logfileconsole("number of samples : ");
+			cin >> nbech;
+			ihm.GETramp()->SETnbech(nbech);
+			logfileconsole("Slope : ");
+			cin >> slope;
+			ihm.GETramp()->SETslope(slope);
+			continuer = false;
 			break;
 		case sinusInput:
 			
 			break;
 		}
 	}
-	request = 0;
 	continuer = true;
 	double coef = 0;
 	Matrice x0(ihm.GETsys()->GETA().GETlength(), 1);
-	cout << endl << "condition initial : x0 " << endl << x0;
+	logfileconsole("\ncondition initial : x0\n");
+	cout << x0 << endl;
 	while (continuer){
-		logfileconsole("type 1 for a default initial condition");
+		logfileconsole("\ntype 1 for a default initial condition");
 		logfileconsole("or type 2 to edit initial condition : ");
-		cin >> request;
-		switch (request){
+		cin >> requestInitial;
+		switch (requestInitial){
 		case 1:
 			continuer = false;
 			break;
 		case 2:
 			for (unsigned int i = 0; i < ihm.GETsys()->GETA().GETlength(); i++){
-				cout << endl << "coef n: " << i << ",0 = ";
+				logfileconsole("\ncoef n: " + to_string(i) + ",0 = ");
 				cin >> coef;
 				x0.SETthiscoef(i, 0, coef);
 			}
@@ -310,7 +336,14 @@ void simulationLoop(IHM& ihm){
 			break;
 		}
 	}
-	ihm.GETsys()->simulation("bin/SaveAndLoad/ReponseTemporelle.txt", *ihm.GETstep(), x0);
+	if (requestInput == stepInput)
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", *ihm.GETstep(), x0);
+	else if (requestInput == rampInput)
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", *ihm.GETramp(), x0);
+	else if (requestInput == sinusInput)
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", *ihm.GETramp(), x0);
+	else
+		logfileconsole("______No Input Signal");
 }
 
 
@@ -325,6 +358,9 @@ void IHM::SETsys(SYSETATDiscret* sys){
 void IHM::SETstep(Echelon* step){
 	_step = step;
 }
+void IHM::SETramp(Rampe* ramp){
+	_ramp = ramp;
+}
 FCTDiscret* IHM::GETfct()const{
 	return _fct;
 }
@@ -333,6 +369,9 @@ SYSETATDiscret* IHM::GETsys()const{
 }
 Echelon* IHM::GETstep()const{
 	return _step;
+}
+Rampe* IHM::GETramp()const{
+	return _ramp;
 }
 
 
@@ -360,7 +399,10 @@ void testIHM(){
 	ihm.GETsys()->calculABCD(*ihm.GETfct());
 	ihm.GETsys()->SETTe(100);
 	cout << endl << *ihm.GETsys();
-	ihm.GETfct()->tabJury();
+	if (ihm.GETfct()->tabJury())
+		cout << endl << "the system is stable";
+	else
+		cout << endl << "the system is unstable";
 	cout << endl << "BODE" << endl;
 	ihm.GETfct()->Bode(0.1, 10, 100);
 
@@ -369,12 +411,12 @@ void testIHM(){
 	x0.SETthiscoef(0, 0, 0.1);
 
 	cout << endl << endl << endl << "Reponse temporelle avec E = 10.0" << endl;
-	ihm.GETsys()->simulation("bin/SaveAndLoad/ReponseTemporelle.txt", E, x0);
+	ihm.GETsys()->simulation("ReponseTemporelle.txt", E, x0);
 
 	cout << endl << endl;
 }
 void logfileconsole(const std::string &msg) {
-	const string logtxt = "bin/log/log.txt";
+	const string logtxt = "log.txt";
 	ofstream log(logtxt, ios::app);
 	if (log) {
 		cout << endl << msg;
