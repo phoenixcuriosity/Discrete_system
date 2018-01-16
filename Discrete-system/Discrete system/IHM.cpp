@@ -1,8 +1,8 @@
 /*
-Discret_system
+Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.26
+last modification on this file on version:0.27
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -13,12 +13,10 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 using namespace std;
 
-IHM::IHM() : _fct(0), _sys(0), _step(0), _ramp(0)
+IHM::IHM() : _fct(0), _sys(0)
 {
 	_fct = new FCTDiscret;
 	_sys = new SYSETATDiscret;
-	_step = new Echelon;
-	_ramp = new Rampe;
 }
 IHM::~IHM()
 {	
@@ -29,14 +27,6 @@ IHM::~IHM()
 	if (_sys != nullptr){
 		delete _sys;
 		_sys = nullptr;
-	}
-	if (_step != nullptr){
-		delete _step;
-		_step = nullptr;
-	}
-	if (_ramp != nullptr){
-		delete _ramp;
-		_ramp = nullptr;
 	}
 }
 
@@ -59,8 +49,13 @@ void mainLoop(IHM& ihm){
 	//testSignal();
 	//testIHM();
 
+
+	//Echelon step;
+	//loadFromFile(step);
+
+	
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 26");
+	logfileconsole("version: 27");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
@@ -81,6 +76,7 @@ void mainLoop(IHM& ihm){
 	}
 }
 void FCTLoop(IHM& ihm){
+	system("cls");
 	unsigned int request = 0;
 	double deltaT = 0;
 	bool continuer = true;
@@ -132,6 +128,7 @@ void FCTLoop(IHM& ihm){
 			break;
 		}
 	}
+	system("cls");
 }
 void modifFCT(IHM& ihm){
 	unsigned int request = 0;
@@ -141,6 +138,7 @@ void modifFCT(IHM& ihm){
 	bool continuer = true;
 
 	while (continuer){
+		system("cls");
 		logfileconsole("Menu edit FCT");
 		logfileconsole("type 1 to edit the numerator");
 		logfileconsole("or type 2 to edit the denominator \nor type 3 to edit deltaT");
@@ -167,6 +165,7 @@ void modifFCT(IHM& ihm){
 	}
 }
 void createNum(IHM& ihm){
+	system("cls");
 	/*
 		Création du numérateur avec un test pour vérifier l'ordre à la fin
 	*/
@@ -194,6 +193,7 @@ void createNum(IHM& ihm){
 	logfileconsole("You have created the numerator, order : " + to_string(realOrderNum));
 }
 void createDen(IHM& ihm){
+	system("cls");
 	/*
 		Création du dénominateur avec un test pour vérifier l'ordre à la fin
 	*/
@@ -221,6 +221,7 @@ void createDen(IHM& ihm){
 	logfileconsole("You have created the denominator, order : " + to_string(realOrderDen));
 }
 void diagBode(IHM& ihm){
+	system("cls");
 	double wMin = 0, wMax = 0;
 	unsigned int nbpoint = 0;
 	logfileconsole("Bode");
@@ -238,7 +239,6 @@ void diagBode(IHM& ihm){
 
 
 void SYSLoop(IHM& ihm){
-	
 	unsigned int request = 0;
 	bool continuer = true;
 	FCTDiscret test;
@@ -247,18 +247,21 @@ void SYSLoop(IHM& ihm){
 	while (continuer){
 		logfileconsole("Menu Discrete System");
 		logfileconsole("type 1 to edit A, B, C, D");
-		logfileconsole("or type 2 to compute A, B, C, D \nor type 3 to simulate");
-		logfileconsole("or type 4 to return to previous menu : ");
+		logfileconsole("or type 2 to compute A, B, C, D \nor type 3 to display A,B,C,D \nor type 4 to simulate");
+		logfileconsole("or type 5 to return to previous menu : ");
 		cin >> request;
 		switch (request){
 		case editMatrice:
-
+			editmatriceLoop(ihm);
 			break;
 		case calculMatriceABCD:
 			if (assertFCT(*ihm.GETfct(),test)){
 				ihm.GETsys()->calculABCD(*ihm.GETfct());
 				cout << endl << *ihm.GETsys();
 			}
+			break;
+		case displaySys:
+			cout << *ihm.GETsys();
 			break;
 		case simulationTemporelle:
 			if (*ihm.GETsys() == Test)
@@ -273,42 +276,129 @@ void SYSLoop(IHM& ihm){
 		}
 	}
 }
+void editmatriceLoop(IHM& ihm){
+	system("cls");
+	bool continuer = true;
+	unsigned int request = 0, length = 0, height = 0;
+	logfileconsole("You have selected edit A, B, C, D");
+	logfileconsole("On default matrix are filled with 0");
+
+	cout << endl << "Default A :" << endl << ihm.GETsys()->GETA();
+	cout << endl << "Default B :" << endl << ihm.GETsys()->GETB();
+	cout << endl << "Default C :" << endl << ihm.GETsys()->GETC();
+	cout << endl << "Default D :" << endl << ihm.GETsys()->GETD();
+
+	
+	logfileconsole("length of A : ");
+	cin >> length;
+	logfileconsole("height of A : ");
+	cin >> height;
+	
+	ihm.GETsys()->SETeditSizeA(length, height);
+	ihm.GETsys()->SETeditSizeB(length, 1);
+	ihm.GETsys()->SETeditSizeC(1, height);
+	ihm.GETsys()->SETeditSizeD(1, 1);
+
+	cout << endl << "A :" << endl << ihm.GETsys()->GETA();
+	cout << endl << "B :" << endl << ihm.GETsys()->GETB();
+	cout << endl << "C :" << endl << ihm.GETsys()->GETC();
+	cout << endl << "D :" << endl << ihm.GETsys()->GETD();
+
+	logfileconsole("Matrix A : ");
+	double coef = 0;
+
+	for (unsigned int i = 0; i < length; i++){
+		for (unsigned int j = 0; j < height; j++){
+			logfileconsole("coef " + to_string(i) + "," + to_string(j) + " = ");
+			cin >> coef;
+			ihm.GETsys()->SETthisCoefA(i, j, coef);
+		}
+	}
+
+	logfileconsole("Matrix B : ");
+	for (unsigned int i = 0; i < length; i++){
+		logfileconsole("coef " + to_string(i) + ",0 = ");
+		cin >> coef;
+		ihm.GETsys()->SETthisCoefB(i, 0, coef);
+	}
+
+	logfileconsole("Matrix C : ");
+	for (unsigned int j = 0; j < height; j++){
+		logfileconsole("coef 0," + to_string(j) + " = ");
+		cin >> coef;
+		ihm.GETsys()->SETthisCoefC(0, j, coef);
+	}
+
+	logfileconsole("Matrix D : ");
+	logfileconsole("coef 0,0 = ");
+	cin >> coef;
+	ihm.GETsys()->SETthisCoefD(0, 0, coef);
+
+	logfileconsole("You have successfully created A, B, C, D");
+}
+
 void simulationLoop(IHM& ihm){
+	system("cls");
+	Echelon step;
+	Rampe ramp;
+	Sinus sinus;
+	randomSignal sig;
 	unsigned int requestInput = 0, requestInitial = 0;;
 	bool continuer = true;
-	double amplitude = 0, slope = 0;
+	double deltaT = 0, amplitude = 0, slope = 0, w = 0, dephasage = 0;
 	unsigned int nbech = 0;
 
 	logfileconsole("You have selected simulation");
 
-	
-
 	logfileconsole("What type of Input ?");
 	while (continuer){
 		logfileconsole("type 1 for a step");
-		logfileconsole("or type 2 for a ramp \nor type 3 for a sinus : ");
+		logfileconsole("or type 2 for a ramp \nor type 3 for a sinus \nor type 4 to import from load.txt : ");
 		cin >> requestInput;
 		switch (requestInput){
 		case stepInput:
 			logfileconsole("number of samples : ");
 			cin >> nbech;
-			ihm.GETstep()->SETnbech(nbech);
+			step.SETnbech(nbech);
+			logfileconsole("deltaT : ");
+			cin >> deltaT;
+			step.SETdeltaT(deltaT);
 			logfileconsole("Amplitude : ");
 			cin >> amplitude;
-			ihm.GETstep()->SETamplitude(amplitude);
+			step.SETamplitude(amplitude);
 			continuer = false;
 			break;
 		case rampInput:
 			logfileconsole("number of samples : ");
 			cin >> nbech;
-			ihm.GETramp()->SETnbech(nbech);
+			ramp.SETnbech(nbech);
+			logfileconsole("deltaT : ");
+			cin >> deltaT;
+			ramp.SETdeltaT(deltaT);
 			logfileconsole("Slope : ");
 			cin >> slope;
-			ihm.GETramp()->SETslope(slope);
+			ramp.SETslope(slope);
 			continuer = false;
 			break;
 		case sinusInput:
-			
+			logfileconsole("number of samples : ");
+			cin >> nbech;
+			sinus.SETnbech(nbech);
+			logfileconsole("deltaT : ");
+			cin >> deltaT;
+			sinus.SETdeltaT(deltaT);
+			logfileconsole("Amplitude : ");
+			cin >> amplitude;
+			sinus.SETamplitude(amplitude);
+			logfileconsole("w : ");
+			cin >> w;
+			sinus.SETw(w);
+			logfileconsole("dephasage : ");
+			cin >> dephasage;
+			sinus.SETdephasage(dephasage);
+			break;
+		case load:
+			loadFromFile(sig);
 			break;
 		}
 	}
@@ -337,13 +427,39 @@ void simulationLoop(IHM& ihm){
 		}
 	}
 	if (requestInput == stepInput)
-		ihm.GETsys()->simulation("ReponseTemporelle.txt", *ihm.GETstep(), x0);
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", step, x0);
 	else if (requestInput == rampInput)
-		ihm.GETsys()->simulation("ReponseTemporelle.txt", *ihm.GETramp(), x0);
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", ramp, x0);
 	else if (requestInput == sinusInput)
-		ihm.GETsys()->simulation("ReponseTemporelle.txt", *ihm.GETramp(), x0);
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", sinus, x0);
+	else if (requestInput == load)
+		ihm.GETsys()->simulation("ReponseTemporelle.txt", sig, x0);
 	else
 		logfileconsole("______No Input Signal");
+}
+void loadFromFile(Signal& sig){
+	ifstream load("load.txt");
+	double ech = 0;
+	string destroy = "";
+	bool continuer = true;
+
+
+	while (continuer){
+		if (load.eof())
+			continuer = false;
+		else{
+			load >> ech;
+			cout << endl << ech;
+			load >> destroy;
+			cout << endl << destroy;
+			load >> ech;
+			cout << endl << ech;
+			cout << endl << destroy;
+			load >> ech;
+			cout << endl << ech;
+		}
+	}
+	
 }
 
 
@@ -355,23 +471,11 @@ void IHM::SETfct(FCTDiscret* fct){
 void IHM::SETsys(SYSETATDiscret* sys){
 	_sys = sys;
 }
-void IHM::SETstep(Echelon* step){
-	_step = step;
-}
-void IHM::SETramp(Rampe* ramp){
-	_ramp = ramp;
-}
 FCTDiscret* IHM::GETfct()const{
 	return _fct;
 }
 SYSETATDiscret* IHM::GETsys()const{
 	return _sys;
-}
-Echelon* IHM::GETstep()const{
-	return _step;
-}
-Rampe* IHM::GETramp()const{
-	return _ramp;
 }
 
 

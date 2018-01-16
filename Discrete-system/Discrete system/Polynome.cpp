@@ -1,5 +1,5 @@
 /*
-Discret_system
+Discrete_system
 author : SAUTER Robin
 2017 - 2018
 last modification on this file on version:0.18
@@ -167,8 +167,8 @@ Polynome multiplication(const Polynome& a, const Polynome& b){
 	unsigned int maxSize = a.GETorder() + b.GETorder();
 	
 	Polynome newPolynome(maxSize);
-	for (int i = 0; i <= a.GETorder(); i++){
-		for (int j = 0; j <= b.GETorder(); j++)
+	for (unsigned int i = 0; i <= a.GETorder(); i++){
+		for (unsigned int j = 0; j <= b.GETorder(); j++)
 			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
 	}
 	return newPolynome;

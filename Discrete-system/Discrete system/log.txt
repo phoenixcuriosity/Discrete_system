@@ -1,11 +1,3 @@
 
 Created by SAUTER Robin
 _________Init Success_________
-_________START PROGRAM_________
-version: 26
-This is a free software, you can redistribute it and/or modify it
-
-Main menu
-type 1 menu Fct Discret
- or type 2 menu Discrete System
- or type 3 to exit the program

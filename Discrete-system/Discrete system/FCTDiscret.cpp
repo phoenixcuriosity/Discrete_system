@@ -1,5 +1,5 @@
 /*
-Discret_system
+Discrete_system
 author : SAUTER Robin
 2017 - 2018
 last modification on this file on version:0.26
@@ -181,7 +181,7 @@ bool FCTDiscret::tabJury(){
 	ostringstream stream;
 
 	Polynome den(_den.GETorder());
-	for (int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j >= 0; i++, j--)
+	for (unsigned int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j > 0; i++, j--)
 		den.SETcoefTab(i, _den.GETcoefTab(j));
 	if (den.GETcoefTab(den.GETorder()) < 0)
 		den = - 1.0 * den;
@@ -207,14 +207,14 @@ bool FCTDiscret::tabJury(){
 	
 	while (ligne2.GETorder() > 2){
 		ligne2.editsize(ligne2.GETorder() - 1);
-		for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j > 0; i++, j--)
 			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
 		
 		if (ligne2.GETorder() > 2) {
 			Jury.editsize(Jury.GETlength() + 2, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
 				Jury.SETthiscoef(Jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
-			for (int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+			for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j > 0; i++, j--)
 				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
 		}
 		else {
@@ -315,6 +315,12 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 	double increment = amplitude / nbpoint;
 	double gain = 0, phase = 0;
 	Complexe Z, c, cnum, cden;
+
+	/*
+		dans le diagramme de Bode wMin n'atteint jamais 0
+	*/
+	if (wMin == 0)
+		wMin = 0.001;
 
 	for (double i = wMin; i <= wMax; i += increment){
 		Z = tfReIm(1, i * _deltaT);

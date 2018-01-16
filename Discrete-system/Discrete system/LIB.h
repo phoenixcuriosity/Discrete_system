@@ -1,5 +1,5 @@
 /*
-Discret_system
+Discrete_system
 author : SAUTER Robin
 2017 - 2018
 last modification on this file on version:0.18

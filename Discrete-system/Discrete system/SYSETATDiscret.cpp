@@ -1,5 +1,5 @@
 /*
-Discret_system
+Discrete_system
 author : SAUTER Robin
 2017 - 2018
 last modification on this file on version:0.25
@@ -96,7 +96,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 		Calcul des matrices A, B, C et D
 	*/
 
-	if (fct.GETden().GETorder() > fct.GETnum().GETorder()){
+	if (fct.GETden().GETorder() >= fct.GETnum().GETorder()){
 		_A.editsize(fct.GETden().GETorder(), fct.GETden().GETorder());
 		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
 			_A.SETthiscoef(fct.GETden().GETorder() - 1, i,
@@ -123,7 +123,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 		_D.editsize(1, 1);
 	}
 	else
-		cout << endl << "______Order of Num = " << fct.GETden().GETorder() << "  >= Order of Den = " << fct.GETnum().GETorder();
+		cout << endl << "______Order of Num = " << fct.GETden().GETorder() << "  > Order of Den = " << fct.GETnum().GETorder();
 }
 
 

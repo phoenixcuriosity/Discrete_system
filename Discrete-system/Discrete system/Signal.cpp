@@ -1,8 +1,8 @@
 /*
-Discret_system
+Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.25
+last modification on this file on version:0.27
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -16,9 +16,6 @@ using namespace std;
 
 
 Signal::Signal() : _tab(allocate(1)), _nbech(1)
-{
-}
-Signal::Signal(unsigned int size) : _tab(allocate(size)), _nbech(size)
 {
 }
 Signal::Signal(unsigned int size, double userValue) : _tab(allocate(size, userValue)), _nbech(size)
@@ -52,6 +49,9 @@ void Signal::SETthiscoef(unsigned int index, double userValue){
 	if (assertIndex(index))
 		_tab[index] = userValue;
 }
+void Signal::SETdeltaT(double deltaT){
+	_deltaT = deltaT;
+}
 unsigned int Signal::GETnbech()const{
 	return _nbech;
 }
@@ -59,6 +59,9 @@ double Signal::GETthiscoef(unsigned int index)const{
 	if (assertIndex(index))
 		return _tab[index];
 	return 0;
+}
+double Signal::GETdeltaT()const{
+	return _deltaT;
 }
 
 bool Signal::assertIndex(unsigned int index)const {
@@ -165,11 +168,8 @@ Rampe::~Rampe()
 
 void Rampe::SETslope(double slope){
 	_slope = slope;
-	double somme = 0;
-	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		this->SETthiscoef(i, somme);
-		somme += slope;
-	}	
+	for (unsigned int i = 0; i < this->GETnbech(); i++)
+		this->SETthiscoef(i, slope * this->GETdeltaT() * i);
 }
 double Rampe::GETslope()const{
 	return _slope;
@@ -178,10 +178,8 @@ double Rampe::GETslope()const{
 double* Rampe::calculAmplitude(unsigned int nbech, double slope){
 	double somme = 0;
 	double* buffer = new double[nbech];
-	for (unsigned int i = 0; i < nbech; i++){
-		buffer[i] = somme;
-		somme += slope;
-	}
+	for (unsigned int i = 0; i < nbech; i++)
+		buffer[i] = slope * this->GETdeltaT() * i;
 	return buffer;
 }
 
@@ -196,3 +194,95 @@ const std::string Rampe::printOn(bool on)const{
 		cout << texte;
 	return texte;
 }
+
+
+
+
+
+
+
+
+
+
+Sinus::Sinus() : Signal(), _amplitude(1), _w(1), _dephasage(0)
+{
+}
+Sinus::Sinus(unsigned int nbech, double amplitude, double w, double dephasage) 
+: Signal(nbech, calculAmplitude(nbech, amplitude, w, dephasage)), _amplitude(amplitude), _w(w), _dephasage(dephasage)
+{
+}
+Sinus::~Sinus()
+{
+}
+
+double* Sinus::calculAmplitude(unsigned int nbech, double amplitude, double w, double dephasage){
+	double* buffer = new double[nbech];
+	for (unsigned int i = 0; i < nbech; i++)
+		buffer[i] = amplitude * sin(w * i * this->GETdeltaT() + dephasage);
+	return buffer;
+}
+
+
+void Sinus::SETamplitude(double amplitude){
+	_amplitude = amplitude;
+	for (unsigned int i = 0; i < this->GETnbech(); i++)
+		this->SETthiscoef(i, _amplitude * sin(_w * i * this->GETdeltaT() + _dephasage));
+}
+void Sinus::SETw(double w){
+	_w = w;
+	for (unsigned int i = 0; i < this->GETnbech(); i++)
+		this->SETthiscoef(i, _amplitude * sin(_w * i * this->GETdeltaT() + _dephasage));
+}
+void Sinus::SETdephasage(double dephasage){
+	_dephasage = dephasage;
+	for (unsigned int i = 0; i < this->GETnbech(); i++)
+		this->SETthiscoef(i, _amplitude * sin(_w * i * this->GETdeltaT() + _dephasage));
+}
+double Sinus::GETamplitude()const{
+	return _amplitude;
+}
+double Sinus::GETw()const{
+	return _w;
+}
+double Sinus::GETdephasage()const{
+	return _dephasage;
+}
+
+const std::string Sinus::printOn(bool on)const{
+	ostringstream stream;
+	string texte = "";
+	for (unsigned int i = 0; i < this->GETnbech(); i++){
+		stream << endl << i << " , " << this->GETthiscoef(i);
+	}
+	texte = stream.str();
+	if (on)
+		cout << texte;
+	return texte;
+}
+
+
+
+
+
+randomSignal::randomSignal() : Signal()
+{
+}
+randomSignal::~randomSignal()
+{
+}
+
+
+
+const std::string randomSignal::printOn(bool on)const{
+	ostringstream stream;
+	string texte = "";
+	for (unsigned int i = 0; i < this->GETnbech(); i++){
+		stream << endl << i << " , " << this->GETthiscoef(i);
+	}
+	texte = stream.str();
+	if (on)
+		cout << texte;
+	return texte;
+}
+
+
