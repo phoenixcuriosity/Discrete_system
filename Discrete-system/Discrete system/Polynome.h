@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.28
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -17,9 +17,9 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 class Polynome {
 public:
 	Polynome();
-	Polynome(unsigned int); // attention : Polynome a((unsigned int)2) est la seule façon de créer un polynome d'ordre 2
-	Polynome(double); // cast
-	Polynome(unsigned int, double tab[]);
+	Polynome(unsigned int order); // attention : Polynome a((unsigned int)2) est la seule façon de créer un polynome d'ordre 2
+	Polynome(double userValue); // cast
+	Polynome(unsigned int order, double tab[]);
 	Polynome(const Polynome& P);
 	~Polynome();
 
@@ -40,9 +40,8 @@ public:
 	friend Polynome addition(const Polynome& a, const Polynome& b);
 	friend Polynome soustraction(const Polynome& a, const Polynome& b);
 	friend Polynome multiplication(const Polynome& a, const Polynome& b);
-	friend Polynome multiplication(double, const Polynome&);
-	void editsize(unsigned int);
-	void grow(double);
+	void editsize(unsigned int order);
+	void grow(double userValue);
 
 	std::string printOn(bool = true) const;
 
@@ -50,12 +49,12 @@ public:
 	
 
 protected:
-	virtual double* allocate(unsigned int) const;
+	virtual double* allocate(unsigned int size) const;
 	virtual double* allocate(unsigned int size, double userValue) const;
-	virtual double* allocate(unsigned int, double*) const;
+	virtual double* allocate(unsigned int size, double* tab) const;
 	virtual double* allocate(const Polynome& P) const;
 
-	bool assertIndex(unsigned int) const;
+	bool assertIndex(unsigned int index) const;
 private:
 	unsigned int _order;
 	double* _tab;
@@ -73,19 +72,6 @@ T min(const T a, const T b){
 	return (a<b) ? a : b;
 }
 
-template<class T>
-T maxP(const T a, const T b){
-	if (a > b)
-		return a;
-	else
-		return b;
-}
-template<class T>
-T minP(const T a, const T b){
-	if (a < b)
-		return a;
-	else
-		return b;
-}
+
 
 #endif // !Polynome_H

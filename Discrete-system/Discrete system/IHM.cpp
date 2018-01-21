@@ -48,11 +48,6 @@ void mainLoop(IHM& ihm){
 	//testSYSETATDiscret();
 	//testSignal();
 	//testIHM();
-
-
-	//Echelon step;
-	//loadFromFile(step);
-
 	
 	logfileconsole("_________START PROGRAM_________");
 	logfileconsole("version: 27");
@@ -439,7 +434,7 @@ void simulationLoop(IHM& ihm){
 }
 void loadFromFile(Signal& sig){
 	ifstream load("load.txt");
-	double ech = 0;
+	double ech = 0, input = 0, output = 0;
 	string destroy = "";
 	bool continuer = true;
 
@@ -447,17 +442,20 @@ void loadFromFile(Signal& sig){
 	while (continuer){
 		if (load.eof())
 			continuer = false;
-		else{
-			load >> ech;
-			cout << endl << ech;
-			load >> destroy;
-			cout << endl << destroy;
-			load >> ech;
-			cout << endl << ech;
-			cout << endl << destroy;
-			load >> ech;
-			cout << endl << ech;
-		}
+		load >> ech;
+		cout << endl << ech;
+		load >> destroy;
+		cout << endl << destroy;
+
+		load >> input;
+		cout << endl << input;
+		load >> destroy;
+		cout << endl << destroy;
+
+		load >> output;
+		cout << endl << output;
+		if (load.eof())
+			continuer = false;
 	}
 	
 }

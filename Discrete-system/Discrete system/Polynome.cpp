@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.18
+last modification on this file on version:0.28
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -178,7 +178,7 @@ Polynome multiplication(const Polynome& a, const Polynome& b){
 void Polynome::editsize(unsigned int order){
 	
 	double* newTab = allocate(order);
-	unsigned int minSize = minP(order, _order);
+	unsigned int minSize = min(order, _order);
 
 	for (unsigned int i = 0; i <= minSize; i++)
 		newTab[i] = _tab[i];

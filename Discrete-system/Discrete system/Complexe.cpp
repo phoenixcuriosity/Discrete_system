@@ -21,6 +21,9 @@ Complexe::Complexe() : _Re(0), _Im(0)
 Complexe::Complexe(double Re) : _Re(Re), _Im(0)
 {
 }
+Complexe::Complexe(const Complexe& a) : _Re(a._Re), _Im(a._Im)
+{
+}
 Complexe::Complexe(double Re, double Im) : _Re(Re), _Im(Im)
 {
 }

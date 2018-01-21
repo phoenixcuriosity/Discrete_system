@@ -20,6 +20,7 @@ public:
 	Complexe();
 	Complexe(double); // cast
 	Complexe(double, double);
+	Complexe(const Complexe&);
 	~Complexe();
 
 	Complexe& operator = (const Complexe&);

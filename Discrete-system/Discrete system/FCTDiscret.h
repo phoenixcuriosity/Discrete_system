@@ -54,7 +54,7 @@ public:
 
 	bool tabJury();
 	bool Bode(double wMin, double wMax, unsigned int nbpoint);
-	friend void closeLoop(const FCTDiscret& a, const FCTDiscret& b);
+	friend void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop);
 
 	friend void testFCTDiscret();
 

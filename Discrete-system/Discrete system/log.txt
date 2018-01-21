@@ -1,3 +1,58 @@
 
 Created by SAUTER Robin
 _________Init Success_________
+_________START PROGRAM_________
+version: 27
+This is a free software, you can redistribute it and/or modify it
+
+Main menu
+type 1 menu Fct Discret
+ or type 2 menu Discrete System
+ or type 3 to exit the program
+
+Menu Fct Discret
+type 1 to create the numerator and the denominator
+or type 2 to edit the FCT 
+or type 3 to display the FCT
+or type 4 for Jury 
+or type 5 for Bode
+or type 6 to return to previous menu : 
+deltaT of FCT? : 
+You have selected to create Numerator
+order of numerator? : 
+new order = 1
+coef n:0 = 
+new coef n:0 = 0.000000
+coef n:1 = 
+new coef n:1 = 1.000000
+You have created the numerator, order : 1
+You have selected to create Denominator
+order of denominator? : 
+new order = 3
+coef n:0 = 
+new coef n:0 = 0.100000
+coef n:1 = 
+new coef n:1 = 0.300000
+coef n:2 = 
+new coef n:2 = 0.500000
+coef n:3 = 
+new coef n:3 = 1.000000
+You have created the denominator, order : 3
+You have created with SUCCESS the FCT, Yeah!!! You did it!!!
+Now try to diplay it
+Menu Fct Discret
+type 1 to create the numerator and the denominator
+or type 2 to edit the FCT 
+or type 3 to display the FCT
+or type 4 for Jury 
+or type 5 for Bode
+or type 6 to return to previous menu : 
+the system is stable
+
+Menu Fct Discret
+type 1 to create the numerator and the denominator
+or type 2 to edit the FCT 
+or type 3 to display the FCT
+or type 4 for Jury 
+or type 5 for Bode
+or type 6 to return to previous menu : 

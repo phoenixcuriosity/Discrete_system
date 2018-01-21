@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.26
+last modification on this file on version:0.28
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -181,8 +181,11 @@ bool FCTDiscret::tabJury(){
 	ostringstream stream;
 
 	Polynome den(_den.GETorder());
-	for (unsigned int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j > 0; i++, j--)
+	for (unsigned int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j >= 0; i++, j--){
 		den.SETcoefTab(i, _den.GETcoefTab(j));
+		if (j == 0) break; // compatibilité unsigned int, j ne peut etre égale à -1
+	}
+		
 	if (den.GETcoefTab(den.GETorder()) < 0)
 		den = - 1.0 * den;
 
@@ -205,17 +208,21 @@ bool FCTDiscret::tabJury(){
 			Jury.SETthiscoef(0, i, _den.GETcoefTab(i));
 	}
 	
+	
 	while (ligne2.GETorder() > 2){
 		ligne2.editsize(ligne2.GETorder() - 1);
-		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j > 0; i++, j--)
+		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--){
 			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
-		
+			if (j == 0) break;
+		}
 		if (ligne2.GETorder() > 2) {
 			Jury.editsize(Jury.GETlength() + 2, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
 				Jury.SETthiscoef(Jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
-			for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j > 0; i++, j--)
+			for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--){
 				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
+				if (j == 0) break;
+			}
 		}
 		else {
 			Jury.editsize(Jury.GETlength() + 1, _den.GETorder() + 1);
@@ -224,9 +231,9 @@ bool FCTDiscret::tabJury(){
 		}
 		ligne1 = ligne2;
 	}
+	
+	
 	stream << endl << endl << "table of Jury = " << Jury;
-
-
 
 	unsigned int condition = 0;
 
@@ -322,33 +329,38 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 	if (wMin == 0)
 		wMin = 0.001;
 
-	for (double i = wMin; i <= wMax; i += increment){
-		Z = tfReIm(1, i * _deltaT);
-		cnum = tfPolynomeComplexe(_num, Z);
-		cden = tfPolynomeComplexe(_den, Z);
-		c = cnum / cden;
-		gain = 20 * log10(module(c));
-		phase = - arg(c);
-		stream << endl << i << " , " << gain << " , " << phase;
+	if (reponse){
+		for (double i = wMin; i <= wMax; i += increment){
+			Z = tfReIm(1, i * _deltaT);
+			cnum = tfPolynomeComplexe(_num, Z);
+			cden = tfPolynomeComplexe(_den, Z);
+			c = cnum / cden;
+			gain = 20 * log10(module(c));
+			phase = -arg(c);
+			stream << endl << i << " , " << gain << " , " << phase;
 
+		}
+		texte = stream.str();
+		reponse << texte;
+		cout << texte;
+		return true;
 	}
-	texte = stream.str();
-	reponse << texte;
-	cout << texte;
-	return true;
+	else
+		return false;
 }
 
 
 
 void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop){
+	/*
+		Calcul de la FTBF
+	*/
 	FCTDiscret num;
 	FCTDiscret den;
 
 
 	num = openLoop;
 	den = 1.0 + openLoop * returnLoop;
-
-	//cout << endl << "CloseLoop = " << endl << num << endl << endl << den;
 
 	FCTDiscret resultat;
 	resultat.SETnum(num.GETnum() * num.GETden());

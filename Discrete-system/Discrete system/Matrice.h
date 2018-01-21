@@ -31,8 +31,8 @@ public:
 	friend Matrice operator*(const Matrice&, const Matrice&);
 
 
-	void SETthiscoef(unsigned int, unsigned int, double);
-	double GETthiscoef(unsigned int, unsigned int)const;
+	void SETthiscoef(unsigned int i, unsigned int j, double userValue);
+	double GETthiscoef(unsigned int i, unsigned int j)const;
 	unsigned int GETlength()const;
 	unsigned int GETheight()const;
 	unsigned int GETstringSize() const;
@@ -44,7 +44,7 @@ public:
 	friend Matrice transposistion(const Matrice&);
 	void zero();
 	void ones();
-	void editsize(unsigned int, unsigned int);
+	void editsize(unsigned int length, unsigned int height);
 	void growOneLOneC();
 
 	const std::string printOn(bool on = true)const;
@@ -52,11 +52,11 @@ public:
 	friend void testMatrice();
 
 protected:
-	virtual double** allocate(unsigned int, unsigned int) const;
-	virtual double** allocate(unsigned int, unsigned int, double) const;
+	virtual double** allocate(unsigned int length, unsigned int height) const;
+	virtual double** allocate(unsigned int length, unsigned int height, double userValue) const;
 	virtual double** allocate(const Matrice&) const;
 
-	bool assertIndex(unsigned int, unsigned int)const;
+	bool assertIndex(unsigned int length, unsigned int height)const;
 	bool assertRange(unsigned int, unsigned int)const;
 	friend bool assertSize(unsigned int, unsigned int, unsigned int, unsigned int);
 private:

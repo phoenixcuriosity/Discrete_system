@@ -31,15 +31,15 @@ public:
 	void SETB(const Matrice&);
 	void SETC(const Matrice&);
 	void SETD(const Matrice&);
-	void SETTe(unsigned int);
-	void SETeditSizeA(unsigned int, unsigned int);
-	void SETeditSizeB(unsigned int, unsigned int);
-	void SETeditSizeC(unsigned int, unsigned int);
-	void SETeditSizeD(unsigned int, unsigned int);
-	void SETthisCoefA(unsigned int, unsigned int, double);
-	void SETthisCoefB(unsigned int, unsigned int, double);
-	void SETthisCoefC(unsigned int, unsigned int, double);
-	void SETthisCoefD(unsigned int, unsigned int, double);
+	void SETTe(unsigned int Te);
+	void SETeditSizeA(unsigned int length, unsigned int height);
+	void SETeditSizeB(unsigned int length, unsigned int height);
+	void SETeditSizeC(unsigned int length, unsigned int height);
+	void SETeditSizeD(unsigned int length, unsigned int height);
+	void SETthisCoefA(unsigned int i, unsigned int j, double userValue);
+	void SETthisCoefB(unsigned int i, unsigned int j, double userValue);
+	void SETthisCoefC(unsigned int i, unsigned int j, double userValue);
+	void SETthisCoefD(unsigned int i, unsigned int j, double userValue);
 	Matrice GETA()const;
 	Matrice GETB()const;
 	Matrice GETC()const;
@@ -47,8 +47,8 @@ public:
 	double GETTe()const;
 	
 
-	void calculABCD(const FCTDiscret&);
-	void simulation(const std::string&, const Signal&, Matrice&);
+	void calculABCD(const FCTDiscret& fct);
+	void simulation(const std::string& namefile, const Signal& signal, Matrice& x0);
 
 	std::string printOn(bool on = true)const;
 
