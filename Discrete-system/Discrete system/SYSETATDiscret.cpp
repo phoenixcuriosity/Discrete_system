@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.25
+last modification on this file on version:0.29
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -130,17 +130,12 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signal, Matrice& x0) {
 	/*
 		simulation du système d'état avec un signal en entré et une matrice x0
-		calcul echantillion par echantillion le signal de sorti
+		calcul echantillon par echantillon le signal de sorti
 	*/
 	ofstream reponse(namefile);
 	ostringstream repy;
 	string rep;
 	Matrice dx(_A.GETlength(), 1), y(1, 1);
-
-	cout << endl << signal.GETthiscoef(0);
-	cout << endl << signal.GETthiscoef(10);
-
-
 
 	for (unsigned int i = 0; i < signal.GETnbech(); i++){
 		dx = _A * x0 + _B * signal.GETthiscoef(i);
@@ -215,7 +210,7 @@ void testSYSETATDiscret(){
 	fct2.Bode(0.1, 10, 100);
 	*/
 
-	Echelon E(50, 10.0);
+	Echelon E(50, 0.1, 10.0);
 	Matrice x0(sys.GETA().GETlength(), 1);
 	x0.SETthiscoef(0, 0, 0.1);
 

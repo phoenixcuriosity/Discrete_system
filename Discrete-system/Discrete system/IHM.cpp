@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.27
+last modification on this file on version:0.29
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -36,26 +36,13 @@ void mainLoop(IHM& ihm){
 	unsigned int request = 0;
 	logfileconsole("_________Init Success_________");
 
-	/*
-		Test des différentes classes du projet
-
-	*/
-	
-	//testPolynome();
-	//testFCTDiscret();
-	//testMatrice();
-	//testComplexe();
-	//testSYSETATDiscret();
-	//testSignal();
-	//testIHM();
-	
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 27");
+	logfileconsole("version: 29");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
 		logfileconsole("Main menu");
-		logfileconsole("type 1 menu Fct Discret\n or type 2 menu Discrete System\n or type 3 to exit the program\n");
+		logfileconsole("type 1 menu Fct Discret\n or type 2 menu Discrete System\n or type 3 menu test\n or type 4 to exit the program\n");
 		cin >> request;
 		switch (request){
 		case selectFCT:
@@ -63,6 +50,9 @@ void mainLoop(IHM& ihm){
 			break;
 		case selectSYSETAT:
 			SYSLoop(ihm);
+			break;
+		case selectTest:
+			test();
 			break;
 		case exitProgram:
 			continuer = false;
@@ -274,7 +264,7 @@ void SYSLoop(IHM& ihm){
 void editmatriceLoop(IHM& ihm){
 	system("cls");
 	bool continuer = true;
-	unsigned int request = 0, length = 0, height = 0;
+	unsigned int request = 0, length = 0;
 	logfileconsole("You have selected edit A, B, C, D");
 	logfileconsole("On default matrix are filled with 0");
 
@@ -284,14 +274,12 @@ void editmatriceLoop(IHM& ihm){
 	cout << endl << "Default D :" << endl << ihm.GETsys()->GETD();
 
 	
-	logfileconsole("length of A : ");
+	logfileconsole("length or height of A : ");
 	cin >> length;
-	logfileconsole("height of A : ");
-	cin >> height;
 	
-	ihm.GETsys()->SETeditSizeA(length, height);
+	ihm.GETsys()->SETeditSizeA(length, length);
 	ihm.GETsys()->SETeditSizeB(length, 1);
-	ihm.GETsys()->SETeditSizeC(1, height);
+	ihm.GETsys()->SETeditSizeC(1, length);
 	ihm.GETsys()->SETeditSizeD(1, 1);
 
 	cout << endl << "A :" << endl << ihm.GETsys()->GETA();
@@ -303,7 +291,7 @@ void editmatriceLoop(IHM& ihm){
 	double coef = 0;
 
 	for (unsigned int i = 0; i < length; i++){
-		for (unsigned int j = 0; j < height; j++){
+		for (unsigned int j = 0; j < length; j++){
 			logfileconsole("coef " + to_string(i) + "," + to_string(j) + " = ");
 			cin >> coef;
 			ihm.GETsys()->SETthisCoefA(i, j, coef);
@@ -318,7 +306,7 @@ void editmatriceLoop(IHM& ihm){
 	}
 
 	logfileconsole("Matrix C : ");
-	for (unsigned int j = 0; j < height; j++){
+	for (unsigned int j = 0; j < length; j++){
 		logfileconsole("coef 0," + to_string(j) + " = ");
 		cin >> coef;
 		ihm.GETsys()->SETthisCoefC(0, j, coef);
@@ -391,9 +379,11 @@ void simulationLoop(IHM& ihm){
 			logfileconsole("dephasage : ");
 			cin >> dephasage;
 			sinus.SETdephasage(dephasage);
+			continuer = false;
 			break;
 		case load:
 			loadFromFile(sig);
+			continuer = false;
 			break;
 		}
 	}
@@ -433,31 +423,112 @@ void simulationLoop(IHM& ihm){
 		logfileconsole("______No Input Signal");
 }
 void loadFromFile(Signal& sig){
+	/*
+		charge un signal défini par l'utilisateur dans le fichier load.txt
+		format < temps , amplitude >
+	*/
 	ifstream load("load.txt");
-	double ech = 0, input = 0, output = 0;
 	string destroy = "";
 	bool continuer = true;
-
+	unsigned int initSize = 1;
+	double *bufferTime1 = new double[initSize], *bufferAmplitude1 = new double[initSize];
+	double *bufferTime2 = new double[initSize], *bufferAmplitude2 = new double[initSize];
+	bufferTime1[0] = 0; bufferTime2[0] = 0; bufferAmplitude1[0] = 0; bufferAmplitude2[0] = 0;
+	unsigned int i = 0;
 
 	while (continuer){
+		if (load.eof()) // flag EOF
+			continuer = false;
+		load >> bufferTime1[i];
+		cout << endl << bufferTime1[i];
+		load >> destroy;
+		// detection d'erreur format
+		if (destroy.compare(" , ") == 0){
+			cout << endl <<"______ERROR while load from file load.txt : mismatch data";
+			break;
+		}
+			
+		cout << endl << destroy;
+		load >> bufferAmplitude1[i];
+		cout << endl << bufferAmplitude1[i];
+		
 		if (load.eof())
 			continuer = false;
-		load >> ech;
-		cout << endl << ech;
-		load >> destroy;
-		cout << endl << destroy;
+		else{
+			i++;
+			delete bufferTime2;
+			bufferTime2 = new double[initSize + i];
+			for (unsigned int k = 0; k < i; k++)
+				bufferTime2[k] = bufferTime1[k];
+			bufferTime2[i] = 0;
+			delete bufferTime1;
+			bufferTime1 = new double[initSize + i];
+			for (unsigned int k = 0; k <= i; k++)
+				bufferTime1[k] = bufferTime2[k];
 
-		load >> input;
-		cout << endl << input;
-		load >> destroy;
-		cout << endl << destroy;
-
-		load >> output;
-		cout << endl << output;
-		if (load.eof())
-			continuer = false;
+			delete bufferAmplitude2;
+			bufferAmplitude2 = new double[initSize + i];
+			for (unsigned int k = 0; k < i; k++)
+				bufferAmplitude2[k] = bufferAmplitude1[k];
+			bufferAmplitude2[i] = 0;
+			delete bufferAmplitude1;
+			bufferAmplitude1 = new double[initSize + i];
+			for (unsigned int k = 0; k <= i; k++)
+				bufferAmplitude1[k] = bufferAmplitude2[k];
+		}
 	}
-	
+
+	if (i >= 1)
+		sig.SETdeltaT(bufferTime2[1] - bufferTime2[0]);
+	sig.SETnbech(i + 1);
+	cout << endl << "deltaT = " << sig.GETdeltaT() << endl << "nbech = " << sig.GETnbech();
+	for (unsigned int a = 0; a <= i; a++)
+		sig.SETthiscoef(a, bufferAmplitude1[a]);
+}
+void test(){
+	system("cls");
+	unsigned int request = 0;
+	bool continuer = true;
+
+	while (continuer){
+		logfileconsole("Menu test");
+		logfileconsole("type 1 to test the class Complexe");
+		logfileconsole("or type 2 to test the class Polynome");
+		logfileconsole("or type 3 to test the class Matrice");
+		logfileconsole("or type 4 to test the class Signal");
+		logfileconsole("or type 5 to test the class FCTDiscret");
+		logfileconsole("or type 6 to test the class SYSETATDiscret");
+		logfileconsole("or type 7 to test the class IHM");
+		logfileconsole("or type 8 to return to previous menu : ");
+		
+		cin >> request;
+		switch (request){
+		case TESTComplexe:
+			testComplexe();
+			break;
+		case TESTPolynome:
+			testPolynome();
+			break;
+		case TESTMatrice:
+			testMatrice();
+			break;
+		case TESTSignal:
+			testSignal();
+			break;
+		case TESTFCTDiscret:
+			testFCTDiscret();
+			break;
+		case TESTSysetatdiscret:
+			testSYSETATDiscret();
+			break;
+		case TESTihm:
+			testIHM();
+			break;
+		case exitTest:
+			continuer = false;
+			break;
+		}
+	}
 }
 
 
@@ -508,7 +579,8 @@ void testIHM(){
 	cout << endl << "BODE" << endl;
 	ihm.GETfct()->Bode(0.1, 10, 100);
 
-	Echelon E(50, 10.0);
+	Echelon E(50, 0.1, 10.0);
+	cout << E;
 	Matrice x0(ihm.GETsys()->GETA().GETlength(), 1);
 	x0.SETthiscoef(0, 0, 0.1);
 

@@ -258,11 +258,11 @@ bool FCTDiscret::tabJury(){
 	
 	stream << endl << "D(1) = " << somme;
 	if (somme > 0){
-		stream << "	Ok";
+		stream << " > 0	Ok";
 		condition++;
 	}
 	else
-		stream << "Not Ok";
+		stream << " <= 0 Not Ok";
 
 	/*
 	condition D(-1) > 0 si n pair et ondition D(-1) < 0 si n impair

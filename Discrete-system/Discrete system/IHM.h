@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.27
+last modification on this file on version:0.29
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -22,11 +22,12 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 
 
-enum { selectnothing, selectFCT, selectSYSETAT, exitProgram };
+enum { selectnothing, selectFCT, selectSYSETAT, selectTest, exitProgram };
 enum { nothing, createNumDen, editFCT, displayFCT, jury, bode,previousMenuFCT };
 enum { nothingtoedit, editnum, editden, editdeltaT, previousMenuEditFCT };
 enum { not, editMatrice, calculMatriceABCD, displaySys, simulationTemporelle, previousMenuSYS };
 enum { not2, stepInput, rampInput, sinusInput, load };
+enum { not3, TESTComplexe, TESTPolynome, TESTMatrice, TESTSignal, TESTFCTDiscret, TESTSysetatdiscret, TESTihm, exitTest };
 
 
 class IHM{
@@ -46,7 +47,9 @@ public:
 	friend void SYSLoop(IHM& ihm);
 	friend void editmatriceLoop(IHM& ihm);
 	friend void simulationLoop(IHM& ihm);
-	friend void loadFromFile(Signal& sig);
+	
+
+	friend void test();
 
 	void SETfct(FCTDiscret* fct);
 	void SETsys(SYSETATDiscret* sys);

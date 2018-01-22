@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.27
+last modification on this file on version:0.29
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -15,13 +15,13 @@ using namespace std;
 
 
 
-Signal::Signal() : _tab(allocate(1)), _nbech(1)
+Signal::Signal() : _tab(allocate(1)), _nbech(1), _deltaT(0)
 {
 }
-Signal::Signal(unsigned int size, double userValue) : _tab(allocate(size, userValue)), _nbech(size)
+Signal::Signal(unsigned int size, double deltaT) : _tab(allocate(size, 0)), _nbech(size), _deltaT(deltaT)
 {
 }
-Signal::Signal(unsigned int size, double* tab) : _tab(tab), _nbech(size)
+Signal::Signal(unsigned int size, double deltaT, double* tab) : _tab(tab), _nbech(size), _deltaT(deltaT)
 {
 }
 Signal::~Signal()
@@ -98,12 +98,16 @@ void testSignal(){
 
 	stream << endl << endl << "___TEST Signal___" << endl << endl;
 
-	Echelon step(10, 5);
+	Echelon step(10, 0.1, 5);
 	stream << endl << "Echelon de " << step.GETnbech() << " echantillons d'amplitude " << step.GETamplitude() << step << endl;
 
-	Rampe ramp(10, 2);
+	Rampe ramp(10, 0.2 ,2);
 	stream << "Rampe de " << ramp.GETnbech() << " echantillons de pente " << ramp.GETslope() << ramp << endl;
 
+	randomSignal sig;
+	loadFromFile(sig);
+	stream << "Signal de " << sig.GETnbech() << " echantillons de deltaT " << sig.GETdeltaT() << "s" << sig << endl;
+	
 
 	texte = stream.str();
 	cout << texte;
@@ -120,7 +124,7 @@ void testSignal(){
 Echelon::Echelon() : _amplitude(1)
 {
 }
-Echelon::Echelon(unsigned int nbech, double amplitude) : Signal(nbech, amplitude), _amplitude(amplitude)
+Echelon::Echelon(unsigned int nbech, double deltaT,double amplitude) : Signal(nbech, deltaT), _amplitude(amplitude)
 {
 }
 Echelon::~Echelon()
@@ -141,7 +145,7 @@ const std::string Echelon::printOn(bool on)const{
 	ostringstream stream;
 	string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i << " , " << _amplitude;
+		stream << endl << i * this->GETdeltaT() << " , " << _amplitude;
 	}
 	texte = stream.str();
 	if (on)
@@ -158,7 +162,7 @@ const std::string Echelon::printOn(bool on)const{
 Rampe::Rampe() : Signal(), _slope(0)
 {
 }
-Rampe::Rampe(unsigned int nbech, double slope): Signal(nbech, calculAmplitude(nbech, slope)), _slope(slope)
+Rampe::Rampe(unsigned int nbech, double deltaT, double slope): Signal(nbech, deltaT,calculAmplitude(nbech, deltaT,slope)), _slope(slope)
 {
 }
 Rampe::~Rampe()
@@ -175,11 +179,11 @@ double Rampe::GETslope()const{
 	return _slope;
 }
 
-double* Rampe::calculAmplitude(unsigned int nbech, double slope){
+double* Rampe::calculAmplitude(unsigned int nbech, double deltaT,double slope){
 	double somme = 0;
 	double* buffer = new double[nbech];
 	for (unsigned int i = 0; i < nbech; i++)
-		buffer[i] = slope * this->GETdeltaT() * i;
+		buffer[i] = slope * deltaT * i;
 	return buffer;
 }
 
@@ -187,7 +191,7 @@ const std::string Rampe::printOn(bool on)const{
 	ostringstream stream;
 	string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i << " , " << this->GETthiscoef(i);
+		stream << endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
 	}
 	texte = stream.str();
 	if (on)
@@ -207,18 +211,18 @@ const std::string Rampe::printOn(bool on)const{
 Sinus::Sinus() : Signal(), _amplitude(1), _w(1), _dephasage(0)
 {
 }
-Sinus::Sinus(unsigned int nbech, double amplitude, double w, double dephasage) 
-: Signal(nbech, calculAmplitude(nbech, amplitude, w, dephasage)), _amplitude(amplitude), _w(w), _dephasage(dephasage)
+Sinus::Sinus(unsigned int nbech, double deltaT, double amplitude, double w, double dephasage) 
+: Signal(nbech, deltaT, calculAmplitude(nbech, deltaT,amplitude, w, dephasage)), _amplitude(amplitude), _w(w), _dephasage(dephasage)
 {
 }
 Sinus::~Sinus()
 {
 }
 
-double* Sinus::calculAmplitude(unsigned int nbech, double amplitude, double w, double dephasage){
+double* Sinus::calculAmplitude(unsigned int nbech, double deltaT, double amplitude, double w, double dephasage){
 	double* buffer = new double[nbech];
 	for (unsigned int i = 0; i < nbech; i++)
-		buffer[i] = amplitude * sin(w * i * this->GETdeltaT() + dephasage);
+		buffer[i] = amplitude * sin(w * i * deltaT + dephasage);
 	return buffer;
 }
 
@@ -252,7 +256,7 @@ const std::string Sinus::printOn(bool on)const{
 	ostringstream stream;
 	string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i << " , " << this->GETthiscoef(i);
+		stream << endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
 	}
 	texte = stream.str();
 	if (on)
@@ -277,7 +281,7 @@ const std::string randomSignal::printOn(bool on)const{
 	ostringstream stream;
 	string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i << " , " << this->GETthiscoef(i);
+		stream << endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
 	}
 	texte = stream.str();
 	if (on)
