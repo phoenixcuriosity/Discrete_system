@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.29
+last modification on this file on version:0.30
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -22,12 +22,13 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 
 
-enum { selectnothing, selectFCT, selectSYSETAT, selectTest, exitProgram };
+enum { selectnothing, selectFCT, selectSYSETAT, selectFTBF,selectTest, exitProgram };
 enum { nothing, createNumDen, editFCT, displayFCT, jury, bode,previousMenuFCT };
 enum { nothingtoedit, editnum, editden, editdeltaT, previousMenuEditFCT };
 enum { not, editMatrice, calculMatriceABCD, displaySys, simulationTemporelle, previousMenuSYS };
 enum { not2, stepInput, rampInput, sinusInput, load };
 enum { not3, TESTComplexe, TESTPolynome, TESTMatrice, TESTSignal, TESTFCTDiscret, TESTSysetatdiscret, TESTihm, exitTest };
+enum { not4, FTBFinteg, FTBFreturnloopunit, FTBFreturnloopinteg, calculFTBF,exitFTBF };
 
 
 class IHM{
@@ -40,8 +41,8 @@ public:
 
 	friend void FCTLoop(IHM& ihm);
 	friend void modifFCT(IHM& ihm);
-	friend void createNum(IHM& ihm);
-	friend void createDen(IHM& ihm);
+	friend bool createNum(IHM& ihm);
+	friend bool createDen(IHM& ihm);
 	friend void diagBode(IHM& ihm);
 
 	friend void SYSLoop(IHM& ihm);
@@ -50,6 +51,8 @@ public:
 	
 
 	friend void test();
+
+	friend void FTBF(IHM& ihm);
 
 	void SETfct(FCTDiscret* fct);
 	void SETsys(SYSETATDiscret* sys);

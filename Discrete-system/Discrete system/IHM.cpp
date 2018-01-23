@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.29
+last modification on this file on version:0.30
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -34,15 +34,16 @@ IHM::~IHM()
 void mainLoop(IHM& ihm){
 	bool continuer = true;
 	unsigned int request = 0;
+	FCTDiscret testFCT;
 	logfileconsole("_________Init Success_________");
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 29");
+	logfileconsole("version: 30");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
 		logfileconsole("Main menu");
-		logfileconsole("type 1 menu Fct Discret\n or type 2 menu Discrete System\n or type 3 menu test\n or type 4 to exit the program\n");
+		logfileconsole("type 1 menu Fct Discret\n or type 2 menu Discrete System\n or type 3 to use closed Loop\n or type 4 menu test\n or type 5 to exit the program\n");
 		cin >> request;
 		switch (request){
 		case selectFCT:
@@ -50,6 +51,10 @@ void mainLoop(IHM& ihm){
 			break;
 		case selectSYSETAT:
 			SYSLoop(ihm);
+			break;
+		case selectFTBF:
+			if (assertFCT(*ihm.GETfct(), testFCT))
+				FTBF(ihm);
 			break;
 		case selectTest:
 			test();
@@ -81,11 +86,17 @@ void FCTLoop(IHM& ihm){
 			cin >> deltaT;
 			ihm.GETfct()->SETdeltaT(deltaT);
 			cout << "New deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
-			createNum(ihm);
-			createDen(ihm);
-			logfileconsole("You have created with SUCCESS the FCT, Yeah!!! You did it!!!");
-			logfileconsole("Now try to diplay it");
-			cout << endl << endl;
+			if (createNum(ihm)){
+				if (createDen(ihm)){
+					logfileconsole("You have created with SUCCESS the FCT, Yeah!!! You did it!!!");
+					logfileconsole("Now try to diplay it");
+					cout << endl << endl;
+				}
+				else
+					logfileconsole("______ERROR creatDen : den is 0");
+			}
+			else
+				logfileconsole("______ERROR creatNum : num is 0");
 			break;
 		case editFCT:
 			modifFCT(ihm);
@@ -93,7 +104,7 @@ void FCTLoop(IHM& ihm){
 		case displayFCT:
 			if (assertFCT(*ihm.GETfct(), test)){
 				logfileconsole("FCT\n");
-				cout << endl << *ihm.GETfct();
+				logfileconsole(ihm.GETfct()->printOn(false));
 			}
 			break;
 		case jury:
@@ -149,10 +160,11 @@ void modifFCT(IHM& ihm){
 		}
 	}
 }
-void createNum(IHM& ihm){
+bool createNum(IHM& ihm){
 	system("cls");
 	/*
 		Création du numérateur avec un test pour vérifier l'ordre à la fin
+		si l'ordre est de 0 et le coefficient est 0 alors la fonction renvoie false
 	*/
 	unsigned int order = 0, realOrderNum = 0;
 	double coef = 0;
@@ -173,14 +185,21 @@ void createNum(IHM& ihm){
 			realOrderNum = i;
 			break;
 		}
+		if (i == 0){
+			if (ihm.GETfct()->GETnum().GETcoefTab(0) == 0)
+				return false;
+		}
 	}
+
 	ihm.GETfct()->SETnumOrder(realOrderNum);
 	logfileconsole("You have created the numerator, order : " + to_string(realOrderNum));
+	return true;
 }
-void createDen(IHM& ihm){
+bool createDen(IHM& ihm){
 	system("cls");
 	/*
 		Création du dénominateur avec un test pour vérifier l'ordre à la fin
+		si l'ordre est de 0 et le coefficient est 0 alors la fonction renvoie false
 	*/
 	unsigned int order = 0, realOrderDen = 0;
 	double coef = 0;
@@ -201,9 +220,15 @@ void createDen(IHM& ihm){
 			realOrderDen = i;
 			break;
 		}
+		if (i == 0){
+			if (ihm.GETfct()->GETden().GETcoefTab(0) == 0)
+				return false;
+		}
 	}
+
 	ihm.GETfct()->SETdenOrder(realOrderDen);
 	logfileconsole("You have created the denominator, order : " + to_string(realOrderDen));
+	return true;
 }
 void diagBode(IHM& ihm){
 	system("cls");
@@ -240,13 +265,11 @@ void SYSLoop(IHM& ihm){
 			editmatriceLoop(ihm);
 			break;
 		case calculMatriceABCD:
-			if (assertFCT(*ihm.GETfct(),test)){
+			if (assertFCT(*ihm.GETfct(),test))
 				ihm.GETsys()->calculABCD(*ihm.GETfct());
-				cout << endl << *ihm.GETsys();
-			}
 			break;
 		case displaySys:
-			cout << *ihm.GETsys();
+			logfileconsole(ihm.GETsys()->printOn(false));
 			break;
 		case simulationTemporelle:
 			if (*ihm.GETsys() == Test)
@@ -268,11 +291,10 @@ void editmatriceLoop(IHM& ihm){
 	logfileconsole("You have selected edit A, B, C, D");
 	logfileconsole("On default matrix are filled with 0");
 
-	cout << endl << "Default A :" << endl << ihm.GETsys()->GETA();
-	cout << endl << "Default B :" << endl << ihm.GETsys()->GETB();
-	cout << endl << "Default C :" << endl << ihm.GETsys()->GETC();
-	cout << endl << "Default D :" << endl << ihm.GETsys()->GETD();
-
+	logfileconsole("Default A :\n" + ihm.GETsys()->GETA().printOn(false));
+	logfileconsole("Default B :\n" + ihm.GETsys()->GETB().printOn(false));
+	logfileconsole("Default C :\n" + ihm.GETsys()->GETC().printOn(false));
+	logfileconsole("Default D :\n" + ihm.GETsys()->GETD().printOn(false));
 	
 	logfileconsole("length or height of A : ");
 	cin >> length;
@@ -282,10 +304,10 @@ void editmatriceLoop(IHM& ihm){
 	ihm.GETsys()->SETeditSizeC(1, length);
 	ihm.GETsys()->SETeditSizeD(1, 1);
 
-	cout << endl << "A :" << endl << ihm.GETsys()->GETA();
-	cout << endl << "B :" << endl << ihm.GETsys()->GETB();
-	cout << endl << "C :" << endl << ihm.GETsys()->GETC();
-	cout << endl << "D :" << endl << ihm.GETsys()->GETD();
+	logfileconsole("A :\n" + ihm.GETsys()->GETA().printOn(false));
+	logfileconsole("B :\n" + ihm.GETsys()->GETB().printOn(false));
+	logfileconsole("C :\n" + ihm.GETsys()->GETC().printOn(false));
+	logfileconsole("D :\n" + ihm.GETsys()->GETD().printOn(false));
 
 	logfileconsole("Matrix A : ");
 	double coef = 0;
@@ -390,8 +412,7 @@ void simulationLoop(IHM& ihm){
 	continuer = true;
 	double coef = 0;
 	Matrice x0(ihm.GETsys()->GETA().GETlength(), 1);
-	logfileconsole("\ncondition initial : x0\n");
-	cout << x0 << endl;
+	logfileconsole("\ncondition initial : x0\n" + x0.printOn(false) + "\n");
 	while (continuer){
 		logfileconsole("\ntype 1 for a default initial condition");
 		logfileconsole("or type 2 to edit initial condition : ");
@@ -406,7 +427,7 @@ void simulationLoop(IHM& ihm){
 				cin >> coef;
 				x0.SETthiscoef(i, 0, coef);
 			}
-			cout << endl << "new x0 :" << endl << x0;
+			logfileconsole("\nnew x0 :\n" + x0.printOn(false) + "\n");
 			continuer = false;
 			break;
 		}
@@ -425,12 +446,13 @@ void simulationLoop(IHM& ihm){
 void loadFromFile(Signal& sig){
 	/*
 		charge un signal défini par l'utilisateur dans le fichier load.txt
-		format < temps , amplitude >
+		format : temps , amplitude
 	*/
 	ifstream load("load.txt");
 	string destroy = "";
 	bool continuer = true;
 	unsigned int initSize = 1;
+	double deltaT1 = 0, deltaT2 = 0;
 	double *bufferTime1 = new double[initSize], *bufferAmplitude1 = new double[initSize];
 	double *bufferTime2 = new double[initSize], *bufferAmplitude2 = new double[initSize];
 	bufferTime1[0] = 0; bufferTime2[0] = 0; bufferAmplitude1[0] = 0; bufferAmplitude2[0] = 0;
@@ -444,7 +466,7 @@ void loadFromFile(Signal& sig){
 		load >> destroy;
 		// detection d'erreur format
 		if (destroy.compare(" , ") == 0){
-			cout << endl <<"______ERROR while load from file load.txt : mismatch data";
+			logfileconsole("______ERROR while load from file load.txt : mismatch data");
 			break;
 		}
 			
@@ -455,6 +477,9 @@ void loadFromFile(Signal& sig){
 		if (load.eof())
 			continuer = false;
 		else{
+			/*
+				creation du nouveaux tableaux de taille i + 1
+			*/
 			i++;
 			delete bufferTime2;
 			bufferTime2 = new double[initSize + i];
@@ -478,12 +503,38 @@ void loadFromFile(Signal& sig){
 		}
 	}
 
-	if (i >= 1)
-		sig.SETdeltaT(bufferTime2[1] - bufferTime2[0]);
+	if (i >= 1){
+		deltaT1 = bufferTime2[1] - bufferTime2[0];
+		if (i >= 2){
+			deltaT2 = bufferTime2[2] - bufferTime2[1];
+			if (deltaT1 != deltaT2)
+				logfileconsole("______ERROR loadFromFile : deltaT not const");
+		}
+		sig.SETdeltaT(deltaT1);
+	}
+	else
+		sig.SETdeltaT(1); // defaut pour 1 echantillon
+	
 	sig.SETnbech(i + 1);
-	cout << endl << "deltaT = " << sig.GETdeltaT() << endl << "nbech = " << sig.GETnbech();
 	for (unsigned int a = 0; a <= i; a++)
 		sig.SETthiscoef(a, bufferAmplitude1[a]);
+
+	if (bufferTime1 != nullptr){
+		delete bufferTime1;
+		bufferTime1 = nullptr;
+	}
+	if (bufferTime2 != nullptr){
+		delete bufferTime2;
+		bufferTime2 = nullptr;
+	}
+	if (bufferAmplitude1 != nullptr){
+		delete bufferAmplitude1;
+		bufferTime1 = nullptr;
+	}
+	if (bufferAmplitude2 != nullptr){
+		delete bufferAmplitude2;
+		bufferAmplitude2 = nullptr;
+	}
 }
 void test(){
 	system("cls");
@@ -525,6 +576,46 @@ void test(){
 			testIHM();
 			break;
 		case exitTest:
+			continuer = false;
+			break;
+		}
+	}
+}
+void FTBF(IHM& ihm){
+	system("cls");
+	unsigned int request = 0;
+	bool continuer = true;
+	FCTDiscret resultFCT(*ihm.GETfct());
+	FCTDiscret integrator;
+	integrator.interg();
+	FCTDiscret returnLoopFCT(1.0);
+	
+
+	while (continuer){
+		request = 0;
+		logfileconsole("Menu FTBF");
+		logfileconsole("by default the gain of the return loop is 1");
+		logfileconsole("type 1 to multiply your FCT with an integrator");
+		logfileconsole("type 2 to put -1 in return loop");
+		logfileconsole("or type 3 to multiply the return loop by an integrator");
+		logfileconsole("type 4 to compute FTBF");
+		logfileconsole("or type 5 to return to previous menu : ");
+
+		cin >> request;
+		switch (request){
+		case FTBFinteg:
+			resultFCT = resultFCT * integrator;
+			break;
+		case FTBFreturnloopunit:
+			returnLoopFCT.SETnumThisCoef(0, -1);
+			break;
+		case FTBFreturnloopinteg:
+			returnLoopFCT = integrator;
+			break;
+		case calculFTBF:
+			closeLoop(resultFCT, returnLoopFCT);
+			break;
+		case exitFTBF:
 			continuer = false;
 			break;
 		}

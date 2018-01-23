@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.28
+last modification on this file on version:0.30
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -172,6 +172,25 @@ double FCTDiscret::GETdeltaT()const{
 }
 
 
+
+void FCTDiscret::interg(){
+	_num.editsize(1);
+	_den.editsize(1);
+	_num.SETcoefTab(0, 0);
+	_num.SETcoefTab(1, 1);
+	_den.SETcoefTab(0, -1);
+	_den.SETcoefTab(1, 1);
+}
+void FCTDiscret::secondOrdre(){
+	_num.editsize(0);
+	_den.editsize(1);
+	_num.SETcoefTab(0, 1);
+	_den.SETcoefTab(0, -0.1);
+	_den.SETcoefTab(1, 0.5);
+	_den.SETcoefTab(2, 1);
+}
+
+
 bool FCTDiscret::tabJury(){
 	/*
 		calcul du critère de Jury permettant de statuer sur la stabilité du système
@@ -197,9 +216,9 @@ bool FCTDiscret::tabJury(){
 	Matrice Jury;
 	if (_den.GETorder() > 2){
 		Jury.editsize(2, _den.GETorder() + 1);
-		for (unsigned int i = 0; i <= _den.GETorder(); i++)
+		for (unsigned int i = 0; i <= _den.GETorder(); i++) // première ligne
 			Jury.SETthiscoef(0, i, _den.GETcoefTab(i));
-		for (unsigned int i = 0; i <= _den.GETorder(); i++)
+		for (unsigned int i = 0; i <= _den.GETorder(); i++) // deuxième ligne
 			Jury.SETthiscoef(1, i, den.GETcoefTab(i));
 	}
 	else{
@@ -338,7 +357,6 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 			gain = 20 * log10(module(c));
 			phase = -arg(c);
 			stream << endl << i << " , " << gain << " , " << phase;
-
 		}
 		texte = stream.str();
 		reponse << texte;
@@ -367,7 +385,6 @@ void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop){
 	resultat.SETden(den.GETnum() * num.GETden());
 
 	cout << endl << endl << "CloseLoop" << endl << resultat << endl;
-	
 }
 
 

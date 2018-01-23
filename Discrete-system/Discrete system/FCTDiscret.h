@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.21
+last modification on this file on version:0.30
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -51,6 +51,9 @@ public:
 	Polynome GETnum() const;
 	Polynome GETden() const;
 	double GETdeltaT() const;
+
+	void interg();
+	void secondOrdre();
 
 	bool tabJury();
 	bool Bode(double wMin, double wMax, unsigned int nbpoint);
