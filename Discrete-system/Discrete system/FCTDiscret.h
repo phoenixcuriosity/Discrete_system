@@ -22,7 +22,7 @@ class FCTDiscret{
 public:
 	FCTDiscret();
 	FCTDiscret(double); // cast
-	FCTDiscret(Polynome&, Polynome&, double deltaT);
+	FCTDiscret(Polynome& num, Polynome& den, double deltaT);
 	FCTDiscret(const FCTDiscret&);
 	~FCTDiscret();
 
@@ -52,8 +52,8 @@ public:
 	Polynome GETden() const;
 	double GETdeltaT() const;
 
-	void interg();
-	void secondOrdre();
+	void interg(); // modification de la fonction de transfert pour correspondre à un intégrateur
+	void secondOrdre();// modification de la fonction de transfert pour correspondre à un second ordre
 
 	bool tabJury();
 	bool Bode(double wMin, double wMax, unsigned int nbpoint);

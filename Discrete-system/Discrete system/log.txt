@@ -2,12 +2,13 @@
 Created by SAUTER Robin
 _________Init Success_________
 _________START PROGRAM_________
-version: 29
+Dev version: 31
+Public release 1.0
 This is a free software, you can redistribute it and/or modify it
 
 Main menu
-type 1 menu Fct Discret
- or type 2 menu Discrete System
- or type 3 to use closed Loop
+type 1 menu Transfert Fonction
+ or type 2 menu State System
+ or type 3 menu closed Loop
  or type 4 menu test
  or type 5 to exit the program

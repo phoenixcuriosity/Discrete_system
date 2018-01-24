@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.30
+last modification on this file on version:0.31
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -36,7 +36,13 @@ public:
 	IHM();
 	~IHM();
 
+	void SETfct(FCTDiscret* fct);
+	void SETsys(SYSETATDiscret* sys);
+	FCTDiscret* GETfct()const;
+	SYSETATDiscret* GETsys()const;
 
+
+protected:
 	friend void mainLoop(IHM& ihm);
 
 	friend void FCTLoop(IHM& ihm);
@@ -49,15 +55,8 @@ public:
 	friend void editmatriceLoop(IHM& ihm);
 	friend void simulationLoop(IHM& ihm);
 	
-
 	friend void test();
-
 	friend void FTBF(IHM& ihm);
-
-	void SETfct(FCTDiscret* fct);
-	void SETsys(SYSETATDiscret* sys);
-	FCTDiscret* GETfct()const;
-	SYSETATDiscret* GETsys()const;
 
 	friend bool assertFCT(const FCTDiscret fct, const FCTDiscret test);
 

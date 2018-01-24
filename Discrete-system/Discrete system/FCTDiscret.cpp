@@ -148,10 +148,10 @@ void FCTDiscret::SETdeltaT(double deltaT){
 	_deltaT = deltaT;
 }
 void FCTDiscret::SETnumOrder(unsigned int order) {
-	_num.editsize(order);
+	_num.SETorder(order);
 }
 void FCTDiscret::SETdenOrder(unsigned int order) {
-	_den.editsize(order);
+	_den.SETorder(order);
 }
 void FCTDiscret::SETnumThisCoef(unsigned int index, double userValue) {
 	_num.SETcoefTab(index, userValue);
@@ -174,16 +174,16 @@ double FCTDiscret::GETdeltaT()const{
 
 
 void FCTDiscret::interg(){
-	_num.editsize(1);
-	_den.editsize(1);
+	_num.SETorder(1);
+	_den.SETorder(1);
 	_num.SETcoefTab(0, 0);
 	_num.SETcoefTab(1, 1);
 	_den.SETcoefTab(0, -1);
 	_den.SETcoefTab(1, 1);
 }
 void FCTDiscret::secondOrdre(){
-	_num.editsize(0);
-	_den.editsize(1);
+	_num.SETorder(0);
+	_den.SETorder(1);
 	_num.SETcoefTab(0, 1);
 	_den.SETcoefTab(0, -0.1);
 	_den.SETcoefTab(1, 0.5);
@@ -229,7 +229,7 @@ bool FCTDiscret::tabJury(){
 	
 	
 	while (ligne2.GETorder() > 2){
-		ligne2.editsize(ligne2.GETorder() - 1);
+		ligne2.SETorder(ligne2.GETorder() - 1);
 		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--){
 			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
 			if (j == 0) break;

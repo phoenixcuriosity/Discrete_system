@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.28
+last modification on this file on version:0.31
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -31,6 +31,7 @@ public:
 	friend Polynome operator-(const Polynome&, const Polynome&);
 	friend Polynome operator*(const Polynome&, const Polynome&);
 
+	void SETorder(unsigned int order);
 	void SETcoefTab(unsigned int index, double userValue);
 
 	unsigned int GETorder() const;
@@ -40,9 +41,8 @@ public:
 	friend Polynome addition(const Polynome& a, const Polynome& b);
 	friend Polynome soustraction(const Polynome& a, const Polynome& b);
 	friend Polynome multiplication(const Polynome& a, const Polynome& b);
-	void editsize(unsigned int order);
+	
 	void grow(double userValue);
-
 	std::string printOn(bool = true) const;
 
 	friend void testPolynome();

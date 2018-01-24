@@ -18,8 +18,8 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 class Complexe{
 public:
 	Complexe();
-	Complexe(double); // cast
-	Complexe(double, double);
+	Complexe(double Re); // cast
+	Complexe(double Re, double Im);
 	Complexe(const Complexe&);
 	~Complexe();
 
@@ -39,8 +39,8 @@ public:
 	friend Complexe tfPolynomeComplexe(const Polynome& P, Complexe& Z);
 
 
-	void SETRe(double);
-	void SETIm(double);
+	void SETRe(double Re);
+	void SETIm(double Im);
 	double GETRe()const;
 	double GETIm()const;
 

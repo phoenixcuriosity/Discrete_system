@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.30
+last modification on this file on version:0.31
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -32,18 +32,22 @@ IHM::~IHM()
 
 
 void mainLoop(IHM& ihm){
+	/*
+		Menu principal
+	*/
 	bool continuer = true;
 	unsigned int request = 0;
 	FCTDiscret testFCT;
 	logfileconsole("_________Init Success_________");
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("version: 30");
+	logfileconsole("Dev version: 31");
+	logfileconsole("Public release 1.0");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 	while (continuer){
 		logfileconsole("Main menu");
-		logfileconsole("type 1 menu Fct Discret\n or type 2 menu Discrete System\n or type 3 to use closed Loop\n or type 4 menu test\n or type 5 to exit the program\n");
+		logfileconsole("type 1 menu Transfert Fonction\n or type 2 menu State System\n or type 3 menu closed Loop\n or type 4 menu test\n or type 5 to exit the program\n");
 		cin >> request;
 		switch (request){
 		case selectFCT:
@@ -66,6 +70,9 @@ void mainLoop(IHM& ihm){
 	}
 }
 void FCTLoop(IHM& ihm){
+	/*
+		Menu fonction de transfert permettant de réaliser les méthodes associées à la fonction de transfert
+	*/
 	system("cls");
 	unsigned int request = 0;
 	double deltaT = 0;
@@ -73,22 +80,24 @@ void FCTLoop(IHM& ihm){
 	FCTDiscret test;
 
 	while (continuer){
-		logfileconsole("Menu Fct Discret");
+		logfileconsole("Menu Transfert Fonction");
 		logfileconsole("type 1 to create the numerator and the denominator");
-		logfileconsole("or type 2 to edit the FCT \nor type 3 to display the FCT");
+		logfileconsole("or type 2 to edit the TF \nor type 3 to display the TF");
 		logfileconsole("or type 4 for Jury \nor type 5 for Bode");
 		logfileconsole("or type 6 to return to previous menu : ");
 		cin >> request;
 		switch (request){
 		case createNumDen:
 			cout << "Init deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
-			logfileconsole("deltaT of FCT? : ");
+			logfileconsole("deltaT of TF? : ");
 			cin >> deltaT;
 			ihm.GETfct()->SETdeltaT(deltaT);
 			cout << "New deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
+			system("cls");
 			if (createNum(ihm)){
+				system("cls");
 				if (createDen(ihm)){
-					logfileconsole("You have created with SUCCESS the FCT, Yeah!!! You did it!!!");
+					logfileconsole("You have created with SUCCESS the TF, Yeah!!! You did it!!!");
 					logfileconsole("Now try to diplay it");
 					cout << endl << endl;
 				}
@@ -103,7 +112,7 @@ void FCTLoop(IHM& ihm){
 			break;
 		case displayFCT:
 			if (assertFCT(*ihm.GETfct(), test)){
-				logfileconsole("FCT\n");
+				logfileconsole("TF\n");
 				logfileconsole(ihm.GETfct()->printOn(false));
 			}
 			break;
@@ -127,6 +136,9 @@ void FCTLoop(IHM& ihm){
 	system("cls");
 }
 void modifFCT(IHM& ihm){
+	/*
+		Menu permettant de modifier la fonction de transfert
+	*/
 	unsigned int request = 0;
 	double deltaT = 0;
 	unsigned int order = 0;
@@ -135,7 +147,7 @@ void modifFCT(IHM& ihm){
 
 	while (continuer){
 		system("cls");
-		logfileconsole("Menu edit FCT");
+		logfileconsole("Menu edit TF");
 		logfileconsole("type 1 to edit the numerator");
 		logfileconsole("or type 2 to edit the denominator \nor type 3 to edit deltaT");
 		logfileconsole("or type 4 to return to previous menu : ");
@@ -145,11 +157,12 @@ void modifFCT(IHM& ihm){
 			createNum(ihm);
 			break;
 		case editden:
+			logfileconsole("You have selected to edit the Denominator");
 			createDen(ihm);
 			break;
 		case editdeltaT:
 			cout << "Init deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
-			logfileconsole("deltaT of FCT? : ");
+			logfileconsole("deltaT of TF? : ");
 			cin >> deltaT;
 			ihm.GETfct()->SETdeltaT(deltaT);
 			cout << "New deltaT = " << ihm.GETfct()->GETdeltaT() << "s";
@@ -163,8 +176,8 @@ void modifFCT(IHM& ihm){
 bool createNum(IHM& ihm){
 	system("cls");
 	/*
-		Création du numérateur avec un test pour vérifier l'ordre à la fin
-		si l'ordre est de 0 et le coefficient est 0 alors la fonction renvoie false
+	Création du numérateur avec un test pour vérifier l'ordre à la fin
+	si l'ordre est de 0 et le coefficient est 0 alors la fonction renvoie false
 	*/
 	unsigned int order = 0, realOrderNum = 0;
 	double coef = 0;
@@ -198,8 +211,8 @@ bool createNum(IHM& ihm){
 bool createDen(IHM& ihm){
 	system("cls");
 	/*
-		Création du dénominateur avec un test pour vérifier l'ordre à la fin
-		si l'ordre est de 0 et le coefficient est 0 alors la fonction renvoie false
+	Création du dénominateur avec un test pour vérifier l'ordre à la fin
+	si l'ordre est de 0 et le coefficient est 0 alors la fonction renvoie false
 	*/
 	unsigned int order = 0, realOrderDen = 0;
 	double coef = 0;
@@ -231,6 +244,9 @@ bool createDen(IHM& ihm){
 	return true;
 }
 void diagBode(IHM& ihm){
+	/*
+		Affiche le diagramme de Bode de la fonction de transfert avec les paramètres Wmin, Wmax et le nombre de points
+	*/
 	system("cls");
 	double wMin = 0, wMax = 0;
 	unsigned int nbpoint = 0;
@@ -249,13 +265,17 @@ void diagBode(IHM& ihm){
 
 
 void SYSLoop(IHM& ihm){
+	/*
+		Menu systeme d'état permettant de réaliser les méthodes associées au systeme d'état
+	*/
+	system("cls");
 	unsigned int request = 0;
 	bool continuer = true;
 	FCTDiscret test;
 	SYSETATDiscret Test;
 
 	while (continuer){
-		logfileconsole("Menu Discrete System");
+		logfileconsole("Menu State System");
 		logfileconsole("type 1 to edit A, B, C, D");
 		logfileconsole("or type 2 to compute A, B, C, D \nor type 3 to display A,B,C,D \nor type 4 to simulate");
 		logfileconsole("or type 5 to return to previous menu : ");
@@ -285,6 +305,9 @@ void SYSLoop(IHM& ihm){
 	}
 }
 void editmatriceLoop(IHM& ihm){
+	/*
+		Menu permettant d'éditer les matrices A, B, C et D
+	*/
 	system("cls");
 	bool continuer = true;
 	unsigned int request = 0, length = 0;
@@ -343,6 +366,10 @@ void editmatriceLoop(IHM& ihm){
 }
 
 void simulationLoop(IHM& ihm){
+	/*
+		Menu permettant la simulation
+		séléction du type d'entrée et des conditions initiales
+	*/
 	system("cls");
 	Echelon step;
 	Rampe ramp;
@@ -461,18 +488,14 @@ void loadFromFile(Signal& sig){
 	while (continuer){
 		if (load.eof()) // flag EOF
 			continuer = false;
-		load >> bufferTime1[i];
-		cout << endl << bufferTime1[i];
+		load >> setprecision(3) >> bufferTime1[i];
 		load >> destroy;
 		// detection d'erreur format
-		if (destroy.compare(" , ") == 0){
+		if (destroy.compare(",") != 0){
 			logfileconsole("______ERROR while load from file load.txt : mismatch data");
 			break;
 		}
-			
-		cout << endl << destroy;
 		load >> bufferAmplitude1[i];
-		cout << endl << bufferAmplitude1[i];
 		
 		if (load.eof())
 			continuer = false;
@@ -503,10 +526,17 @@ void loadFromFile(Signal& sig){
 		}
 	}
 
+
 	if (i >= 1){
-		deltaT1 = bufferTime2[1] - bufferTime2[0];
+		deltaT1 = bufferTime1[1] - bufferTime1[0];
 		if (i >= 2){
-			deltaT2 = bufferTime2[2] - bufferTime2[1];
+			deltaT2 = bufferTime1[2] - bufferTime1[1];
+			/*
+				actuellement un problème avec l'importation des données qui n'est pas fixe empéche la vérification du deltaT
+				si dans le fichier il y a 0.1 l'importation le transforme en 0.1000000000001 ce qui n'est pas la meme chose
+				de meme 0.2 se transforme en 0.199999999999
+				la condition ne peut pas etre vérifiée correctement
+			*/
 			if (deltaT1 != deltaT2)
 				logfileconsole("______ERROR loadFromFile : deltaT not const");
 		}
@@ -515,6 +545,7 @@ void loadFromFile(Signal& sig){
 	else
 		sig.SETdeltaT(1); // defaut pour 1 echantillon
 	
+
 	sig.SETnbech(i + 1);
 	for (unsigned int a = 0; a <= i; a++)
 		sig.SETthiscoef(a, bufferAmplitude1[a]);
@@ -582,6 +613,11 @@ void test(){
 	}
 }
 void FTBF(IHM& ihm){
+	/*
+		Menu FTBF permet de calculer la fonction de transfert en boucle fermée
+		Plusieurs possibilités sont disponibles comme : multiplier la TF par un intégrateur
+		ou encore de modifier le gain de la boucle de retour
+	*/
 	system("cls");
 	unsigned int request = 0;
 	bool continuer = true;
@@ -595,7 +631,7 @@ void FTBF(IHM& ihm){
 		request = 0;
 		logfileconsole("Menu FTBF");
 		logfileconsole("by default the gain of the return loop is 1");
-		logfileconsole("type 1 to multiply your FCT with an integrator");
+		logfileconsole("type 1 to multiply your TF with an integrator");
 		logfileconsole("type 2 to put -1 in return loop");
 		logfileconsole("or type 3 to multiply the return loop by an integrator");
 		logfileconsole("type 4 to compute FTBF");
@@ -613,6 +649,7 @@ void FTBF(IHM& ihm){
 			returnLoopFCT = integrator;
 			break;
 		case calculFTBF:
+			system("cls");
 			closeLoop(resultFCT, returnLoopFCT);
 			break;
 		case exitFTBF:
@@ -626,9 +663,13 @@ void FTBF(IHM& ihm){
 
 
 void IHM::SETfct(FCTDiscret* fct){
+	if (_fct != nullptr)
+		delete _fct;
 	_fct = fct;
 }
 void IHM::SETsys(SYSETATDiscret* sys){
+	if (_sys != nullptr)
+		delete _sys;
 	_sys = sys;
 }
 FCTDiscret* IHM::GETfct()const{
