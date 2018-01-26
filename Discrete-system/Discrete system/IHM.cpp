@@ -61,15 +61,12 @@ void mainLoop(IHM& ihm){
 	initsdl(information);
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 2.1");
+	logfileconsole("Dev version: 2.2");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
-	SDL_RenderClear(information.ecran.renderer);
-	writetxt(information, "Dev version: 2.1", { 255, 255, 255, 255 }, 16, 0, 0);
-	writetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
-	writetxt(information, "Discret System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 50, center_x);
+	loadAllTextures(information);
+	ecrantitre(information);
 	
-	SDL_RenderPresent(information.ecran.renderer);
 
 	SDL_Event event;
 	int SDL_EnableUNICODE(1); // on azerty
@@ -99,14 +96,67 @@ void mainLoop(IHM& ihm){
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
+				mouse(information, event);
 				break;
 			case SDL_MOUSEWHEEL:
 				break;
 			}
 		}
+	deleteAll(information);
 	logfileconsole("__");
 }
-	
+void loadAllTextures(sysinfo& information){
+
+	// ______Writetxt_____ 
+	information.ecran.statescreen = STATEecrantitre;
+	loadwritetxt(information, "Dev version: 2.1", { 255, 255, 255, 255 }, 16, 0, 0);
+	loadwritetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
+	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 50, center_x);
+	information.ecran.statescreen = STATEfunctionTransfer;
+	loadwritetxt(information, "Transfert Function", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+
+	// ______Buttons_____
+	information.ecran.statescreen = STATEecrantitre;
+	int spacemenu = 64, initspacemenu = 150;
+	createbutton(information, "Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu, center);
+	createbutton(information, "State System", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Closed Loop", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Tests", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Quit", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+
+	information.ecran.statescreen = STATEfunctionTransfer;
+	spacemenu = 64, initspacemenu = 150;
+	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
+	createbutton(information, "Create the Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu, center);
+	createbutton(information, "Display the Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Jury", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Bode", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+}
+void ecrantitre(sysinfo& information){
+	SDL_RenderClear(information.ecran.renderer);
+	information.ecran.statescreen = STATEecrantitre;
+
+	for (unsigned int i = 0; i < information.allTextures.tabTexture.size(); i++)
+		information.allTextures.tabTexture[i]->renderTextureTestStates(information.ecran.renderer, information.ecran.statescreen, information.variables.select);
+
+	for (unsigned int i = 0; i < information.tabbutton.size(); i++)
+		information.tabbutton[i]->renderButton(information.ecran.renderer, information.ecran.statescreen);
+
+	SDL_RenderPresent(information.ecran.renderer);
+}
+void menuTransferFunction(sysinfo& information){
+	SDL_RenderClear(information.ecran.renderer);
+	information.ecran.statescreen = STATEfunctionTransfer;
+
+	for (unsigned int i = 0; i < information.allTextures.tabTexture.size(); i++)
+		information.allTextures.tabTexture[i]->renderTextureTestStates(information.ecran.renderer, information.ecran.statescreen, information.variables.select);
+
+	for (unsigned int i = 0; i < information.tabbutton.size(); i++)
+		information.tabbutton[i]->renderButton(information.ecran.renderer, information.ecran.statescreen);
+
+	SDL_RenderPresent(information.ecran.renderer);
+}
+
 
 
 bool assertFCT(const FCTDiscret fct, const FCTDiscret test){
@@ -127,6 +177,16 @@ void logfileconsole(const std::string &msg) {
 	}
 	else
 		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << logtxt;
+}
+void logSDLError(std::ostream &os, const std::string &msg){
+	const std::string logtxt = "bin/log/log.txt";
+	ofstream log(logtxt, ios::app);
+	if (log){
+		os << msg << " error: " << SDL_GetError() << std::endl;
+		log << msg << " error: " << SDL_GetError() << std::endl;
+	}
+	else
+		cout << "ERREUR: Impossible d'ouvrir le fichier : " << logtxt << endl;
 }
 void initsdl(sysinfo& information){
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -232,7 +292,47 @@ void createbutton(sysinfo& information, const string& msg, SDL_Color color, SDL_
 		}
 	}
 }
+void loadImage(sysinfo& information, unsigned int& index, const std::string &path, const std::string &msg, Uint8 alpha, int x, int y, int cnt) {
 
+
+	int iW = 0, iH = 0, xc = 0, yc = 0;
+	if (x != -1 && y != -1)
+		xc = x, yc = y;
+
+	SDL_Texture* newTexture = NULL;
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	if (loadedSurface != NULL) {
+		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
+		newTexture = SDL_CreateTextureFromSurface(information.ecran.renderer, loadedSurface);
+		iW = loadedSurface->w;
+		iH = loadedSurface->h;
+		if (newTexture != NULL) {
+			if (alpha != (Uint8)255) {
+				if (SDL_SetTextureAlphaMod(newTexture, alpha) != 0)
+					logSDLError(cout, "alpha : ");
+			}
+			centrage(xc, yc, iW, iH, cnt);
+			information.allTextures.tabTexture.push_back(new Texture(newTexture, msg, information.ecran.statescreen, information.variables.select, xc, yc, iW, iH));
+			index++;
+		}
+		SDL_FreeSurface(loadedSurface);
+	}
+}
+
+void loadwritetxt(sysinfo& information, const std::string &msg, SDL_Color color, int size, unsigned int x, unsigned int y, int cnt) {
+	SDL_Texture *image = renderText(information.ecran.renderer, msg, color, information.allTextures.font, size);
+	int xc = x, yc = y, iW = 0, iH = 0;
+	SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
+	centrage(xc, yc, iW, iH, cnt);
+	information.allTextures.tabTexture.push_back(new Texture(image, msg, information.ecran.statescreen, information.variables.select, xc, yc, iW, iH));
+}
+void loadwritetxtshaded(sysinfo& information, const std::string &msg, SDL_Color color, SDL_Color backcolor, int size, unsigned int x, unsigned int y, int cnt) {
+	SDL_Texture *image = renderTextShaded(information.ecran.renderer, msg, color, backcolor, information.allTextures.font, size);
+	int xc = x, yc = y, iW = 0, iH = 0;
+	SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
+	centrage(xc, yc, iW, iH, cnt);
+	information.allTextures.tabTexture.push_back(new Texture(image, msg, information.ecran.statescreen, information.variables.select, xc, yc, iW, iH));
+}
 void writetxt(sysinfo& information, const std::string &msg, SDL_Color color, int size, unsigned int x, unsigned int y, int cnt) {
 	SDL_Texture *image = renderText(information.ecran.renderer, msg, color, information.allTextures.font, size);
 	loadAndWriteImage(information.ecran.renderer, image, x, y, cnt);
@@ -288,38 +388,70 @@ void mouse(sysinfo& information, SDL_Event event){
 
 	if (event.button.button == SDL_BUTTON_LEFT){
 
-		if (information.ecran.statescreen == STATEmainmap) {
-
-		}
-
 		for (unsigned int i = 0; i < information.tabbutton.size(); i++){ // recherche si une bouton est dans ces coordonnées
 
 
-			if (information.tabbutton[i]->searchButton(fct = "New Game", information.ecran.statescreen, event.button.x, event.button.y)){
+			if (information.tabbutton[i]->searchButton(fct = "Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
+				menuTransferFunction(information);
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "State System", information.ecran.statescreen, event.button.x, event.button.y)){
 				
 				break;
 			}
-			if (information.tabbutton[i]->searchButton(fct = "Reload", information.ecran.statescreen, event.button.x, event.button.y)){
-				
+			if (information.tabbutton[i]->searchButton(fct = "Closed Loop", information.ecran.statescreen, event.button.x, event.button.y)){
+
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Tests", information.ecran.statescreen, event.button.x, event.button.y)){
+
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Quit", information.ecran.statescreen, event.button.x, event.button.y)) {
 				information.variables.continuer = false;
 				break;
 			}
+
+
+
+
+
+
+
+			if (information.tabbutton[i]->searchButton(fct = "Main menu", information.ecran.statescreen, event.button.x, event.button.y)){
+				ecrantitre(information);
+				break;
+			}
 		}
 
 
+
 		// reset de l'affichage On des boutons
+		/*
 		for (unsigned int i = 0; i < information.tabbutton.size(); i++) {
 			if (information.ecran.statescreen == STATEmainmap) 
 				information.tabbutton[i]->resetOnStatescreen(information.variables.select, selectnothing);
 		}
+		*/
 	}
 
 
 
-	if (event.button.button == SDL_BUTTON_RIGHT && information.ecran.statescreen == STATEmainmap) {
-		
-	}
+	//if (event.button.button == SDL_BUTTON_RIGHT && information.ecran.statescreen == STATEmainmap)
+	
+}
+
+
+void deleteAll(sysinfo& information){
+	logfileconsole("*********_________ Start DeleteAll _________*********");
+	for (unsigned int i = 1; i < 80; i++)
+		TTF_CloseFont(information.allTextures.font[i]);
+
+	deleteDyTabPlayerAndTextures(information.allTextures.tabTexture, "Texture");
+	deleteDyTabPlayerAndTextures(information.tabbutton, "Button");
+	SDL_DestroyRenderer(information.ecran.renderer);
+	SDL_DestroyWindow(information.ecran.window);
+	information.ecran.renderer = nullptr;
+	information.ecran.window = nullptr;
+	logfileconsole("*********_________ End DeleteAll _________*********");
 }

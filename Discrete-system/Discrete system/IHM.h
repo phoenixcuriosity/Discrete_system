@@ -24,7 +24,7 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 const unsigned int SCREEN_WIDTH = 640;
 const unsigned int SCREEN_HEIGHT = 480;
 
-enum { STATEnothing, STATEecrantitre, STATEecrannewgame, STATEmainmap, STATEscience, STATEcitiemap };
+enum { STATEnothing, STATEecrantitre, STATEfunctionTransfer, STATEstateSystem, STATEclosedLoop, STATEtests };
 enum { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
 enum { nocenter, center_x, center_y, center };
 
@@ -38,8 +38,6 @@ struct screen {
 
 typedef struct var var;
 struct var {
-	unsigned int nbturn = 0;
-
 	unsigned int select = selectnothing;
 
 	unsigned int mouse_x = 0;
@@ -77,10 +75,17 @@ public:
 
 protected:
 	friend void mainLoop(IHM& ihm);
+	friend void loadAllTextures(sysinfo&);
+	friend void ecrantitre(sysinfo&);
+	friend void menuTransferFunction(sysinfo& information);
+
 	friend void initsdl(sysinfo&);
 	friend SDL_Texture* renderText(SDL_Renderer*&, const std::string&, SDL_Color, TTF_Font*[], int);
 
 	friend void createbutton(sysinfo&, const std::string &msg, SDL_Color, SDL_Color, int, int, int, int = 0); // parametre par defaut -> nocenter
+	friend void loadImage(sysinfo&, unsigned int&, const std::string&, const std::string&, Uint8, int, int, int = 0);
+	friend void loadwritetxt(sysinfo&, const std::string &msg, SDL_Color, int, unsigned int, unsigned int, int = 0);
+	friend void loadwritetxtshaded(sysinfo&, const std::string &msg, SDL_Color, SDL_Color, int, unsigned int, unsigned int, int = 0);
 	friend void writetxt(sysinfo&, const std::string &msg, SDL_Color, int, unsigned int, unsigned int, int = 0);
 	friend void writetxtshaded(sysinfo&, const std::string &msg, SDL_Color, SDL_Color, int, unsigned int, unsigned int, int = 0);
 	friend void loadAndWriteImage(SDL_Renderer*&, SDL_Texture*, unsigned int, unsigned int, int = 0);
@@ -89,11 +94,29 @@ protected:
 	friend void mouse(sysinfo&, SDL_Event);
 
 	friend void logfileconsole(const std::string& msg);
+	friend void logSDLError(std::ostream &os, const std::string &msg);
+	friend void deleteAll(sysinfo&);
 
 private:
 	FCTDiscret* _fct;
 	SYSETATDiscret* _sys;
 };
+
+
+template<class T>
+void deleteDyTabPlayerAndTextures(T& dytab, const std::string& name) {
+	unsigned int size = dytab.size();
+	for (unsigned int i = 0; i < size; i++) {
+		logfileconsole("Delete " + name + " n:" + to_string(i) + " name = " + dytab[i]->GETname() + " Success");
+		delete dytab[i];
+	}
+	for (unsigned int i = 0; i < size; i++)
+		dytab.pop_back();
+	if (dytab.size() != 0)
+		logfileconsole("___________ERROR : " + name + ".size() != 0");
+	else
+		logfileconsole("Delete ALL " + name + " Success");
+}
 
 
 
