@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.31
+last modification on this file on version:2.3
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -48,6 +48,14 @@ SYSETATDiscret* IHM::GETsys()const{
 	return _sys;
 }
 
+bool assertFCT(const FCTDiscret fct, const FCTDiscret test){
+	if (fct == test){
+		logfileconsole("_____FCT doesn't exist");
+		return false;
+	}
+	return true;
+}
+
 
 void mainLoop(IHM& ihm){
 	/*
@@ -61,11 +69,13 @@ void mainLoop(IHM& ihm){
 	initsdl(information);
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 2.2");
+	logfileconsole("Dev version: 2.3");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
+
 	loadAllTextures(information);
-	ecrantitre(information);
+	information.ecran.statescreen = STATEecrantitre;
+	rendueEcran(information);
 	
 
 	SDL_Event event;
@@ -96,7 +106,7 @@ void mainLoop(IHM& ihm){
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
-				mouse(information, event);
+				mouse(ihm, information, event);
 				break;
 			case SDL_MOUSEWHEEL:
 				break;
@@ -109,11 +119,13 @@ void loadAllTextures(sysinfo& information){
 
 	// ______Writetxt_____ 
 	information.ecran.statescreen = STATEecrantitre;
-	loadwritetxt(information, "Dev version: 2.1", { 255, 255, 255, 255 }, 16, 0, 0);
+	loadwritetxt(information, "Dev version: 2.3", { 255, 255, 255, 255 }, 16, 0, 0);
 	loadwritetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
 	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 50, center_x);
 	information.ecran.statescreen = STATEfunctionTransfer;
 	loadwritetxt(information, "Transfert Function", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+	information.ecran.statescreen = STATEstateSystem;
+	loadwritetxt(information, "State System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
 
 	// ______Buttons_____
 	information.ecran.statescreen = STATEecrantitre;
@@ -131,10 +143,18 @@ void loadAllTextures(sysinfo& information){
 	createbutton(information, "Display the Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 	createbutton(information, "Jury", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 	createbutton(information, "Bode", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+
+	information.ecran.statescreen = STATEstateSystem;
+	spacemenu = 64, initspacemenu = 150;
+	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
+	createbutton(information, "Edit Matrix A, B, C and D", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu, center);
+	createbutton(information, "Compute A, B, C and D", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Display the State System", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Simulate", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 }
-void ecrantitre(sysinfo& information){
+void rendueEcran(sysinfo& information){
 	SDL_RenderClear(information.ecran.renderer);
-	information.ecran.statescreen = STATEecrantitre;
+	
 
 	for (unsigned int i = 0; i < information.allTextures.tabTexture.size(); i++)
 		information.allTextures.tabTexture[i]->renderTextureTestStates(information.ecran.renderer, information.ecran.statescreen, information.variables.select);
@@ -144,28 +164,8 @@ void ecrantitre(sysinfo& information){
 
 	SDL_RenderPresent(information.ecran.renderer);
 }
-void menuTransferFunction(sysinfo& information){
-	SDL_RenderClear(information.ecran.renderer);
-	information.ecran.statescreen = STATEfunctionTransfer;
-
-	for (unsigned int i = 0; i < information.allTextures.tabTexture.size(); i++)
-		information.allTextures.tabTexture[i]->renderTextureTestStates(information.ecran.renderer, information.ecran.statescreen, information.variables.select);
-
-	for (unsigned int i = 0; i < information.tabbutton.size(); i++)
-		information.tabbutton[i]->renderButton(information.ecran.renderer, information.ecran.statescreen);
-
-	SDL_RenderPresent(information.ecran.renderer);
-}
 
 
-
-bool assertFCT(const FCTDiscret fct, const FCTDiscret test){
-	if (fct == test){
-		logfileconsole("_____FCT doesn't exist");
-		return false;
-	}
-	return true;
-}
 
 
 void logfileconsole(const std::string &msg) {
@@ -375,28 +375,29 @@ void centrage(int& xc, int& yc, int iW, int iH, int cnt) {
 	}
 }
 
-void mouse(sysinfo& information, SDL_Event event){
+void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 	/*
 	Handle Mouse Event
 	BUTTON_LEFT
 	BUTTON_RIGHT
 
 	*/
-
-
-	string test, fct;
+	string test, fct, barre;
 
 	if (event.button.button == SDL_BUTTON_LEFT){
 
 		for (unsigned int i = 0; i < information.tabbutton.size(); i++){ // recherche si une bouton est dans ces coordonnées
 
+			// boutons du main menu
 
 			if (information.tabbutton[i]->searchButton(fct = "Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
-				menuTransferFunction(information);
+				information.ecran.statescreen = STATEfunctionTransfer;
+				rendueEcran(information);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "State System", information.ecran.statescreen, event.button.x, event.button.y)){
-				
+				information.ecran.statescreen = STATEstateSystem;
+				rendueEcran(information);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Closed Loop", information.ecran.statescreen, event.button.x, event.button.y)){
@@ -414,12 +415,78 @@ void mouse(sysinfo& information, SDL_Event event){
 
 
 
-
-
-
+			// bouton multiple
 
 			if (information.tabbutton[i]->searchButton(fct = "Main menu", information.ecran.statescreen, event.button.x, event.button.y)){
-				ecrantitre(information);
+				information.ecran.statescreen = STATEecrantitre;
+				rendueEcran(information);
+				break;
+			}
+
+
+			// boutons du menu TF
+
+			if (information.tabbutton[i]->searchButton(fct = "Create the Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
+				
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Display the Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
+				FCTDiscret* FCT = new FCTDiscret;
+				FCT->SETnumOrder(1);
+				FCT->SETdenOrder(3);
+				FCT->SETnumThisCoef(0, 0);
+				FCT->SETnumThisCoef(1, 1);
+				FCT->SETdenThisCoef(0, 0.2);
+				FCT->SETdenThisCoef(1, -1.2);
+				FCT->SETdenThisCoef(2, 0.57);
+				FCT->SETdenThisCoef(3, 1);
+				ihm.SETfct(FCT);
+				
+				unsigned int stringSize = 0;
+				stringSize = max(ihm.GETfct()->GETnum().GETstringSize(), ihm.GETfct()->GETden().GETstringSize());
+				for (unsigned int i = 0; i <= stringSize; i++)
+					barre += "-";
+				
+				writetxt(information, ihm.GETfct()->GETnum().printOn(), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 400, center_x);
+				writetxt(information, barre, { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 418, center_x);
+				writetxt(information, ihm.GETfct()->GETden().printOn(), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 436, center_x);
+				SDL_RenderPresent(information.ecran.renderer);
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Jury", information.ecran.statescreen, event.button.x, event.button.y)){
+				
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Bode", information.ecran.statescreen, event.button.x, event.button.y)){
+				
+				break;
+			}
+
+
+
+
+			// boutons du menu State System
+
+			if (information.tabbutton[i]->searchButton(fct = "Edit Matrix A, B, C and D", information.ecran.statescreen, event.button.x, event.button.y)){
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Compute A, B, C and D", information.ecran.statescreen, event.button.x, event.button.y)){
+				FCTDiscret FCT;
+				if (FCT == *ihm.GETfct())
+					writetxt(information, "TF doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 214, center_y);
+				else{
+					ihm.GETsys()->calculABCD(*ihm.GETfct());
+					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 214, center_y);
+				}
+				SDL_RenderPresent(information.ecran.renderer);
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Display the State System", information.ecran.statescreen, event.button.x, event.button.y)){
+				displayStateSystem(ihm, information);
+				break;
+			}
+			if (information.tabbutton[i]->searchButton(fct = "Simulate", information.ecran.statescreen, event.button.x, event.button.y)){
+
 				break;
 			}
 		}
@@ -440,7 +507,57 @@ void mouse(sysinfo& information, SDL_Event event){
 	//if (event.button.button == SDL_BUTTON_RIGHT && information.ecran.statescreen == STATEmainmap)
 	
 }
+void displayStateSystem(IHM& ihm, sysinfo& information){
+	unsigned int initspace = 100;
+	string texte; ostringstream stream;
+	writetxt(information,"Matrix A", { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	for (unsigned int i = 0; i < ihm.GETsys()->GETA().GETlength(); i++){
+		stream << "|";
+		for (unsigned int j = 0; j < ihm.GETsys()->GETA().GETheight(); j++)
+			stream << " " << ihm.GETsys()->GETA().GETthiscoef(i, j) << " ";
+		stream << "|";
+		texte = stream.str();
+		stream.str("");
+		stream.clear();
+		writetxt(information, texte, { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	}
 
+	initspace += 32;
+	writetxt(information, "Matrix B", { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	for (unsigned int i = 0; i < ihm.GETsys()->GETB().GETlength(); i++){
+		stream << "|";
+		for (unsigned int j = 0; j < ihm.GETsys()->GETB().GETheight(); j++)
+			stream << " " << ihm.GETsys()->GETB().GETthiscoef(i, j) << " ";
+		stream << "|";
+		texte = stream.str();
+		stream.str("");
+		stream.clear();
+		writetxt(information, texte, { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	}
+
+	initspace += 32;
+	writetxt(information, "Matrix C", { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	for (unsigned int i = 0; i < ihm.GETsys()->GETC().GETlength(); i++){
+		stream << "|";
+		for (unsigned int j = 0; j < ihm.GETsys()->GETC().GETheight(); j++)
+			stream << " " << ihm.GETsys()->GETC().GETthiscoef(i, j) << " ";
+		stream << "|";
+		texte = stream.str();
+		stream.str("");
+		stream.clear();
+		writetxt(information, texte, { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	}
+
+	initspace += 32;
+	writetxt(information, "Matrix D", { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+	stream << "| " << ihm.GETsys()->GETD().GETthiscoef(0, 0) << " |";
+	texte = stream.str();
+	stream.str("");
+	stream.clear();
+	writetxt(information, texte, { 0, 64, 255, 255 }, 16, 0, initspace += 16);
+
+	SDL_RenderPresent(information.ecran.renderer);
+}
 
 void deleteAll(sysinfo& information){
 	logfileconsole("*********_________ Start DeleteAll _________*********");

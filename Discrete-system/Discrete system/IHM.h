@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.31
+last modification on this file on version:2.3
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -72,12 +72,13 @@ public:
 	FCTDiscret* GETfct()const;
 	SYSETATDiscret* GETsys()const;
 
+	bool assertFCT(const FCTDiscret fct, const FCTDiscret test);
 
 protected:
 	friend void mainLoop(IHM& ihm);
 	friend void loadAllTextures(sysinfo&);
-	friend void ecrantitre(sysinfo&);
-	friend void menuTransferFunction(sysinfo& information);
+	friend void rendueEcran(sysinfo&);
+
 
 	friend void initsdl(sysinfo&);
 	friend SDL_Texture* renderText(SDL_Renderer*&, const std::string&, SDL_Color, TTF_Font*[], int);
@@ -91,7 +92,8 @@ protected:
 	friend void loadAndWriteImage(SDL_Renderer*&, SDL_Texture*, unsigned int, unsigned int, int = 0);
 	friend void centrage(int&, int&, int, int, int = 0);
 
-	friend void mouse(sysinfo&, SDL_Event);
+	friend void mouse(IHM& ,sysinfo&, SDL_Event);
+	friend void displayStateSystem(IHM& ihm, sysinfo& information);
 
 	friend void logfileconsole(const std::string& msg);
 	friend void logSDLError(std::ostream &os, const std::string &msg);
