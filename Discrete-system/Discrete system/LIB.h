@@ -23,7 +23,10 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 #include <exception>
 #include <stdexcept>
 #include <iomanip>
+#include <vector>
 
-
+#include "bin/SDL2-2.0.6/include/SDL.h"
+#include "bin/SDL2-2.0.6/include/SDL_ttf.h"
+#include "bin/SDL2-2.0.6/include/SDL_image.h"
 
 #endif

@@ -333,7 +333,7 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 		Diagramme de Bode en gain et phase
 	*/
 
-	ofstream reponse("Bode.txt");
+	ofstream reponse("bin/files/Bode.txt");
 	string texte;
 	ostringstream stream;
 

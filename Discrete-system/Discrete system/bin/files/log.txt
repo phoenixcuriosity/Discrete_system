@@ -1,0 +1,12 @@
+
+Created by SAUTER Robin
+_________Init Success_________
+CreateWindow Success
+CreateRenderer Success
+TTF_Init Success
+SDL_Init Success
+_________START PROGRAM_________
+Dev version: 2.1
+This is a free software, you can redistribute it and/or modify it
+
+__

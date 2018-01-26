@@ -32,7 +32,7 @@ public:
 
 	virtual const std::string printOn(bool on = true)const = 0;
 
-	friend void loadFromFile(Signal& sig);
+	//friend void loadFromFile(Signal& sig);
 
 	friend void testSignal();
 

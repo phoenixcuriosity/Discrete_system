@@ -215,5 +215,5 @@ void testSYSETATDiscret(){
 	x0.SETthiscoef(0, 0, 0.1);
 
 	cout << endl << endl << endl << "Reponse temporelle avec E = 10.0" << endl;
-	sys.simulation("ReponseTemporelle.txt", E, x0);
+	sys.simulation("bin/files/ReponseTemporelle.txt", E, x0);
 }

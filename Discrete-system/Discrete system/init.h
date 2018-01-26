@@ -17,10 +17,10 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 typedef struct fichier fichier;
 struct fichier {
-	const std::string log = "log.txt";
-	const std::string reponseTemporelle = "ReponseTemporelle.txt";
-	const std::string bode = "Bode.txt";
-	const std::string load = "load.txt";
+	const std::string log = "bin/files/log.txt";
+	const std::string reponseTemporelle = "bin/files/ReponseTemporelle.txt";
+	const std::string bode = "bin/files/Bode.txt";
+	const std::string load = "bin/files/load.txt";
 };
 
 bool initfile(fichier& file);

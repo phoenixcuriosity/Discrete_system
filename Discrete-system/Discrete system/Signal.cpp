@@ -105,7 +105,7 @@ void testSignal(){
 	stream << "Rampe de " << ramp.GETnbech() << " echantillons de pente " << ramp.GETslope() << ramp << endl;
 
 	randomSignal sig;
-	loadFromFile(sig);
+//	loadFromFile(sig);
 	stream << "Signal de " << sig.GETnbech() << " echantillons de deltaT " << sig.GETdeltaT() << "s" << sig << endl;
 	
 
