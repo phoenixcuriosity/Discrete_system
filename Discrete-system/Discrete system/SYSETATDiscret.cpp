@@ -115,7 +115,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 		
 
 		_C.editsize(1, fct.GETden().GETorder());
-		for (unsigned int i = 0; i <= fct.GETnum().GETorder(); i++) {
+		for (unsigned int i = 0; i < fct.GETnum().GETorder(); i++) {
 			_C.SETthiscoef(0, i, fct.GETnum().GETcoefTab(i));
 		}
 		

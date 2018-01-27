@@ -26,7 +26,8 @@ const unsigned int SCREEN_HEIGHT = 480;
 
 enum { STATEnothing, STATEecrantitre,
 	STATEfunctionTransfer, STATETFcreateNumDen,
-	STATEstateSystem, STATEclosedLoop, STATEtests };
+	STATEstateSystem, STATESSsimulate, STATEreponseTemporelle,
+	STATEclosedLoop, STATEtests };
 enum { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
 enum { nocenter, center_x, center_y, center };
 
@@ -99,6 +100,7 @@ protected:
 	friend void CreateNumDen(IHM& ihm, sysinfo& information);
 	friend void displayTF(IHM& ihm, sysinfo& information);
 	friend void displayJury(IHM& ihm, sysinfo& information);
+	friend void computeABCD(IHM& ihm, sysinfo& information);
 	friend void displayStateSystem(IHM& ihm, sysinfo& information);
 
 	friend void logfileconsole(const std::string& msg);

@@ -14,17 +14,17 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 
 using namespace std;
 
-FCTDiscret::FCTDiscret() : _num(), _den(), _deltaT(1)
+FCTDiscret::FCTDiscret() : _jury(), _num(), _den(), _deltaT(1)
 {
 }
-FCTDiscret::FCTDiscret(double userValue) : _num(allocate(userValue)), _den(allocate(1.0)), _deltaT(1)
+FCTDiscret::FCTDiscret(double userValue) : _jury(), _num(allocate(userValue)), _den(allocate(1.0)), _deltaT(1)
 {
 }
-FCTDiscret::FCTDiscret(Polynome& num, Polynome& den, double deltaT) : _num(num), _den(den), _deltaT(deltaT)
+FCTDiscret::FCTDiscret(Polynome& num, Polynome& den, double deltaT) : _jury(), _num(num), _den(den), _deltaT(deltaT)
 {
 }
 
-FCTDiscret::FCTDiscret(const FCTDiscret& F) : _num(F.GETnum()), _den(F.GETden()), _deltaT(F.GETdeltaT())
+FCTDiscret::FCTDiscret(const FCTDiscret& F) : _jury(), _num(F.GETnum()), _den(F.GETden()), _deltaT(F.GETdeltaT())
 {
 }
 

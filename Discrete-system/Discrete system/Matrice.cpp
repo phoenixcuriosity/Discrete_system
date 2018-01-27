@@ -265,7 +265,7 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 				buffer[i][j] = _tab[i][j];
 		}
 
-		if (length >= _length && height >= _height){
+		if (length >= _length && height >= _height && (length != _length || height != _height)){
 			for (unsigned int i = 0; i < maxLength; i++) {
 				for (unsigned int j = 0; j < maxHeight; j++){
 					if (i >= minLength || j >= minHeight)
@@ -273,7 +273,7 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 				}
 			}
 		}
-		else if (length >= _length && height <= _height){
+		else if (length >= _length && height <= _height && (length != _length || height != _height)){
 			for (unsigned int i = 0; i < maxLength; i++) {
 				for (unsigned int j = 0; j < minHeight; j++){
 					if (i >= minLength)
@@ -281,12 +281,20 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 				}
 			}
 		}
-		else if (length <= _length && height >= _height){
+		else if (length <= _length && height >= _height && (length != _length || height != _height)){
 			for (unsigned int i = 0; i < minLength; i++) {
 				for (unsigned int j = 0; j < maxHeight; j++){
 					if (j >= minHeight)
 						buffer[i][j] = 0;
 				}
+			}
+		}
+		else if (length <= _length && height <= _height && (length != _length || height != _height)){
+		}
+		else if (length == _length && height == _height){
+			for (unsigned int i = 0; i < _length; i++) {
+				for (unsigned int j = 0; j < _height; j++)
+					buffer[i][j] = _tab[i][j];
 			}
 		}
 
@@ -353,7 +361,7 @@ const string Matrice::printOn(bool on)const{
 }
 
 bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
-	if (lenght <= _length && height <= _height)
+	if (lenght < _length && height < _height)
 		return true;
 	else {
 		cout << endl << "__________Matrice : assertIndex false";
