@@ -69,7 +69,7 @@ void mainLoop(IHM& ihm){
 	initsdl(information);
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 2.3");
+	logfileconsole("Dev version: 2.4");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 
@@ -119,7 +119,7 @@ void loadAllTextures(sysinfo& information){
 
 	// ______Writetxt_____ 
 	information.ecran.statescreen = STATEecrantitre;
-	loadwritetxt(information, "Dev version: 2.3", { 255, 255, 255, 255 }, 16, 0, 0);
+	loadwritetxt(information, "Dev version: 2.4", { 255, 255, 255, 255 }, 16, 0, 0);
 	loadwritetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
 	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 50, center_x);
 	information.ecran.statescreen = STATEfunctionTransfer;
@@ -401,7 +401,7 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Closed Loop", information.ecran.statescreen, event.button.x, event.button.y)){
-
+				
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Tests", information.ecran.statescreen, event.button.x, event.button.y)){
@@ -427,14 +427,20 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 			// boutons du menu TF
 
 			if (information.tabbutton[i]->searchButton(fct = "Create the Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
-				
+				writetxt(information, "Order of the Numerator : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 420, center_x);
+				SDL_RenderPresent(information.ecran.renderer);
+				ihm.GETfct()->SETnumOrder(CinNumberUnsignedInt(information, (SCREEN_WIDTH / 2) + 100, 420));
+				rendueEcran(information);
+				writetxt(information, "Order of the Numerator : " + to_string(ihm.GETfct()->GETnum().GETorder()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 420, center_x);
+				SDL_RenderPresent(information.ecran.renderer);
+
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Display the Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
 				FCTDiscret* FCT = new FCTDiscret;
 				FCT->SETnumOrder(1);
 				FCT->SETdenOrder(3);
-				FCT->SETnumThisCoef(0, 0);
+				FCT->SETnumThisCoef(0, 0.12);
 				FCT->SETnumThisCoef(1, 1);
 				FCT->SETdenThisCoef(0, 0.2);
 				FCT->SETdenThisCoef(1, -1.2);
@@ -482,11 +488,26 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Display the State System", information.ecran.statescreen, event.button.x, event.button.y)){
-				displayStateSystem(ihm, information);
+				SYSETATDiscret SYS;
+				if (SYS == *ihm.GETsys())
+					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 278, center_y);
+				else{
+					displayStateSystem(ihm, information);
+					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 278, center_y);
+				}
+				SDL_RenderPresent(information.ecran.renderer);
+				
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Simulate", information.ecran.statescreen, event.button.x, event.button.y)){
-
+				SYSETATDiscret SYS;
+				if (SYS == *ihm.GETsys())
+					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 342, center_y);
+				else{
+					
+					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 342, center_y);
+				}
+				SDL_RenderPresent(information.ecran.renderer);
 				break;
 			}
 		}
@@ -506,6 +527,105 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 
 	//if (event.button.button == SDL_BUTTON_RIGHT && information.ecran.statescreen == STATEmainmap)
 	
+}
+unsigned int CinNumberUnsignedInt(sysinfo& information, unsigned int x, unsigned int y){
+	bool continuer = true, ppostive = true;
+	unsigned int number = 0, digit = 0;
+	SDL_Event event;
+	int SDL_EnableUNICODE(1); // on azerty
+	writetxt(information, "Press ENTER to validate", { 255, 0, 0, 255 }, 18, 0, 75);
+
+
+	while (continuer){
+		SDL_WaitEvent(&event);
+		switch (event.type){
+		case SDL_QUIT:	// permet de quitter
+			information.variables.continuer = false;
+			continuer = false;
+			break;
+		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
+			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				information.variables.continuer = false;
+				continuer = false;
+				break;
+			case SDLK_BACKSPACE:
+				number = 0;
+				digit = 0;
+				break;
+			case SDLK_RETURN:
+				continuer = false;
+				break;
+			case SDLK_KP_ENTER:
+				continuer = false;
+				break;
+			case SDLK_1:
+				digit = 1;
+				break;
+			case SDLK_2:
+				digit = 2;
+				break;
+			case SDLK_3:
+				digit = 3;
+				break;
+			case SDLK_4:
+				digit = 4;
+				break;
+			case SDLK_5:
+				digit = 5;
+				break;
+			case SDLK_6:
+				digit = 6;
+				break;
+			case SDLK_7:
+				digit = 7;
+				break;
+			case SDLK_8:
+				digit = 8;
+				break;
+			case SDLK_9:
+				digit = 9;
+				break;
+			case SDLK_KP_1:
+				digit = 1;
+				break;
+			case SDLK_KP_2:
+				digit = 2;
+				break;
+			case SDLK_KP_3:
+				digit = 3;
+				break;
+			case SDLK_KP_4:
+				digit = 4;
+				break;
+			case SDLK_KP_5:
+				digit = 5;
+				break;
+			case SDLK_KP_6:
+				digit = 6;
+				break;
+			case SDLK_KP_7:
+				digit = 7;
+				break;
+			case SDLK_KP_8:
+				digit = 8;
+				break;
+			case SDLK_KP_9:
+				digit = 9;
+				break;
+			}
+			if (continuer){
+				number = (number * 10) + digit;
+				digit = 0;
+				cout << endl << number;
+				//rendueEcran(information);
+				writetxt(information, to_string(number), { 0, 64, 255, 255 }, 18, x, y);
+				SDL_RenderPresent(information.ecran.renderer);
+			}
+			break;
+		}
+	}
+	return number;
 }
 void displayStateSystem(IHM& ihm, sysinfo& information){
 	unsigned int initspace = 100;

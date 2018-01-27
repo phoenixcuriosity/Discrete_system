@@ -93,6 +93,7 @@ protected:
 	friend void centrage(int&, int&, int, int, int = 0);
 
 	friend void mouse(IHM& ,sysinfo&, SDL_Event);
+	friend unsigned int CinNumberUnsignedInt(sysinfo&, unsigned int, unsigned int);
 	friend void displayStateSystem(IHM& ihm, sysinfo& information);
 
 	friend void logfileconsole(const std::string& msg);
