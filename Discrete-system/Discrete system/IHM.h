@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:2.3
+last modification on this file on version:2.5
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -24,7 +24,9 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 const unsigned int SCREEN_WIDTH = 640;
 const unsigned int SCREEN_HEIGHT = 480;
 
-enum { STATEnothing, STATEecrantitre, STATEfunctionTransfer, STATEstateSystem, STATEclosedLoop, STATEtests };
+enum { STATEnothing, STATEecrantitre,
+	STATEfunctionTransfer, STATETFcreateNumDen,
+	STATEstateSystem, STATEclosedLoop, STATEtests };
 enum { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
 enum { nocenter, center_x, center_y, center };
 
@@ -93,7 +95,10 @@ protected:
 	friend void centrage(int&, int&, int, int, int = 0);
 
 	friend void mouse(IHM& ,sysinfo&, SDL_Event);
-	friend unsigned int CinNumberUnsignedInt(sysinfo&, unsigned int, unsigned int);
+	friend unsigned int CinNumberUnsignedInt(sysinfo&, const std::string& msg, unsigned int, unsigned int);
+	friend void CreateNumDen(IHM& ihm, sysinfo& information);
+	friend void displayTF(IHM& ihm, sysinfo& information);
+	friend void displayJury(IHM& ihm, sysinfo& information);
 	friend void displayStateSystem(IHM& ihm, sysinfo& information);
 
 	friend void logfileconsole(const std::string& msg);

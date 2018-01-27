@@ -6,7 +6,7 @@ CreateRenderer Success
 TTF_Init Success
 SDL_Init Success
 _________START PROGRAM_________
-Dev version: 2.4
+Dev version: 2.5
 This is a free software, you can redistribute it and/or modify it
 
 Create Button n:0 msg = Transfer Function Success
@@ -25,11 +25,15 @@ Create Button n:12 msg = Compute A, B, C and D Success
 Create Button n:13 msg = Display the State System Success
 Create Button n:14 msg = Simulate Success
 *********_________ Start DeleteAll _________*********
-Delete Texture n:0 name = Dev version: 2.4 Success
+Delete Texture n:0 name = Dev version: 2.5 Success
 Delete Texture n:1 name = Develop by SAUTER Robin Success
 Delete Texture n:2 name = Discret System Success
 Delete Texture n:3 name = Transfert Function Success
 Delete Texture n:4 name = State System Success
+Delete Texture n:5 name = Create the Transfer Function Success
+Delete Texture n:6 name = Order of the Numerator : 1 Success
+Delete Texture n:7 name = Order of the Denominator : 2 Success
+Delete Texture n:8 name = Sampling time : 1.000000 Success
 Delete ALL Texture Success
 Delete Button n:0 name = Transfer Function Success
 Delete Button n:1 name = State System Success

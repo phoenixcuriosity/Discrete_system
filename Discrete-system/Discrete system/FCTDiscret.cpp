@@ -137,7 +137,9 @@ const string FCTDiscret::printOn(bool on) const{
 	return equation;
 }
 
-
+void FCTDiscret::SETjury(const Matrice& J){
+	_jury = J;
+}
 void FCTDiscret::SETnum(const Polynome &a){
 	_num = a;
 }
@@ -160,7 +162,9 @@ void FCTDiscret::SETdenThisCoef(unsigned int index, double userValue) {
 	_den.SETcoefTab(index, userValue);
 }
 
-
+Matrice FCTDiscret::GETjury()const{
+	return _jury;
+}
 Polynome FCTDiscret::GETnum() const{
 	return _num;
 }
@@ -213,18 +217,18 @@ bool FCTDiscret::tabJury(){
 	Polynome ligne1(_den);
 	Polynome ligne2(_den);
 
-	Matrice Jury;
+	
 	if (_den.GETorder() > 2){
-		Jury.editsize(2, _den.GETorder() + 1);
+		_jury.editsize(2, _den.GETorder() + 1);
 		for (unsigned int i = 0; i <= _den.GETorder(); i++) // première ligne
-			Jury.SETthiscoef(0, i, _den.GETcoefTab(i));
+			_jury.SETthiscoef(0, i, _den.GETcoefTab(i));
 		for (unsigned int i = 0; i <= _den.GETorder(); i++) // deuxième ligne
-			Jury.SETthiscoef(1, i, den.GETcoefTab(i));
+			_jury.SETthiscoef(1, i, den.GETcoefTab(i));
 	}
 	else{
-		Jury.editsize(1, _den.GETorder() + 1);
+		_jury.editsize(1, _den.GETorder() + 1);
 		for (unsigned int i = 0; i <= _den.GETorder(); i++)
-			Jury.SETthiscoef(0, i, _den.GETcoefTab(i));
+			_jury.SETthiscoef(0, i, _den.GETcoefTab(i));
 	}
 	
 	
@@ -235,24 +239,24 @@ bool FCTDiscret::tabJury(){
 			if (j == 0) break;
 		}
 		if (ligne2.GETorder() > 2) {
-			Jury.editsize(Jury.GETlength() + 2, _den.GETorder() + 1);
+			_jury.editsize(_jury.GETlength() + 2, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
-				Jury.SETthiscoef(Jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
+				_jury.SETthiscoef(_jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
 			for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--){
-				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
+				_jury.SETthiscoef(_jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
 				if (j == 0) break;
 			}
 		}
 		else {
-			Jury.editsize(Jury.GETlength() + 1, _den.GETorder() + 1);
+			_jury.editsize(_jury.GETlength() + 1, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
-				Jury.SETthiscoef(Jury.GETlength() - 1, i, ligne2.GETcoefTab(i));
+				_jury.SETthiscoef(_jury.GETlength() - 1, i, ligne2.GETcoefTab(i));
 		}
 		ligne1 = ligne2;
 	}
 	
-	
-	stream << endl << endl << "table of Jury = " << Jury;
+	 
+	stream << endl << endl << "table of Jury = " << _jury;
 
 	unsigned int condition = 0;
 

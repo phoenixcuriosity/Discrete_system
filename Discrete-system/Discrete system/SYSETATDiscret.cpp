@@ -192,10 +192,7 @@ void testSYSETATDiscret(){
 	sys.calculABCD(fct);
 	sys.SETTe(100);
 	cout << endl << sys;
-	if (fct.tabJury())
-		cout << endl << "the system is stable";
-	else
-		cout << endl << "the system is unstable";
+	
 	cout << endl << "BODE" << endl;
 	fct.Bode(0.1, 10, 100);
 

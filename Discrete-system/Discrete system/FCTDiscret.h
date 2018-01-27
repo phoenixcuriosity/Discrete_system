@@ -13,6 +13,11 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 #define FCTDiscret_H
 
 #include "LIB.h"
+
+//#ifndef IHM_H
+//#include "IHM.h"
+//#endif
+
 #include "Polynome.h"
 #include "Matrice.h"
 #include "Complexe.h"
@@ -40,6 +45,7 @@ public:
 
 	const std::string printOn(bool on = true) const;
 
+	void SETjury(const Matrice& J);
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);
 	void SETdeltaT(double);
@@ -48,6 +54,7 @@ public:
 	void SETnumThisCoef(unsigned int order, double userValue);
 	void SETdenThisCoef(unsigned int order, double userValue);
 
+	Matrice GETjury()const;
 	Polynome GETnum() const;
 	Polynome GETden() const;
 	double GETdeltaT() const;
@@ -65,6 +72,7 @@ protected:
 	virtual Polynome allocate(double order) const;
 
 private:
+	Matrice _jury;
 	Polynome _num;
 	Polynome _den;
 	double _deltaT;

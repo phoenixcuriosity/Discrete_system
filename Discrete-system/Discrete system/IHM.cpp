@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:2.3
+last modification on this file on version:2.5
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -69,7 +69,7 @@ void mainLoop(IHM& ihm){
 	initsdl(information);
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 2.4");
+	logfileconsole("Dev version: 2.5");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 
@@ -119,13 +119,15 @@ void loadAllTextures(sysinfo& information){
 
 	// ______Writetxt_____ 
 	information.ecran.statescreen = STATEecrantitre;
-	loadwritetxt(information, "Dev version: 2.4", { 255, 255, 255, 255 }, 16, 0, 0);
+	loadwritetxt(information, "Dev version: 2.5", { 255, 255, 255, 255 }, 16, 0, 0);
 	loadwritetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
-	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 50, center_x);
+	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 28, SCREEN_WIDTH / 2, 25, center_x);
 	information.ecran.statescreen = STATEfunctionTransfer;
 	loadwritetxt(information, "Transfert Function", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
 	information.ecran.statescreen = STATEstateSystem;
 	loadwritetxt(information, "State System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+	information.ecran.statescreen = STATETFcreateNumDen;
+	loadwritetxt(information, "Create the Transfer Function", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
 
 	// ______Buttons_____
 	information.ecran.statescreen = STATEecrantitre;
@@ -137,7 +139,7 @@ void loadAllTextures(sysinfo& information){
 	createbutton(information, "Quit", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 
 	information.ecran.statescreen = STATEfunctionTransfer;
-	spacemenu = 64, initspacemenu = 150;
+	spacemenu = 48, initspacemenu = 100;
 	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
 	createbutton(information, "Create the Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu, center);
 	createbutton(information, "Display the Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
@@ -145,7 +147,7 @@ void loadAllTextures(sysinfo& information){
 	createbutton(information, "Bode", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 
 	information.ecran.statescreen = STATEstateSystem;
-	spacemenu = 64, initspacemenu = 150;
+	spacemenu = 48, initspacemenu = 100;
 	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
 	createbutton(information, "Edit Matrix A, B, C and D", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu, center);
 	createbutton(information, "Compute A, B, C and D", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
@@ -382,7 +384,7 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 	BUTTON_RIGHT
 
 	*/
-	string test, fct, barre;
+	string test, fct;
 
 	if (event.button.button == SDL_BUTTON_LEFT){
 
@@ -427,40 +429,15 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 			// boutons du menu TF
 
 			if (information.tabbutton[i]->searchButton(fct = "Create the Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
-				writetxt(information, "Order of the Numerator : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 420, center_x);
-				SDL_RenderPresent(information.ecran.renderer);
-				ihm.GETfct()->SETnumOrder(CinNumberUnsignedInt(information, (SCREEN_WIDTH / 2) + 100, 420));
-				rendueEcran(information);
-				writetxt(information, "Order of the Numerator : " + to_string(ihm.GETfct()->GETnum().GETorder()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 420, center_x);
-				SDL_RenderPresent(information.ecran.renderer);
-
+				CreateNumDen(ihm, information);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Display the Transfer Function", information.ecran.statescreen, event.button.x, event.button.y)){
-				FCTDiscret* FCT = new FCTDiscret;
-				FCT->SETnumOrder(1);
-				FCT->SETdenOrder(3);
-				FCT->SETnumThisCoef(0, 0.12);
-				FCT->SETnumThisCoef(1, 1);
-				FCT->SETdenThisCoef(0, 0.2);
-				FCT->SETdenThisCoef(1, -1.2);
-				FCT->SETdenThisCoef(2, 0.57);
-				FCT->SETdenThisCoef(3, 1);
-				ihm.SETfct(FCT);
-				
-				unsigned int stringSize = 0;
-				stringSize = max(ihm.GETfct()->GETnum().GETstringSize(), ihm.GETfct()->GETden().GETstringSize());
-				for (unsigned int i = 0; i <= stringSize; i++)
-					barre += "-";
-				
-				writetxt(information, ihm.GETfct()->GETnum().printOn(), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 400, center_x);
-				writetxt(information, barre, { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 418, center_x);
-				writetxt(information, ihm.GETfct()->GETden().printOn(), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 436, center_x);
-				SDL_RenderPresent(information.ecran.renderer);
+				displayTF(ihm, information);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Jury", information.ecran.statescreen, event.button.x, event.button.y)){
-				
+				displayJury(ihm, information);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Bode", information.ecran.statescreen, event.button.x, event.button.y)){
@@ -479,10 +456,10 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 			if (information.tabbutton[i]->searchButton(fct = "Compute A, B, C and D", information.ecran.statescreen, event.button.x, event.button.y)){
 				FCTDiscret FCT;
 				if (FCT == *ihm.GETfct())
-					writetxt(information, "TF doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 214, center_y);
+					writetxt(information, "TF doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
 				else{
 					ihm.GETsys()->calculABCD(*ihm.GETfct());
-					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 214, center_y);
+					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
 				}
 				SDL_RenderPresent(information.ecran.renderer);
 				break;
@@ -490,10 +467,10 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 			if (information.tabbutton[i]->searchButton(fct = "Display the State System", information.ecran.statescreen, event.button.x, event.button.y)){
 				SYSETATDiscret SYS;
 				if (SYS == *ihm.GETsys())
-					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 278, center_y);
+					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 196, center_y);
 				else{
 					displayStateSystem(ihm, information);
-					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 278, center_y);
+					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 196, center_y);
 				}
 				SDL_RenderPresent(information.ecran.renderer);
 				
@@ -502,10 +479,10 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 			if (information.tabbutton[i]->searchButton(fct = "Simulate", information.ecran.statescreen, event.button.x, event.button.y)){
 				SYSETATDiscret SYS;
 				if (SYS == *ihm.GETsys())
-					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 342, center_y);
+					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 292, center_y);
 				else{
 					
-					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 342, center_y);
+					writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 292, center_y);
 				}
 				SDL_RenderPresent(information.ecran.renderer);
 				break;
@@ -528,14 +505,12 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 	//if (event.button.button == SDL_BUTTON_RIGHT && information.ecran.statescreen == STATEmainmap)
 	
 }
-unsigned int CinNumberUnsignedInt(sysinfo& information, unsigned int x, unsigned int y){
+unsigned int CinNumberUnsignedInt(sysinfo& information, const string& msg, unsigned int x, unsigned int y){
 	bool continuer = true, ppostive = true;
 	unsigned int number = 0, digit = 0;
 	SDL_Event event;
 	int SDL_EnableUNICODE(1); // on azerty
-	writetxt(information, "Press ENTER to validate", { 255, 0, 0, 255 }, 18, 0, 75);
-
-
+	
 	while (continuer){
 		SDL_WaitEvent(&event);
 		switch (event.type){
@@ -617,15 +592,98 @@ unsigned int CinNumberUnsignedInt(sysinfo& information, unsigned int x, unsigned
 			if (continuer){
 				number = (number * 10) + digit;
 				digit = 0;
-				cout << endl << number;
-				//rendueEcran(information);
-				writetxt(information, to_string(number), { 0, 64, 255, 255 }, 18, x, y);
+				rendueEcran(information);
+				writetxt(information, "Press ENTER to validate", { 255, 0, 0, 255 }, 16, 0, 50);
+				writetxt(information, "Press Backspace to retry", { 255, 0, 0, 255 }, 16, 0, 66);
+				writetxt(information, msg + to_string(number), { 0, 64, 255, 255 }, 18, x, y, center_x);
 				SDL_RenderPresent(information.ecran.renderer);
 			}
 			break;
 		}
 	}
 	return number;
+}
+void CreateNumDen(IHM& ihm, sysinfo& information){
+	information.ecran.statescreen = STATETFcreateNumDen;
+	rendueEcran(information);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 100, 50);
+
+	writetxt(information, "Order of the Numerator : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 50, center_x);
+	SDL_RenderPresent(information.ecran.renderer);
+	ihm.GETfct()->SETnumOrder(CinNumberUnsignedInt(information, "Order of the Numerator : ", SCREEN_WIDTH / 2, 50));
+	loadwritetxt(information, "Order of the Numerator : " + to_string(ihm.GETfct()->GETnum().GETorder()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 50, center_x);
+	rendueEcran(information);
+	for (unsigned int z = 0; z <= ihm.GETfct()->GETnum().GETorder(); z++){
+		writetxt(information, "coef n:" + to_string(z) + " = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 75, center_x);
+		SDL_RenderPresent(information.ecran.renderer);
+		ihm.GETfct()->SETnumThisCoef(z, CinNumberUnsignedInt(information, "coef n:" + to_string(z) + " = ", SCREEN_WIDTH / 2, 75));
+		rendueEcran(information);
+	}
+
+
+	writetxt(information, "Order of the Denominator : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 100, center_x);
+	SDL_RenderPresent(information.ecran.renderer);
+	ihm.GETfct()->SETdenOrder(CinNumberUnsignedInt(information, "Order of the Denominator : ", SCREEN_WIDTH / 2, 100));
+	loadwritetxt(information, "Order of the Denominator : " + to_string(ihm.GETfct()->GETden().GETorder()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 100, center_x);
+	rendueEcran(information);
+	for (unsigned int z = 0; z <= ihm.GETfct()->GETden().GETorder(); z++){
+		writetxt(information, "coef n:" + to_string(z) + " = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 125, center_x);
+		SDL_RenderPresent(information.ecran.renderer);
+		ihm.GETfct()->SETdenThisCoef(z, CinNumberUnsignedInt(information, "coef n:" + to_string(z) + " = ", SCREEN_WIDTH / 2, 125));
+		rendueEcran(information);
+	}
+
+	writetxt(information, "Sampling time : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	SDL_RenderPresent(information.ecran.renderer);
+	ihm.GETfct()->SETdeltaT(CinNumberUnsignedInt(information, "Sampling time : ", SCREEN_WIDTH / 2, 150));
+	loadwritetxt(information, "Sampling time : " + to_string(ihm.GETfct()->GETdeltaT()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	rendueEcran(information);
+
+	information.ecran.statescreen = STATEfunctionTransfer;
+	rendueEcran(information);
+}
+void displayTF(IHM& ihm, sysinfo& information){
+	ostringstream stream; string texte;
+	string barre;
+	FCTDiscret FCT;
+	if (FCT == *ihm.GETfct()){
+		writetxt(information, "TF doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 175, 196, center_y);
+		SDL_RenderPresent(information.ecran.renderer);
+	}
+	else{
+		unsigned int stringSize = 0;
+		stringSize = max(ihm.GETfct()->GETnum().GETstringSize(), ihm.GETfct()->GETden().GETstringSize());
+		for (unsigned int i = 0; i < ihm.GETfct()->GETden().GETstringSize(); i++)
+			barre += "-";
+
+		stream << ihm.GETfct()->GETnum().printOn(false); texte = stream.str(); stream.str(""); stream.clear();
+		writetxt(information, texte, { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 400, center_x);
+		writetxt(information, barre, { 0, 64, 255, 255 }, 24, SCREEN_WIDTH / 2, 414, center_x);
+		stream << ihm.GETfct()->GETden().printOn(false); texte = stream.str(); stream.str(""); stream.clear();
+		writetxt(information, texte, { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 436, center_x);
+		SDL_RenderPresent(information.ecran.renderer);
+	}
+}
+void displayJury(IHM& ihm, sysinfo& information){
+	unsigned int initspace = 180;
+	string texte; ostringstream stream;
+	if (ihm.GETfct()->tabJury())
+		writetxt(information, "The system is stable", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 100, 196, center_y);
+	else
+		writetxt(information, "The system is unstable", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 100, 196, center_y);
+
+	for (unsigned int i = 0; i < ihm.GETfct()->GETjury().GETlength(); i++){
+		stream << "|";
+		for (unsigned int j = 0; j < ihm.GETfct()->GETjury().GETheight(); j++)
+			stream << " " << ihm.GETfct()->GETjury().GETthiscoef(i, j) << " ";
+		stream << "|";
+		texte = stream.str();
+		stream.str("");
+		stream.clear();
+		writetxt(information, texte, { 255, 255, 255, 255 }, 16, 0, initspace += 16);
+	}
+
+	SDL_RenderPresent(information.ecran.renderer);
 }
 void displayStateSystem(IHM& ihm, sysinfo& information){
 	unsigned int initspace = 100;

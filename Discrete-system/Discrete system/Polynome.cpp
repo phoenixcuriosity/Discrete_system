@@ -220,14 +220,19 @@ string Polynome::printOn(bool on) const{
 	ostringstream stream;
 	for (int i = _order; i >= 0; i--){
 		if (_tab[i] < 0){
-			stream << " - " << fixed << setprecision(2) << abs(_tab[i]);
+			stream << " - ";
+			if (abs(_tab[i]) != 1 || i < 1)
+				stream << fixed << setprecision(2) << abs(_tab[i]);
 			if (i > 1)
 				stream << "Z^" << i;
 			else if (i == 1)
 				stream << "Z";
 		}
 		else if (_tab[i] > 0){
-			stream << " + " << fixed << setprecision(2) <<_tab[i];
+			if (i != _order)
+				stream << " + ";
+			if (_tab[i] != 1 || i < 1)
+				stream << fixed << setprecision(2) <<_tab[i];
 			if (i > 1)
 				stream << "Z^" << i;
 			else if (i == 1)
