@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:2.6
+last modification on this file on version:2.7
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -69,7 +69,7 @@ void mainLoop(IHM& ihm){
 	initsdl(information);
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 2.6");
+	logfileconsole("Dev version: 2.7");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 
@@ -121,7 +121,7 @@ void loadAllTextures(sysinfo& information){
 
 	// ______Writetxt_____ 
 	information.ecran.statescreen = STATEecrantitre;
-	loadwritetxt(information, "Dev version: 2.6", { 255, 255, 255, 255 }, 16, 0, 0);
+	loadwritetxt(information, "Dev version: 2.7", { 255, 255, 255, 255 }, 16, 0, 0);
 	loadwritetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
 	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 28, SCREEN_WIDTH / 2, 25, center_x);
 	information.ecran.statescreen = STATEfunctionTransfer;
@@ -496,23 +496,11 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				if (SYS == *ihm.GETsys())
 					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 244, center_y);
 				else{
+					displayReponseTemp(ihm, information);
 					//information.ecran.statescreen = STATESSsimulate;
 					information.ecran.statescreen = STATEreponseTemporelle;
 					rendueEcran(information);
-					string barre;
-					barre = "0";
-					for (unsigned int z = 0; z < 100; z++)
-						barre += "-";
-					barre += ">t(s)";
-					writetxt(information, barre, { 255, 255, 255, 255 }, 16, 40, 250, center_y);
-					barre = "";
-					unsigned int initspace = 34;
-					for (unsigned int z = 0; z < 30; z++)
-						writetxt(information, "|", { 255, 255, 255, 255 }, 16, 50, initspace += 16 , center_x);
-				
-					
 				}
-				SDL_RenderPresent(information.ecran.renderer);
 				break;
 			}
 
@@ -817,6 +805,43 @@ void displayStateSystem(IHM& ihm, sysinfo& information){
 
 	SDL_RenderPresent(information.ecran.renderer);
 	logfileconsole("_ End displayStateSystem _");
+}
+void displayReponseTemp(IHM& ihm, sysinfo& information){
+	string barre;
+	barre = "0";
+	for (unsigned int z = 0; z < 100; z++)
+		barre += "-";
+	barre += ">t(s)";
+	writetxt(information, barre, { 255, 255, 255, 255 }, 16, 40, 250, center_y);
+	barre = "";
+	unsigned int initspace = 34;
+	for (unsigned int z = 0; z < 30; z++)
+		writetxt(information, "|", { 255, 255, 255, 255 }, 16, 50, initspace += 16, center_x);
+
+	unsigned int x0 = 50, xmin = 50, xmax = 550;
+	unsigned int y0 = 250, ymin = 450, ymax = 50;
+	Rampe ramp(50, 0.1, 1);
+	double max = 0, min = 0;
+	for (unsigned int z = 0; z < ramp.GETnbech(); z++){
+		if (ramp.GETthiscoef(z) > max)
+			max = ramp.GETthiscoef(z);
+		if (ramp.GETthiscoef(z) < min)
+			min = ramp.GETthiscoef(z);
+	}
+	double pasGraph = (xmax - xmin) / ramp.GETnbech();
+	writetxt(information, to_string(max), { 255, 0, 0, 255 }, 8, 20, 50, center);
+	for (double z = xmin, n = 0; z < xmax, n < ramp.GETnbech(); z += pasGraph, n++){
+		writetxt(information, "|", { 255, 255, 255, 255 }, 8, z, y0, center);
+
+		if (ramp.GETthiscoef(n) > 0)
+			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 - ((ramp.GETthiscoef(n) / max) * (y0 - ymax)), center);
+		else if (ramp.GETthiscoef(n) < 0)
+			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 + ((ramp.GETthiscoef(n) / min) * (ymin - y0)), center);
+
+		if (n == 10)
+			writetxt(information, to_string(ramp.GETdeltaT() * 10), { 255, 255, 255, 255 }, 8, z, y0 + 10, center);
+	}
+	SDL_RenderPresent(information.ecran.renderer);
 }
 
 void deleteAll(sysinfo& information){

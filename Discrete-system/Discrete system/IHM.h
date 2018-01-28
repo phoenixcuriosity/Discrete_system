@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:2.5
+last modification on this file on version:2.7
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -102,6 +102,7 @@ protected:
 	friend void displayJury(IHM& ihm, sysinfo& information);
 	friend void computeABCD(IHM& ihm, sysinfo& information);
 	friend void displayStateSystem(IHM& ihm, sysinfo& information);
+	friend void displayReponseTemp(IHM& ihm, sysinfo& information);
 
 	friend void logfileconsole(const std::string& msg);
 	friend void logSDLError(std::ostream &os, const std::string &msg);
