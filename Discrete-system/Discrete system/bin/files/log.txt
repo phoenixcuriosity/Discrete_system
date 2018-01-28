@@ -33,6 +33,10 @@ Create Button n:20 msg = Main menu Success
 _ Start mainLoop _
 _ Start CreateNumDen _
 _ End CreateNumDen _
+_ Start computeABCD _
+_ End computeABCD _
+_ Start displayReponseTemp _
+_ Start displayReponseTemp _
 *********_________ Start DeleteAll _________*********
 Delete Texture n:0 name = Dev version: 2.7 Success
 Delete Texture n:1 name = Develop by SAUTER Robin Success
@@ -42,7 +46,7 @@ Delete Texture n:4 name = State System Success
 Delete Texture n:5 name = Create the Transfer Function Success
 Delete Texture n:6 name = Simulate Success
 Delete Texture n:7 name = Simulation Success
-Delete Texture n:8 name = Order of the Numerator : 1 Success
+Delete Texture n:8 name = Order of the Numerator : 0 Success
 Delete Texture n:9 name = Order of the Denominator : 1 Success
 Delete Texture n:10 name = Sampling time : 1.000000 Success
 Delete ALL Texture Success

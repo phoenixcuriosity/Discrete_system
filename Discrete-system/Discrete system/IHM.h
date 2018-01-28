@@ -102,7 +102,11 @@ protected:
 	friend void displayJury(IHM& ihm, sysinfo& information);
 	friend void computeABCD(IHM& ihm, sysinfo& information);
 	friend void displayStateSystem(IHM& ihm, sysinfo& information);
-	friend void displayReponseTemp(IHM& ihm, sysinfo& information);
+	friend void createSignal(IHM& ihm, sysinfo& information, Signal& sig);
+	friend void createStep(IHM& ihm, sysinfo& information, Echelon& step);
+	friend void createRamp(IHM& ihm, sysinfo& information, Rampe& ramp);
+	friend void createSinus(IHM& ihm, sysinfo& information, Sinus& sinus);
+	friend void displayReponseTemp(IHM& ihm, sysinfo& information, Signal& sig);
 
 	friend void logfileconsole(const std::string& msg);
 	friend void logSDLError(std::ostream &os, const std::string &msg);

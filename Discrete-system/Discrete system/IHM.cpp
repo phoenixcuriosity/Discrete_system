@@ -163,10 +163,10 @@ void loadAllTextures(sysinfo& information){
 
 	information.ecran.statescreen = STATESSsimulate;
 	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
-	createbutton(information, "Step", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 100, 50);
-	createbutton(information, "Ramp", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 200, 50);
-	createbutton(information, "Sinus", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 300, 50);
-	createbutton(information, "Import Signal", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 400, 50);
+	createbutton(information, "Step", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 100, 100);
+	createbutton(information, "Ramp", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 200, 100);
+	createbutton(information, "Sinus", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 300, 100);
+	createbutton(information, "Import Signal", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 400, 100);
 
 	information.ecran.statescreen = STATEreponseTemporelle;
 	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
@@ -496,10 +496,9 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				if (SYS == *ihm.GETsys())
 					writetxt(information, "SS doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 244, center_y);
 				else{
-					displayReponseTemp(ihm, information);
-					//information.ecran.statescreen = STATESSsimulate;
-					information.ecran.statescreen = STATEreponseTemporelle;
+					information.ecran.statescreen = STATESSsimulate;
 					rendueEcran(information);
+					
 				}
 				break;
 			}
@@ -509,18 +508,38 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 
 			if (information.tabbutton[i]->searchButton(fct = "Step", information.ecran.statescreen, event.button.x, event.button.y)){
 				information.tabbutton[i]->changeOn();
-				Echelon step;
 				rendueEcran(information);
+				Echelon step;
+				createSignal(ihm, information, step);
+				createStep(ihm, information, step);
+				information.ecran.statescreen = STATEreponseTemporelle;
+				rendueEcran(information);
+				displayReponseTemp(ihm, information, step);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Ramp", information.ecran.statescreen, event.button.x, event.button.y)){
 				information.tabbutton[i]->changeOn();
 				rendueEcran(information);
+				Rampe ramp;
+				createSignal(ihm, information, ramp);
+				createRamp(ihm, information, ramp);
+				information.ecran.statescreen = STATEreponseTemporelle;
+				rendueEcran(information);
+				displayReponseTemp(ihm, information, ramp);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Sinus", information.ecran.statescreen, event.button.x, event.button.y)){
+				Sinus sinus(500, 0.01, 1, 1, 0);
+				/*
 				information.tabbutton[i]->changeOn();
 				rendueEcran(information);
+				Sinus sinus;
+				createSignal(ihm, information, sinus);
+				createSinus(ihm, information, sinus);
+				information.ecran.statescreen = STATEreponseTemporelle;
+				rendueEcran(information);
+				*/
+				displayReponseTemp(ihm, information, sinus);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Import Signal", information.ecran.statescreen, event.button.x, event.button.y)){
@@ -744,6 +763,7 @@ void displayJury(IHM& ihm, sysinfo& information){
 	logfileconsole("_ End displayJury _");
 }
 void computeABCD(IHM& ihm, sysinfo& information){
+	logfileconsole("_ Start computeABCD _");
 	FCTDiscret FCT;
 	if (FCT == *ihm.GETfct())
 		writetxt(information, "TF doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
@@ -752,6 +772,7 @@ void computeABCD(IHM& ihm, sysinfo& information){
 		writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
 	}
 	SDL_RenderPresent(information.ecran.renderer);
+	logfileconsole("_ End computeABCD _");
 }
 void displayStateSystem(IHM& ihm, sysinfo& information){
 	logfileconsole("_ Start displayStateSystem _");
@@ -806,7 +827,76 @@ void displayStateSystem(IHM& ihm, sysinfo& information){
 	SDL_RenderPresent(information.ecran.renderer);
 	logfileconsole("_ End displayStateSystem _");
 }
-void displayReponseTemp(IHM& ihm, sysinfo& information){
+void createSignal(IHM& ihm, sysinfo& information, Signal& sig){
+	logfileconsole("_ Start createSignal _");
+	writetxt(information, "Number of samples : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 100, 150);
+	SDL_RenderPresent(information.ecran.renderer);
+	sig.SETnbech(CinNumberUnsignedInt(information, "Number of samples : ", SCREEN_WIDTH / 2, 150));
+	loadwritetxt(information, "Number of samples : " + to_string(sig.GETnbech()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	rendueEcran(information);
+
+	writetxt(information, "DeltaT : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 200, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 50, 200);
+	SDL_RenderPresent(information.ecran.renderer);
+	sig.SETdeltaT(CinNumberUnsignedInt(information, "DeltaT : ", SCREEN_WIDTH / 2, 200));
+	loadwritetxt(information, "DeltaT : " + to_string(sig.GETnbech()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 200, center_x);
+	rendueEcran(information);
+
+	logfileconsole("_ End createSignal _");
+}
+void createStep(IHM& ihm, sysinfo& information, Echelon& step){
+	logfileconsole("_ Start createStep _");
+
+	writetxt(information, "Amplitude : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 70, 250);
+	SDL_RenderPresent(information.ecran.renderer);
+	step.SETamplitude(CinNumberUnsignedInt(information, "Amplitude : ", SCREEN_WIDTH / 2, 250));
+	loadwritetxt(information, "Amplitude : " + to_string(step.GETamplitude()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
+	rendueEcran(information);
+
+	logfileconsole("_ End createStep _");
+}
+void createRamp(IHM& ihm, sysinfo& information, Rampe& ramp){
+	logfileconsole("_ Start createRamp _");
+
+	writetxt(information, "Slope : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 50, 250);
+	SDL_RenderPresent(information.ecran.renderer);
+	ramp.SETslope(CinNumberUnsignedInt(information, "Slope : ", SCREEN_WIDTH / 2, 250));
+	loadwritetxt(information, "Slope : " + to_string(ramp.GETslope()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
+	rendueEcran(information);
+
+	logfileconsole("_ End createRamp _");
+}
+void createSinus(IHM& ihm, sysinfo& information, Sinus& sinus){
+	logfileconsole("_ Start createSinus _");
+
+	writetxt(information, "Amplitude : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 70, 250);
+	SDL_RenderPresent(information.ecran.renderer);
+	sinus.SETamplitude(CinNumberUnsignedInt(information, "Amplitude : ", SCREEN_WIDTH / 2, 250));
+	loadwritetxt(information, "Amplitude : " + to_string(sinus.GETamplitude()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
+	rendueEcran(information);
+
+	writetxt(information, "Angular velocity (w): ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 300, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 100, 300);
+	SDL_RenderPresent(information.ecran.renderer);
+	sinus.SETw(CinNumberUnsignedInt(information, "Angular velocity (w): ", SCREEN_WIDTH / 2, 300));
+	loadwritetxt(information, "Angular velocity (w): " + to_string(sinus.GETw()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 300, center_x);
+	rendueEcran(information);
+
+	writetxt(information, "Phase (phi): ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 350, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 70, 350);
+	SDL_RenderPresent(information.ecran.renderer);
+	sinus.SETdephasage(CinNumberUnsignedInt(information, "Phase (phi): ", SCREEN_WIDTH / 2, 350));
+	loadwritetxt(information, "Phase (phi): " + to_string(sinus.GETdephasage()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 350, center_x);
+	rendueEcran(information);
+
+	logfileconsole("_ End createSinus _");
+}
+void displayReponseTemp(IHM& ihm, sysinfo& information, Signal& sig){
+	logfileconsole("_ Start displayReponseTemp _");
 	string barre;
 	barre = "0";
 	for (unsigned int z = 0; z < 100; z++)
@@ -820,28 +910,29 @@ void displayReponseTemp(IHM& ihm, sysinfo& information){
 
 	unsigned int x0 = 50, xmin = 50, xmax = 550;
 	unsigned int y0 = 250, ymin = 450, ymax = 50;
-	Rampe ramp(50, 0.1, 1);
+	
 	double max = 0, min = 0;
-	for (unsigned int z = 0; z < ramp.GETnbech(); z++){
-		if (ramp.GETthiscoef(z) > max)
-			max = ramp.GETthiscoef(z);
-		if (ramp.GETthiscoef(z) < min)
-			min = ramp.GETthiscoef(z);
+	for (unsigned int z = 0; z < sig.GETnbech(); z++){
+		if (sig.GETthiscoef(z) > max)
+			max = sig.GETthiscoef(z);
+		if (sig.GETthiscoef(z) < min)
+			min = sig.GETthiscoef(z);
 	}
-	double pasGraph = (xmax - xmin) / ramp.GETnbech();
+	double pasGraph = (xmax - xmin) / sig.GETnbech();
 	writetxt(information, to_string(max), { 255, 0, 0, 255 }, 8, 20, 50, center);
-	for (double z = xmin, n = 0; z < xmax, n < ramp.GETnbech(); z += pasGraph, n++){
+	for (double z = xmin, n = 0; z < xmax, n < sig.GETnbech(); z += pasGraph, n++){
 		writetxt(information, "|", { 255, 255, 255, 255 }, 8, z, y0, center);
 
-		if (ramp.GETthiscoef(n) > 0)
-			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 - ((ramp.GETthiscoef(n) / max) * (y0 - ymax)), center);
-		else if (ramp.GETthiscoef(n) < 0)
-			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 + ((ramp.GETthiscoef(n) / min) * (ymin - y0)), center);
+		if (sig.GETthiscoef(n) > 0)
+			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 - ((sig.GETthiscoef(n) / max) * (y0 - ymax)), center);
+		else if (sig.GETthiscoef(n) < 0)
+			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 + ((sig.GETthiscoef(n) / min) * (ymin - y0)), center);
 
 		if (n == 10)
-			writetxt(information, to_string(ramp.GETdeltaT() * 10), { 255, 255, 255, 255 }, 8, z, y0 + 10, center);
+			writetxt(information, to_string(sig.GETdeltaT() * 10), { 255, 255, 255, 255 }, 8, z, y0 + 10, center);
 	}
 	SDL_RenderPresent(information.ecran.renderer);
+	logfileconsole("_ Start displayReponseTemp _");
 }
 
 void deleteAll(sysinfo& information){

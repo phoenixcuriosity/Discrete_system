@@ -1,14 +1,14 @@
-﻿La génération a démarré 28/01/2018 12:48:51.
+﻿La génération a démarré 28/01/2018 17:12:40.
      1>Projet "C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
          I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt IHM.cpp
          IHM.cpp
-     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(526): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(528): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(529): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(530): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(531): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(534): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(924): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(926): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(927): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(928): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(929): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(932): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
        Link:
          I:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.exe" /INCREMENTAL /NOLOGO /LIBPATH:"bin\SDL2-2.0.6\lib\x86" SDL2.lib SDL2main.lib SDL2_ttf.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.lib" /MACHINE:X86 Debug\Buttons.obj
          Debug\Complexe.obj
@@ -26,4 +26,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:00.78
+Temps écoulé 00:00:00.80
