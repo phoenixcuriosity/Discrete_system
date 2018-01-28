@@ -25,8 +25,8 @@ const unsigned int SCREEN_WIDTH = 640;
 const unsigned int SCREEN_HEIGHT = 480;
 
 enum { STATEnothing, STATEecrantitre,
-	STATEfunctionTransfer, STATETFcreateNumDen,
-	STATEstateSystem, STATESSsimulate, STATEreponseTemporelle,
+	STATEfunctionTransfer, STATETFcreateNumDen, STATETFcreateBode, STATETFdisplayBode,
+	STATEstateSystem, STATESScreateMatrice, STATESSsimulate, STATEreponseTemporelle,
 	STATEclosedLoop, STATEtests };
 enum { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
 enum { nocenter, center_x, center_y, center };
@@ -97,9 +97,12 @@ protected:
 
 	friend void mouse(IHM& ,sysinfo&, SDL_Event);
 	friend unsigned int CinNumberUnsignedInt(sysinfo&, const std::string& msg, unsigned int, unsigned int);
+	friend double CinNumberDouble(sysinfo&, const std::string& msg, unsigned int, unsigned int);
 	friend void CreateNumDen(IHM& ihm, sysinfo& information);
 	friend void displayTF(IHM& ihm, sysinfo& information);
 	friend void displayJury(IHM& ihm, sysinfo& information);
+	friend void displayBode(IHM& ihm, sysinfo& information);
+	friend void createMatrice(IHM& ihm, sysinfo& information);
 	friend void computeABCD(IHM& ihm, sysinfo& information);
 	friend void displayStateSystem(IHM& ihm, sysinfo& information);
 	friend void createSignal(IHM& ihm, sysinfo& information, Signal& sig);

@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:2.7
+last modification on this file on version:2.8
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -69,7 +69,7 @@ void mainLoop(IHM& ihm){
 	initsdl(information);
 
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 2.7");
+	logfileconsole("Dev version: 2.8");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
 
@@ -121,15 +121,21 @@ void loadAllTextures(sysinfo& information){
 
 	// ______Writetxt_____ 
 	information.ecran.statescreen = STATEecrantitre;
-	loadwritetxt(information, "Dev version: 2.7", { 255, 255, 255, 255 }, 16, 0, 0);
+	loadwritetxt(information, "Dev version: 2.8", { 255, 255, 255, 255 }, 16, 0, 0);
 	loadwritetxt(information, "Develop by SAUTER Robin", { 255, 255, 255, 255 }, 16, 0, 16);
 	loadwritetxt(information, "Discret System", { 0, 255, 255, 255 }, 28, SCREEN_WIDTH / 2, 25, center_x);
 	information.ecran.statescreen = STATEfunctionTransfer;
 	loadwritetxt(information, "Transfert Function", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
-	information.ecran.statescreen = STATEstateSystem;
-	loadwritetxt(information, "State System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
 	information.ecran.statescreen = STATETFcreateNumDen;
 	loadwritetxt(information, "Create the Transfer Function", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+	information.ecran.statescreen = STATETFcreateBode;
+	loadwritetxt(information, "Create Bode", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+	information.ecran.statescreen = STATETFdisplayBode;
+	loadwritetxt(information, "Display Bode", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+	information.ecran.statescreen = STATEstateSystem;
+	loadwritetxt(information, "State System", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
+	information.ecran.statescreen = STATESScreateMatrice;
+	loadwritetxt(information, "Create Matrix A, B, C and D", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
 	information.ecran.statescreen = STATESSsimulate;
 	loadwritetxt(information, "Simulate", { 0, 255, 255, 255 }, 24, SCREEN_WIDTH / 2, 0, center_x);
 	information.ecran.statescreen = STATEreponseTemporelle;
@@ -138,12 +144,11 @@ void loadAllTextures(sysinfo& information){
 
 	// ______Buttons_____
 	information.ecran.statescreen = STATEecrantitre;
-	int spacemenu = 64, initspacemenu = 150;
-	createbutton(information, "Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu, center);
-	createbutton(information, "State System", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
-	createbutton(information, "Closed Loop", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
-	createbutton(information, "Tests", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
-	createbutton(information, "Quit", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	int spacemenu = 64, initspacemenu = 200;
+	createbutton(information, "Transfer Function", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 26, SCREEN_WIDTH / 2, initspacemenu, center);
+	createbutton(information, "State System", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Closed Loop", { 128, 128, 128, 255 }, { 64, 64, 64, 255 }, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+	createbutton(information, "Quit", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 
 	information.ecran.statescreen = STATEfunctionTransfer;
 	spacemenu = 48, initspacemenu = 100;
@@ -153,6 +158,12 @@ void loadAllTextures(sysinfo& information){
 	createbutton(information, "Jury", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 	createbutton(information, "Bode", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 
+	information.ecran.statescreen = STATETFcreateBode;
+	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
+
+	information.ecran.statescreen = STATETFdisplayBode;
+	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
+
 	information.ecran.statescreen = STATEstateSystem;
 	spacemenu = 48, initspacemenu = 100;
 	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
@@ -160,6 +171,9 @@ void loadAllTextures(sysinfo& information){
 	createbutton(information, "Compute A, B, C and D", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 	createbutton(information, "Display the State System", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
 	createbutton(information, "Simulate", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, center);
+
+	information.ecran.statescreen = STATESScreateMatrice;
+	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
 
 	information.ecran.statescreen = STATESSsimulate;
 	createbutton(information, "Main menu", { 255, 64, 0, 255 }, { 64, 64, 64, 255 }, 24, 0, 0);
@@ -459,7 +473,7 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Bode", information.ecran.statescreen, event.button.x, event.button.y)){
-				
+				displayBode(ihm, information);
 				break;
 			}
 
@@ -469,6 +483,7 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 			// boutons du menu State System
 
 			if (information.tabbutton[i]->searchButton(fct = "Edit Matrix A, B, C and D", information.ecran.statescreen, event.button.x, event.button.y)){
+				createMatrice(ihm, information);
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Compute A, B, C and D", information.ecran.statescreen, event.button.x, event.button.y)){
@@ -529,8 +544,7 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				break;
 			}
 			if (information.tabbutton[i]->searchButton(fct = "Sinus", information.ecran.statescreen, event.button.x, event.button.y)){
-				Sinus sinus(500, 0.01, 1, 1, 0);
-				/*
+				//Sinus sinus(500, 0.1, 1, 1, 0);
 				information.tabbutton[i]->changeOn();
 				rendueEcran(information);
 				Sinus sinus;
@@ -538,7 +552,6 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 				createSinus(ihm, information, sinus);
 				information.ecran.statescreen = STATEreponseTemporelle;
 				rendueEcran(information);
-				*/
 				displayReponseTemp(ihm, information, sinus);
 				break;
 			}
@@ -570,7 +583,7 @@ void mouse(IHM& ihm, sysinfo& information, SDL_Event event){
 	
 }
 unsigned int CinNumberUnsignedInt(sysinfo& information, const string& msg, unsigned int x, unsigned int y){
-	bool continuer = true, ppostive = true;
+	bool continuer = true;
 	unsigned int number = 0, digit = 0;
 	SDL_Event event;
 	int SDL_EnableUNICODE(1); // on azerty
@@ -625,6 +638,9 @@ unsigned int CinNumberUnsignedInt(sysinfo& information, const string& msg, unsig
 			case SDLK_9:
 				digit = 9;
 				break;
+			case SDLK_KP_0:
+				digit = 0;
+				break;
 			case SDLK_KP_1:
 				digit = 1;
 				break;
@@ -654,13 +670,146 @@ unsigned int CinNumberUnsignedInt(sysinfo& information, const string& msg, unsig
 				break;
 			}
 			if (continuer){
-				number = (number * 10) + digit;
+				if (digit != -1){
+					number = (number * 10) + digit;
+					digit = -1;
+					rendueEcran(information);
+					writetxt(information, "Press ENTER to validate", { 255, 0, 0, 255 }, 16, 0, 50);
+					writetxt(information, "Press Backspace to retry", { 255, 0, 0, 255 }, 16, 0, 66);
+					writetxt(information, msg + to_string(number), { 0, 64, 255, 255 }, 18, x, y, center_x);
+					SDL_RenderPresent(information.ecran.renderer);
+				}
+			}
+			break;
+		}
+	}
+	return number;
+}
+double CinNumberDouble(sysinfo& information, const string& msg, unsigned int x, unsigned int y){
+	bool continuer = true, postive = true, puissancePositive = true;
+	double number = 0, digit = 0;
+	unsigned int p = 1;
+	SDL_Event event;
+	int SDL_EnableUNICODE(1); // on azerty
+
+	while (continuer){
+		SDL_WaitEvent(&event);
+		switch (event.type){
+		case SDL_QUIT:	// permet de quitter
+			information.variables.continuer = false;
+			continuer = false;
+			digit = -1;
+			number = 0;
+			break;
+		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
+			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				information.variables.continuer = false;
+				continuer = false;
+				digit = -1;
+				number = 0;
+				break;
+			case SDLK_BACKSPACE:
+				postive = true;
+				puissancePositive = true;
+				number = 0;
 				digit = 0;
-				rendueEcran(information);
-				writetxt(information, "Press ENTER to validate", { 255, 0, 0, 255 }, 16, 0, 50);
-				writetxt(information, "Press Backspace to retry", { 255, 0, 0, 255 }, 16, 0, 66);
-				writetxt(information, msg + to_string(number), { 0, 64, 255, 255 }, 18, x, y, center_x);
-				SDL_RenderPresent(information.ecran.renderer);
+				break;
+			case SDLK_RETURN:
+				continuer = false;
+				break;
+			case SDLK_KP_ENTER:
+				continuer = false;
+				break;
+			case SDLK_KP_MINUS:
+				postive = false;
+				break;
+			case SDLK_KP_PLUS:
+				postive = true;
+				break;
+			case SDLK_KP_PERIOD:
+				puissancePositive = false;
+				break;
+			case SDLK_1:
+				digit = 1;
+				break;
+			case SDLK_2:
+				digit = 2;
+				break;
+			case SDLK_3:
+				digit = 3;
+				break;
+			case SDLK_4:
+				digit = 4;
+				break;
+			case SDLK_5:
+				digit = 5;
+				break;
+			case SDLK_6:
+				digit = 6;
+				break;
+			case SDLK_7:
+				digit = 7;
+				break;
+			case SDLK_8:
+				digit = 8;
+				break;
+			case SDLK_9:
+				digit = 9;
+				break;
+			case SDLK_KP_0:
+				digit = 0;
+				break;
+			case SDLK_KP_1:
+				digit = 1;
+				break;
+			case SDLK_KP_2:
+				digit = 2;
+				break;
+			case SDLK_KP_3:
+				digit = 3;
+				break;
+			case SDLK_KP_4:
+				digit = 4;
+				break;
+			case SDLK_KP_5:
+				digit = 5;
+				break;
+			case SDLK_KP_6:
+				digit = 6;
+				break;
+			case SDLK_KP_7:
+				digit = 7;
+				break;
+			case SDLK_KP_8:
+				digit = 8;
+				break;
+			case SDLK_KP_9:
+				digit = 9;
+				break;
+			}
+			if (continuer){
+				if (digit != -1){
+					rendueEcran(information);
+					writetxt(information, "Press ENTER to validate", { 255, 0, 0, 255 }, 16, 0, 50);
+					writetxt(information, "Press Backspace to retry", { 255, 0, 0, 255 }, 16, 0, 66);
+					
+					if (puissancePositive){
+						number = (number * 10) + digit;
+						if (!postive)
+							number = -number;
+						writetxt(information, msg + to_string(number), { 0, 64, 255, 255 }, 18, x, y, center_x);
+					}
+					else{
+						number += (digit / pow(10, p));
+						p++;
+						if (!postive)
+							number = -number;
+						writetxt(information, msg + to_string(number), { 0, 64, 255, 255 }, 18, x, y, center_x);
+					}
+					SDL_RenderPresent(information.ecran.renderer);
+					digit = -1;
+				}
 			}
 			break;
 		}
@@ -681,7 +830,7 @@ void CreateNumDen(IHM& ihm, sysinfo& information){
 	for (unsigned int z = 0; z <= ihm.GETfct()->GETnum().GETorder(); z++){
 		writetxt(information, "coef n:" + to_string(z) + " = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 75, center_x);
 		SDL_RenderPresent(information.ecran.renderer);
-		ihm.GETfct()->SETnumThisCoef(z, CinNumberUnsignedInt(information, "coef n:" + to_string(z) + " = ", SCREEN_WIDTH / 2, 75));
+		ihm.GETfct()->SETnumThisCoef(z, CinNumberDouble(information, "coef n:" + to_string(z) + " = ", SCREEN_WIDTH / 2, 75));
 		rendueEcran(information);
 	}
 
@@ -694,13 +843,13 @@ void CreateNumDen(IHM& ihm, sysinfo& information){
 	for (unsigned int z = 0; z <= ihm.GETfct()->GETden().GETorder(); z++){
 		writetxt(information, "coef n:" + to_string(z) + " = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 125, center_x);
 		SDL_RenderPresent(information.ecran.renderer);
-		ihm.GETfct()->SETdenThisCoef(z, CinNumberUnsignedInt(information, "coef n:" + to_string(z) + " = ", SCREEN_WIDTH / 2, 125));
+		ihm.GETfct()->SETdenThisCoef(z, CinNumberDouble(information, "coef n:" + to_string(z) + " = ", SCREEN_WIDTH / 2, 125));
 		rendueEcran(information);
 	}
 
 	writetxt(information, "Sampling time : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
 	SDL_RenderPresent(information.ecran.renderer);
-	ihm.GETfct()->SETdeltaT(CinNumberUnsignedInt(information, "Sampling time : ", SCREEN_WIDTH / 2, 150));
+	ihm.GETfct()->SETdeltaT(CinNumberDouble(information, "Sampling time : ", SCREEN_WIDTH / 2, 150));
 	loadwritetxt(information, "Sampling time : " + to_string(ihm.GETfct()->GETdeltaT()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
 	rendueEcran(information);
 
@@ -762,14 +911,176 @@ void displayJury(IHM& ihm, sysinfo& information){
 	SDL_RenderPresent(information.ecran.renderer);
 	logfileconsole("_ End displayJury _");
 }
+void displayBode(IHM& ihm, sysinfo& information){
+	logfileconsole("_ Start displayBode _");
+	information.ecran.statescreen = STATETFcreateBode;
+	rendueEcran(information);
+	double wmin = 0, wmax = 0;
+	unsigned int nbpoint = 0;
+
+	writetxt(information, "W min : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 50, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 50, 50);
+	SDL_RenderPresent(information.ecran.renderer);
+	wmin = CinNumberDouble(information, "W min : ", SCREEN_WIDTH / 2, 50);
+	loadwritetxt(information, "W min : " + to_string(wmin), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 50, center_x);
+	rendueEcran(information);
+
+	writetxt(information, "W max : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 100, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 50, 100);
+	SDL_RenderPresent(information.ecran.renderer);
+	wmax = CinNumberDouble(information, "W max : ", SCREEN_WIDTH / 2, 100);
+	loadwritetxt(information, "W max : " + to_string(wmax), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 100, center_x);
+	rendueEcran(information);
+
+	writetxt(information, "Number of points : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 100, 150);
+	SDL_RenderPresent(information.ecran.renderer);
+	nbpoint= CinNumberUnsignedInt(information, "Number of points : ", SCREEN_WIDTH / 2, 150);
+	loadwritetxt(information, "Number of points : " + to_string(nbpoint), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	rendueEcran(information);
+
+	information.ecran.statescreen = STATETFdisplayBode;
+	rendueEcran(information);
+
+	double** gainPhase = new double*[3];
+	for (unsigned int i = 0; i < 3; i++)
+		gainPhase[i] = new double[nbpoint];
+
+	for (unsigned int i = 0; i < 3; i++){
+		for (unsigned int j = 0; j < nbpoint; j++)
+			gainPhase[i][j] = 0;
+	}
+	ihm.GETfct()->Bode(wmin, wmax, nbpoint, gainPhase);
+
+	double gainMax = gainPhase[1][0], gainMin = gainPhase[1][0];
+	double phaseMax = gainPhase[2][0], phaseMin = gainPhase[2][0];
+	for (unsigned int i = 0; i < nbpoint; i++){
+		if (gainPhase[1][i] > gainMax)
+			gainMax = gainPhase[1][i];
+		if (gainPhase[1][i] < gainMin)
+			gainMin = gainPhase[1][i];
+
+		if (gainPhase[2][i] > phaseMax)
+			phaseMax = gainPhase[2][i];
+		if (gainPhase[2][i] < phaseMin)
+			phaseMin = gainPhase[2][i];
+	}
+
+	double amplitudeGain = max(abs(gainMax), abs(gainMin));
+	double amplitudePhase = max(abs(phaseMax), abs(phaseMin));
+	
+	string barre;
+	barre = "";
+	for (unsigned int z = 0; z < 100; z++)
+		barre += "-";
+	barre += ">w(2xPixf)";
+	writetxt(information, barre, { 255, 255, 255, 255 }, 16, 40, 460, center_y);
+	barre = "";
+	unsigned int initspace = 14;
+	for (unsigned int z = 0; z < 30; z++)
+		writetxt(information, "|", { 255, 255, 255, 255 }, 16, 50, initspace += 16, center_x);
+
+	writetxt(information, to_string(wmin), { 255, 255, 255, 255 }, 10, 30, 472, center_y);
+	writetxt(information, to_string(wmax), { 255, 255, 255, 255 }, 10, 530, 472, center_y);
+
+	unsigned int x0 = 50, xmax = 550; 
+	unsigned int ymingain = 30, ymaxgain = 230;
+	unsigned int yminphase = 250, ymaxphase = 450;
+	double pasGraph = (xmax - x0) / nbpoint;
+
+
+	for (unsigned int z = x0, n = 0; z < xmax, n < nbpoint; z += pasGraph, n++){
+		writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, ymaxgain - ((gainPhase[1][n] / amplitudeGain) * (ymaxgain - ymingain)), center);
+		writetxt(information, "+", { 0, 255, 0, 255 }, 8, z, yminphase - ((gainPhase[2][n] / amplitudePhase) * (ymaxphase - yminphase)), center);
+	}
+	SDL_RenderPresent(information.ecran.renderer);
+
+	logfileconsole("_ End displayBode _");
+}
+void createMatrice(IHM& ihm, sysinfo& information){
+	logfileconsole("_ Start createMatrice _");
+	information.ecran.statescreen = STATESScreateMatrice;
+	rendueEcran(information);
+
+	unsigned int length = 0;
+
+
+	writetxt(information, "Length or height of A : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 50, center_x);
+	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 100, 50);
+	SDL_RenderPresent(information.ecran.renderer);
+	length = CinNumberUnsignedInt(information, "Length or height of A : ", SCREEN_WIDTH / 2, 50);
+	ihm.GETsys()->SETeditSizeA(length, length);
+	ihm.GETsys()->SETeditSizeB(length, 1);
+	ihm.GETsys()->SETeditSizeC(1, length);
+	ihm.GETsys()->SETeditSizeD(1, 1);
+	loadwritetxt(information, "Length of A : " + to_string(ihm.GETsys()->GETA().GETlength()) + " and Height of A : " + to_string(ihm.GETsys()->GETA().GETheight()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 50, center_x);
+	rendueEcran(information);
+
+	displayStateSystem(ihm, information);
+
+	for (unsigned int i = 0; i < ihm.GETsys()->GETA().GETlength(); i++){
+		for (unsigned int j = 0; j < ihm.GETsys()->GETA().GETheight(); j++){
+			writetxt(information, "coef [" + to_string(i) + "][" + to_string(j) + "] = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 75, center_x);
+			SDL_RenderPresent(information.ecran.renderer);
+			ihm.GETsys()->SETthisCoefA(i, j, CinNumberDouble(information, "coef [" + to_string(i) + "][" + to_string(j) + "] = ", SCREEN_WIDTH / 2, 75));
+			rendueEcran(information);
+			displayStateSystem(ihm, information);
+		}
+	}
+
+	loadwritetxt(information, "Length of B : " + to_string(ihm.GETsys()->GETB().GETlength()) + " and Height of B : " + to_string(ihm.GETsys()->GETB().GETlength()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 100, center_x);
+	rendueEcran(information);
+	displayStateSystem(ihm, information);
+
+	for (unsigned int i = 0; i < ihm.GETsys()->GETB().GETlength(); i++){
+		for (unsigned int j = 0; j < ihm.GETsys()->GETB().GETheight(); j++){
+			writetxt(information, "coef [" + to_string(i) + "][" + to_string(j) + "] = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 125, center_x);
+			SDL_RenderPresent(information.ecran.renderer);
+			ihm.GETsys()->SETthisCoefB(i, j, CinNumberDouble(information, "coef [" + to_string(i) + "][" + to_string(j) + "] = ", SCREEN_WIDTH / 2, 125));
+			rendueEcran(information);
+			displayStateSystem(ihm, information);
+		}
+	}
+
+	loadwritetxt(information, "Length of C : " + to_string(ihm.GETsys()->GETC().GETlength()) + " and Height of C : " + to_string(ihm.GETsys()->GETC().GETheight()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 150, center_x);
+	rendueEcran(information);
+	displayStateSystem(ihm, information);
+
+	for (unsigned int i = 0; i < ihm.GETsys()->GETC().GETlength(); i++){
+		for (unsigned int j = 0; j < ihm.GETsys()->GETC().GETheight(); j++){
+			writetxt(information, "coef [" + to_string(i) + "][" + to_string(j) + "] = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 175, center_x);
+			SDL_RenderPresent(information.ecran.renderer);
+			ihm.GETsys()->SETthisCoefC(i, j, CinNumberDouble(information, "coef [" + to_string(i) + "][" + to_string(j) + "] = ", SCREEN_WIDTH / 2, 175));
+			rendueEcran(information);
+			displayStateSystem(ihm, information);
+		}
+	}
+
+	loadwritetxt(information, "Length of D : " + to_string(ihm.GETsys()->GETD().GETlength()) + " and Height of D : " + to_string(ihm.GETsys()->GETD().GETheight()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 200, center_x);
+	rendueEcran(information);
+	displayStateSystem(ihm, information);
+
+	writetxt(information, "coef [0][0] = ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 225, center_x);
+	SDL_RenderPresent(information.ecran.renderer);
+	ihm.GETsys()->SETthisCoefD(0, 0, CinNumberDouble(information, "coef [0][0] = ", SCREEN_WIDTH / 2, 225));
+	rendueEcran(information);
+	displayStateSystem(ihm, information);
+
+
+	logfileconsole("_ End createMatrice _");
+}
 void computeABCD(IHM& ihm, sysinfo& information){
 	logfileconsole("_ Start computeABCD _");
 	FCTDiscret FCT;
 	if (FCT == *ihm.GETfct())
 		writetxt(information, "TF doesn't exist", { 255, 0, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
 	else{
-		ihm.GETsys()->calculABCD(*ihm.GETfct());
-		writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
+		if (ihm.GETfct()->GETden().GETorder() > ihm.GETfct()->GETnum().GETorder()){
+			ihm.GETsys()->calculABCD(*ihm.GETfct());
+			writetxt(information, "OK", { 0, 255, 0, 255 }, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
+		}
+		else
+			writetxt(information, "Order of Num >= Den", { 255, 0, 0, 255 }, 14, (SCREEN_WIDTH / 2) + 150, 148, center_y);
 	}
 	SDL_RenderPresent(information.ecran.renderer);
 	logfileconsole("_ End computeABCD _");
@@ -839,8 +1150,8 @@ void createSignal(IHM& ihm, sysinfo& information, Signal& sig){
 	writetxt(information, "DeltaT : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 200, center_x);
 	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 50, 200);
 	SDL_RenderPresent(information.ecran.renderer);
-	sig.SETdeltaT(CinNumberUnsignedInt(information, "DeltaT : ", SCREEN_WIDTH / 2, 200));
-	loadwritetxt(information, "DeltaT : " + to_string(sig.GETnbech()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 200, center_x);
+	sig.SETdeltaT(CinNumberDouble(information, "DeltaT : ", SCREEN_WIDTH / 2, 200));
+	loadwritetxt(information, "DeltaT : " + to_string(sig.GETdeltaT()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 200, center_x);
 	rendueEcran(information);
 
 	logfileconsole("_ End createSignal _");
@@ -851,7 +1162,7 @@ void createStep(IHM& ihm, sysinfo& information, Echelon& step){
 	writetxt(information, "Amplitude : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
 	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 70, 250);
 	SDL_RenderPresent(information.ecran.renderer);
-	step.SETamplitude(CinNumberUnsignedInt(information, "Amplitude : ", SCREEN_WIDTH / 2, 250));
+	step.SETamplitude(CinNumberDouble(information, "Amplitude : ", SCREEN_WIDTH / 2, 250));
 	loadwritetxt(information, "Amplitude : " + to_string(step.GETamplitude()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
 	rendueEcran(information);
 
@@ -863,7 +1174,7 @@ void createRamp(IHM& ihm, sysinfo& information, Rampe& ramp){
 	writetxt(information, "Slope : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
 	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 50, 250);
 	SDL_RenderPresent(information.ecran.renderer);
-	ramp.SETslope(CinNumberUnsignedInt(information, "Slope : ", SCREEN_WIDTH / 2, 250));
+	ramp.SETslope(CinNumberDouble(information, "Slope : ", SCREEN_WIDTH / 2, 250));
 	loadwritetxt(information, "Slope : " + to_string(ramp.GETslope()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
 	rendueEcran(information);
 
@@ -875,21 +1186,21 @@ void createSinus(IHM& ihm, sysinfo& information, Sinus& sinus){
 	writetxt(information, "Amplitude : ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
 	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 70, 250);
 	SDL_RenderPresent(information.ecran.renderer);
-	sinus.SETamplitude(CinNumberUnsignedInt(information, "Amplitude : ", SCREEN_WIDTH / 2, 250));
+	sinus.SETamplitude(CinNumberDouble(information, "Amplitude : ", SCREEN_WIDTH / 2, 250));
 	loadwritetxt(information, "Amplitude : " + to_string(sinus.GETamplitude()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 250, center_x);
 	rendueEcran(information);
 
 	writetxt(information, "Angular velocity (w): ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 300, center_x);
 	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 100, 300);
 	SDL_RenderPresent(information.ecran.renderer);
-	sinus.SETw(CinNumberUnsignedInt(information, "Angular velocity (w): ", SCREEN_WIDTH / 2, 300));
+	sinus.SETw(CinNumberDouble(information, "Angular velocity (w): ", SCREEN_WIDTH / 2, 300));
 	loadwritetxt(information, "Angular velocity (w): " + to_string(sinus.GETw()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 300, center_x);
 	rendueEcran(information);
 
 	writetxt(information, "Phase (phi): ", { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 350, center_x);
 	writetxt(information, "Enter a number", { 255, 215, 0, 255 }, 18, SCREEN_WIDTH / 2 + 70, 350);
 	SDL_RenderPresent(information.ecran.renderer);
-	sinus.SETdephasage(CinNumberUnsignedInt(information, "Phase (phi): ", SCREEN_WIDTH / 2, 350));
+	sinus.SETdephasage(CinNumberDouble(information, "Phase (phi): ", SCREEN_WIDTH / 2, 350));
 	loadwritetxt(information, "Phase (phi): " + to_string(sinus.GETdephasage()), { 0, 64, 255, 255 }, 18, SCREEN_WIDTH / 2, 350, center_x);
 	rendueEcran(information);
 
@@ -908,25 +1219,43 @@ void displayReponseTemp(IHM& ihm, sysinfo& information, Signal& sig){
 	for (unsigned int z = 0; z < 30; z++)
 		writetxt(information, "|", { 255, 255, 255, 255 }, 16, 50, initspace += 16, center_x);
 
+
+	Matrice X0(ihm.GETsys()->GETA().GETlength(), 1);
+
+	double* yOut = new double[sig.GETnbech()];
+	ihm.GETsys()->simulation("bin/files/ReponseTemporelle.txt", sig, X0, yOut);
+
+
 	unsigned int x0 = 50, xmin = 50, xmax = 550;
 	unsigned int y0 = 250, ymin = 450, ymax = 50;
 	
+
 	double max = 0, min = 0;
 	for (unsigned int z = 0; z < sig.GETnbech(); z++){
 		if (sig.GETthiscoef(z) > max)
 			max = sig.GETthiscoef(z);
+		if (yOut[z] > max)
+			max = yOut[z];
 		if (sig.GETthiscoef(z) < min)
 			min = sig.GETthiscoef(z);
+		if (yOut[z] < min)
+			min = yOut[z];
 	}
-	double pasGraph = (xmax - xmin) / sig.GETnbech();
+
+	unsigned int pasGraph = (xmax - xmin) / sig.GETnbech();
 	writetxt(information, to_string(max), { 255, 0, 0, 255 }, 8, 20, 50, center);
-	for (double z = xmin, n = 0; z < xmax, n < sig.GETnbech(); z += pasGraph, n++){
+	for (unsigned int z = xmin, n = 0; z < xmax, n < sig.GETnbech(); z += pasGraph, n++){
 		writetxt(information, "|", { 255, 255, 255, 255 }, 8, z, y0, center);
 
 		if (sig.GETthiscoef(n) > 0)
 			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 - ((sig.GETthiscoef(n) / max) * (y0 - ymax)), center);
 		else if (sig.GETthiscoef(n) < 0)
 			writetxt(information, "+", { 255, 0, 0, 255 }, 8, z, y0 + ((sig.GETthiscoef(n) / min) * (ymin - y0)), center);
+
+		if (yOut[n] > 0)
+			writetxt(information, "+", { 0, 255, 0, 255 }, 8, z, y0 - ((yOut[n] / max) * (y0 - ymax)), center);
+		else if (yOut[n] < 0)
+			writetxt(information, "+", { 0, 255, 0, 255 }, 8, z, y0 + ((yOut[n] / min) * (ymin - y0)), center);
 
 		if (n == 10)
 			writetxt(information, to_string(sig.GETdeltaT() * 10), { 255, 255, 255, 255 }, 8, z, y0 + 10, center);

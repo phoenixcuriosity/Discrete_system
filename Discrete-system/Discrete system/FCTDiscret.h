@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.30
+last modification on this file on version:2.8
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -63,7 +63,7 @@ public:
 	void secondOrdre();// modification de la fonction de transfert pour correspondre à un second ordre
 
 	bool tabJury();
-	bool Bode(double wMin, double wMax, unsigned int nbpoint);
+	bool Bode(double wMin, double wMax, unsigned int nbpoint, double** gainPhase);
 	friend void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop);
 
 	friend void testFCTDiscret();

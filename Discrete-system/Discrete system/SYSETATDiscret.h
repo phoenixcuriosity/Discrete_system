@@ -48,7 +48,7 @@ public:
 	
 
 	void calculABCD(const FCTDiscret& fct);
-	void simulation(const std::string& namefile, const Signal& signal, Matrice& x0);
+	void simulation(const std::string& namefile, Signal& signal, Matrice& x0, double* yOut);
 
 	std::string printOn(bool on = true)const;
 

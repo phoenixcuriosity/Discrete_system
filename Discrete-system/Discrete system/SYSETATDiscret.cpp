@@ -115,9 +115,9 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 		
 
 		_C.editsize(1, fct.GETden().GETorder());
-		for (unsigned int i = 0; i < fct.GETnum().GETorder(); i++) {
+		for (unsigned int i = 0; i <= fct.GETnum().GETorder(); i++) 
 			_C.SETthiscoef(0, i, fct.GETnum().GETcoefTab(i));
-		}
+		
 		
 
 		_D.editsize(1, 1);
@@ -127,7 +127,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 }
 
 
-void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signal, Matrice& x0) {
+void SYSETATDiscret::simulation(const std::string& namefile, Signal& signal, Matrice& x0, double* yOut) {
 	/*
 		simulation du système d'état avec un signal en entré et une matrice x0
 		calcul echantillon par echantillon le signal de sorti
@@ -140,8 +140,9 @@ void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signa
 	for (unsigned int i = 0; i < signal.GETnbech(); i++){
 		dx = _A * x0 + _B * signal.GETthiscoef(i);
 		y = _C * x0 + _D * signal.GETthiscoef(i);
+		yOut[i] = y.GETthiscoef(0, 0);
 		x0 = dx;
-		repy << endl << i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
+		repy << endl << signal.GETdeltaT() * i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
 	}
 
 	rep = repy.str();
@@ -151,6 +152,7 @@ void SYSETATDiscret::simulation(const std::string& namefile, const Signal& signa
 	}
 	else
 		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << namefile;
+
 }
 
 string SYSETATDiscret::printOn(bool on)const{
@@ -194,7 +196,7 @@ void testSYSETATDiscret(){
 	cout << endl << sys;
 	
 	cout << endl << "BODE" << endl;
-	fct.Bode(0.1, 10, 100);
+	//fct.Bode(0.1, 10, 100);
 
 	/*
 	FCTDiscret fct2;
@@ -212,5 +214,5 @@ void testSYSETATDiscret(){
 	x0.SETthiscoef(0, 0, 0.1);
 
 	cout << endl << endl << endl << "Reponse temporelle avec E = 10.0" << endl;
-	sys.simulation("bin/files/ReponseTemporelle.txt", E, x0);
+	//sys.simulation("bin/files/ReponseTemporelle.txt", E, x0);
 }

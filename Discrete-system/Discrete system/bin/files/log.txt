@@ -6,71 +6,93 @@ CreateRenderer Success
 TTF_Init Success
 SDL_Init Success
 _________START PROGRAM_________
-Dev version: 2.7
+Dev version: 2.8
 This is a free software, you can redistribute it and/or modify it
 
 Create Button n:0 msg = Transfer Function Success
 Create Button n:1 msg = State System Success
 Create Button n:2 msg = Closed Loop Success
-Create Button n:3 msg = Tests Success
-Create Button n:4 msg = Quit Success
-Create Button n:5 msg = Main menu Success
-Create Button n:6 msg = Create the Transfer Function Success
-Create Button n:7 msg = Display the Transfer Function Success
-Create Button n:8 msg = Jury Success
-Create Button n:9 msg = Bode Success
+Create Button n:3 msg = Quit Success
+Create Button n:4 msg = Main menu Success
+Create Button n:5 msg = Create the Transfer Function Success
+Create Button n:6 msg = Display the Transfer Function Success
+Create Button n:7 msg = Jury Success
+Create Button n:8 msg = Bode Success
+Create Button n:9 msg = Main menu Success
 Create Button n:10 msg = Main menu Success
-Create Button n:11 msg = Edit Matrix A, B, C and D Success
-Create Button n:12 msg = Compute A, B, C and D Success
-Create Button n:13 msg = Display the State System Success
-Create Button n:14 msg = Simulate Success
-Create Button n:15 msg = Main menu Success
-Create Button n:16 msg = Step Success
-Create Button n:17 msg = Ramp Success
-Create Button n:18 msg = Sinus Success
-Create Button n:19 msg = Import Signal Success
-Create Button n:20 msg = Main menu Success
+Create Button n:11 msg = Main menu Success
+Create Button n:12 msg = Edit Matrix A, B, C and D Success
+Create Button n:13 msg = Compute A, B, C and D Success
+Create Button n:14 msg = Display the State System Success
+Create Button n:15 msg = Simulate Success
+Create Button n:16 msg = Main menu Success
+Create Button n:17 msg = Main menu Success
+Create Button n:18 msg = Step Success
+Create Button n:19 msg = Ramp Success
+Create Button n:20 msg = Sinus Success
+Create Button n:21 msg = Import Signal Success
+Create Button n:22 msg = Main menu Success
 _ Start mainLoop _
 _ Start CreateNumDen _
 _ End CreateNumDen _
+_ Start displayTF _
+_ End displayTF _
+_ Start displayJury _
+_ End displayJury _
 _ Start computeABCD _
 _ End computeABCD _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start createSignal _
+_ End createSignal _
+_ Start createSinus _
+_ End createSinus _
 _ Start displayReponseTemp _
 _ Start displayReponseTemp _
 *********_________ Start DeleteAll _________*********
-Delete Texture n:0 name = Dev version: 2.7 Success
+Delete Texture n:0 name = Dev version: 2.8 Success
 Delete Texture n:1 name = Develop by SAUTER Robin Success
 Delete Texture n:2 name = Discret System Success
 Delete Texture n:3 name = Transfert Function Success
-Delete Texture n:4 name = State System Success
-Delete Texture n:5 name = Create the Transfer Function Success
-Delete Texture n:6 name = Simulate Success
-Delete Texture n:7 name = Simulation Success
-Delete Texture n:8 name = Order of the Numerator : 0 Success
-Delete Texture n:9 name = Order of the Denominator : 1 Success
-Delete Texture n:10 name = Sampling time : 1.000000 Success
+Delete Texture n:4 name = Create the Transfer Function Success
+Delete Texture n:5 name = Create Bode Success
+Delete Texture n:6 name = Display Bode Success
+Delete Texture n:7 name = State System Success
+Delete Texture n:8 name = Create Matrix A, B, C and D Success
+Delete Texture n:9 name = Simulate Success
+Delete Texture n:10 name = Simulation Success
+Delete Texture n:11 name = Order of the Numerator : 0 Success
+Delete Texture n:12 name = Order of the Denominator : 3 Success
+Delete Texture n:13 name = Sampling time : 1.000000 Success
+Delete Texture n:14 name = Number of samples : 100 Success
+Delete Texture n:15 name = DeltaT : 0.100000 Success
+Delete Texture n:16 name = Amplitude : 1.000000 Success
+Delete Texture n:17 name = Angular velocity (w): 1.000000 Success
+Delete Texture n:18 name = Phase (phi): 0.000000 Success
 Delete ALL Texture Success
 Delete Button n:0 name = Transfer Function Success
 Delete Button n:1 name = State System Success
 Delete Button n:2 name = Closed Loop Success
-Delete Button n:3 name = Tests Success
-Delete Button n:4 name = Quit Success
-Delete Button n:5 name = Main menu Success
-Delete Button n:6 name = Create the Transfer Function Success
-Delete Button n:7 name = Display the Transfer Function Success
-Delete Button n:8 name = Jury Success
-Delete Button n:9 name = Bode Success
+Delete Button n:3 name = Quit Success
+Delete Button n:4 name = Main menu Success
+Delete Button n:5 name = Create the Transfer Function Success
+Delete Button n:6 name = Display the Transfer Function Success
+Delete Button n:7 name = Jury Success
+Delete Button n:8 name = Bode Success
+Delete Button n:9 name = Main menu Success
 Delete Button n:10 name = Main menu Success
-Delete Button n:11 name = Edit Matrix A, B, C and D Success
-Delete Button n:12 name = Compute A, B, C and D Success
-Delete Button n:13 name = Display the State System Success
-Delete Button n:14 name = Simulate Success
-Delete Button n:15 name = Main menu Success
-Delete Button n:16 name = Step Success
-Delete Button n:17 name = Ramp Success
-Delete Button n:18 name = Sinus Success
-Delete Button n:19 name = Import Signal Success
-Delete Button n:20 name = Main menu Success
+Delete Button n:11 name = Main menu Success
+Delete Button n:12 name = Edit Matrix A, B, C and D Success
+Delete Button n:13 name = Compute A, B, C and D Success
+Delete Button n:14 name = Display the State System Success
+Delete Button n:15 name = Simulate Success
+Delete Button n:16 name = Main menu Success
+Delete Button n:17 name = Main menu Success
+Delete Button n:18 name = Step Success
+Delete Button n:19 name = Ramp Success
+Delete Button n:20 name = Sinus Success
+Delete Button n:21 name = Import Signal Success
+Delete Button n:22 name = Main menu Success
 Delete ALL Button Success
 *********_________ End DeleteAll _________*********
 _ End mainLoop _

@@ -2,7 +2,7 @@
 Discrete_system
 author : SAUTER Robin
 2017 - 2018
-last modification on this file on version:0.30
+last modification on this file on version:2.8
 
 This library is free software; you can redistribute it and/or modify it
 You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -332,7 +332,7 @@ bool FCTDiscret::tabJury(){
 	}
 }
 
-bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
+bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** gainPhase){
 	/*
 		Diagramme de Bode en gain et phase
 	*/
@@ -352,15 +352,19 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint){
 	if (wMin == 0)
 		wMin = 0.001;
 
+
+	unsigned int o = 0;
 	if (reponse){
 		for (double i = wMin; i <= wMax; i += increment){
 			Z = tfReIm(1, i * _deltaT);
 			cnum = tfPolynomeComplexe(_num, Z);
 			cden = tfPolynomeComplexe(_den, Z);
 			c = cnum / cden;
-			gain = 20 * log10(module(c));
-			phase = -arg(c);
+			gainPhase[0][o] = i;
+			gainPhase[1][o] = gain = 20 * log10(module(c));
+			gainPhase[2][o] = phase = -arg(c);
 			stream << endl << i << " , " << gain << " , " << phase;
+			o++;
 		}
 		texte = stream.str();
 		reponse << texte;
