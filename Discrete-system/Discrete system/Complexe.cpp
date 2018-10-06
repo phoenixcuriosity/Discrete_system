@@ -1,28 +1,17 @@
 /*
+Discrete_system
+author : SAUTER Robin
+2017 - 2018
+last modification on this file on version:0.21
 
-	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
-
-	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
-
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
 */
 
 #include "Complexe.h"
 
+using namespace std;
 const double Pi = 3.14159265358979323846;
 
 
@@ -56,7 +45,7 @@ bool operator ==(const Complexe& a, const Complexe& b){
 	else
 		return false;
 }
-std::ostream& operator<<(std::ostream& os, const Complexe& c){
+ostream& operator<<(std::ostream& os, const Complexe& c){
 	return os << c.printOn(false);
 }
 Complexe operator+(const Complexe& a, const Complexe& b){
@@ -153,9 +142,9 @@ double Complexe::GETIm()const{
 
 
 
-const std::string Complexe::printOn(bool on)const{
-	std::string texte;
-	std::ostringstream stream;
+const string Complexe::printOn(bool on)const{
+	string texte;
+	ostringstream stream;
 
 	if (_Re != 0)
 		stream << _Re;
@@ -167,7 +156,7 @@ const std::string Complexe::printOn(bool on)const{
 	}
 	texte = stream.str();
 	if (on)
-		std::cout << texte;
+		cout << texte;
 	return texte;
 }
 
@@ -175,29 +164,29 @@ const std::string Complexe::printOn(bool on)const{
 
 
 void testComplexe(){
-	std::string texte = "";
-	std::ostringstream stream;
+	string texte = "";
+	ostringstream stream;
 
-	stream << std::endl << "___TEST COMPLEXE___";
+	stream << endl << "___TEST COMPLEXE___";
 
 	Complexe a(2, 3);
 	Complexe b(1, 1);
 	Complexe c;
 
 
-	stream << std::endl << "Complexe a = " << a;
-	stream << std::endl << "Complexe b = " << b;
-	stream << std::endl << "Complexe a + b = " << a + b;
-	stream << std::endl << "Complexe a - b = " << a - b;
-	stream << std::endl << "Complexe a * b = " << a * b;
-	stream << std::endl << "Complexe a / b = " << a / b;
-	stream << std::endl << "Module de a = " << module(a);
-	stream << std::endl << "arg de a = " << arg(a);
-	stream << std::endl << "Module de b = " << module(b);
-	stream << std::endl << "arg de b = " << arg(b);
-	stream << std::endl << "tfReIm du module et arg de b = " << tfReIm(module(b), arg(b));
-	stream << std::endl << "Puissance 3 de a = " << a.power(3) << std::endl << std::endl;
+	stream << endl << "Complexe a = " << a;
+	stream << endl << "Complexe b = " << b;
+	stream << endl << "Complexe a + b = " << a + b;
+	stream << endl << "Complexe a - b = " << a - b;
+	stream << endl << "Complexe a * b = " << a * b;
+	stream << endl << "Complexe a / b = " << a / b;
+	stream << endl << "Module de a = " << module(a);
+	stream << endl << "arg de a = " << arg(a);
+	stream << endl << "Module de b = " << module(b);
+	stream << endl << "arg de b = " << arg(b);
+	stream << endl << "tfReIm du module et arg de b = " << tfReIm(module(b), arg(b));
+	stream << endl << "Puissance 3 de a = " << a.power(3) << endl << endl;
 
 	texte = stream.str();
-	std::cout << texte;
+	cout << texte;
 }

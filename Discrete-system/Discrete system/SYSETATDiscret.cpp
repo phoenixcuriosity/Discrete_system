@@ -1,27 +1,17 @@
 /*
+Discrete_system
+author : SAUTER Robin
+2017 - 2018
+last modification on this file on version:0.29
 
-	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
-
-	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
-
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
 */
 
 #include "SYSETATDiscret.h"
+
+using namespace std;
 
 SYSETATDiscret::SYSETATDiscret()
 : _A(), _B(), _C(), _D(), _Te(1)
@@ -133,7 +123,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 		_D.editsize(1, 1);
 	}
 	else
-		std::cout << std::endl << "______Order of Num = " << fct.GETden().GETorder() << "  > Order of Den = " << fct.GETnum().GETorder();
+		cout << endl << "______Order of Num = " << fct.GETden().GETorder() << "  > Order of Den = " << fct.GETnum().GETorder();
 }
 
 
@@ -142,9 +132,9 @@ void SYSETATDiscret::simulation(const std::string& namefile, Signal& signal, Mat
 		simulation du système d'état avec un signal en entré et une matrice x0
 		calcul echantillon par echantillon le signal de sorti
 	*/
-	std::ofstream reponse(namefile);
-	std::ostringstream repy;
-	std::string rep;
+	ofstream reponse(namefile);
+	ostringstream repy;
+	string rep;
 	Matrice dx(_A.GETlength(), 1), y(1, 1);
 
 	for (unsigned int i = 0; i < signal.GETnbech(); i++){
@@ -152,38 +142,38 @@ void SYSETATDiscret::simulation(const std::string& namefile, Signal& signal, Mat
 		y = _C * x0 + _D * signal.GETthiscoef(i);
 		yOut[i] = y.GETthiscoef(0, 0);
 		x0 = dx;
-		repy << std::endl << signal.GETdeltaT() * i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
+		repy << endl << signal.GETdeltaT() * i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
 	}
 
 	rep = repy.str();
-	std::cout << rep;
+	cout << rep;
 	if (reponse) {
 		reponse << rep;
 	}
 	else
-		std::cout << std::endl << "ERREUR: Impossible d'ouvrir le fichier : " << namefile;
+		cout << endl << "ERREUR: Impossible d'ouvrir le fichier : " << namefile;
 
 }
 
-std::string SYSETATDiscret::printOn(bool on)const{
-	std::string equation;
-	std::ostringstream stream;
+string SYSETATDiscret::printOn(bool on)const{
+	string equation;
+	ostringstream stream;
 
-	stream << std::endl << std::endl << "Forme Compagne de Commande";
-	stream << std::endl << "Matrice Ac :" << _A << std::endl << "Matrice Bc :" << _B << std::endl << "Matrice Cc :" << _C << std::endl << "Matrice D :" << _D;
-	stream << std::endl << std::endl << "Forme Compagne d'Observabilite";
-	stream << std::endl << "Matrice Ao :" << transposistion(_A) << std::endl << "Matrice Bo :" << transposistion(_B)
-		<< std::endl << "Matrice Co :" << transposistion(_C) << std::endl << "Matrice D :" << _D;
+	stream << endl << endl << "Forme Compagne de Commande";
+	stream << endl << "Matrice Ac :" << _A << endl << "Matrice Bc :" << _B << endl << "Matrice Cc :" << _C << endl << "Matrice D :" << _D;
+	stream << endl << endl << "Forme Compagne d'Observabilite";
+	stream << endl << "Matrice Ao :" << transposistion(_A) << endl << "Matrice Bo :" << transposistion(_B)
+		<< endl << "Matrice Co :" << transposistion(_C) << endl << "Matrice D :" << _D;
 
 	equation = stream.str();
 	if (on)
-		std::cout << equation;
+		cout << equation;
 	return equation;
 }
 
 
 void testSYSETATDiscret(){
-	std::cout << std::endl << "___TEST SYSETATDiscret___";
+	cout << endl << "___TEST SYSETATDiscret___";
 
 
 	FCTDiscret fct;
@@ -198,14 +188,14 @@ void testSYSETATDiscret(){
 	fct.SETdenThisCoef(4, 2);
 	//fct.SETdenThisCoef(5, -0.359);
 	//fct.SETdenThisCoef(6, 5);
-	std::cout << std::endl << std::endl << std::endl << "fct = " << std::endl << fct;
+	cout << endl << endl << endl << "fct = " << endl << fct;
 
 	SYSETATDiscret sys;
 	sys.calculABCD(fct);
 	sys.SETTe(100);
-	std::cout << std::endl << sys;
+	cout << endl << sys;
 	
-	std::cout << std::endl << "BODE" << std::endl;
+	cout << endl << "BODE" << endl;
 	//fct.Bode(0.1, 10, 100);
 
 	/*
@@ -215,7 +205,7 @@ void testSYSETATDiscret(){
 	fct2.SETdenOrder(1);
 	fct2.SETdenThisCoef(0, -1);
 	fct2.SETdenThisCoef(1, 1);
-	cout << std::endl << fct2;
+	cout << endl << fct2;
 	fct2.Bode(0.1, 10, 100);
 	*/
 
@@ -223,6 +213,6 @@ void testSYSETATDiscret(){
 	Matrice x0(sys.GETA().GETlength(), 1);
 	x0.SETthiscoef(0, 0, 0.1);
 
-	std::cout << std::endl << std::endl << std::endl << "Reponse temporelle avec E = 10.0" << std::endl;
+	cout << endl << endl << endl << "Reponse temporelle avec E = 10.0" << endl;
 	//sys.simulation("bin/files/ReponseTemporelle.txt", E, x0);
 }

@@ -14,13 +14,13 @@
     <ProjectGuid>{F5CBE2E1-EBEF-473E-8EAD-9874B9D35A23}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Discretesystem</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -81,23 +81,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buttons.cpp" />
     <ClCompile Include="Complexe.cpp" />
     <ClCompile Include="IHM.cpp" />
     <ClCompile Include="Matrice.cpp" />
     <ClCompile Include="Polynome.cpp" />
     <ClCompile Include="FCTDiscret.cpp" />
+    <ClCompile Include="init.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Signal.cpp" />
     <ClCompile Include="SYSETATDiscret.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buttons.h" />
     <ClInclude Include="Complexe.h" />
     <ClInclude Include="IHM.h" />
     <ClInclude Include="Matrice.h" />
     <ClInclude Include="Polynome.h" />
     <ClInclude Include="FCTDiscret.h" />
-    <ClInclude Include="discrete_system_LIB.h" />
+    <ClInclude Include="init.h" />
     <ClInclude Include="LIB.h" />
     <ClInclude Include="Signal.h" />
     <ClInclude Include="SYSETATDiscret.h" />

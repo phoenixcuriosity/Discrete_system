@@ -1,27 +1,17 @@
 /*
+Discrete_system
+author : SAUTER Robin
+2017 - 2018
+last modification on this file on version:0.26
 
-	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
-
-	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
-
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
 */
 
 #include "Matrice.h"
+
+using namespace std;
 
 Matrice::Matrice() : _tab(allocate(1, 1)), _length(1), _height(1), _stringSize(0)
 {
@@ -148,7 +138,7 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 	}
 	else {
 		Matrice multiplication(1, 1);
-		std::cout << std::endl << "___________Matrice : Error multiplication : A._lenght != B._height";
+		cout << endl << "___________Matrice : Error multiplication : A._lenght != B._height";
 		return multiplication;
 	}
 	
@@ -355,18 +345,18 @@ void Matrice::growOneLOneC(){
 	_height++;
 }
 
-const std::string Matrice::printOn(bool on)const{
-	std::ostringstream stream;
-	std::string matrice = "";
+const string Matrice::printOn(bool on)const{
+	ostringstream stream;
+	string matrice = "";
 	for (unsigned int i = 0; i < _length; i++){
-		stream << std::endl << "|";
+		stream << endl << "|";
 		for (unsigned int j = 0; j < _height; j++)
 			stream << " " << _tab[i][j];
 		stream << " |";
 	}
 	matrice = stream.str();
 	if (on)
-		std::cout << matrice;
+		cout << matrice;
 	return matrice;
 }
 
@@ -374,7 +364,7 @@ bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
 	if (lenght < _length && height < _height)
 		return true;
 	else {
-		std::cout << std::endl << "__________Matrice : assertIndex false";
+		cout << endl << "__________Matrice : assertIndex false";
 		return false;
 	}
 }
@@ -382,7 +372,7 @@ bool Matrice::assertRange(unsigned int length, unsigned int height)const {
 	if (length > 0 && length < 10000 && height > 0 && height < 10000)
 		return true;
 	else {
-		std::cout << std::endl << "__________Matrice : editsize : Range error";
+		cout << endl << "__________Matrice : editsize : Range error";
 		return false;
 	}
 }
@@ -390,27 +380,27 @@ bool assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB
 	if (lenghtA == lenghtB && heightA == heightB)
 		return true;
 	else {
-		std::cout << std::endl << "__________Matrice : assertSize false";
+		cout << endl << "__________Matrice : assertSize false";
 		return false;
 	}
 }
 
 
 void testMatrice(){
-	std::ostringstream stream;
-	std::string matrice = "";
+	ostringstream stream;
+	string matrice = "";
 
-	stream << std::endl << "___TEST MATRICE___";
+	stream << endl << "___TEST MATRICE___";
 	Matrice A(5, 5);
-	stream << std::endl << std::endl << "Matrice A, constructeur par value1: " << A;
+	stream << endl << endl << "Matrice A, constructeur par value1: " << A;
 	Matrice B(A);
 	B.ones();
-	stream << std::endl << std::endl << "Matrice B constructeur par recopie : " << B;
+	stream << endl << endl << "Matrice B constructeur par recopie : " << B;
 	B.SETthiscoef(0, 0, 3);
 	B.SETthiscoef(1, 4, 0.1);
 	B.SETthiscoef(2, 1, -0.96);
-	stream << std::endl << std::endl << "coef de la matrice B a l'index 2,1 = " << B.GETthiscoef(2, 1);
-	stream << std::endl << std::endl << "Matrice B modifie : " << B << std::endl << std::endl;
+	stream << endl << endl << "coef de la matrice B a l'index 2,1 = " << B.GETthiscoef(2, 1);
+	stream << endl << endl << "Matrice B modifie : " << B << endl << endl;
 
 	double** a = new double*[3];
 	for (unsigned int i = 0; i < 3; i++)
@@ -421,52 +411,52 @@ void testMatrice(){
 			a[i][j] = 2;
 	}
 	Matrice C(a, 3 ,3);
-	stream << std::endl << "Matrice C, constructeur par value2: : " << C << std::endl;
+	stream << endl << "Matrice C, constructeur par value2: : " << C << endl;
 	Matrice D(3, 3);
 	D.ones();
 	Matrice E(D);
 	Matrice F = D + E;
-	stream << std::endl << "Matrice F : D + E = " << F;
+	stream << endl << "Matrice F : D + E = " << F;
 	Matrice G = F - E;
-	stream << std::endl << "Matrice G : F - E = " << G;
+	stream << endl << "Matrice G : F - E = " << G;
 	Matrice H = F * F;
-	stream << std::endl << "Matrice H : F(3x3) * F(3x3) = " << H;
+	stream << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	F.SETthiscoef(0, 2, 3);
-	stream << std::endl << "nouvelle matrice F avec le coef 0,2 = 3" << F;
+	stream << endl << "nouvelle matrice F avec le coef 0,2 = 3" << F;
 	H = F * F;
-	stream << std::endl << "Matrice H : F(3x3) * F(3x3) = " << H;
+	stream << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	F = C + D;
-	stream << std::endl << "nouvelle matrice F = C + D" << F;
+	stream << endl << "nouvelle matrice F = C + D" << F;
 	H = F * F;
-	stream << std::endl << "Matrice H : F(3x3) * F(3x3) = " << H;
+	stream << endl << "Matrice H : F(3x3) * F(3x3) = " << H;
 	Matrice K;
-	stream << std::endl << "Matrice K constructeur par defaut:" << K;
+	stream << endl << "Matrice K constructeur par defaut:" << K;
 	K.editsize(3, 3);
-	stream << std::endl << "Matrice K : K.editsize(3, 3) :" << K;
+	stream << endl << "Matrice K : K.editsize(3, 3) :" << K;
 	Matrice J(1, 5);
-	stream << std::endl << "J(1x5)" << J;
+	stream << endl << "J(1x5)" << J;
 	J.editsize(5, 1);
-	stream << std::endl << "J(5x1)" << J;
+	stream << endl << "J(5x1)" << J;
 
 	K.ones();
 	K.editsize(3, 4);
 	
 	K.SETthiscoef(0, 0, 3.6), K.SETthiscoef(0, 1, -3.6), K.SETthiscoef(0, 2, 3.6);
-	stream << std::endl << "Matrice K :" << K;
+	stream << endl << "Matrice K :" << K;
 	Matrice L = transposistion(K);
-	stream << std::endl << "L transposee de K" << L;
+	stream << endl << "L transposee de K" << L;
 
 	J.editsize(1, 1);
-	stream << std::endl << "J(1x1)" << J;
+	stream << endl << "J(1x1)" << J;
 	J.growOneLOneC();
-	stream << std::endl << "J grow :" << J;
+	stream << endl << "J grow :" << J;
 	K.growOneLOneC();
-	stream << std::endl << "K grow :" << K;
+	stream << endl << "K grow :" << K;
 	
 	Matrice M = 2 * K;
-	stream << std::endl << "M = 2 * K" << M;
-	stream << std::endl << std::endl;
+	stream << endl << "M = 2 * K" << M;
+	stream << endl << endl;
 
 	matrice = stream.str();
-	std::cout << matrice;
+	cout << matrice;
 }

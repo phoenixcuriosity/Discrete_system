@@ -1,18 +1,30 @@
-﻿  Complexe.cpp
-  IHM.cpp
-c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(874): warning C4244: '+=' : conversion de 'double' en 'unsigned int', perte possible de données
-c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(875): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1148): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1150): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1153): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1155): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
-  Matrice.cpp
-  Polynome.cpp
-  FCTDiscret.cpp
-  main.cpp
-  Signal.cpp
-  SYSETATDiscret.cpp
-  Texture.cpp
-  Génération de code en cours...
-     Création de la bibliothèque C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.lib et de l'objet C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.exp
-  Discrete system.vcxproj -> C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.exe
+﻿La génération a démarré 28/01/2018 22:43:04.
+     1>Projet "C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Discrete system\Discrete system.vcxproj" sur le nœud 2 (Build cible(s)).
+     1>ClCompile:
+         I:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt IHM.cpp
+         IHM.cpp
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(992): warning C4244: '+=' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(993): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(994): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1251): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1253): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1256): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+     1>c:\users\robin\documents\github\discret_system\discrete-system\discrete system\ihm.cpp(1258): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+       Link:
+         I:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.exe" /INCREMENTAL /NOLOGO /LIBPATH:"bin\SDL2-2.0.6\lib\x86" SDL2.lib SDL2main.lib SDL2_ttf.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.lib" /MACHINE:X86 Debug\Buttons.obj
+         Debug\Complexe.obj
+         Debug\IHM.obj
+         Debug\Matrice.obj
+         Debug\Polynome.obj
+         Debug\FCTDiscret.obj
+         Debug\init.obj
+         Debug\main.obj
+         Debug\Signal.obj
+         Debug\SYSETATDiscret.obj
+         Debug\Texture.obj
+         Discrete system.vcxproj -> C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Debug\Discrete system.exe
+     1>Génération du projet "C:\Users\Robin\Documents\GitHub\Discret_system\Discrete-system\Discrete system\Discrete system.vcxproj" terminée (Build cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:00.83

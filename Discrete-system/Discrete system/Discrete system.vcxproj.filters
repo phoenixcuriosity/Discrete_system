@@ -23,6 +23,9 @@
     <ClCompile Include="FCTDiscret.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
+    <ClCompile Include="init.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
     <ClCompile Include="Polynome.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
@@ -41,6 +44,9 @@
     <ClCompile Include="IHM.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
+    <ClCompile Include="Buttons.cpp">
+      <Filter>Fichiers sources\Class</Filter>
+    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Fichiers sources\Class</Filter>
     </ClCompile>
@@ -51,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="FCTDiscret.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="init.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Polynome.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
@@ -70,8 +79,8 @@
     <ClInclude Include="IHM.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
-    <ClInclude Include="discrete_system_LIB.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Buttons.h">
+      <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>

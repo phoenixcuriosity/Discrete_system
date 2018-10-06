@@ -1,27 +1,17 @@
 /*
+Discrete_system
+author : SAUTER Robin
+2017 - 2018
+last modification on this file on version:0.31
 
-	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
-
-	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
-
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This library is free software; you can redistribute it and/or modify it
+You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
 */
 
 #include "Polynome.h"
+
+using namespace std;
 
 Polynome::Polynome() : _order(1), _tab(allocate(1)), _stringSize(0)
 {
@@ -119,7 +109,7 @@ unsigned int Polynome::GETstringSize() const{
 	/*
 		calcul la place en byte (= nombre de caractère) pour afficher le polynome sur la console
 	*/
-	std::string equation;
+	string equation;
 	equation = this->printOn(false);
 	_stringSize = equation.length();
 	return _stringSize;
@@ -222,17 +212,17 @@ void Polynome::grow(double userValue){
 
 
 
-std::string Polynome::printOn(bool on) const{
+string Polynome::printOn(bool on) const{
 	/*
 		affiche le polynome en z d'ordre décroissant
 	*/
-	std::string equation;
-	std::ostringstream stream;
+	string equation;
+	ostringstream stream;
 	for (int i = _order; i >= 0; i--){
 		if (_tab[i] < 0){
 			stream << " - ";
 			if (abs(_tab[i]) != 1 || i < 1)
-				stream << std::fixed << std::setprecision(2) << abs(_tab[i]);
+				stream << fixed << setprecision(2) << abs(_tab[i]);
 			if (i > 1)
 				stream << "Z^" << i;
 			else if (i == 1)
@@ -242,7 +232,7 @@ std::string Polynome::printOn(bool on) const{
 			if (i != _order)
 				stream << " + ";
 			if (_tab[i] != 1 || i < 1)
-				stream << std::fixed << std::setprecision(2) <<_tab[i];
+				stream << fixed << setprecision(2) <<_tab[i];
 			if (i > 1)
 				stream << "Z^" << i;
 			else if (i == 1)
@@ -252,7 +242,7 @@ std::string Polynome::printOn(bool on) const{
 	equation = stream.str();
 	_stringSize = equation.length();
 	if (on)
-		std::cout << equation;
+		cout << equation;
 	return equation;
 }
 
@@ -299,7 +289,7 @@ bool Polynome::assertIndex(unsigned int index)const {
 	if (index <= _order)
 		return true;
 	else {
-		std::cout << std::endl << "_______Polynome : assertIndex false : index = " << index;
+		cout << endl << "_______Polynome : assertIndex false : index = " << index;
 		return false;
 	}
 }
@@ -307,58 +297,58 @@ bool Polynome::assertIndex(unsigned int index)const {
 
 
 void testPolynome() {
-	std::string polynome;
-	std::ostringstream stream;
+	string polynome;
+	ostringstream stream;
 
 
-	stream << std::endl << "___TEST POLYNOME___";
+	stream << endl << "___TEST POLYNOME___";
 	Polynome a((unsigned int)5);
 	a.SETcoefTab(3, 1);
 	a.SETcoefTab(1, 69.1);
 	Polynome b(a);
 
-	stream << std::endl << "taille de a = " + std::to_string(a.GETorder());
+	stream << endl << "taille de a = " + to_string(a.GETorder());
 	b.SETcoefTab(2, 12.6);
-	stream << std::endl << "valeur de l'index " << 2 << "= " + std::to_string(b.GETcoefTab(2));
+	stream << endl << "valeur de l'index " << 2 << "= " + to_string(b.GETcoefTab(2));
 
 	a.SETcoefTab(0, -0.9), a.SETcoefTab(4, -6534.69461354), a.grow(2.3);
 	b.SETcoefTab(0, 96.36), b.SETcoefTab(1, -619);
 
-	stream << std::endl << "taille de a = " + std::to_string(a.GETorder());
-	stream << std::endl << "valeur de l'index " << 5 << "= " + std::to_string(a.GETcoefTab(5));
-	stream << std::endl << "Polynome a = " << a;
-	stream << std::endl << "Polynome b = " << b;
+	stream << endl << "taille de a = " + to_string(a.GETorder());
+	stream << endl << "valeur de l'index " << 5 << "= " + to_string(a.GETcoefTab(5));
+	stream << endl << "Polynome a = " << a;
+	stream << endl << "Polynome b = " << b;
 	if (a == b)
-		stream << std::endl << "polynomes identique : a et b";
+		stream << endl << "polynomes identique : a et b";
 	else
-		stream << std::endl << "polynomes different : a et b";
+		stream << endl << "polynomes different : a et b";
 	
 	
 	Polynome addition = a + b;
-	stream << std::endl << "addition de a + b = " << addition;
+	stream << endl << "addition de a + b = " << addition;
 	Polynome soustraction1 = a - b;
-	stream << std::endl << "soustraction de a - b = " << soustraction1;
+	stream << endl << "soustraction de a - b = " << soustraction1;
 	Polynome soustraction2 = addition - soustraction1;
-	stream << std::endl << "addition de addition - soustraction1 = " << soustraction2;
+	stream << endl << "addition de addition - soustraction1 = " << soustraction2;
 	Polynome multiplication = a * b;
-	stream << std::endl << "multiplication de a * b = " << multiplication;
+	stream << endl << "multiplication de a * b = " << multiplication;
 	a = b;
 	if (a == b)
-		stream << std::endl << "polynomes identique : a et b";
+		stream << endl << "polynomes identique : a et b";
 	else
-		stream << std::endl << "polynomes different : a et b";
+		stream << endl << "polynomes different : a et b";
 	Polynome Z;
-	stream << std::endl << std::endl << "taille de Z = " + std::to_string(Z.GETorder());
+	stream << endl << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.SETorder(6);
-	stream << std::endl << "taille de Z = " + std::to_string(Z.GETorder());
+	stream << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.SETorder(5);
-	stream << std::endl << "taille de Z = " + std::to_string(Z.GETorder());
+	stream << endl << "taille de Z = " + to_string(Z.GETorder());
 	Z.SETcoefTab(4, -3.2);
-	stream << std::endl << "redefinition de l'operateur << ,  Z = " << Z;
-	stream << std::endl << "Z * 2 = " << Z * 2.0;
-	stream << std::endl << "Z + 2 = " << Z + 2.0;
-	stream << std::endl << "Z - 2 = " << Z - 2.0 << std::endl << std::endl;
+	stream << endl << "redefinition de l'operateur << ,  Z = " << Z;
+	stream << endl << "Z * 2 = " << Z * 2.0;
+	stream << endl << "Z + 2 = " << Z + 2.0;
+	stream << endl << "Z - 2 = " << Z - 2.0 << endl << endl;
 
 	polynome = stream.str();
-	std::cout << polynome;
+	cout << polynome;
 }
