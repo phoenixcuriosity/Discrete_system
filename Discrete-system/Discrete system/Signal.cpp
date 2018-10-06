@@ -1,19 +1,27 @@
 /*
-Discrete_system
-author : SAUTER Robin
-2017 - 2018
-last modification on this file on version:0.29
 
-This library is free software; you can redistribute it and/or modify it
-You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+	Discrete_system
+	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
+	last modification on this file on version:2.9
+
+	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
 #include "Signal.h"
-
-using namespace std;
-
-
 
 Signal::Signal() : _tab(allocate(1)), _nbech(1), _deltaT(0)
 {
@@ -68,7 +76,7 @@ bool Signal::assertIndex(unsigned int index)const {
 	if (index < _nbech)
 		return true;
 	else {
-		cout << endl << "_______Signal : assertIndex false";
+		std::cout << std::endl << "_______Signal : assertIndex false";
 		return false;
 	}
 }
@@ -93,24 +101,24 @@ double* Signal::allocate(unsigned int size, double userValue) const {
 }
 
 void testSignal(){
-	ostringstream stream;
-	string texte = "";
+	std::ostringstream stream;
+	std::string texte = "";
 
-	stream << endl << endl << "___TEST Signal___" << endl << endl;
+	stream << std::endl << std::endl << "___TEST Signal___" << std::endl << std::endl;
 
 	Echelon step(10, 0.1, 5);
-	stream << endl << "Echelon de " << step.GETnbech() << " echantillons d'amplitude " << step.GETamplitude() << step << endl;
+	stream << std::endl << "Echelon de " << step.GETnbech() << " echantillons d'amplitude " << step.GETamplitude() << step << std::endl;
 
 	Rampe ramp(10, 0.2 ,2);
-	stream << "Rampe de " << ramp.GETnbech() << " echantillons de pente " << ramp.GETslope() << ramp << endl;
+	stream << "Rampe de " << ramp.GETnbech() << " echantillons de pente " << ramp.GETslope() << ramp << std::endl;
 
 	randomSignal sig;
 //	loadFromFile(sig);
-	stream << "Signal de " << sig.GETnbech() << " echantillons de deltaT " << sig.GETdeltaT() << "s" << sig << endl;
+	stream << "Signal de " << sig.GETnbech() << " echantillons de deltaT " << sig.GETdeltaT() << "s" << sig << std::endl;
 	
 
 	texte = stream.str();
-	cout << texte;
+	std::cout << texte;
 }
 
 
@@ -142,14 +150,14 @@ double Echelon::GETamplitude()const{
 }
 
 const std::string Echelon::printOn(bool on)const{
-	ostringstream stream;
-	string texte = "";
+	std::ostringstream stream;
+	std::string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i * this->GETdeltaT() << " , " << _amplitude;
+		stream << std::endl << i * this->GETdeltaT() << " , " << _amplitude;
 	}
 	texte = stream.str();
 	if (on)
-		cout << texte;
+		std::cout << texte;
 	return texte;
 }
 
@@ -188,14 +196,14 @@ double* Rampe::calculAmplitude(unsigned int nbech, double deltaT,double slope){
 }
 
 const std::string Rampe::printOn(bool on)const{
-	ostringstream stream;
-	string texte = "";
+	std::ostringstream stream;
+	std::string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
+		stream << std::endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
 	}
 	texte = stream.str();
 	if (on)
-		cout << texte;
+		std::cout << texte;
 	return texte;
 }
 
@@ -253,14 +261,14 @@ double Sinus::GETdephasage()const{
 }
 
 const std::string Sinus::printOn(bool on)const{
-	ostringstream stream;
-	string texte = "";
+	std::ostringstream stream;
+	std::string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
+		stream << std::endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
 	}
 	texte = stream.str();
 	if (on)
-		cout << texte;
+		std::cout << texte;
 	return texte;
 }
 
@@ -278,14 +286,14 @@ randomSignal::~randomSignal()
 
 
 const std::string randomSignal::printOn(bool on)const{
-	ostringstream stream;
-	string texte = "";
+	std::ostringstream stream;
+	std::string texte = "";
 	for (unsigned int i = 0; i < this->GETnbech(); i++){
-		stream << endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
+		stream << std::endl << i * this->GETdeltaT() << " , " << this->GETthiscoef(i);
 	}
 	texte = stream.str();
 	if (on)
-		cout << texte;
+		std::cout << texte;
 	return texte;
 }
 
