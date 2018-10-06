@@ -1,10 +1,23 @@
 /*
-Discrete_system
-author : SAUTER Robin
-2017 - 2018
-last modification on this file on version:0.18
-This library is free software; you can redistribute it and/or modify it
-You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+	Discrete_system
+	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
+	last modification on this file on version:2.9
+
+	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -28,5 +41,21 @@ You can check for update on github.com -> https://github.com/phoenixcuriosity/Di
 #include "bin/SDL2-2.0.6/include/SDL.h"
 #include "bin/SDL2-2.0.6/include/SDL_ttf.h"
 #include "bin/SDL2-2.0.6/include/SDL_image.h"
+
+typedef struct screen screen;
+typedef struct fichier fichier;
+typedef struct var var;
+typedef struct texture texture;
+typedef struct button button;
+typedef struct sysinfo sysinfo;
+
+class IHM;
+class Complexe;
+class FCTDiscret;
+class Matrice;
+class Polynome;
+class Signal;
+class SYSETATDiscret;
+
 
 #endif

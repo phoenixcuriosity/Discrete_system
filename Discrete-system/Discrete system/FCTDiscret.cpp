@@ -1,18 +1,28 @@
 /*
-Discrete_system
-author : SAUTER Robin
-2017 - 2018
-last modification on this file on version:2.8
 
-This library is free software; you can redistribute it and/or modify it
-You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+	Discrete_system
+	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
+	last modification on this file on version:2.9
+
+	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
 
 #include "FCTDiscret.h"
-
-using namespace std;
 
 FCTDiscret::FCTDiscret() : _jury(), _num(), _den(), _deltaT(1)
 {
@@ -94,21 +104,21 @@ FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b){
 	return resultat;
 }
 
-const string FCTDiscret::printOn(bool on) const{
+const std::string FCTDiscret::printOn(bool on) const{
 	/*
 		affiche sur la console : en haut le num, puis la barre de fraction et enfin le den
 		affichage selon la taille de la chaine de caratere la plus longue
 	*/
 	unsigned int stringSize = 0;
-	string equation;
-	stringstream stream;
+	std::string equation;
+	std::stringstream stream;
 
 	if (_num.GETstringSize() > _den.GETstringSize()){
 		stringSize = _num.GETstringSize();
-		stream << _num.printOn(false) << endl;
+		stream << _num.printOn(false) << std::endl;
 		for (unsigned int i = 0; i < stringSize; i++)
 			stream << "-";
-		stream << endl;
+		stream << std::endl;
 		for (unsigned int i = 0; i < ((_num.GETstringSize() / 2) - (_den.GETstringSize() / 2)); i++)
 			stream << " ";
 		stream << _den.printOn(false);
@@ -118,22 +128,22 @@ const string FCTDiscret::printOn(bool on) const{
 		stringSize = _den.GETstringSize();
 		for (unsigned int i = 0; i < ((_den.GETstringSize() / 2) - (_num.GETstringSize() / 2)); i++)
 			stream << " ";
-		stream << _num.printOn(false) << endl;
+		stream << _num.printOn(false) << std::endl;
 		for (unsigned int i = 0; i < stringSize; i++)
 			stream << "-";
-		stream << endl << _den.printOn(false);
+		stream << std::endl << _den.printOn(false);
 		equation = stream.str();
 	}
 	else{
 		stringSize = _num.GETstringSize();
-		stream << _num.printOn(false) << endl;
+		stream << _num.printOn(false) << std::endl;
 		for (unsigned int i = 0; i < stringSize; i++)
 			stream << "-";
-		stream << endl << _den.printOn(false);
+		stream << std::endl << _den.printOn(false);
 		equation = stream.str();
 	}
 	if (on)
-		cout << equation;
+		std::cout << equation;
 	return equation;
 }
 
@@ -200,8 +210,8 @@ bool FCTDiscret::tabJury(){
 		calcul du critère de Jury permettant de statuer sur la stabilité du système
 		tableau de Jury -> Matrice pouvant changer de taille en fonction de l'ordre du den
 	*/
-	string tableauJury;
-	ostringstream stream;
+	std::string tableauJury;
+	std::ostringstream stream;
 
 	Polynome den(_den.GETorder());
 	for (unsigned int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j >= 0; i++, j--){
@@ -256,14 +266,14 @@ bool FCTDiscret::tabJury(){
 	}
 	
 	 
-	stream << endl << endl << "table of Jury = " << _jury;
+	stream << std::endl << std::endl << "table of Jury = " << _jury;
 
 	unsigned int condition = 0;
 
 	/*
 		condition abs(a0) < an
 	*/
-	stream << endl << endl << "abs(a0) = " << abs(_den.GETcoefTab(0));
+	stream << std::endl << std::endl << "abs(a0) = " << abs(_den.GETcoefTab(0));
 	if (abs(_den.GETcoefTab(0)) < _den.GETcoefTab(_den.GETorder())){
 		stream << " < a" << _den.GETorder() << " = " << _den.GETcoefTab(_den.GETorder()) << "	Ok";
 		condition++;
@@ -279,7 +289,7 @@ bool FCTDiscret::tabJury(){
 	for (unsigned int i = 0; i <= _den.GETorder(); i++)
 		somme += _den.GETcoefTab(i);
 	
-	stream << endl << "D(1) = " << somme;
+	stream << std::endl << "D(1) = " << somme;
 	if (somme > 0){
 		stream << " > 0	Ok";
 		condition++;
@@ -293,7 +303,7 @@ bool FCTDiscret::tabJury(){
 	somme = 0;
 	for (unsigned int i = 0; i <= _den.GETorder(); i++)
 		somme += _den.GETcoefTab(i) * pow(-1, i);
-	stream << endl << "D(-1) = " << somme;
+	stream << std::endl << "D(-1) = " << somme;
 	if ((somme > 0 && (_den.GETorder() % 2) == 0) || (somme < 0 && (_den.GETorder() % 2) == 1)) {
 		stream << "	Ok";
 		condition++;
@@ -305,7 +315,7 @@ bool FCTDiscret::tabJury(){
 		/*
 		condition Q0 > Q2
 		*/
-		stream << endl << "Q0 = " << abs(ligne2.GETcoefTab(0));
+		stream << std::endl << "Q0 = " << abs(ligne2.GETcoefTab(0));
 		if (abs(ligne2.GETcoefTab(0)) > abs(ligne2.GETcoefTab(2))){
 			stream << " > Q2 = " << abs(ligne2.GETcoefTab(2)) << "	Ok";
 			condition++;
@@ -319,15 +329,15 @@ bool FCTDiscret::tabJury(){
 	
 
 	if (condition == 4){
-		stream << endl;
+		stream << std::endl;
 		tableauJury = stream.str();
-		cout << tableauJury;
+		std::cout << tableauJury;
 		return true;
 	}
 	else{
-		stream << endl;
+		stream << std::endl;
 		tableauJury = stream.str();
-		cout << tableauJury;
+		std::cout << tableauJury;
 		return false;
 	}
 }
@@ -337,9 +347,9 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** g
 		Diagramme de Bode en gain et phase
 	*/
 
-	ofstream reponse("bin/files/Bode.txt");
-	string texte;
-	ostringstream stream;
+	std::ofstream reponse("bin/files/Bode.txt");
+	std::string texte;
+	std::ostringstream stream;
 
 	double amplitude = wMax - wMin;
 	double increment = amplitude / nbpoint;
@@ -363,12 +373,12 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** g
 			gainPhase[0][o] = i;
 			gainPhase[1][o] = gain = 20 * log10(module(c));
 			gainPhase[2][o] = phase = -arg(c);
-			stream << endl << i << " , " << gain << " , " << phase;
+			stream << std::endl << i << " , " << gain << " , " << phase;
 			o++;
 		}
 		texte = stream.str();
 		reponse << texte;
-		cout << texte;
+		std::cout << texte;
 		return true;
 	}
 	else
@@ -392,7 +402,7 @@ void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop){
 	resultat.SETnum(num.GETnum() * num.GETden());
 	resultat.SETden(den.GETnum() * num.GETden());
 
-	cout << endl << endl << "CloseLoop" << endl << resultat << endl;
+	std::cout << std::endl << std::endl << "CloseLoop" << std::endl << resultat << std::endl;
 }
 
 
@@ -405,10 +415,10 @@ Polynome FCTDiscret::allocate(double userValue) const{
 
 
 void testFCTDiscret(){
-	string fctdiscret;
-	ostringstream stream;
+	std::string fctdiscret;
+	std::ostringstream stream;
 
-	stream << endl << "___TEST FCTDiscret___";
+	stream << std::endl << "___TEST FCTDiscret___";
 	Polynome a((unsigned int)3);
 	a.SETcoefTab(2, 1), a.SETcoefTab(1, 2);
 	Polynome b(a);
@@ -419,25 +429,25 @@ void testFCTDiscret(){
 	b.SETcoefTab(0, 7.3);
 	b.SETcoefTab(1, -91);
 	FCTDiscret fct2(a, b, 10.3);
-	stream << endl << endl << "Fct1 constructeur par valeur:" << endl << fct1 << endl;
-	stream << endl << "Fct2 constructeur par recopie:" << endl << fct2 << endl;
+	stream << std::endl << std::endl << "Fct1 constructeur par valeur:" << std::endl << fct1 << std::endl;
+	stream << std::endl << "Fct2 constructeur par recopie:" << std::endl << fct2 << std::endl;
 	FCTDiscret fctmultiplication = fct1 * fct2;
-	stream << endl << "multiplication de fct1 * fct2, Fonctions de transfert :" << endl << fctmultiplication << endl;
+	stream << std::endl << "multiplication de fct1 * fct2, Fonctions de transfert :" << std::endl << fctmultiplication << std::endl;
 	FCTDiscret fctaddition = fct1 + fct2;
-	stream << endl << "addition de fct1 + fct2,  Fonctions de transfert :" << endl << fctaddition << endl;
+	stream << std::endl << "addition de fct1 + fct2,  Fonctions de transfert :" << std::endl << fctaddition << std::endl;
 	FCTDiscret fctsoustraction = fct1 - fct2;
-	stream << endl << "soustraction de fct1 - fct2,  Fonctions de transfert :" << endl << fctsoustraction << endl;
+	stream << std::endl << "soustraction de fct1 - fct2,  Fonctions de transfert :" << std::endl << fctsoustraction << std::endl;
 	
-	stream << endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
+	stream << std::endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
 	fct1.SETnumOrder(5);
-	stream << endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
+	stream << std::endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
 	fct1.SETnumThisCoef(4, 5.6), fct1.SETnumThisCoef(3, -5.6);
-	stream << endl << "Fct1 :" << endl << fct1 << endl << endl;
+	stream << std::endl << "Fct1 :" << std::endl << fct1 << std::endl << std::endl;
 	FCTDiscret integ;
 	integ.SETnumOrder(0), integ.SETnumThisCoef(0, 1);
 	integ.SETdenOrder(1), integ.SETdenThisCoef(1, 1);
-	stream << endl << "integ = " << endl << integ << endl;
-	stream << endl << "integ * fct1 = " << endl << (integ * fct1) << endl;
+	stream << std::endl << "integ = " << std::endl << integ << std::endl;
+	stream << std::endl << "integ * fct1 = " << std::endl << (integ * fct1) << std::endl;
 
 	FCTDiscret openLoop = fct1 * integ;
 	FCTDiscret returnLoop = -1.0;
@@ -445,5 +455,5 @@ void testFCTDiscret(){
 	closeLoop(openLoop, returnLoop);
 
 	fctdiscret = stream.str();
-	cout << fctdiscret;
+	std::cout << fctdiscret;
 }
