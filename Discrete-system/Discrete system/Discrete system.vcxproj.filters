@@ -76,5 +76,14 @@
     <ClInclude Include="Texture.h">
       <Filter>Fichiers d%27en-tête\Class</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Discrete system.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="D:\Downloads\PhoenixCuriosity.ico" />
   </ItemGroup>
 </Project>

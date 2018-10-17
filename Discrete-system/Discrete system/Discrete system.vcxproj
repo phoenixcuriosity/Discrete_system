@@ -50,7 +50,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
@@ -99,9 +99,16 @@
     <ClInclude Include="FCTDiscret.h" />
     <ClInclude Include="discrete_system_LIB.h" />
     <ClInclude Include="LIB.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Signal.h" />
     <ClInclude Include="SYSETATDiscret.h" />
     <ClInclude Include="Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Discrete system.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="D:\Downloads\PhoenixCuriosity.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

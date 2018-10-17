@@ -161,7 +161,7 @@ void SYSETATDiscret::simulation(const std::string& namefile, Signal& signal, Mat
 		reponse << rep;
 	}
 	else
-		std::cout << std::endl << "ERREUR: Impossible d'ouvrir le fichier : " << namefile;
+		std::cout << std::endl << "ERREUR: Impossible d'ouvrir le Fichier : " << namefile;
 
 }
 
@@ -172,8 +172,8 @@ std::string SYSETATDiscret::printOn(bool on)const{
 	stream << std::endl << std::endl << "Forme Compagne de Commande";
 	stream << std::endl << "Matrice Ac :" << _A << std::endl << "Matrice Bc :" << _B << std::endl << "Matrice Cc :" << _C << std::endl << "Matrice D :" << _D;
 	stream << std::endl << std::endl << "Forme Compagne d'Observabilite";
-	stream << std::endl << "Matrice Ao :" << transposistion(_A) << std::endl << "Matrice Bo :" << transposistion(_B)
-		<< std::endl << "Matrice Co :" << transposistion(_C) << std::endl << "Matrice D :" << _D;
+	stream << std::endl << "Matrice Ao :" << transposition(_A) << std::endl << "Matrice Bo :" << transposition(_B)
+		<< std::endl << "Matrice Co :" << transposition(_C) << std::endl << "Matrice D :" << _D;
 
 	equation = stream.str();
 	if (on)

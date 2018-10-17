@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -28,7 +28,7 @@ void mainLoop(IHM& ihm);
 
 int main(int argc, char *argv[]){
 	IHM ihm;
-	fichier file;
+	Fichier file;
 	
 	if (IHM::initfile(file)) {
 		mainLoop(ihm);
@@ -42,30 +42,30 @@ void mainLoop(IHM& ihm) {
 	/*
 		Menu principal
 	*/
-	unsigned int request = 0;
 	FCTDiscret testFCT;
 	IHM::logfileconsole("_________Init Success_________");
 
-	sysinfo information;
-	IHM::initsdl(information);
+	Sysinfo sysinfo;
+	IHM::initsdl(sysinfo);
 
 	IHM::logfileconsole("_________START PROGRAM_________");
-	IHM::logfileconsole("Dev version: 2.9");
+	IHM::logfileconsole("Dev version: 2.10");
+	IHM::logfileconsole("Created by SAUTER Robin");
 	IHM::logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 
-	loadAllTextures(information);
-	information.variables.statescreen = STATEecrantitre;
-	rendueEcran(information);
+	loadAllTextures(sysinfo);
+	sysinfo.var.statescreen = STATEecrantitre;
+	rendueEcran(sysinfo);
 
 	SDL_Event event;
 	int SDL_EnableUNICODE(1); // on azerty
 
 	IHM::logfileconsole("_ Start mainLoop _");
-	while (information.variables.continuer) {
+	while (sysinfo.var.continuer) {
 		SDL_WaitEvent(&event);
 		switch (event.type) {
 		case SDL_QUIT:	// permet de quitter
-			information.variables.continuer = false;
+			sysinfo.var.continuer = false;
 			break;
 		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
 			switch (event.key.keysym.sym) {
@@ -76,7 +76,7 @@ void mainLoop(IHM& ihm) {
 
 				break;
 			case SDLK_ESCAPE:
-				information.variables.continuer = false;
+				sysinfo.var.continuer = false;
 				break;
 			case SDLK_SPACE:
 
@@ -86,12 +86,12 @@ void mainLoop(IHM& ihm) {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
-			mouse(ihm, information, event);
+			mouse(ihm, sysinfo, event);
 			break;
 		case SDL_MOUSEWHEEL:
 			break;
 		}
 	}
-	IHM::deleteAll(information);
+	IHM::deleteAll(sysinfo);
 	IHM::logfileconsole("_ End mainLoop _");
 }

@@ -42,12 +42,12 @@
 #include "bin/SDL2-2.0.6/include/SDL_ttf.h"
 #include "bin/SDL2-2.0.6/include/SDL_image.h"
 
-typedef struct screen screen;
-typedef struct fichier fichier;
-typedef struct var var;
-typedef struct texture texture;
-typedef struct button button;
-typedef struct sysinfo sysinfo;
+typedef struct Screen Screen;
+typedef struct Fichier Fichier;
+typedef struct Var Var;
+typedef struct AllTextures AllTextures;
+typedef struct AllButtons AllButtons;
+typedef struct Sysinfo Sysinfo;
 
 class IHM;
 class Complexe;

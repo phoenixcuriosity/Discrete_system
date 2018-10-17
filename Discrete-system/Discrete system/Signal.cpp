@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -39,11 +39,9 @@ Signal::~Signal()
 		_tab = nullptr;
 	}
 }
-
-std::ostream& operator<<(std::ostream& os, const Signal& s){
+std::ostream& operator<<(std::ostream& os, const Signal& s) {
 	return os << s.printOn(false);
 }
-
 void Signal::SETnbech(unsigned int nbech){
 	_nbech = nbech;
 	double* buffer = new double[nbech];
@@ -71,7 +69,6 @@ double Signal::GETthiscoef(unsigned int index)const{
 double Signal::GETdeltaT()const{
 	return _deltaT;
 }
-
 bool Signal::assertIndex(unsigned int index)const {
 	if (index < _nbech)
 		return true;
@@ -138,8 +135,6 @@ Echelon::Echelon(unsigned int nbech, double deltaT,double amplitude) : Signal(nb
 Echelon::~Echelon()
 {
 }
-
-
 void Echelon::SETamplitude(double amplitude){
 	_amplitude = amplitude;
 	for (unsigned int i = 0; i < this->GETnbech(); i++)
@@ -148,7 +143,6 @@ void Echelon::SETamplitude(double amplitude){
 double Echelon::GETamplitude()const{
 	return _amplitude;
 }
-
 const std::string Echelon::printOn(bool on)const{
 	std::ostringstream stream;
 	std::string texte = "";
@@ -164,9 +158,6 @@ const std::string Echelon::printOn(bool on)const{
 
 
 
-
-
-
 Rampe::Rampe() : Signal(), _slope(0)
 {
 }
@@ -176,8 +167,6 @@ Rampe::Rampe(unsigned int nbech, double deltaT, double slope): Signal(nbech, del
 Rampe::~Rampe()
 {
 }
-
-
 void Rampe::SETslope(double slope){
 	_slope = slope;
 	for (unsigned int i = 0; i < this->GETnbech(); i++)
@@ -186,15 +175,12 @@ void Rampe::SETslope(double slope){
 double Rampe::GETslope()const{
 	return _slope;
 }
-
 double* Rampe::calculAmplitude(unsigned int nbech, double deltaT,double slope){
-	double somme = 0;
 	double* buffer = new double[nbech];
 	for (unsigned int i = 0; i < nbech; i++)
 		buffer[i] = slope * deltaT * i;
 	return buffer;
 }
-
 const std::string Rampe::printOn(bool on)const{
 	std::ostringstream stream;
 	std::string texte = "";
@@ -210,12 +196,6 @@ const std::string Rampe::printOn(bool on)const{
 
 
 
-
-
-
-
-
-
 Sinus::Sinus() : Signal(), _amplitude(1), _w(1), _dephasage(0)
 {
 }
@@ -226,15 +206,12 @@ Sinus::Sinus(unsigned int nbech, double deltaT, double amplitude, double w, doub
 Sinus::~Sinus()
 {
 }
-
 double* Sinus::calculAmplitude(unsigned int nbech, double deltaT, double amplitude, double w, double dephasage){
 	double* buffer = new double[nbech];
 	for (unsigned int i = 0; i < nbech; i++)
 		buffer[i] = amplitude * sin(w * i * deltaT + dephasage);
 	return buffer;
 }
-
-
 void Sinus::SETamplitude(double amplitude){
 	_amplitude = amplitude;
 	for (unsigned int i = 0; i < this->GETnbech(); i++)
@@ -259,7 +236,6 @@ double Sinus::GETw()const{
 double Sinus::GETdephasage()const{
 	return _dephasage;
 }
-
 const std::string Sinus::printOn(bool on)const{
 	std::ostringstream stream;
 	std::string texte = "";
@@ -282,9 +258,6 @@ randomSignal::randomSignal() : Signal()
 randomSignal::~randomSignal()
 {
 }
-
-
-
 const std::string randomSignal::printOn(bool on)const{
 	std::ostringstream stream;
 	std::string texte = "";

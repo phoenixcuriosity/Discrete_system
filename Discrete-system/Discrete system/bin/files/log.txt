@@ -1,12 +1,12 @@
 
-Created by SAUTER Robin
 _________Init Success_________
 CreateWindow Success
 CreateRenderer Success
 TTF_Init Success
 SDL_Init Success
 _________START PROGRAM_________
-Dev version: 2.9
+Dev version: 2.10
+Created by SAUTER Robin
 This is a free software, you can redistribute it and/or modify it
 
 Create Button n:0 msg = Transfer Function Success
@@ -33,18 +33,8 @@ Create Button n:9 msg = Sinus Success
 Create Button n:10 msg = Import Signal Success
 Create Button n:11 msg = Main menu Success
 _ Start mainLoop _
-_ Start CreateNumDen _
-_ End CreateNumDen _
-_ Start displayTF _
-_ End displayTF _
-_ Start displayJury _
-_ End displayJury _
-_ Start computeABCD _
-_ End computeABCD _
-_ Start displayStateSystem _
-_ End displayStateSystem _
 *********_________ Start DeleteAll _________*********
-Delete txtEcranTitre n:0 name = Dev version: 2.8 Success
+Delete txtEcranTitre n:0 name = Dev version: 2.10 Success
 Delete txtEcranTitre n:1 name = Developed by SAUTER Robin Success
 Delete txtEcranTitre n:2 name = Discret System Success
 Delete txtEcranTitre n:3 name = Transfert Function Success
@@ -55,10 +45,8 @@ Delete txtEcranTitre n:7 name = State System Success
 Delete txtEcranTitre n:8 name = Create Matrix A, B, C and D Success
 Delete txtEcranTitre n:9 name = Simulate Success
 Delete txtEcranTitre n:10 name = Simulation Success
-Delete txtEcranTitre n:11 name = Order of the Numerator : 1 Success
-Delete txtEcranTitre n:12 name = Order of the Denominator : 4 Success
-Delete txtEcranTitre n:13 name = Sampling time : 1.000000 Success
 Delete ALL txtEcranTitre Success
+Delete ALL CreateNumDen Success
 Delete ecranTitre n:0 name = Transfer Function Success
 Delete ecranTitre n:1 name = State System Success
 Delete ecranTitre n:2 name = Closed Loop Success

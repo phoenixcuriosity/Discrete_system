@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -27,43 +27,44 @@
 #include "LIB.h"
 
 class Matrice{
-public:
+public: // constructeurs et destructeur
 	Matrice();
-	Matrice(double); // cast
+	Matrice(double); // cast d'un double vers un objet Matice
 	Matrice(unsigned int lenght, unsigned int height);
 	Matrice(double** tab, unsigned int length, unsigned int height);
 	Matrice(const Matrice& M);
 	~Matrice();
-	
+
+public: // opérations entre 2 Matrices
 	Matrice& operator=(const Matrice&);
 	friend bool operator==(const Matrice&, const Matrice&);
-	friend std::ostream& operator<<(std::ostream&, const Matrice&);
 	friend Matrice operator+(const Matrice&, const Matrice&);
 	friend Matrice operator-(const Matrice&, const Matrice&);
 	friend Matrice operator*(const Matrice&, const Matrice&);
 
+	friend Matrice addition(const Matrice&, const Matrice&);
+	friend Matrice soustraction(const Matrice&, const Matrice&);
+	friend Matrice multiplication(const Matrice&, const Matrice&);
 
+public: // assesseurs
 	void SETthiscoef(unsigned int i, unsigned int j, double userValue);
 	double GETthiscoef(unsigned int i, unsigned int j)const;
 	unsigned int GETlength()const;
 	unsigned int GETheight()const;
 	unsigned int GETstringSize() const;
 
-	friend Matrice addition(const Matrice&, const Matrice&);
-	friend Matrice soustraction(const Matrice&, const Matrice&);
-	friend Matrice multiplication(const Matrice&, const Matrice&);
-
-	friend Matrice transposistion(const Matrice&);
+public: // opérations sur la Matrice
+	friend Matrice transposition(const Matrice&);
 	void zero();
 	void ones();
 	void editsize(unsigned int length, unsigned int height);
 	void growOneLOneC();
 
+public: // affichage
+	friend std::ostream& operator<<(std::ostream&, const Matrice&);
 	const std::string printOn(bool on = true)const;
 
-	friend void testMatrice();
-
-protected:
+protected: // allocation et tests d'index
 	virtual double** allocate(unsigned int length, unsigned int height) const;
 	virtual double** allocate(unsigned int length, unsigned int height, double userValue) const;
 	virtual double** allocate(const Matrice&) const;
@@ -71,6 +72,10 @@ protected:
 	bool assertIndex(unsigned int length, unsigned int height)const;
 	bool assertRange(unsigned int, unsigned int)const;
 	friend bool assertSize(unsigned int, unsigned int, unsigned int, unsigned int);
+
+public:
+	friend void testMatrice();
+
 private:
 	unsigned int _length;
 	unsigned int _height;

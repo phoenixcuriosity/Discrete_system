@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -26,27 +26,22 @@
 
 #include "LIB.h"
 
-//#ifndef IHM_H
-//#include "IHM.h"
-//#endif
-
 #include "Polynome.h"
 #include "Matrice.h"
 #include "Complexe.h"
 
 
 class FCTDiscret{
-public:
+public: // constructeurs et destructeur
 	FCTDiscret();
 	FCTDiscret(double); // cast
 	FCTDiscret(Polynome& num, Polynome& den, double deltaT);
 	FCTDiscret(const FCTDiscret&);
 	~FCTDiscret();
 
-
+public: // opérations entre 2 objets FCTDiscret
 	virtual FCTDiscret& operator = (const FCTDiscret&);
 	friend bool operator ==(const FCTDiscret& a, const FCTDiscret& b);
-	friend std::ostream& operator<<(std::ostream&, const FCTDiscret&);
 	friend FCTDiscret operator+(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator-(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator*(const FCTDiscret&, const FCTDiscret&);
@@ -55,8 +50,7 @@ public:
 	friend FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
 	friend FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
 
-	const std::string printOn(bool on = true) const;
-
+public: // assesseurs
 	void SETjury(const Matrice& J);
 	void SETnum(const Polynome &a);
 	void SETden(const Polynome &a);
@@ -71,13 +65,20 @@ public:
 	Polynome GETden() const;
 	double GETdeltaT() const;
 
+public: // affichage
+	friend std::ostream& operator<<(std::ostream&, const FCTDiscret&);
+	const std::string printOn(bool on = true) const;
+
+public:
 	void interg(); // modification de la fonction de transfert pour correspondre à un intégrateur
 	void secondOrdre();// modification de la fonction de transfert pour correspondre à un second ordre
 
+public: // opérations sur l'objet
 	bool tabJury();
 	bool Bode(double wMin, double wMax, unsigned int nbpoint, double** gainPhase);
 	friend void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop);
 
+public:
 	friend void testFCTDiscret();
 
 protected:

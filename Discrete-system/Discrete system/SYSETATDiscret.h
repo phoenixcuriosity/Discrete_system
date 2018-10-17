@@ -31,14 +31,15 @@
 
 
 class SYSETATDiscret{
-public:
+public: // constructeurs et destructeur
 	SYSETATDiscret();
 	SYSETATDiscret(const SYSETATDiscret&);
 	~SYSETATDiscret();
 
-	friend std::ostream& operator<<(std::ostream&, const SYSETATDiscret&);
+public: // opérations entre 2 objets SYSETATDiscret
 	friend bool operator ==(const SYSETATDiscret&, const SYSETATDiscret&);
 
+public: // assesseurs
 	void SETA(const Matrice&);
 	void SETB(const Matrice&);
 	void SETC(const Matrice&);
@@ -58,14 +59,16 @@ public:
 	Matrice GETD()const;
 	double GETTe()const;
 	
-
-	void calculABCD(const FCTDiscret& fct);
-	void simulation(const std::string& namefile, Signal& signal, Matrice& x0, double* yOut);
-
+public: // affichage
+	friend std::ostream& operator<<(std::ostream&, const SYSETATDiscret&);
 	std::string printOn(bool on = true)const;
 
+public: // opération sur l'objet
+	void calculABCD(const FCTDiscret& fct);
+	void simulation(const std::string& namefile, Signal& signal, Matrice& x0, double* yOut);
+	
+public:
 	friend void testSYSETATDiscret();
-
 
 private:
 	Matrice _A, _B, _C, _D;

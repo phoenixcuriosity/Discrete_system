@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -52,10 +52,6 @@ Matrice::~Matrice()
 		_tab = nullptr;
 	}
 }
-
-
-
-
 Matrice& Matrice::operator=(const Matrice& M) {
 	if (this != &M) {
 		if (_tab != nullptr)
@@ -78,9 +74,6 @@ bool operator==(const Matrice& A, const Matrice& B) {
 	}
 	return false;
 }
-std::ostream& operator<<(std::ostream& os, const Matrice& s){
-	return os << s.printOn(false);
-}
 Matrice operator+(const Matrice& a, const Matrice& b) {
 	Matrice resultat = addition(a, b);
 	return resultat;
@@ -93,8 +86,6 @@ Matrice operator*(const Matrice& a, const Matrice& b) {
 	Matrice resultat = multiplication(a, b);
 	return resultat;
 }
-
-
 Matrice addition(const Matrice& A, const Matrice& B) {
 	Matrice addition(A._length, A._height);
 	if (assertSize(A._length, A._height, B._length, B._height)){
@@ -153,60 +144,6 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 	}
 	
 }
-
-
-
-
-double** Matrice::allocate(unsigned int length, unsigned int height) const {
-	/*
-	alloue un tableau de taille size de type double initialisé à 0
-	*/
-	double** buffer = nullptr;
-	if (assertRange(length, height)){
-		buffer = new double*[length];
-		for (unsigned int i = 0; i < length; i++)
-			buffer[i] = new double[height];
-
-		for (unsigned int i = 0; i < length; i++){
-			for (unsigned int j = 0; j < height; j++)
-				buffer[i][j] = 0;
-		}
-	}
-	return buffer;
-}
-double** Matrice::allocate(unsigned int length, unsigned int height, double userValue) const {
-	/*
-	alloue un tableau de taille size de type double initialisé à 0
-	*/
-	double** buffer = nullptr;
-	if (assertRange(length, height)) {
-		buffer = new double*[length];
-		for (unsigned int i = 0; i < length; i++)
-			buffer[i] = new double[height];
-
-		for (unsigned int i = 0; i < length; i++) {
-			for (unsigned int j = 0; j < height; j++)
-				buffer[i][j] = userValue;
-		}
-	}
-	return buffer;
-}
-double** Matrice::allocate(const Matrice& P) const {
-	/*
-		recopie de l'allocation de la matrice P
-	*/
-	double** buffer = new double*[P._length];
-	for (unsigned int i = 0; i < P._length; i++)
-		buffer[i] = new double[P._height];
-
-	for (unsigned int i = 0; i < P._length; i++){
-		for (unsigned int j = 0; j < P._height; j++)
-			buffer[i][j] = P._tab[i][j];
-	}
-	return buffer;
-}
-
-
 void Matrice::SETthiscoef(unsigned int i, unsigned int j, double userValue) {
 	if (assertIndex(i, j))
 		_tab[i][j] = userValue;
@@ -222,12 +159,10 @@ unsigned int Matrice::GETlength()const {
 unsigned int Matrice::GETheight()const {
 	return _height;
 }
-
-
-Matrice transposistion(const Matrice& A){
-	/*
-		transpose la matrice
-	*/
+/*
+	transpose la matrice
+*/
+Matrice transposition(const Matrice& A){
 	Matrice resultat(A.GETheight(), A.GETlength());
 	for (unsigned int i = 0; i < resultat.GETlength(); i++){
 		for (unsigned int j = 0; j < resultat.GETheight(); j++)
@@ -235,31 +170,30 @@ Matrice transposistion(const Matrice& A){
 	}
 	return resultat;
 }
+/*
+	Ramplit la matrice de 0
+*/
 void Matrice::zero(){
-	/*
-		Ramplit la matrice de 0
-	*/
 	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
 			_tab[i][j] = 0;
 		}
 	}
 }
-void Matrice::ones(){
-	/*
+/*
 		Ramplit la matrice de 1
-	*/
+*/
+void Matrice::ones(){
 	for (unsigned int i = 0; i < _length; i++){
 		for (unsigned int j = 0; j < _height; j++){
 			_tab[i][j] = 1;
 		}
 	}
 }
-void Matrice::editsize(unsigned int length, unsigned int height) {
-	/*
+/*
 		Permet de changer la taille d'une matrice en gardant les coefficients existant
-	*/
-
+*/
+void Matrice::editsize(unsigned int length, unsigned int height) {
 	if (assertRange(length, height)){
 		double** buffer = new double*[length];
 		for (unsigned int i = 0; i < length; i++)
@@ -322,10 +256,10 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 		_height = height;
 	}
 }
+/*
+	fait grandir la matrice de 1 ligne et une colonne en gardant les coefficients existant
+*/
 void Matrice::growOneLOneC(){
-	/*
-		fait grandir la matrice de 1 ligne et une colonne en gardant les coefficients existant
-	*/
 	double** buffer = new double*[_length + 1];
 	for (unsigned int i = 0; i < _length + 1; i++)
 		buffer[i] = new double[_height + 1];
@@ -354,14 +288,16 @@ void Matrice::growOneLOneC(){
 	_length++;
 	_height++;
 }
-
+std::ostream& operator<<(std::ostream& os, const Matrice& s) {
+	return os << s.printOn(false);
+}
 const std::string Matrice::printOn(bool on)const{
 	std::ostringstream stream;
 	std::string matrice = "";
 	for (unsigned int i = 0; i < _length; i++){
 		stream << std::endl << "|";
 		for (unsigned int j = 0; j < _height; j++)
-			stream << " " << _tab[i][j];
+			stream << "\t" << _tab[i][j];
 		stream << " |";
 	}
 	matrice = stream.str();
@@ -369,7 +305,56 @@ const std::string Matrice::printOn(bool on)const{
 		std::cout << matrice;
 	return matrice;
 }
+/*
+	alloue un tableau de taille size de type double initialisé à 0
+*/
+double** Matrice::allocate(unsigned int length, unsigned int height) const {
+	double** buffer = nullptr;
+	if (assertRange(length, height)) {
+		buffer = new double*[length];
+		for (unsigned int i = 0; i < length; i++)
+			buffer[i] = new double[height];
 
+		for (unsigned int i = 0; i < length; i++) {
+			for (unsigned int j = 0; j < height; j++)
+				buffer[i][j] = 0;
+		}
+	}
+	return buffer;
+}
+/*
+	alloue un tableau de taille size de type double initialisé à 0
+*/
+double** Matrice::allocate(unsigned int length, unsigned int height, double userValue) const {
+	
+	double** buffer = nullptr;
+	if (assertRange(length, height)) {
+		buffer = new double*[length];
+		for (unsigned int i = 0; i < length; i++)
+			buffer[i] = new double[height];
+
+		for (unsigned int i = 0; i < length; i++) {
+			for (unsigned int j = 0; j < height; j++)
+				buffer[i][j] = userValue;
+		}
+	}
+	return buffer;
+}
+/*
+		recopie de l'allocation de la matrice P
+*/
+double** Matrice::allocate(const Matrice& P) const {
+	
+	double** buffer = new double*[P._length];
+	for (unsigned int i = 0; i < P._length; i++)
+		buffer[i] = new double[P._height];
+
+	for (unsigned int i = 0; i < P._length; i++) {
+		for (unsigned int j = 0; j < P._height; j++)
+			buffer[i][j] = P._tab[i][j];
+	}
+	return buffer;
+}
 bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
 	if (lenght < _length && height < _height)
 		return true;
@@ -394,8 +379,6 @@ bool assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB
 		return false;
 	}
 }
-
-
 void testMatrice(){
 	std::ostringstream stream;
 	std::string matrice = "";
@@ -453,7 +436,7 @@ void testMatrice(){
 	
 	K.SETthiscoef(0, 0, 3.6), K.SETthiscoef(0, 1, -3.6), K.SETthiscoef(0, 2, 3.6);
 	stream << std::endl << "Matrice K :" << K;
-	Matrice L = transposistion(K);
+	Matrice L = transposition(K);
 	stream << std::endl << "L transposee de K" << L;
 
 	J.editsize(1, 1);

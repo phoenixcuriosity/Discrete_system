@@ -28,8 +28,9 @@
 #include "LIB.h"
 #include "Texture.h"
 
-const unsigned int SCREEN_WIDTH = 640;
-const unsigned int SCREEN_HEIGHT = 480;
+const Uint16 SCREEN_WIDTH = 640;
+const Uint16 SCREEN_HEIGHT = 640;
+const Uint8 MAX_FONT = 80;
 
 const SDL_Color Black = { 0, 0, 0, 255 };
 const SDL_Color White = { 255, 255, 255, 255 };
@@ -40,51 +41,53 @@ const SDL_Color WriteColorButton = { 255, 64, 0, 255 }; // orange
 const SDL_Color BackColorButton = { 64, 64, 64, 255 }; // gris
 const SDL_Color NoColor = { 0, 0, 0, 0 };
 
-enum { normal, blended, shaded };
-enum {
+enum : Uint8{ normal, blended, shaded };
+enum : Uint8 {
 	STATEnothing, STATEecrantitre,
 	STATEfunctionTransfer, STATETFcreateNumDen, STATETFcreateBode, STATETFdisplayBode,
 	STATEstateSystem, STATESScreateMatrice, STATESSsimulate, STATEreponseTemporelle,
 	STATEclosedLoop, STATEtests
 };
-enum { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
-enum { nocenter, center_x, center_y, center };
+enum : Uint8 { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
+enum : Uint8 { nocenter, center_x, center_y, center };
 
-struct screen {
+struct Screen {
 	SDL_Window *window = nullptr;
 	SDL_Renderer *renderer = nullptr;
 };
-struct fichier {
+struct Fichier {
 	const std::string log = "bin/files/log.txt";
 	const std::string reponseTemporelle = "bin/files/ReponseTemporelle.txt";
 	const std::string bode = "bin/files/Bode.txt";
 	const std::string load = "bin/files/load.txt";
 };
-struct var {
-	unsigned int select = selectnothing;
-	unsigned int statescreen = 0; // selectnothing par défaut
+struct Var {
+	Uint8 select = selectnothing;
+	Uint8 statescreen = 0; // selectnothing par défaut
 
-	unsigned int mouse_x = 0;
-	unsigned int mouse_y = 0;
-	unsigned int ywheel = 0;
-	unsigned int xwheel = 0;
+	Uint16 mouse_x = 0;
+	Uint16 mouse_y = 0;
+	Uint16 ywheel = 0;
+	Uint16 xwheel = 0;
 
 	bool continuer = true;
 };
-struct texture {
-	TTF_Font *font[80];
+struct AllTextures {
+	TTF_Font *font[MAX_FONT];
 	std::vector<Texture*> txtEcranTitre;
+
+	std::vector<Texture*> CreateNumDen;
 };
-struct button {
+struct AllButtons {
 	std::vector<Buttons*> ecranTitre;
 	std::vector<Buttons*> ecranFCT;
 	std::vector<Buttons*> ecranSYSETAT;
 };
-struct sysinfo {
-	var variables;
-	screen ecran;
-	texture allTextures;
-	button allButtons;
+struct Sysinfo {
+	Var var;
+	Screen screen;
+	AllTextures allTextures;
+	AllButtons allButtons;
 };
 
 

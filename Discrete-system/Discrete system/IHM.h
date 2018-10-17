@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -35,44 +35,46 @@
 
 
 class IHM{
-public:
+public: // STATIC
 
-	static bool initfile(fichier& file);
+	static bool initfile(Fichier& file);
 	static void logfileconsole(const std::string& msg);
 	static void logSDLError(std::ostream &os, const std::string &msg);
-	static void initsdl(sysinfo&);
-	static void deleteAll(sysinfo&);
+	static void initsdl(Sysinfo&);
+	static void deleteAll(Sysinfo&);
 
 public:
 	IHM();
 	~IHM();
 
+public: // assesseurs
 	void SETfct(FCTDiscret* fct);
 	void SETsys(SYSETATDiscret* sys);
 	FCTDiscret* GETfct()const;
 	SYSETATDiscret* GETsys()const;
 
+public: // test si l'objet n'est pas créer par défaut
 	bool assertFCT(const FCTDiscret fct, const FCTDiscret test);
 
 protected:
-	friend void loadAllTextures(sysinfo&);
-	friend void rendueEcran(sysinfo&);
+	friend void loadAllTextures(Sysinfo&);
+	friend void rendueEcran(Sysinfo&);
 
-	friend void mouse(IHM& ,sysinfo&, SDL_Event);
-	friend unsigned int CinNumberUnsignedInt(sysinfo&, const std::string& msg, unsigned int, unsigned int);
-	friend double CinNumberDouble(sysinfo&, const std::string& msg, unsigned int, unsigned int);
-	friend void CreateNumDen(IHM& ihm, sysinfo& information);
-	friend void displayTF(IHM& ihm, sysinfo& information);
-	friend void displayJury(IHM& ihm, sysinfo& information);
-	friend void displayBode(IHM& ihm, sysinfo& information);
-	friend void createMatrice(IHM& ihm, sysinfo& information);
-	friend void computeABCD(IHM& ihm, sysinfo& information);
-	friend void displayStateSystem(IHM& ihm, sysinfo& information);
-	friend void createSignal(IHM& ihm, sysinfo& information, Signal& sig);
-	friend void createStep(IHM& ihm, sysinfo& information, Echelon& step);
-	friend void createRamp(IHM& ihm, sysinfo& information, Rampe& ramp);
-	friend void createSinus(IHM& ihm, sysinfo& information, Sinus& sinus);
-	friend void displayReponseTemp(IHM& ihm, sysinfo& information, Signal& sig);
+	friend void mouse(IHM& ,Sysinfo&, SDL_Event);
+	friend unsigned int CinNumberUnsignedInt(Sysinfo&, const std::string& msg, unsigned int, unsigned int);
+	friend double CinNumberDouble(Sysinfo&, const std::string& msg, unsigned int, unsigned int);
+	friend void CreateNumDen(IHM& ihm, Sysinfo& sysinfo);
+	friend void displayTF(IHM& ihm, Sysinfo& sysinfo);
+	friend void displayJury(IHM& ihm, Sysinfo& sysinfo);
+	friend void displayBode(IHM& ihm, Sysinfo& sysinfo);
+	friend void createMatrice(IHM& ihm, Sysinfo& sysinfo);
+	friend void computeABCD(IHM& ihm, Sysinfo& sysinfo);
+	friend void displayStateSystem(IHM& ihm, Sysinfo& sysinfo);
+	friend void createSignal(Sysinfo& sysinfo, Signal& sig);
+	friend void createStep(Sysinfo& sysinfo, Echelon& step);
+	friend void createRamp(Sysinfo& sysinfo, Rampe& ramp);
+	friend void createSinus(Sysinfo& sysinfo, Sinus& sinus);
+	friend void displayReponseTemp(IHM& ihm, Sysinfo& sysinfo, Signal& sig);
 
 private:
 	FCTDiscret* _fct;

@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -27,7 +27,7 @@
 #include "LIB.h"
 
 class Polynome {
-public:
+public: // constructeurs et destructeur
 	Polynome();
 	Polynome(unsigned int order); // attention : Polynome a((unsigned int)2) est la seule façon de créer un polynome d'ordre 2
 	Polynome(double userValue); // cast
@@ -35,14 +35,17 @@ public:
 	Polynome(const Polynome& P);
 	~Polynome();
 
+public: // opérations sur 2 objets Polynome
 	Polynome& operator=(const Polynome&);
-	double operator[](unsigned int index);
-	friend std::ostream& operator<<(std::ostream& os, const Polynome&);
 	friend bool operator==(const Polynome&, const Polynome&);
 	friend Polynome operator+(const Polynome&, const Polynome&);
 	friend Polynome operator-(const Polynome&, const Polynome&);
 	friend Polynome operator*(const Polynome&, const Polynome&);
+	friend Polynome addition(const Polynome& a, const Polynome& b);
+	friend Polynome soustraction(const Polynome& a, const Polynome& b);
+	friend Polynome multiplication(const Polynome& a, const Polynome& b);
 
+public: // assesseurs
 	void SETorder(unsigned int order);
 	void SETcoefTab(unsigned int index, double userValue);
 
@@ -50,23 +53,24 @@ public:
 	double GETcoefTab(unsigned int index) const;
 	unsigned int GETstringSize() const;
 
-	friend Polynome addition(const Polynome& a, const Polynome& b);
-	friend Polynome soustraction(const Polynome& a, const Polynome& b);
-	friend Polynome multiplication(const Polynome& a, const Polynome& b);
-	
+public: // opération sur l'objet
+	double operator[](unsigned int index);
 	void grow(double userValue);
+
+public: // affichage
+	friend std::ostream& operator<<(std::ostream& os, const Polynome&);
 	std::string printOn(bool = true) const;
 
+public:
 	friend void testPolynome();
 	
-
-protected:
+protected: // allocate et test d'index
 	virtual double* allocate(unsigned int size) const;
 	virtual double* allocate(unsigned int size, double userValue) const;
 	virtual double* allocate(unsigned int size, double* tab) const;
 	virtual double* allocate(const Polynome& P) const;
-
 	bool assertIndex(unsigned int index) const;
+
 private:
 	unsigned int _order;
 	double* _tab;

@@ -78,17 +78,17 @@ void Texture::loadImage(SDL_Renderer*& renderer, std::vector<Texture*>& tabTextu
 	else
 		IHM::logfileconsole("___________ERROR : loadImage : path or image are corrupt : " + path);
 }
-void Texture::loadwritetxt(sysinfo& information, std::vector<Texture*>& tabTexture, unsigned int type, const std::string &msg,
+void Texture::loadwritetxt(Sysinfo& sysinfo, std::vector<Texture*>& tabTexture, unsigned int type, const std::string &msg,
 	SDL_Color color, SDL_Color backcolor, unsigned int size, int x, int y, int cnt) {
-	SDL_Texture *image = renderText(information.ecran.renderer, type, msg, color, backcolor, information.allTextures.font[size]);
+	SDL_Texture *image = renderText(sysinfo.screen.renderer, type, msg, color, backcolor, sysinfo.allTextures.font[size]);
 	int xc = x, yc = y, iW = 0, iH = 0;
 	SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
 	centrage(xc, yc, iW, iH, cnt);
-	tabTexture.push_back(new Texture(image, msg, information.variables.statescreen, information.variables.select, xc, yc, iW, iH));
+	tabTexture.push_back(new Texture(image, msg, sysinfo.var.statescreen, sysinfo.var.select, xc, yc, iW, iH));
 }
-void Texture::writetxt(sysinfo& information, unsigned int type, const std::string &msg, SDL_Color color, SDL_Color backcolor, unsigned int size, unsigned int x, unsigned int y, int cnt) {
-	SDL_Texture *image = renderText(information.ecran.renderer, type, msg, color, backcolor, information.allTextures.font[size]);
-	loadAndWriteImage(information.ecran.renderer, image, x, y, cnt);
+void Texture::writetxt(Sysinfo& sysinfo, unsigned int type, const std::string &msg, SDL_Color color, SDL_Color backcolor, unsigned int size, unsigned int x, unsigned int y, int cnt) {
+	SDL_Texture *image = renderText(sysinfo.screen.renderer, type, msg, color, backcolor, sysinfo.allTextures.font[size]);
+	loadAndWriteImage(sysinfo.screen.renderer, image, x, y, cnt);
 	SDL_DestroyTexture(image);
 }
 void Texture::loadAndWriteImage(SDL_Renderer*& renderer, SDL_Texture *image, unsigned int x, unsigned int y, int cnt) {
@@ -185,10 +185,10 @@ void Texture::changeAlpha(Uint8 alpha) {
 	if (SDL_SetTextureAlphaMod(_texture, alpha) != 0)
 		IHM::logSDLError(std::cout, "alpha : ");
 }
-void Texture::changeTextureMsg(sysinfo& information, unsigned int type, const std::string &msg,
+void Texture::changeTextureMsg(Sysinfo& sysinfo, unsigned int type, const std::string &msg,
 	SDL_Color color, SDL_Color backcolor, unsigned int size, unsigned int x, unsigned int y, int cnt) {
 	_name = msg;
-	_texture = renderText(information.ecran.renderer, type, msg, color, backcolor, information.allTextures.font[size]);
+	_texture = renderText(sysinfo.screen.renderer, type, msg, color, backcolor, sysinfo.allTextures.font[size]);
 	int xc = x, yc = y, iW = 0, iH = 0;
 	SDL_QueryTexture(_texture, NULL, NULL, &iW, &iH);
 	centrage(xc, yc, iW, iH, cnt);
@@ -240,7 +240,7 @@ void Texture::SETdsth(int h) {
 
 ///////////////////////////// Button //////////////////////////////
 /* BUTTONS :: STATIC */
-void Buttons::createbutton(sysinfo& information, std::vector<Buttons*>& tabbutton, unsigned int type, const std::string& msg, SDL_Color color, SDL_Color backcolor, unsigned int size, int x, int y, int cnt) {
+void Buttons::createbutton(Sysinfo& sysinfo, std::vector<Buttons*>& tabbutton, unsigned int type, const std::string& msg, SDL_Color color, SDL_Color backcolor, unsigned int size, int x, int y, int cnt) {
 	int iW = 0, iH = 0;
 	unsigned int i = 0;
 
@@ -252,11 +252,11 @@ void Buttons::createbutton(sysinfo& information, std::vector<Buttons*>& tabbutto
 	}
 	for (i; i <= tabbutton.size(); i++) {
 		if (i == tabbutton.size()) {
-			image = renderText(information.ecran.renderer, type, msg, color, backcolor, information.allTextures.font[size]);
-			imageOn = renderText(information.ecran.renderer, type, msg, color, { 64,128,64,255 }, information.allTextures.font[size]);
+			image = renderText(sysinfo.screen.renderer, type, msg, color, backcolor, sysinfo.allTextures.font[size]);
+			imageOn = renderText(sysinfo.screen.renderer, type, msg, color, { 64,128,64,255 }, sysinfo.allTextures.font[size]);
 			SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
 			centrage(x, y, iW, iH, cnt);
-			tabbutton.push_back(new Buttons(image, msg, information.variables.statescreen, information.variables.select, x, y, iW, iH, imageOn, color, backcolor));
+			tabbutton.push_back(new Buttons(image, msg, sysinfo.var.statescreen, sysinfo.var.select, x, y, iW, iH, imageOn, color, backcolor));
 
 			IHM::logfileconsole("Create Button n:" + std::to_string(i) + " msg = " + tabbutton[i]->GETname() + " Success");
 			break;

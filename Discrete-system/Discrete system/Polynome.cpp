@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -38,7 +38,6 @@ Polynome::Polynome(unsigned int size, double tab[]) : _order(size), _tab(allocat
 Polynome::Polynome(const Polynome& P) : _order(P._order), _tab(allocate(P)), _stringSize(0)
 {
 }
-
 Polynome::~Polynome()
 {
 	if (_tab != nullptr) {
@@ -46,9 +45,6 @@ Polynome::~Polynome()
 		_tab = nullptr;
 	}
 }
-
-
-
 Polynome& Polynome::operator=(const Polynome& a){
 	/*
 		si le polynome n'est pas le meme que celui testé alors le polynome prend les valeurs des attributs de a
@@ -61,15 +57,6 @@ Polynome& Polynome::operator=(const Polynome& a){
 	}
 	return *this;
 }
-double Polynome::operator[](unsigned int index) {
-	if (assertIndex(index))
-		return _tab[index];
-	return 0;
-}
-std::ostream& operator << (std::ostream& os, const Polynome& s){
-	return os << s.printOn(false);
-}
-
 bool operator==(const Polynome& a, const Polynome& b){
 	/*
 		test coef par coef si le polynome est identique
@@ -96,7 +83,63 @@ Polynome operator*(const Polynome& a, const Polynome& b){
 	Polynome resultat = multiplication(a, b);
 	return resultat;
 }
+Polynome addition(const Polynome& a, const Polynome& b) {
+	/*
+	addition de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
+	*/
+	unsigned int maxSize = max(a.GETorder(), b.GETorder());
+	unsigned int minSize = min(a.GETorder(), b.GETorder());
 
+
+
+	if (maxSize == a.GETorder()) {
+		Polynome newPolynome(a);
+		for (unsigned int i = 0; i <= minSize; i++)
+			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + b.GETcoefTab(i));
+		return newPolynome;
+	}
+	else {
+		Polynome newPolynome(b);
+		for (unsigned int i = 0; i <= minSize; i++)
+			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + a.GETcoefTab(i));
+		return newPolynome;
+	}
+}
+Polynome soustraction(const Polynome& a, const Polynome& b) {
+	/*
+		soustraction de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
+	*/
+	unsigned int maxSize = max(a.GETorder(), b.GETorder());
+	unsigned int minSize = min(a.GETorder(), b.GETorder());
+
+	Polynome newPolynome(maxSize);
+	if (a.GETorder() == maxSize) {
+		for (unsigned int i = 0; i <= maxSize; i++)
+			newPolynome.SETcoefTab(i, a.GETcoefTab(i));
+		for (unsigned int i = 0; i <= minSize; i++)
+			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - b.GETcoefTab(i));
+	}
+	else {
+		for (unsigned int i = 0; i <= maxSize; i++)
+			newPolynome.SETcoefTab(i, b.GETcoefTab(i));
+		for (unsigned int i = 0; i <= minSize; i++)
+			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - a.GETcoefTab(i));
+	}
+	return newPolynome;
+}
+Polynome multiplication(const Polynome& a, const Polynome& b) {
+	/*
+		multiplication de 2 polynomes
+	*/
+	unsigned int maxSize = a.GETorder() + b.GETorder();
+
+	Polynome newPolynome(maxSize);
+	for (unsigned int i = 0; i <= a.GETorder(); i++) {
+		for (unsigned int j = 0; j <= b.GETorder(); j++)
+			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
+	}
+	return newPolynome;
+}
 
 void Polynome::SETcoefTab(unsigned int index, double userValue){
 	/*
@@ -106,7 +149,6 @@ void Polynome::SETcoefTab(unsigned int index, double userValue){
 		_tab[index] = userValue;
 	}
 }
-
 unsigned int Polynome::GETorder() const {
 	return _order;
 }
@@ -124,67 +166,6 @@ unsigned int Polynome::GETstringSize() const{
 	_stringSize = equation.length();
 	return _stringSize;
 }
-
-Polynome addition(const Polynome& a, const Polynome& b){
-	/*
-	addition de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
-	*/
-	unsigned int maxSize = max(a.GETorder(), b.GETorder());
-	unsigned int minSize = min(a.GETorder(), b.GETorder());
-
-	
-
-	if (maxSize == a.GETorder()){
-		Polynome newPolynome(a);
-		for (unsigned int i = 0; i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + b.GETcoefTab(i));
-		return newPolynome;
-	}
-	else{
-		Polynome newPolynome(b);
-		for (unsigned int i = 0; i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + a.GETcoefTab(i));
-		return newPolynome;
-	}
-}
-
-Polynome soustraction(const Polynome& a, const Polynome& b){
-	/*
-		soustraction de 2 polynomes en choisissant la nouvelle taille par le plus grand ordre
-	*/
-	unsigned int maxSize = max(a.GETorder(), b.GETorder());
-	unsigned int minSize = min(a.GETorder(), b.GETorder());
-
-	Polynome newPolynome(maxSize);
-	if (a.GETorder() == maxSize){
-		for (unsigned int i = 0; i <= maxSize; i++)
-			newPolynome.SETcoefTab(i, a.GETcoefTab(i));
-		for (unsigned int i = 0; i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - b.GETcoefTab(i));
-	}
-	else {
-		for (unsigned int i = 0; i <= maxSize; i++)
-			newPolynome.SETcoefTab(i, b.GETcoefTab(i));
-		for (unsigned int i = 0; i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - a.GETcoefTab(i));
-	}
-	return newPolynome;
-}
-Polynome multiplication(const Polynome& a, const Polynome& b){
-	/*
-		multiplication de 2 polynomes
-	*/
-	unsigned int maxSize = a.GETorder() + b.GETorder();
-	
-	Polynome newPolynome(maxSize);
-	for (unsigned int i = 0; i <= a.GETorder(); i++){
-		for (unsigned int j = 0; j <= b.GETorder(); j++)
-			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
-	}
-	return newPolynome;
-}
-
-
 void Polynome::SETorder(unsigned int order){
 	
 	double* newTab = allocate(order);
@@ -204,7 +185,11 @@ void Polynome::SETorder(unsigned int order){
 	_order = order;
 	_tab = newTab;
 }
-
+double Polynome::operator[](unsigned int index) {
+	if (assertIndex(index))
+		return _tab[index];
+	return 0;
+}
 void Polynome::grow(double userValue){
 	/*
 		créer un nouveau tableau ayant une case de plus avec la nouvelle valeur de l'utilisateur
@@ -219,9 +204,9 @@ void Polynome::grow(double userValue){
 
 	_tab = newTab;
 }
-
-
-
+std::ostream& operator << (std::ostream& os, const Polynome& s) {
+	return os << s.printOn(false);
+}
 std::string Polynome::printOn(bool on) const{
 	/*
 		affiche le polynome en z d'ordre décroissant
@@ -256,10 +241,6 @@ std::string Polynome::printOn(bool on) const{
 	return equation;
 }
 
-
-
-
-
 double* Polynome::allocate(unsigned int size) const {
 	/*
 	alloue un tableau de taille size de type double initialisé à 0
@@ -293,8 +274,6 @@ double* Polynome::allocate(const Polynome& P) const {
 		buffer[i] = P._tab[i];
 	return buffer;
 }
-
-
 bool Polynome::assertIndex(unsigned int index)const {
 	if (index <= _order)
 		return true;
@@ -303,8 +282,6 @@ bool Polynome::assertIndex(unsigned int index)const {
 		return false;
 	}
 }
-
-
 
 void testPolynome() {
 	std::string polynome;

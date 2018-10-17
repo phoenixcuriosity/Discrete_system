@@ -34,9 +34,9 @@ public:
 		const std::string &message, SDL_Color color, SDL_Color colorback, TTF_Font* font);
 	static void loadImage(SDL_Renderer*& renderer, std::vector<Texture*>& tabTexture, unsigned int statescreen, unsigned int select,
 		const std::string &path, const std::string &msg, Uint8 alpha, int x, int y, unsigned int w, unsigned int h, int cnt = 0);
-	static void loadwritetxt(sysinfo& information, std::vector<Texture*>& tabTexture, unsigned int type, const std::string &msg,
+	static void loadwritetxt(Sysinfo& sysinfo, std::vector<Texture*>& tabTexture, unsigned int type, const std::string &msg,
 		SDL_Color color, SDL_Color backcolor, unsigned int size, int x, int y, int cnt = 0);
-	static void writetxt(sysinfo& information, unsigned int type, const std::string &msg, SDL_Color color,
+	static void writetxt(Sysinfo& sysinfo, unsigned int type, const std::string &msg, SDL_Color color,
 		SDL_Color backcolor, unsigned int size, unsigned int x, unsigned int y, int cnt = 0);
 	static void loadAndWriteImage(SDL_Renderer*&, SDL_Texture*, unsigned int, unsigned int, int = 0);
 	static void centrage(int&, int&, int, int, int = 0);
@@ -55,7 +55,7 @@ public:
 	virtual bool TextureTestString(const std::string&);
 
 	virtual void changeAlpha(Uint8);
-	virtual void changeTextureMsg(sysinfo& information, unsigned int type, const std::string &msg,
+	virtual void changeTextureMsg(Sysinfo& sysinfo, unsigned int type, const std::string &msg,
 		SDL_Color color, SDL_Color backcolor, unsigned int size, unsigned int x, unsigned int y, int cnt = 0);
 
 	virtual SDL_Texture* GETtexture() const;
@@ -104,7 +104,7 @@ private:
 */
 class Buttons : public Texture {
 public:
-	static void createbutton(sysinfo& information, std::vector<Buttons*>& tabbutton, unsigned int type, const std::string& msg,
+	static void createbutton(Sysinfo& sysinfo, std::vector<Buttons*>& tabbutton, unsigned int type, const std::string& msg,
 		SDL_Color color, SDL_Color backcolor, unsigned int size, int x, int y, int centerbutton = 0);
 
 	Buttons() {};
