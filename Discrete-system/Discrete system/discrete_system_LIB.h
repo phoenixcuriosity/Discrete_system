@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.11
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -28,31 +28,46 @@
 #include "LIB.h"
 #include "Texture.h"
 
+/* *********************************************************
+						 Constantes
+  ********************************************************* */
+
+//--- Constantes concernant l'ecran et la dimension de la fenetre  -----------------------------------------------------------------------------------
+
+// longueur de la fenetre SDL en pixel
 const Uint16 SCREEN_WIDTH = 640;
+
+// hauteur de la fenetre SDL en pixel
 const Uint16 SCREEN_HEIGHT = 640;
-const Uint8 MAX_FONT = 80;
 
-const SDL_Color Black = { 0, 0, 0, 255 };
-const SDL_Color White = { 255, 255, 255, 255 };
-const SDL_Color Red = { 255, 0, 0, 255 };
-const SDL_Color Green = { 0, 255, 0, 255 };
-const SDL_Color Blue = { 0, 0, 255, 255 };
-const SDL_Color WriteColorButton = { 255, 64, 0, 255 }; // orange
-const SDL_Color BackColorButton = { 64, 64, 64, 255 }; // gris
-const SDL_Color NoColor = { 0, 0, 0, 0 };
 
-enum : Uint8{ normal, blended, shaded };
+
+/* *********************************************************
+						 Enum
+  ********************************************************* */
+
+// différents état de l'écran
 enum : Uint8 {
 	STATEnothing, STATEecrantitre,
 	STATEfunctionTransfer, STATETFcreateNumDen, STATETFcreateBode, STATETFdisplayBode,
 	STATEstateSystem, STATESScreateMatrice, STATESSsimulate, STATEreponseTemporelle,
 	STATEclosedLoop, STATEtests
 };
-enum : Uint8 { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
-enum : Uint8 { nocenter, center_x, center_y, center };
 
+// spécifications de la séléction
+enum : Uint8 { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
+
+
+
+/* *********************************************************
+						Structures
+  ********************************************************* */
+//---------------------- Structure niveau 1 ---------------------------------------------------------------------------------------------------------
 struct Screen {
+	// ptr sur la fenetre crée par la SDL
 	SDL_Window *window = nullptr;
+
+	// ptr sur le renderer crée par la SDL
 	SDL_Renderer *renderer = nullptr;
 };
 struct Fichier {
@@ -62,31 +77,60 @@ struct Fichier {
 	const std::string load = "bin/files/load.txt";
 };
 struct Var {
+	// variable permettant de quitter la boucle principale donc le jeu
+	bool continuer = true;
+
+	/*
+		état de la sélection du joueur
+		enum : Uint8 { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
+	*/
 	Uint8 select = selectnothing;
-	Uint8 statescreen = 0; // selectnothing par défaut
+
+	/*
+		état de l'écran du joueur
+		enum : Uint8 {	STATEnothing, STATEecrantitre,
+						STATEfunctionTransfer, STATETFcreateNumDen, STATETFcreateBode, STATETFdisplayBode,
+						STATEstateSystem, STATESScreateMatrice, STATESSsimulate, STATEreponseTemporelle,
+						STATEclosedLoop, STATEtests
+					}
+	*/
+	Uint8 stateScreen = STATEnothing;
 
 	Uint16 mouse_x = 0;
 	Uint16 mouse_y = 0;
 	Uint16 ywheel = 0;
 	Uint16 xwheel = 0;
-
-	bool continuer = true;
 };
 struct AllTextures {
+	
+};
+struct AllTextes {
 	TTF_Font *font[MAX_FONT];
-	std::vector<Texture*> txtEcranTitre;
 
-	std::vector<Texture*> CreateNumDen;
+	std::vector<Texte*> txtEcranTitre;
+
+	std::vector<Texte*> CreateNumDen;
 };
 struct AllButtons {
-	std::vector<Buttons*> ecranTitre;
-	std::vector<Buttons*> ecranFCT;
-	std::vector<Buttons*> ecranSYSETAT;
+	std::vector<ButtonTexte*> ecranTitre;
+	std::vector<ButtonTexte*> ecranFCT;
+	std::vector<ButtonTexte*> ecranSYSETAT;
 };
+//---------------------- Structure niveau 0 ---------------------------------------------------------------------------------------------------------
 struct Sysinfo {
-	Var var;
+	// contient les données en rapport à la SDL 
 	Screen screen;
+
+	// contient des variables non organisées
+	Var var;
+
+	// contient toutes les images
 	AllTextures allTextures;
+
+	// contient tous les textes
+	AllTextes allTextes;
+
+	// contient tous les boutons
 	AllButtons allButtons;
 };
 

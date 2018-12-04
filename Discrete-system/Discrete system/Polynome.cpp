@@ -213,7 +213,7 @@ std::string Polynome::printOn(bool on) const{
 	*/
 	std::string equation;
 	std::ostringstream stream;
-	for (int i = _order; i >= 0; i--){
+	for (unsigned int i = _order; i >= 0; i--){
 		if (_tab[i] < 0){
 			stream << " - ";
 			if (abs(_tab[i]) != 1 || i < 1)
@@ -233,6 +233,7 @@ std::string Polynome::printOn(bool on) const{
 			else if (i == 1)
 				stream << "Z";
 		}
+		if (i == 0)	break;
 	}
 	equation = stream.str();
 	_stringSize = equation.length();

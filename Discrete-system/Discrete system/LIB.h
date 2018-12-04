@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:2.11
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -46,6 +46,7 @@ typedef struct Screen Screen;
 typedef struct Fichier Fichier;
 typedef struct Var Var;
 typedef struct AllTextures AllTextures;
+typedef struct AllTextes AllTextes;
 typedef struct AllButtons AllButtons;
 typedef struct Sysinfo Sysinfo;
 
@@ -56,6 +57,10 @@ class Matrice;
 class Polynome;
 class Signal;
 class SYSETATDiscret;
+class Texture;
+class Texte;
+class ButtonImage;
+class ButtonTexte;
 
 
 #endif
