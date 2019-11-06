@@ -88,7 +88,7 @@ Matrice operator*(const Matrice& a, const Matrice& b) {
 }
 Matrice addition(const Matrice& A, const Matrice& B) {
 	Matrice addition(A._length, A._height);
-	if (assertSize(A._length, A._height, B._length, B._height)){
+	if (Matrice::assertSize(A._length, A._height, B._length, B._height)){
 		for (unsigned int i = 0; i < A._length; i++){
 			for (unsigned int j = 0; j < A._height; j++)
 				addition.SETthiscoef(i, j, A.GETthiscoef(i, j) + B.GETthiscoef(i, j));
@@ -98,7 +98,7 @@ Matrice addition(const Matrice& A, const Matrice& B) {
 }
 Matrice soustraction(const Matrice& A, const Matrice& B) {
 	Matrice soustraction(A._length, A._height);
-	if (assertSize(A._length, A._height, B._length, B._height)){
+	if (Matrice::assertSize(A._length, A._height, B._length, B._height)){
 		for (unsigned int i = 0; i < A._length; i++){
 			for (unsigned int j = 0; j < A._height; j++)
 				soustraction.SETthiscoef(i, j, A.GETthiscoef(i, j) - B.GETthiscoef(i, j));
@@ -371,7 +371,7 @@ bool Matrice::assertRange(unsigned int length, unsigned int height)const {
 		return false;
 	}
 }
-bool assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB, unsigned int heightB){
+bool Matrice::assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB, unsigned int heightB){
 	if (lenghtA == lenghtB && heightA == heightB)
 		return true;
 	else {

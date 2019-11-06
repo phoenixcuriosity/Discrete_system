@@ -1,8 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.0
+	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -43,52 +44,63 @@ Complexe::~Complexe()
 }
 
 
-Complexe& Complexe::operator = (const Complexe& a){
+Complexe& Complexe::operator = (const Complexe& a)
+{
 	if (this != &a){
 		_Re = a.GETRe();
 		_Im = a.GETIm();
 	}
 	return *this;
 }
-bool operator ==(const Complexe& a, const Complexe& b){
+bool operator ==(const Complexe& a, const Complexe& b)
+{
 	if (a.GETRe() == b.GETRe() && a.GETIm() == b.GETIm())
 		return true;
 	else
 		return false;
 }
-std::ostream& operator<<(std::ostream& os, const Complexe& c){
+std::ostream& operator<<(std::ostream& os, const Complexe& c)
+{
 	return os << c.printOn(false);
 }
-Complexe operator+(const Complexe& a, const Complexe& b){
+Complexe operator+(const Complexe& a, const Complexe& b)
+{
 	Complexe resultat;
 	resultat.SETRe(a.GETRe() + b.GETRe());
 	resultat.SETIm(a.GETIm() + b.GETIm());
 	return resultat;
 }
-Complexe operator-(const Complexe& a, const Complexe& b){
+Complexe operator-(const Complexe& a, const Complexe& b)
+{
 	Complexe resultat;
 	resultat.SETRe(a.GETRe() - b.GETRe());
 	resultat.SETIm(a.GETIm() - b.GETIm());
 	return resultat;
 }
-Complexe operator*(const Complexe& a, const Complexe& b){
+Complexe operator*(const Complexe& a, const Complexe& b)
+{
 	Complexe resultat;
 	resultat.SETRe(a.GETRe() * b.GETRe() - (a.GETIm() * b.GETIm()));
 	resultat.SETIm(2 * a.GETRe() * b.GETIm());
 	return resultat;
 }
-Complexe operator/(const Complexe& a, const Complexe& b) {
+Complexe operator/(const Complexe& a, const Complexe& b)
+{
 	Complexe resultat;
 	resultat.SETRe((a.GETRe() * b.GETRe() + a.GETIm() * b.GETIm()) / (pow(b.GETRe(), 2) + pow(b.GETIm(), 2)));
 	resultat.SETIm((a.GETIm() * b.GETRe() + a.GETRe() * b.GETIm()) / (pow(b.GETRe(), 2) + pow(b.GETIm(), 2)));
 	return resultat;
 }
 
-double module(const Complexe& a){
+
+
+double Complexe::module(const Complexe& a)
+{
 	double module = sqrt(pow(a.GETRe(), 2) + pow(a.GETIm(), 2));
 	return module;
 }
-double arg(const Complexe& a){
+double Complexe::arg(const Complexe& a)
+{
 	/*
 		argument en degré
 	*/
@@ -98,7 +110,8 @@ double arg(const Complexe& a){
 		argument += Pi;
 	return argument;
 }
-Complexe tfReIm(double module, double arg){
+Complexe Complexe::tfReIm(double module, double arg)
+{
 	/*
 		arg en degré en entré
 	*/
@@ -107,25 +120,30 @@ Complexe tfReIm(double module, double arg){
 	Complexe c(Re, Im);
 	return c;
 }
-Complexe Complexe::power(unsigned int power){
+Complexe Complexe::power(unsigned int power)
+{
 	/*
 		calcul du complexe puissance power
 	*/
 	if (power == 1)
 		return *this;
-	else if (power > 1){
+	else if (power > 1)
+	{
 		Complexe c(*this);
-		for (unsigned int i = 1; i < power; i++){
+		for (unsigned int i = 1; i < power; i++)
+		{
 			c = c * *this;
 		}
 		return c;
 	}
-	else{
+	else
+	{
 		Complexe c(1, 0);
 		return c;
 	}
 }
-Complexe tfPolynomeComplexe(const Polynome& P, Complexe& Z){
+Complexe Complexe::tfPolynomeComplexe(const Polynome& P, Complexe& Z)
+{
 	/*
 		calcul du complexe à partir du polynome et de Z transformé en complexe
 	*/
@@ -138,22 +156,27 @@ Complexe tfPolynomeComplexe(const Polynome& P, Complexe& Z){
 
 
 
-void Complexe::SETRe(double Re){
+void Complexe::SETRe(double Re)
+{
 	_Re = Re;
 }
-void Complexe::SETIm(double Im){
+void Complexe::SETIm(double Im)
+{
 	_Im = Im;
 }
-double Complexe::GETRe()const{
+double Complexe::GETRe()const
+{
 	return _Re;
 }
-double Complexe::GETIm()const{
+double Complexe::GETIm()const
+{
 	return _Im;
 }
 
 
 
-const std::string Complexe::printOn(bool on)const{
+const std::string Complexe::printOn(bool on)const
+{
 	std::string texte;
 	std::ostringstream stream;
 
@@ -174,7 +197,8 @@ const std::string Complexe::printOn(bool on)const{
 
 
 
-void testComplexe(){
+void testComplexe()
+{
 	std::string texte = "";
 	std::ostringstream stream;
 
@@ -191,13 +215,17 @@ void testComplexe(){
 	stream << std::endl << "Complexe a - b = " << a - b;
 	stream << std::endl << "Complexe a * b = " << a * b;
 	stream << std::endl << "Complexe a / b = " << a / b;
-	stream << std::endl << "Module de a = " << module(a);
-	stream << std::endl << "arg de a = " << arg(a);
-	stream << std::endl << "Module de b = " << module(b);
-	stream << std::endl << "arg de b = " << arg(b);
-	stream << std::endl << "tfReIm du module et arg de b = " << tfReIm(module(b), arg(b));
+	stream << std::endl << "Module de a = " << Complexe::module(a);
+	stream << std::endl << "arg de a = " << Complexe::arg(a);
+	stream << std::endl << "Module de b = " << Complexe::module(b);
+	stream << std::endl << "arg de b = " << Complexe::arg(b);
+	stream << std::endl << "tfReIm du module et arg de b = " << Complexe::tfReIm(Complexe::module(b), Complexe::arg(b));
 	stream << std::endl << "Puissance 3 de a = " << a.power(3) << std::endl << std::endl;
 
 	texte = stream.str();
 	std::cout << texte;
 }
+
+/*
+*	End Of File : Complexe.cpp
+*/

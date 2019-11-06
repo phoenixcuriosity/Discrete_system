@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="src\Discret_system\Complexe.h" />
     <ClInclude Include="src\Discret_system\discrete_system_LIB.h" />
+    <ClInclude Include="src\Discret_system\End.h" />
     <ClInclude Include="src\Discret_system\FCTDiscret.h" />
     <ClInclude Include="src\Discret_system\IHM.h" />
     <ClInclude Include="src\Discret_system\LIB.h" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Discret_system\Complexe.cpp" />
+    <ClCompile Include="src\Discret_system\End.cpp" />
     <ClCompile Include="src\Discret_system\FCTDiscret.cpp" />
     <ClCompile Include="src\Discret_system\IHM.cpp" />
     <ClCompile Include="src\Discret_system\LoadConfig.cpp" />

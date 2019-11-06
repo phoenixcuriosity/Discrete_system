@@ -157,9 +157,9 @@ struct Sysinfo
 	// contient tous les boutons
 	AllButtons allButtons;
 
-	FCTDiscret* fctDiscret;
+	FCTDiscret* fctDiscret = nullptr;
 
-	SYSETATDiscret* sysetatDiscret;
+	SYSETATDiscret* sysetatDiscret = nullptr;
 };
 
 

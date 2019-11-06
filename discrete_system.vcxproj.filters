@@ -57,6 +57,9 @@
     <ClInclude Include="src\Discret_system\LoadConfig.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Discret_system\End.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Discret_system\main.cpp">
@@ -87,6 +90,9 @@
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
     <ClCompile Include="src\Discret_system\LoadConfig.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Discret_system\End.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
   </ItemGroup>

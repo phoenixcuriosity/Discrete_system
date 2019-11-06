@@ -50,9 +50,12 @@ void Texture::loadImage(SDL_Renderer*& renderer, std::vector<Texture*>& tabTextu
 		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if (newTexture != nullptr) {
-			if (alpha != nonTransparent) {
+			if (alpha != nonTransparent)
+			{
 				if (SDL_SetTextureAlphaMod(newTexture, alpha) != 0)
-					IHM::logSDLError(std::cout, "alpha : ");
+				{
+					// todo erreur
+				}		
 			}
 			centrage(xt, yt, wt, ht, cnt);
 			tabTexture.push_back(new Texture(renderer, newTexture, msg, stateScreen, select, xt, yt, wt, ht, alpha, cnt));
@@ -205,7 +208,9 @@ void Texture::SETalpha(Uint8 alpha) {
 	if (_alpha != alpha) {
 		_alpha = alpha;
 		if (SDL_SetTextureAlphaMod(_texture, _alpha) != 0)
-			IHM::logSDLError(std::cout, "alpha : ");
+		{
+			// todo erreur
+		}
 	}
 }
 void Texture::SETcenter(Uint8 center) {
@@ -496,9 +501,15 @@ void ButtonImage::SETon(bool state) {
 void ButtonImage::SETalpha(Uint8 alpha) {
 	this->SETalpha(alpha);
 	if (SDL_SetTextureAlphaMod(this->GETtextureNonConst(), this->GETalpha()) != 0)
-		IHM::logSDLError(std::cout, "alpha : ");
+	{
+
+	}
+
 	if (SDL_SetTextureAlphaMod(_imageOn, this->GETalpha()) != 0)
-		IHM::logSDLError(std::cout, "alpha : ");
+	{
+
+	}
+
 }
 
 
@@ -616,7 +627,12 @@ void ButtonTexte::SETon(bool state) {
 void ButtonTexte::SETalpha(Uint8 alpha) {
 	this->SETalpha(alpha);
 	if (SDL_SetTextureAlphaMod(this->GETtextureNonConst(), this->GETalpha()) != 0)
-		IHM::logSDLError(std::cout, "alpha : ");
+	{
+
+	}
+
 	if (SDL_SetTextureAlphaMod(_imageOn, this->GETalpha()) != 0)
-		IHM::logSDLError(std::cout, "alpha : ");
+	{
+
+	}
 }

@@ -158,7 +158,7 @@ void LoadConfig::initsdl(Sysinfo& sysinfo)
 * OUTPUT PARAMETERS : Chargement des Textures/Boutons/Textes
 * RETURNED VALUE    : void
 */
-void loadAllTextures(Sysinfo& sysinfo)
+void LoadConfig::loadAllTextures(Sysinfo& sysinfo)
 {
 
 	// ______Writetxt_____ 

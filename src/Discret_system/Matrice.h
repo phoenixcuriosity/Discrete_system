@@ -64,14 +64,13 @@ public: // affichage
 	friend std::ostream& operator<<(std::ostream&, const Matrice&);
 	const std::string printOn(bool on = true)const;
 
-protected: // allocation et tests d'index
 	virtual double** allocate(unsigned int length, unsigned int height) const;
 	virtual double** allocate(unsigned int length, unsigned int height, double userValue) const;
 	virtual double** allocate(const Matrice&) const;
 
 	bool assertIndex(unsigned int length, unsigned int height)const;
 	bool assertRange(unsigned int, unsigned int)const;
-	friend bool assertSize(unsigned int, unsigned int, unsigned int, unsigned int);
+	static bool assertSize(unsigned int, unsigned int, unsigned int, unsigned int);
 
 public:
 	friend void testMatrice();

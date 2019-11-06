@@ -74,18 +74,18 @@ public:
 
 	static unsigned int CinNumberUnsignedInt(Sysinfo&, const std::string& msg, unsigned int, unsigned int);
 	static double CinNumberDouble(Sysinfo&, const std::string& msg, unsigned int, unsigned int);
-	static void CreateNumDen(IHM& ihm, Sysinfo& sysinfo);
-	static void displayTF(IHM& ihm, Sysinfo& sysinfo);
-	static void displayJury(IHM& ihm, Sysinfo& sysinfo);
-	static void displayBode(IHM& ihm, Sysinfo& sysinfo);
-	static void createMatrice(IHM& ihm, Sysinfo& sysinfo);
-	static void computeABCD(IHM& ihm, Sysinfo& sysinfo);
-	static void displayStateSystem(IHM& ihm, Sysinfo& sysinfo);
+	static void CreateNumDen(Sysinfo& sysinfo);
+	static void displayTF(Sysinfo& sysinfo);
+	static void displayJury(Sysinfo& sysinfo);
+	static void displayBode(Sysinfo& sysinfo);
+	static void createMatrice(Sysinfo& sysinfo);
+	static void computeABCD(Sysinfo& sysinfo);
+	static void displayStateSystem(Sysinfo& sysinfo);
 	static void createSignal(Sysinfo& sysinfo, Signal& sig);
 	static void createStep(Sysinfo& sysinfo, Echelon& step);
 	static void createRamp(Sysinfo& sysinfo, Rampe& ramp);
 	static void createSinus(Sysinfo& sysinfo, Sinus& sinus);
-	static void displayReponseTemp(IHM& ihm, Sysinfo& sysinfo, Signal& sig);
+	static void displayReponseTemp(Sysinfo& sysinfo, Signal& sig);
 
 	static void deleteAll(Sysinfo&);
 };

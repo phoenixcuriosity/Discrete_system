@@ -1,8 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.0
+	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -44,11 +45,11 @@ public:
 	friend Complexe operator/(const Complexe&, const Complexe&);
 
 
-	friend double module(const Complexe&);
-	friend double arg(const Complexe&);
-	friend Complexe tfReIm(double module, double arg);
+	static double module(const Complexe&);
+	static double arg(const Complexe&);
+	static Complexe tfReIm(double module, double arg);
 	Complexe power(unsigned int power);
-	friend Complexe tfPolynomeComplexe(const Polynome& P, Complexe& Z);
+	static Complexe tfPolynomeComplexe(const Polynome& P, Complexe& Z);
 
 
 	void SETRe(double Re);
@@ -65,7 +66,8 @@ private:
 	double _Im;
 };
 
-
-
-
 #endif
+
+/*
+*	End Of File : Complexe.h
+*/

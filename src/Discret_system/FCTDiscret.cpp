@@ -1,8 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.10
+	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.0
+	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -39,107 +40,142 @@ FCTDiscret::FCTDiscret(const FCTDiscret& F) : _jury(), _num(F.GETnum()), _den(F.
 FCTDiscret::~FCTDiscret()
 {
 }
+
 /*
 		si la fct n'est pas de la meme forme alors on prend les attributs de a
 */
-FCTDiscret& FCTDiscret::operator=(const FCTDiscret& a){
+FCTDiscret& FCTDiscret::operator=(const FCTDiscret& a)
+{
 	
-	if (this != &a){
+	if (this != &a)
+	{
 		_num = a._num;
 		_den = a._den;
 		_deltaT = a._deltaT;
 	}
 	return *this;
 }
-bool operator==(const FCTDiscret& a, const FCTDiscret& b){
+
+
+bool operator==(const FCTDiscret& a, const FCTDiscret& b)
+{
 	if (a.GETnum() == b.GETnum() && a.GETden() == b.GETden())
 		return true;
 	return false;
 }
-FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b)
+{
 	FCTDiscret resultat;
 	resultat = addition(a, b);
 	return resultat;
 }
-FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b)
+{
 	FCTDiscret resultat;
 	resultat = soustraction(a, b);
 	return resultat;
 }
-FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b)
+{
 	FCTDiscret resultat;
 	resultat = multiplication(a, b);
 	return resultat;
 }
-FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b)
+{
 	FCTDiscret resultat;
 	resultat.SETnum(a.GETnum() * b.GETden());
 	resultat.SETnum(resultat.GETnum() + b.GETnum() * a.GETden());
 	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
 }
-FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b)
+{
 	FCTDiscret resultat;
 	resultat.SETnum(a.GETnum() * b.GETden());
 	resultat.SETnum(resultat.GETnum() - b.GETnum() * a.GETden());
 	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
 }
-FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b){
+FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b)
+{
 	FCTDiscret resultat;
 	resultat.SETnum(a.GETnum() * b.GETnum());
 	resultat.SETden(a.GETden() * b.GETden());
 	return resultat;
 }
-void FCTDiscret::SETjury(const Matrice& J){
+
+
+
+void FCTDiscret::SETjury(const Matrice& J)
+{
 	_jury = J;
 }
-void FCTDiscret::SETnum(const Polynome &a){
+void FCTDiscret::SETnum(const Polynome &a)
+{
 	_num = a;
 }
-void FCTDiscret::SETden(const Polynome &a){
+void FCTDiscret::SETden(const Polynome &a)
+{
 	_den = a;
 }
-void FCTDiscret::SETdeltaT(double deltaT){
+void FCTDiscret::SETdeltaT(double deltaT)
+{
 	_deltaT = deltaT;
 }
-void FCTDiscret::SETnumOrder(unsigned int order) {
+void FCTDiscret::SETnumOrder(unsigned int order)
+{
 	_num.SETorder(order);
 }
-void FCTDiscret::SETdenOrder(unsigned int order) {
+void FCTDiscret::SETdenOrder(unsigned int order)
+{
 	_den.SETorder(order);
 }
-void FCTDiscret::SETnumThisCoef(unsigned int index, double userValue) {
+void FCTDiscret::SETnumThisCoef(unsigned int index, double userValue)
+{
 	_num.SETcoefTab(index, userValue);
 }
-void FCTDiscret::SETdenThisCoef(unsigned int index, double userValue) {
+void FCTDiscret::SETdenThisCoef(unsigned int index, double userValue)
+{
 	_den.SETcoefTab(index, userValue);
 }
-Matrice FCTDiscret::GETjury()const{
+Matrice FCTDiscret::GETjury()const
+{
 	return _jury;
 }
-Polynome FCTDiscret::GETnum() const{
+Polynome FCTDiscret::GETnum() const
+{
 	return _num;
 }
-Polynome FCTDiscret::GETden() const{
+Polynome FCTDiscret::GETden() const
+{
 	return _den;
 }
-double FCTDiscret::GETdeltaT()const{
+double FCTDiscret::GETdeltaT()const
+{
 	return _deltaT;
 }
-std::ostream& operator<<(std::ostream& os, const FCTDiscret& s) {
+
+
+
+std::ostream& operator<<(std::ostream& os, const FCTDiscret& s)
+{
 	return os << s.printOn(false);
 }
+
+
 /*
 		affiche sur la console : en haut le num, puis la barre de fraction et enfin le den
 		affichage selon la taille de la chaine de caratere la plus longue
 */
-const std::string FCTDiscret::printOn(bool on) const {
+const std::string FCTDiscret::printOn(bool on) const
+{
 	unsigned int stringSize = 0;
 	std::string equation;
 	std::stringstream stream;
 
-	if (_num.GETstringSize() > _den.GETstringSize()) {
+	if (_num.GETstringSize() > _den.GETstringSize())
+	{
 		stringSize = _num.GETstringSize();
 		stream << _num.printOn(false) << std::endl;
 		for (unsigned int i = 0; i < stringSize; i++)
@@ -150,7 +186,8 @@ const std::string FCTDiscret::printOn(bool on) const {
 		stream << _den.printOn(false);
 		equation = stream.str();
 	}
-	else if (_num.GETstringSize() < _den.GETstringSize()) {
+	else if (_num.GETstringSize() < _den.GETstringSize())
+	{
 		stringSize = _den.GETstringSize();
 		for (unsigned int i = 0; i < ((_den.GETstringSize() / 2) - (_num.GETstringSize() / 2)); i++)
 			stream << " ";
@@ -160,7 +197,8 @@ const std::string FCTDiscret::printOn(bool on) const {
 		stream << std::endl << _den.printOn(false);
 		equation = stream.str();
 	}
-	else {
+	else
+	{
 		stringSize = _num.GETstringSize();
 		stream << _num.printOn(false) << std::endl;
 		for (unsigned int i = 0; i < stringSize; i++)
@@ -172,7 +210,8 @@ const std::string FCTDiscret::printOn(bool on) const {
 		std::cout << equation;
 	return equation;
 }
-void FCTDiscret::interg(){
+void FCTDiscret::interg()
+{
 	_num.SETorder(1);
 	_den.SETorder(1);
 	_num.SETcoefTab(0, 0);
@@ -180,7 +219,8 @@ void FCTDiscret::interg(){
 	_den.SETcoefTab(0, -1);
 	_den.SETcoefTab(1, 1);
 }
-void FCTDiscret::secondOrdre(){
+void FCTDiscret::secondOrdre()
+{
 	_num.SETorder(0);
 	_den.SETorder(1);
 	_num.SETcoefTab(0, 1);
@@ -192,12 +232,14 @@ void FCTDiscret::secondOrdre(){
 		calcul du critère de Jury permettant de statuer sur la stabilité du système
 		tableau de Jury -> Matrice pouvant changer de taille en fonction de l'ordre du den
 */
-bool FCTDiscret::tabJury(){
+bool FCTDiscret::tabJury()
+{
 	std::string tableauJury;
 	std::ostringstream stream;
 
 	Polynome den(_den.GETorder());
-	for (unsigned int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j >= 0; i++, j--){
+	for (unsigned int i = 0, j = _den.GETorder(); i <= _den.GETorder(), j >= 0; i++, j--)
+	{
 		den.SETcoefTab(i, _den.GETcoefTab(j));
 		if (j == 0) break; // compatibilité unsigned int, j ne peut etre égale à -1
 	}
@@ -208,36 +250,45 @@ bool FCTDiscret::tabJury(){
 	Polynome ligne1(_den);
 	Polynome ligne2(_den);
 
-	if (_den.GETorder() > 2){
+	if (_den.GETorder() > 2)
+	{
 		_jury.editsize(2, _den.GETorder() + 1);
 		for (unsigned int i = 0; i <= _den.GETorder(); i++) // première ligne
 			_jury.SETthiscoef(0, i, _den.GETcoefTab(i));
 		for (unsigned int i = 0; i <= _den.GETorder(); i++) // deuxième ligne
 			_jury.SETthiscoef(1, i, den.GETcoefTab(i));
 	}
-	else{
+	else
+	{
 		_jury.editsize(1, _den.GETorder() + 1);
 		for (unsigned int i = 0; i <= _den.GETorder(); i++)
 			_jury.SETthiscoef(0, i, _den.GETcoefTab(i));
 	}
 	
 	
-	while (ligne2.GETorder() > 2){
+	while (ligne2.GETorder() > 2)
+	{
 		ligne2.SETorder(ligne2.GETorder() - 1);
-		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--){
+		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+		{
 			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
 			if (j == 0) break;
 		}
-		if (ligne2.GETorder() > 2) {
+		if (ligne2.GETorder() > 2) 
+		{
 			_jury.editsize(_jury.GETlength() + 2, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
+
+
 				_jury.SETthiscoef(_jury.GETlength() - 2, i, ligne2.GETcoefTab(i));
-			for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--){
+			for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
+			{
 				_jury.SETthiscoef(_jury.GETlength() - 1, i, ligne2.GETcoefTab(j));
 				if (j == 0) break;
 			}
 		}
-		else {
+		else
+		{
 			_jury.editsize(_jury.GETlength() + 1, _den.GETorder() + 1);
 			for (unsigned int i = 0; i <= ligne2.GETorder(); i++)
 				_jury.SETthiscoef(_jury.GETlength() - 1, i, ligne2.GETcoefTab(i));
@@ -254,7 +305,8 @@ bool FCTDiscret::tabJury(){
 		condition abs(a0) < an
 	*/
 	stream << std::endl << std::endl << "abs(a0) = " << abs(_den.GETcoefTab(0));
-	if (abs(_den.GETcoefTab(0)) < _den.GETcoefTab(_den.GETorder())){
+	if (abs(_den.GETcoefTab(0)) < _den.GETcoefTab(_den.GETorder()))
+	{
 		stream << " < a" << _den.GETorder() << " = " << _den.GETcoefTab(_den.GETorder()) << "	Ok";
 		condition++;
 	}
@@ -270,7 +322,8 @@ bool FCTDiscret::tabJury(){
 		somme += _den.GETcoefTab(i);
 	
 	stream << std::endl << "D(1) = " << somme;
-	if (somme > 0){
+	if (somme > 0)
+	{
 		stream << " > 0	Ok";
 		condition++;
 	}
@@ -284,37 +337,43 @@ bool FCTDiscret::tabJury(){
 	for (unsigned int i = 0; i <= _den.GETorder(); i++)
 		somme += _den.GETcoefTab(i) * pow(-1, i);
 	stream << std::endl << "D(-1) = " << somme;
-	if ((somme > 0 && (_den.GETorder() % 2) == 0) || (somme < 0 && (_den.GETorder() % 2) == 1)) {
+	if ((somme > 0 && (_den.GETorder() % 2) == 0) || (somme < 0 && (_den.GETorder() % 2) == 1))
+	{
 		stream << "	Ok";
 		condition++;
 	}
 	else
 		stream << "	Not Ok";
 		
-	if (_den.GETorder() > 2){
+	if (_den.GETorder() > 2)
+	{
 		/*
 		condition Q0 > Q2
 		*/
 		stream << std::endl << "Q0 = " << abs(ligne2.GETcoefTab(0));
-		if (abs(ligne2.GETcoefTab(0)) > abs(ligne2.GETcoefTab(2))){
+		if (abs(ligne2.GETcoefTab(0)) > abs(ligne2.GETcoefTab(2)))
+		{
 			stream << " > Q2 = " << abs(ligne2.GETcoefTab(2)) << "	Ok";
 			condition++;
 		}
 		else
 			stream << " < Q2 = " << abs(ligne2.GETcoefTab(2)) << "	Not Ok";
 	}
-	else{
+	else
+	{
 		condition++;
 	}
 	
 
-	if (condition == 4){
+	if (condition == 4)
+	{
 		stream << std::endl;
 		tableauJury = stream.str();
 		std::cout << tableauJury;
 		return true;
 	}
-	else{
+	else
+	{
 		stream << std::endl;
 		tableauJury = stream.str();
 		std::cout << tableauJury;
@@ -324,9 +383,8 @@ bool FCTDiscret::tabJury(){
 /*
 		Diagramme de Bode en gain et phase
 */
-bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** gainPhase){
-	
-
+bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** gainPhase)
+{
 	std::ofstream reponse("bin/files/Bode.txt");
 	std::string texte;
 	std::ostringstream stream;
@@ -345,14 +403,15 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** g
 
 	unsigned int o = 0;
 	if (reponse){
-		for (double i = wMin; i <= wMax; i += increment){
-			Z = tfReIm(1, i * _deltaT);
-			cnum = tfPolynomeComplexe(_num, Z);
-			cden = tfPolynomeComplexe(_den, Z);
+		for (double i = wMin; i <= wMax; i += increment)
+		{
+			Z = Complexe::tfReIm(1, i * _deltaT);
+			cnum = Complexe::tfPolynomeComplexe(_num, Z);
+			cden = Complexe::tfPolynomeComplexe(_den, Z);
 			c = cnum / cden;
 			gainPhase[0][o] = i;
-			gainPhase[1][o] = gain = 20 * log10(module(c));
-			gainPhase[2][o] = phase = -arg(c);
+			gainPhase[1][o] = gain = 20 * log10(Complexe::module(c));
+			gainPhase[2][o] = phase = -Complexe::arg(c);
 			stream << std::endl << i << " , " << gain << " , " << phase;
 			o++;
 		}
@@ -364,10 +423,14 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** g
 	else
 		return false;
 }
+
+
+
 /*
-		Calcul de la FTBF
+*		Calcul de la FTBF
 */
-void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop){
+void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop)
+{
 	
 	FCTDiscret num;
 	FCTDiscret den;
@@ -382,11 +445,17 @@ void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop){
 
 	std::cout << std::endl << std::endl << "CloseLoop" << std::endl << resultat << std::endl;
 }
-Polynome FCTDiscret::allocate(double userValue) const{
+
+
+Polynome FCTDiscret::allocate(double userValue) const
+{
 	Polynome a(userValue);
 	return a;
 }
-void testFCTDiscret(){
+
+
+void testFCTDiscret()
+{
 	std::string fctdiscret;
 	std::ostringstream stream;
 
