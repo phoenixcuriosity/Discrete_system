@@ -1,0 +1,77 @@
+
+_________Init Success_________
+CreateWindow Success
+CreateRenderer Success
+TTF_Init Success
+SDL_Init Success
+_________START PROGRAM_________
+Dev version: 2.11
+Created by SAUTER Robin
+This is a free software, you can redistribute it and/or modify it
+
+Create ButtonTexte n:0 msg = Transfer Function Success
+Create ButtonTexte n:1 msg = State System Success
+Create ButtonTexte n:2 msg = Closed Loop Success
+Create ButtonTexte n:3 msg = Quit Success
+Create ButtonTexte n:0 msg = Main menu Success
+Create ButtonTexte n:1 msg = Create the Transfer Function Success
+Create ButtonTexte n:2 msg = Display the Transfer Function Success
+Create ButtonTexte n:3 msg = Jury Success
+Create ButtonTexte n:4 msg = Bode Success
+Create ButtonTexte n:5 msg = Main menu Success
+Create ButtonTexte n:6 msg = Main menu Success
+Create ButtonTexte n:0 msg = Main menu Success
+Create ButtonTexte n:1 msg = Edit Matrix A, B, C and D Success
+Create ButtonTexte n:2 msg = Compute A, B, C and D Success
+Create ButtonTexte n:3 msg = Display the State System Success
+Create ButtonTexte n:4 msg = Simulate Success
+Create ButtonTexte n:5 msg = Main menu Success
+Create ButtonTexte n:6 msg = Main menu Success
+Create ButtonTexte n:7 msg = Step Success
+Create ButtonTexte n:8 msg = Ramp Success
+Create ButtonTexte n:9 msg = Sinus Success
+Create ButtonTexte n:10 msg = Import Signal Success
+Create ButtonTexte n:11 msg = Main menu Success
+_ Start mainLoop _
+*********_________ Start DeleteAll _________*********
+Delete txtEcranTitre n:0 name = Dev version: 2.11 Success
+Delete txtEcranTitre n:1 name = Developed by SAUTER Robin Success
+Delete txtEcranTitre n:2 name = Discret System Success
+Delete txtEcranTitre n:3 name = Transfert Function Success
+Delete txtEcranTitre n:4 name = Create the Transfer Function Success
+Delete txtEcranTitre n:5 name = Create Bode Success
+Delete txtEcranTitre n:6 name = Display Bode Success
+Delete txtEcranTitre n:7 name = State System Success
+Delete txtEcranTitre n:8 name = Create Matrix A, B, C and D Success
+Delete txtEcranTitre n:9 name = Simulate Success
+Delete txtEcranTitre n:10 name = Simulation Success
+Delete ALL txtEcranTitre Success
+Delete ALL CreateNumDen Success
+Delete ecranTitre n:0 name = Transfer Function Success
+Delete ecranTitre n:1 name = State System Success
+Delete ecranTitre n:2 name = Closed Loop Success
+Delete ecranTitre n:3 name = Quit Success
+Delete ALL ecranTitre Success
+Delete ecranFCT n:0 name = Main menu Success
+Delete ecranFCT n:1 name = Create the Transfer Function Success
+Delete ecranFCT n:2 name = Display the Transfer Function Success
+Delete ecranFCT n:3 name = Jury Success
+Delete ecranFCT n:4 name = Bode Success
+Delete ecranFCT n:5 name = Main menu Success
+Delete ecranFCT n:6 name = Main menu Success
+Delete ALL ecranFCT Success
+Delete ecranSYSETAT n:0 name = Main menu Success
+Delete ecranSYSETAT n:1 name = Edit Matrix A, B, C and D Success
+Delete ecranSYSETAT n:2 name = Compute A, B, C and D Success
+Delete ecranSYSETAT n:3 name = Display the State System Success
+Delete ecranSYSETAT n:4 name = Simulate Success
+Delete ecranSYSETAT n:5 name = Main menu Success
+Delete ecranSYSETAT n:6 name = Main menu Success
+Delete ecranSYSETAT n:7 name = Step Success
+Delete ecranSYSETAT n:8 name = Ramp Success
+Delete ecranSYSETAT n:9 name = Sinus Success
+Delete ecranSYSETAT n:10 name = Import Signal Success
+Delete ecranSYSETAT n:11 name = Main menu Success
+Delete ALL ecranSYSETAT Success
+*********_________ End DeleteAll _________*********
+_ End mainLoop _
