@@ -26,6 +26,8 @@
 #include "discrete_system_LIB.h"
 #include "LIB.h"
 
+#include "End.h"
+
 
 /*
 * NAME : showStartSuccess
@@ -141,7 +143,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 	BUTTON_RIGHT
 
 	*/
-	std::string test, fct;
+
 
 	if (event.button.button == SDL_BUTTON_LEFT)
 	{
@@ -158,7 +160,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 
 				if	(
 						sysinfo.allButtons.ecranTitre[i]
-						->searchButtonTexte(fct = "Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y)
+						->searchButtonTexte("Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y)
 					)
 				{
 					sysinfo.var.stateScreen = STATEfunctionTransfer;
@@ -167,7 +169,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 				}
 				else if (
 							sysinfo.allButtons.ecranTitre[i]
-							->searchButtonTexte(fct = "State System", sysinfo.var.stateScreen, event.button.x, event.button.y)
+							->searchButtonTexte("State System", sysinfo.var.stateScreen, event.button.x, event.button.y)
 						)
 				{
 					sysinfo.var.stateScreen = STATEstateSystem;
@@ -176,7 +178,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 				}
 				else if (
 							sysinfo.allButtons.ecranTitre[i]
-							->searchButtonTexte(fct = "Closed Loop", sysinfo.var.stateScreen, event.button.x, event.button.y)
+							->searchButtonTexte("Closed Loop", sysinfo.var.stateScreen, event.button.x, event.button.y)
 						)
 				{
 					// Todo
@@ -184,7 +186,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 				}
 				else if (
 							sysinfo.allButtons.ecranTitre[i]
-							->searchButtonTexte(fct = "Quit", sysinfo.var.stateScreen, event.button.x, event.button.y)
+							->searchButtonTexte("Quit", sysinfo.var.stateScreen, event.button.x, event.button.y)
 						)
 				{
 					sysinfo.var.continuer = false;
@@ -204,28 +206,28 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 		{
 			for (unsigned int i = 0; i < sysinfo.allButtons.ecranFCT.size(); i++)
 			{
-				if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte(fct = "Main menu", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Main menu", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					sysinfo.var.stateScreen = STATEecrantitre;
 					rendueEcran(sysinfo);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte(fct = "Create the Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Create the Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					CreateNumDen(sysinfo);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte(fct = "Display the Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Display the Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					displayTF(sysinfo);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte(fct = "Jury", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Jury", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					displayJury(sysinfo);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte(fct = "Bode", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Bode", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					displayBode(sysinfo);
 					break;
@@ -242,18 +244,18 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 		{
 			for (unsigned int i = 0; i < sysinfo.allButtons.ecranSYSETAT.size(); i++)
 			{
-				if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Main menu", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Main menu", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					sysinfo.var.stateScreen = STATEecrantitre;
 					rendueEcran(sysinfo);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Edit Matrix A, B, C and D", sysinfo.var.stateScreen, event.button.x, event.button.y)) 
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Edit Matrix A, B, C and D", sysinfo.var.stateScreen, event.button.x, event.button.y)) 
 				{
 					createMatrice(sysinfo);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Compute A, B, C and D", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Compute A, B, C and D", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					if (sysinfo.fctDiscret->GETden().GETorder() > 0)
 						computeABCD(sysinfo);
@@ -263,9 +265,9 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 					SDL_RenderPresent(sysinfo.screen.renderer);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Display the State System", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Display the State System", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
-					if (sysinfo.sysetatDiscret != nullptr)
+					if (sysinfo.sysetatDiscret == nullptr)
 						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
 							"SS doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 196, center_y);
 					else {
@@ -277,9 +279,9 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Simulate", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Simulate", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
-					if (sysinfo.sysetatDiscret != nullptr)
+					if (sysinfo.sysetatDiscret == nullptr)
 						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
 							"SS doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 244, center_y);
 					else {
@@ -289,7 +291,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 					}
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Step", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Step", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
 					rendueEcran(sysinfo);
@@ -301,7 +303,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 					displayReponseTemp(sysinfo, step);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Ramp", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Ramp", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
 					rendueEcran(sysinfo);
@@ -313,7 +315,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 					displayReponseTemp(sysinfo, ramp);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Sinus", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Sinus", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					//Sinus sinus(500, 0.1, 1, 1, 0);
 					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
@@ -326,7 +328,7 @@ void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
 					displayReponseTemp(sysinfo, sinus);
 					break;
 				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte(fct = "Import Signal", sysinfo.var.stateScreen, event.button.x, event.button.y))
+				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Import Signal", sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
 					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
 					rendueEcran(sysinfo);
@@ -591,15 +593,7 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 
 	sysinfo.var.stateScreen = STATETFcreateNumDen;
 	
-	/* Erase last FCT */
-	if (sysinfo.fctDiscret != nullptr)
-	{
-		delete sysinfo.fctDiscret;
-	}
-	else
-	{
-		/* N/A */
-	}
+	End::deleteFCTDiscret(sysinfo.fctDiscret);
 	sysinfo.fctDiscret = new FCTDiscret;
 
 	sysinfo.allTextes.CreateNumDen.clear();
@@ -672,7 +666,7 @@ void IHM::displayTF(Sysinfo& sysinfo)
 	std::ostringstream stream; std::string texte;
 	std::string barre;
 
-	if (sysinfo.fctDiscret != nullptr)
+	if (sysinfo.fctDiscret == nullptr)
 	{
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 148, center_y);
@@ -706,10 +700,9 @@ void IHM::displayJury(Sysinfo& sysinfo)
 	IHM::logfileconsole("_ Start displayJury _");
 	unsigned int initspace = 300;
 	std::string texte; std::ostringstream stream;
-	FCTDiscret FCT;
 
 	stream << std::fixed << std::setprecision(4);
-	if (FCT == *sysinfo.fctDiscret)
+	if (sysinfo.fctDiscret == nullptr)
 	{
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 196, center_y);
@@ -754,7 +747,7 @@ void IHM::displayBode(Sysinfo& sysinfo)
 	unsigned int nbpoint = 0;
 
 	FCTDiscret FCT;
-	if (FCT == *sysinfo.fctDiscret) 
+	if (sysinfo.fctDiscret == nullptr) 
 	{
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 244, center_y);
@@ -889,6 +882,9 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 	sysinfo.var.stateScreen = STATESScreateMatrice;
 	IHM::rendueEcran(sysinfo);
 
+	End::deleteSYSETATDiscret(sysinfo.sysetatDiscret);
+	sysinfo.sysetatDiscret = new SYSETATDiscret;
+
 	unsigned int length = 0;
 
 
@@ -986,12 +982,14 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 void IHM::computeABCD(Sysinfo& sysinfo)
 {
 	IHM::logfileconsole("_ Start computeABCD _");
-	FCTDiscret FCT;
-	if (FCT == *sysinfo.fctDiscret)
+	if (sysinfo.fctDiscret == nullptr)
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
 	else
 	{
+		End::deleteSYSETATDiscret(sysinfo.sysetatDiscret);
+		sysinfo.sysetatDiscret = new SYSETATDiscret;
+
 		if (sysinfo.fctDiscret->GETden().GETorder() > sysinfo.fctDiscret->GETnum().GETorder())
 		{
 			sysinfo.sysetatDiscret->calculABCD(*sysinfo.fctDiscret);
@@ -1274,23 +1272,8 @@ void IHM::deleteAll(Sysinfo& sysinfo){
 	deleteDyTabPlayerAndTextures(sysinfo.allButtons.ecranFCT, "ecranFCT");
 	deleteDyTabPlayerAndTextures(sysinfo.allButtons.ecranSYSETAT, "ecranSYSETAT");
 
-	if (sysinfo.fctDiscret != nullptr)
-	{
-		delete sysinfo.fctDiscret;
-	}
-	else
-	{
-		// Todo
-	}
-
-	if (sysinfo.sysetatDiscret != nullptr)
-	{
-		delete sysinfo.sysetatDiscret;
-	}
-	else
-	{
-		// Todo
-	}
+	End::deleteFCTDiscret(sysinfo.fctDiscret);
+	End::deleteSYSETATDiscret(sysinfo.sysetatDiscret);
 
 	SDL_DestroyRenderer(sysinfo.screen.renderer);
 	SDL_DestroyWindow(sysinfo.screen.window);

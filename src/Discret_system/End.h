@@ -25,9 +25,14 @@
 #ifndef End_H
 #define End_H
 
+#include "discrete_system_LIB.h"
+
 class End
 {
 public:
+
+	static void deleteFCTDiscret(FCTDiscret* fctDiscret);
+	static void deleteSYSETATDiscret(SYSETATDiscret* sysetatDiscret);
 
 
 

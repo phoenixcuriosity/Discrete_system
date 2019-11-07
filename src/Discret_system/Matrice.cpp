@@ -43,8 +43,10 @@ Matrice::Matrice(const Matrice& M)
 }
 Matrice::~Matrice()
 {
-	if (_tab != nullptr) {
-		for (unsigned int i = 0; i < _length; i++) {
+	if (_tab != nullptr) 
+	{
+		for (unsigned int i = 0; i < _length; i++)
+		{
 			delete[] _tab[i];
 			_tab[i] = nullptr;
 		}
@@ -52,8 +54,15 @@ Matrice::~Matrice()
 		_tab = nullptr;
 	}
 }
-Matrice& Matrice::operator=(const Matrice& M) {
-	if (this != &M) {
+
+
+
+
+
+Matrice& Matrice::operator=(const Matrice& M)
+{
+	if (this != &M) 
+	{
 		if (_tab != nullptr)
 			delete  _tab;
 		_length = M._length;
@@ -62,10 +71,14 @@ Matrice& Matrice::operator=(const Matrice& M) {
 	}
 	return *this;
 }
-bool operator==(const Matrice& A, const Matrice& B) {
-	if (A._length == B._length && A._height == B._height){
-		for (unsigned int i = 0; i < A._length; i++){
-			for (unsigned int j = 0; j < B._length; j++){
+bool operator==(const Matrice& A, const Matrice& B)
+{
+	if (A._length == B._length && A._height == B._height)
+	{
+		for (unsigned int i = 0; i < A._length; i++)
+		{
+			for (unsigned int j = 0; j < B._length; j++)
+			{
 				if (A._tab[i][j] != B._tab[i][j])
 					return false;
 			}
@@ -74,45 +87,58 @@ bool operator==(const Matrice& A, const Matrice& B) {
 	}
 	return false;
 }
-Matrice operator+(const Matrice& a, const Matrice& b) {
+Matrice operator+(const Matrice& a, const Matrice& b)
+{
 	Matrice resultat = addition(a, b);
 	return resultat;
 }
-Matrice operator-(const Matrice& a, const Matrice& b) {
+Matrice operator-(const Matrice& a, const Matrice& b)
+{
 	Matrice resultat = soustraction(a, b);
 	return resultat;
 }
-Matrice operator*(const Matrice& a, const Matrice& b) {
+Matrice operator*(const Matrice& a, const Matrice& b)
+{
 	Matrice resultat = multiplication(a, b);
 	return resultat;
 }
-Matrice addition(const Matrice& A, const Matrice& B) {
+Matrice addition(const Matrice& A, const Matrice& B)
+{
 	Matrice addition(A._length, A._height);
-	if (Matrice::assertSize(A._length, A._height, B._length, B._height)){
-		for (unsigned int i = 0; i < A._length; i++){
+	if (Matrice::assertSize(A._length, A._height, B._length, B._height))
+	{
+		for (unsigned int i = 0; i < A._length; i++)
+		{
 			for (unsigned int j = 0; j < A._height; j++)
 				addition.SETthiscoef(i, j, A.GETthiscoef(i, j) + B.GETthiscoef(i, j));
 		}
 	}
 	return addition;
 }
-Matrice soustraction(const Matrice& A, const Matrice& B) {
+Matrice soustraction(const Matrice& A, const Matrice& B)
+{
 	Matrice soustraction(A._length, A._height);
-	if (Matrice::assertSize(A._length, A._height, B._length, B._height)){
-		for (unsigned int i = 0; i < A._length; i++){
+	if (Matrice::assertSize(A._length, A._height, B._length, B._height))
+	{
+		for (unsigned int i = 0; i < A._length; i++)
+		{
 			for (unsigned int j = 0; j < A._height; j++)
 				soustraction.SETthiscoef(i, j, A.GETthiscoef(i, j) - B.GETthiscoef(i, j));
 		}
 	}
 	return soustraction;
 }
-Matrice multiplication(const Matrice& A, const Matrice& B) {
+Matrice multiplication(const Matrice& A, const Matrice& B)
+{
 	double somme = 0;
 	
-	if (A._height == B._length) {
+	if (A._height == B._length)
+	{
 		Matrice multiplication(A._length, B._height);
-		for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._length, iA < A._length; iMulti++, iA++) {
-			for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++) {
+		for (unsigned int iMulti = 0, iA = 0; iMulti < multiplication._length, iA < A._length; iMulti++, iA++)
+		{
+			for (unsigned int jMulti = 0, jB = 0; jMulti < multiplication._height, jB < B._height; jMulti++, jB++)
+			{
 				somme = 0;
 				for (unsigned int jA = 0, iB = 0; jA < A._height, iB < B._length; jA++, iB++)
 					somme += A.GETthiscoef(iA, jA) * B.GETthiscoef(iB, jB);
@@ -121,50 +147,65 @@ Matrice multiplication(const Matrice& A, const Matrice& B) {
 		}
 		return multiplication;
 	}
-	else if (A._length == 1 && A._height == 1) {
+	else if (A._length == 1 && A._height == 1)
+	{
 		Matrice multiplication(B.GETlength(), B.GETheight());
-		for (unsigned int iB = 0; iB < B.GETlength(); iB++) {
+		for (unsigned int iB = 0; iB < B.GETlength(); iB++) 
+		{
 			for (unsigned int jB = 0; jB < B.GETheight(); jB++)
 				multiplication.SETthiscoef(iB, jB, A.GETthiscoef(0,0) * B.GETthiscoef(iB, jB));
 		}
 		return multiplication;
 	}
-	else if (B._length == 1 && B._height == 1) {
+	else if (B._length == 1 && B._height == 1) 
+	{
 		Matrice multiplication(A.GETlength(), A.GETheight());
-		for (unsigned int iA = 0; iA < A.GETlength(); iA++) {
+		for (unsigned int iA = 0; iA < A.GETlength(); iA++) 
+		{
 			for (unsigned int jA = 0; jA < A.GETheight(); jA++)
 				multiplication.SETthiscoef(iA, jA, B.GETthiscoef(0, 0) * A.GETthiscoef(iA, jA));
 		}
 		return multiplication;
 	}
-	else {
+	else 
+	{
 		Matrice multiplication(1, 1);
 		std::cout << std::endl << "___________Matrice : Error multiplication : A._lenght != B._height";
 		return multiplication;
 	}
 	
 }
-void Matrice::SETthiscoef(unsigned int i, unsigned int j, double userValue) {
+void Matrice::SETthiscoef(unsigned int i, unsigned int j, double userValue)
+{
 	if (assertIndex(i, j))
 		_tab[i][j] = userValue;
 }
-double Matrice::GETthiscoef(unsigned int i, unsigned int j)const {
+double Matrice::GETthiscoef(unsigned int i, unsigned int j)const
+{
 	if (assertIndex(i, j))
 		return _tab[i][j];
 	return 0;
 }
-unsigned int Matrice::GETlength()const {
+unsigned int Matrice::GETlength()const
+{
 	return _length;
 }
-unsigned int Matrice::GETheight()const {
+unsigned int Matrice::GETheight()const 
+{
 	return _height;
 }
+
+
+
+
 /*
 	transpose la matrice
 */
-Matrice transposition(const Matrice& A){
+Matrice transposition(const Matrice& A)
+{
 	Matrice resultat(A.GETheight(), A.GETlength());
-	for (unsigned int i = 0; i < resultat.GETlength(); i++){
+	for (unsigned int i = 0; i < resultat.GETlength(); i++)
+	{
 		for (unsigned int j = 0; j < resultat.GETheight(); j++)
 			resultat.SETthiscoef(i, j, A.GETthiscoef(j, i));
 	}
@@ -173,28 +214,41 @@ Matrice transposition(const Matrice& A){
 /*
 	Ramplit la matrice de 0
 */
-void Matrice::zero(){
-	for (unsigned int i = 0; i < _length; i++){
-		for (unsigned int j = 0; j < _height; j++){
+void Matrice::zero()
+{
+	for (unsigned int i = 0; i < _length; i++)
+	{
+		for (unsigned int j = 0; j < _height; j++)
+		{
 			_tab[i][j] = 0;
 		}
 	}
 }
+
+
 /*
 		Ramplit la matrice de 1
 */
-void Matrice::ones(){
-	for (unsigned int i = 0; i < _length; i++){
-		for (unsigned int j = 0; j < _height; j++){
+void Matrice::ones()
+{
+	for (unsigned int i = 0; i < _length; i++)
+	{
+		for (unsigned int j = 0; j < _height; j++)
+		{
 			_tab[i][j] = 1;
 		}
 	}
 }
+
+
+
 /*
 		Permet de changer la taille d'une matrice en gardant les coefficients existant
 */
-void Matrice::editsize(unsigned int length, unsigned int height) {
-	if (assertRange(length, height)){
+void Matrice::editsize(unsigned int length, unsigned int height)
+{
+	if (assertRange(length, height))
+	{
 		double** buffer = new double*[length];
 		for (unsigned int i = 0; i < length; i++)
 			buffer[i] = new double[height];
@@ -204,46 +258,62 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 		unsigned int minLength = minM(_length, length);
 		unsigned int minHeight = minM(_height, height);
 
-		for (unsigned int i = 0; i < minLength; i++) {
+		for (unsigned int i = 0; i < minLength; i++)
+		{
 			for (unsigned int j = 0; j < minHeight; j++)
 				buffer[i][j] = _tab[i][j];
 		}
 
-		if (length >= _length && height >= _height && (length != _length || height != _height)){
-			for (unsigned int i = 0; i < maxLength; i++) {
-				for (unsigned int j = 0; j < maxHeight; j++){
+		if (length >= _length && height >= _height && (length != _length || height != _height))
+		{
+			for (unsigned int i = 0; i < maxLength; i++)
+			{
+				for (unsigned int j = 0; j < maxHeight; j++)
+				{
 					if (i >= minLength || j >= minHeight)
 						buffer[i][j] = 0;
 				}
 			}
 		}
-		else if (length >= _length && height <= _height && (length != _length || height != _height)){
-			for (unsigned int i = 0; i < maxLength; i++) {
-				for (unsigned int j = 0; j < minHeight; j++){
+		else if (length >= _length && height <= _height && (length != _length || height != _height))
+		{
+			for (unsigned int i = 0; i < maxLength; i++) 
+			{
+				for (unsigned int j = 0; j < minHeight; j++)
+				{
 					if (i >= minLength)
 						buffer[i][j] = 0;
 				}
 			}
 		}
-		else if (length <= _length && height >= _height && (length != _length || height != _height)){
-			for (unsigned int i = 0; i < minLength; i++) {
-				for (unsigned int j = 0; j < maxHeight; j++){
+		else if (length <= _length && height >= _height && (length != _length || height != _height))
+		{
+			for (unsigned int i = 0; i < minLength; i++)
+			{
+				for (unsigned int j = 0; j < maxHeight; j++)
+				{
 					if (j >= minHeight)
 						buffer[i][j] = 0;
 				}
 			}
 		}
-		else if (length <= _length && height <= _height && (length != _length || height != _height)){
+		else if (length <= _length && height <= _height && (length != _length || height != _height))
+		{
+			/* Todo */
 		}
-		else if (length == _length && height == _height){
-			for (unsigned int i = 0; i < _length; i++) {
+		else if (length == _length && height == _height)
+		{
+			for (unsigned int i = 0; i < _length; i++)
+			{
 				for (unsigned int j = 0; j < _height; j++)
 					buffer[i][j] = _tab[i][j];
 			}
 		}
 
-		if (_tab != nullptr) {
-			for (unsigned int i = 0; i < _length; i++) {
+		if (_tab != nullptr) 
+		{
+			for (unsigned int i = 0; i < _length; i++)
+			{
 				delete[] _tab[i];
 				_tab[i] = nullptr;
 			}
@@ -256,27 +326,36 @@ void Matrice::editsize(unsigned int length, unsigned int height) {
 		_height = height;
 	}
 }
+
+
+
 /*
 	fait grandir la matrice de 1 ligne et une colonne en gardant les coefficients existant
 */
-void Matrice::growOneLOneC(){
+void Matrice::growOneLOneC()
+{
 	double** buffer = new double*[_length + 1];
 	for (unsigned int i = 0; i < _length + 1; i++)
 		buffer[i] = new double[_height + 1];
 
-	for (unsigned int i = 0; i < _length; i++) {
+	for (unsigned int i = 0; i < _length; i++)
+	{
 		for (unsigned int j = 0; j < _height; j++)
 			buffer[i][j] = _tab[i][j];
 	}
-	for (unsigned int i = 0; i < _length + 1; i++) {
-		for (unsigned int j = 0; j < _height + 1; j++){
+	for (unsigned int i = 0; i < _length + 1; i++) 
+	{
+		for (unsigned int j = 0; j < _height + 1; j++)
+		{
 			if (i == _length || j == _height)
 				buffer[i][j] = 0;
 		}
 	}
 
-	if (_tab != nullptr) {
-		for (unsigned int i = 0; i < _length; i++) {
+	if (_tab != nullptr)
+	{
+		for (unsigned int i = 0; i < _length; i++) 
+		{
 			delete[] _tab[i];
 			_tab[i] = nullptr;
 		}
@@ -288,13 +367,20 @@ void Matrice::growOneLOneC(){
 	_length++;
 	_height++;
 }
-std::ostream& operator<<(std::ostream& os, const Matrice& s) {
+
+
+std::ostream& operator<<(std::ostream& os, const Matrice& s)
+{
 	return os << s.printOn(false);
 }
-const std::string Matrice::printOn(bool on)const{
+
+
+const std::string Matrice::printOn(bool on)const
+{
 	std::ostringstream stream;
 	std::string matrice = "";
-	for (unsigned int i = 0; i < _length; i++){
+	for (unsigned int i = 0; i < _length; i++)
+	{
 		stream << std::endl << "|";
 		for (unsigned int j = 0; j < _height; j++)
 			stream << "\t" << _tab[i][j];
@@ -305,81 +391,118 @@ const std::string Matrice::printOn(bool on)const{
 		std::cout << matrice;
 	return matrice;
 }
+
+
+
 /*
 	alloue un tableau de taille size de type double initialisé à 0
 */
-double** Matrice::allocate(unsigned int length, unsigned int height) const {
+double** Matrice::allocate(unsigned int length, unsigned int height) const
+{
 	double** buffer = nullptr;
-	if (assertRange(length, height)) {
+	if (assertRange(length, height))
+	{
 		buffer = new double*[length];
 		for (unsigned int i = 0; i < length; i++)
 			buffer[i] = new double[height];
 
-		for (unsigned int i = 0; i < length; i++) {
+		for (unsigned int i = 0; i < length; i++)
+		{
 			for (unsigned int j = 0; j < height; j++)
 				buffer[i][j] = 0;
 		}
 	}
 	return buffer;
 }
+
+
+
+
 /*
 	alloue un tableau de taille size de type double initialisé à 0
 */
-double** Matrice::allocate(unsigned int length, unsigned int height, double userValue) const {
+double** Matrice::allocate(unsigned int length, unsigned int height, double userValue) const
+{
 	
 	double** buffer = nullptr;
-	if (assertRange(length, height)) {
+	if (assertRange(length, height))
+	{
 		buffer = new double*[length];
 		for (unsigned int i = 0; i < length; i++)
 			buffer[i] = new double[height];
 
-		for (unsigned int i = 0; i < length; i++) {
+		for (unsigned int i = 0; i < length; i++)
+		{
 			for (unsigned int j = 0; j < height; j++)
 				buffer[i][j] = userValue;
 		}
 	}
 	return buffer;
 }
+
+
+
+
 /*
 		recopie de l'allocation de la matrice P
 */
-double** Matrice::allocate(const Matrice& P) const {
+double** Matrice::allocate(const Matrice& P) const
+{
 	
 	double** buffer = new double*[P._length];
 	for (unsigned int i = 0; i < P._length; i++)
 		buffer[i] = new double[P._height];
 
-	for (unsigned int i = 0; i < P._length; i++) {
+	for (unsigned int i = 0; i < P._length; i++)
+	{
 		for (unsigned int j = 0; j < P._height; j++)
 			buffer[i][j] = P._tab[i][j];
 	}
 	return buffer;
 }
-bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const {
+
+
+
+
+bool Matrice::assertIndex(unsigned int lenght, unsigned int height)const
+{
 	if (lenght < _length && height < _height)
 		return true;
-	else {
+	else 
+	{
 		std::cout << std::endl << "__________Matrice : assertIndex false";
 		return false;
 	}
 }
-bool Matrice::assertRange(unsigned int length, unsigned int height)const {
+
+
+bool Matrice::assertRange(unsigned int length, unsigned int height)const
+{
 	if (length > 0 && length < 10000 && height > 0 && height < 10000)
 		return true;
-	else {
+	else 
+	{
 		std::cout << std::endl << "__________Matrice : editsize : Range error";
 		return false;
 	}
 }
-bool Matrice::assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB, unsigned int heightB){
+
+
+bool Matrice::assertSize(unsigned int lenghtA, unsigned int heightA, unsigned int lenghtB, unsigned int heightB)
+{
 	if (lenghtA == lenghtB && heightA == heightB)
 		return true;
-	else {
+	else 
+	{
 		std::cout << std::endl << "__________Matrice : assertSize false";
 		return false;
 	}
 }
-void testMatrice(){
+
+
+
+void testMatrice()
+{
 	std::ostringstream stream;
 	std::string matrice = "";
 
@@ -399,7 +522,8 @@ void testMatrice(){
 	for (unsigned int i = 0; i < 3; i++)
 		a[i] = new double[3];
 
-	for (unsigned int i = 0; i < 3; i++){
+	for (unsigned int i = 0; i < 3; i++)
+	{
 		for (unsigned int j = 0; j < 3; j++)
 			a[i][j] = 2;
 	}

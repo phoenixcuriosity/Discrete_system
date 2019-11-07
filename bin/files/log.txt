@@ -28,6 +28,46 @@ Create ButtonTexte n:9 msg = Sinus Success
 Create ButtonTexte n:10 msg = Import Signal Success
 Create ButtonTexte n:11 msg = Main menu Success
 _ Start mainLoop _
+_ Start CreateNumDen _
+_ End CreateNumDen _
+_ Start displayTF _
+_ End displayTF _
+_ Start displayJury _
+_ End displayJury _
+_ Start computeABCD _
+_ End computeABCD _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start createMatrice _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ End createMatrice _
+_ Start displayStateSystem _
+_ End displayStateSystem _
 *********_________ Start DeleteAll _________*********
 Delete txtEcranTitre n:0 name = Dev version: 2.11 Success
 Delete txtEcranTitre n:1 name = Developed by SAUTER Robin Success
@@ -40,7 +80,14 @@ Delete txtEcranTitre n:7 name = State System Success
 Delete txtEcranTitre n:8 name = Create Matrix A, B, C and D Success
 Delete txtEcranTitre n:9 name = Simulate Success
 Delete txtEcranTitre n:10 name = Simulation Success
+Delete txtEcranTitre n:11 name = Length of A : 2 and Height of A : 2 Success
+Delete txtEcranTitre n:12 name = Length of B : 2 and Height of B : 2 Success
+Delete txtEcranTitre n:13 name = Length of C : 1 and Height of C : 2 Success
+Delete txtEcranTitre n:14 name = Length of D : 1 and Height of D : 1 Success
 Delete ALL txtEcranTitre Success
+Delete CreateNumDen n:0 name = Order of the Numerator : 1 Success
+Delete CreateNumDen n:1 name = Order of the Denominator : 3 Success
+Delete CreateNumDen n:2 name = Sampling time : 1.000000 Success
 Delete ALL CreateNumDen Success
 Delete ecranTitre n:0 name = Transfer Function Success
 Delete ecranTitre n:1 name = State System Success

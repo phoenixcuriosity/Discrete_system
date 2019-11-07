@@ -24,6 +24,35 @@
 
 #include "End.h"
 
+
+void End::deleteFCTDiscret(FCTDiscret* fctDiscret)
+{
+	/* Erase last FCT */
+	if (fctDiscret != nullptr)
+	{
+		delete fctDiscret;
+	}
+	else
+	{
+		/* N/A */
+	}
+}
+
+
+
+void End::deleteSYSETATDiscret(SYSETATDiscret* sysetatDiscret)
+{
+	/* Erase previous sysinfo.sysetatDiscret */
+	if (sysetatDiscret != nullptr)
+	{
+		delete sysetatDiscret;
+	}
+	else
+	{
+		/* N/A */
+	}
+}
+
 /*
 *	End Of File : End.cpp
 */

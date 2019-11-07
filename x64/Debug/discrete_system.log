@@ -1,24 +1,28 @@
 ﻿  Complexe.cpp
   End.cpp
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\End.cpp(33,20): warning C4150: deletion of pointer to incomplete type 'FCTDiscret'; no destructor called
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LIB.h(55): message : see declaration of 'FCTDiscret'
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\End.cpp(48,24): warning C4150: deletion of pointer to incomplete type 'SYSETATDiscret'; no destructor called
   FCTDiscret.cpp
   IHM.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(344,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(451,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(849,16): warning C4189: 'yminphase': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(855,10): warning C4189: 'increment': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(827,10): warning C4189: 'amplitudePhase': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(856,10): warning C4189: 'nbpointParDecade': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(849,33): warning C4189: 'ymaxphase': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LIB.h(59): message : see declaration of 'SYSETATDiscret'
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(346,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(453,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,16): warning C4189: 'yminphase': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(848,10): warning C4189: 'increment': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(820,10): warning C4189: 'amplitudePhase': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(849,10): warning C4189: 'nbpointParDecade': local variable is initialized but not referenced
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,33): warning C4189: 'ymaxphase': local variable is initialized but not referenced
 C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.h(96,1): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
   LoadConfig.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1270): message : see reference to function template instantiation 'void deleteDyTabPlayerAndTextures<std::vector<Texte *,std::allocator<_Ty>>>(T &,const std::string &)' being compiled
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1270): message :         with
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1270): message :         [
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1270): message :             _Ty=Texte *,
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1270): message :             T=std::vector<Texte *,std::allocator<Texte *>>
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1270): message :         ]
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message : see reference to function template instantiation 'void deleteDyTabPlayerAndTextures<std::vector<Texte *,std::allocator<_Ty>>>(T &,const std::string &)' being compiled
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :         with
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :         [
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :             _Ty=Texte *,
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :             T=std::vector<Texte *,std::allocator<Texte *>>
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :         ]
 C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(36,39): warning C4100: 'sysinfo': unreferenced formal parameter
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(150,32): warning C4459: declaration of 'fontFile' hides global declaration
+C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(145,32): warning C4459: declaration of 'fontFile' hides global declaration
   main.cpp
 C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.h(56,19): message : see declaration of 'fontFile'
 C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\main.cpp(29,26): warning C4100: 'argv': unreferenced formal parameter
