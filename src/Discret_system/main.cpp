@@ -29,6 +29,10 @@
 int main(int argc, char *argv[])
 {
 	Sysinfo sysinfo;
+
+	sysinfo.var.argc = argc;
+	sysinfo.var.argv = argv;
+
 	LoadConfig::initSysinfo(sysinfo);
 	LoadConfig::initsdl(sysinfo);
 

@@ -2,7 +2,8 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:3.1
+	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -24,78 +25,136 @@
 #include "SYSETATDiscret.h"
 
 SYSETATDiscret::SYSETATDiscret()
-: _A(), _B(), _C(), _D(), _Te(1)
+: _Te(1)
 {
+	_A = new Matrice;
+	_B = new Matrice;
+	_C = new Matrice;
+	_D = new Matrice;
 }
 SYSETATDiscret::SYSETATDiscret(const SYSETATDiscret& a)
-: _A(a._A), _B(a._B), _C(a._C), _D(a._D), _Te(a._Te)
+: _Te(a._Te)
 {
+	_A = new Matrice(*a._A);
+	_B = new Matrice(*a._B);
+	_C = new Matrice(*a._B);
+	_D = new Matrice(*a._B);
 }
 SYSETATDiscret::~SYSETATDiscret()
 {
+	if (_A != nullptr)
+	{
+		delete _A;
+		_A = nullptr;
+	}
+	if (_B != nullptr)
+	{
+		delete _B;
+		_B = nullptr;
+	}
+	if (_C != nullptr)
+	{
+		delete _C;
+		_C = nullptr;
+	}
+	if (_D != nullptr)
+	{
+		delete _D;
+		_D = nullptr;
+	}
 }
 
-std::ostream& operator<<(std::ostream& os, const SYSETATDiscret& s){
+std::ostream& operator<<(std::ostream& os, const SYSETATDiscret& s)
+{
 	return os << s.printOn(false);
 }
-bool operator ==(const SYSETATDiscret& a, const SYSETATDiscret& b){
-	if (a.GETA() == b.GETA() && a.GETB() == b.GETB() && a.GETC() == b.GETC() && a.GETD() == b.GETD() && a.GETTe() == b.GETTe())
+bool operator ==(const SYSETATDiscret& a, const SYSETATDiscret& b)
+{
+	if (	a.GETA() == b.GETA()
+		 && a.GETB() == b.GETB()
+		 && a.GETC() == b.GETC()
+		 && a.GETD() == b.GETD()
+		 && a.GETTe() == b.GETTe()
+		)
 		return true;
 	return false;
 }
 
-void SYSETATDiscret::SETA(const Matrice& Z){
-	_A = Z;
+void SYSETATDiscret::SETA(const Matrice* Z)
+{
+	*_A = *Z;
 }
-void SYSETATDiscret::SETB(const Matrice& Z){
-	_B = Z;
+void SYSETATDiscret::SETB(const Matrice* Z)
+{
+	*_B = *Z;
 }
-void SYSETATDiscret::SETC(const Matrice& Z){
-	_C = Z;
+void SYSETATDiscret::SETC(const Matrice* Z)
+{
+	*_C = *Z;
 }
-void SYSETATDiscret::SETD(const Matrice& Z){
-	_D = Z;
+void SYSETATDiscret::SETD(const Matrice* Z)
+{
+	*_D = *Z;
 }
-void SYSETATDiscret::SETTe(unsigned int nbech){
+void SYSETATDiscret::SETTe(unsigned int nbech)
+{
 	_Te = nbech;
 }
-void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height){
-	_A.editsize(length, height);
+
+
+
+void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height)
+{
+	_A->editsize(length, height);
 }
-void SYSETATDiscret::SETeditSizeB(unsigned int length, unsigned int height){
-	_B.editsize(length, height);
+void SYSETATDiscret::SETeditSizeB(unsigned int length, unsigned int height)
+{
+	_B->editsize(length, height);
 }
-void SYSETATDiscret::SETeditSizeC(unsigned int length, unsigned int height){
-	_C.editsize(length, height);
+void SYSETATDiscret::SETeditSizeC(unsigned int length, unsigned int height)
+{
+	_C->editsize(length, height);
 }
-void SYSETATDiscret::SETeditSizeD(unsigned int length, unsigned int height){
-	_D.editsize(length, height);
+void SYSETATDiscret::SETeditSizeD(unsigned int length, unsigned int height)
+{
+	_D->editsize(length, height);
 }
-void SYSETATDiscret::SETthisCoefA(unsigned int i, unsigned int j, double userValue){
-	_A.SETthiscoef(i, j, userValue);
+void SYSETATDiscret::SETthisCoefA(unsigned int i, unsigned int j, double userValue)
+{
+	_A->SETthiscoef(i, j, userValue);
 }
-void SYSETATDiscret::SETthisCoefB(unsigned int i, unsigned int j, double userValue){
-	_B.SETthiscoef(i, j, userValue);
+void SYSETATDiscret::SETthisCoefB(unsigned int i, unsigned int j, double userValue)
+{
+	_B->SETthiscoef(i, j, userValue);
 }
-void SYSETATDiscret::SETthisCoefC(unsigned int i, unsigned int j, double userValue){
-	_C.SETthiscoef(i, j, userValue);
+void SYSETATDiscret::SETthisCoefC(unsigned int i, unsigned int j, double userValue)
+{
+	_C->SETthiscoef(i, j, userValue);
 }
-void SYSETATDiscret::SETthisCoefD(unsigned int i, unsigned int j, double userValue){
-	_D.SETthiscoef(i, j, userValue);
+void SYSETATDiscret::SETthisCoefD(unsigned int i, unsigned int j, double userValue)
+{
+	_D->SETthiscoef(i, j, userValue);
 }
-Matrice SYSETATDiscret::GETA()const{
+
+
+Matrice* SYSETATDiscret::GETA()const
+{
 	return _A;
 }
-Matrice SYSETATDiscret::GETB()const{
+Matrice* SYSETATDiscret::GETB()const
+{
 	return _B;
 }
-Matrice SYSETATDiscret::GETC()const{
+Matrice* SYSETATDiscret::GETC()const
+{
 	return _C;
 }
-Matrice SYSETATDiscret::GETD()const{
+Matrice* SYSETATDiscret::GETD()const
+{
 	return _D;
 }
-double SYSETATDiscret::GETTe()const{
+double SYSETATDiscret::GETTe()const
+{
 	return _Te;
 }
 
@@ -107,30 +166,30 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
 	*/
 
 	if (fct.GETden().GETorder() >= fct.GETnum().GETorder()){
-		_A.editsize(fct.GETden().GETorder(), fct.GETden().GETorder());
+		_A->editsize(fct.GETden().GETorder(), fct.GETden().GETorder());
 		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
-			_A.SETthiscoef(fct.GETden().GETorder() - 1, i,
+			_A->SETthiscoef(fct.GETden().GETorder() - 1, i,
 				-(fct.GETden().GETcoefTab(i) / fct.GETden().GETcoefTab(fct.GETden().GETorder())));
 		}
 		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
 			for (unsigned int j = 1; j < fct.GETden().GETorder(); j++) {
-				_A.SETthiscoef(i, j, 1);
+				_A->SETthiscoef(i, j, 1);
 				i++;
 			}
 		}
 		
 
-		_B.editsize(fct.GETden().GETorder(), 1);
-		_B.SETthiscoef(_B.GETlength() - 1, 0, 1 / fct.GETden().GETcoefTab(fct.GETden().GETorder()));
+		_B->editsize(fct.GETden().GETorder(), 1);
+		_B->SETthiscoef(_B->GETlength() - 1, 0, 1 / fct.GETden().GETcoefTab(fct.GETden().GETorder()));
 		
 
-		_C.editsize(1, fct.GETden().GETorder());
+		_C->editsize(1, fct.GETden().GETorder());
 		for (unsigned int i = 0; i <= fct.GETnum().GETorder(); i++) 
-			_C.SETthiscoef(0, i, fct.GETnum().GETcoefTab(i));
+			_C->SETthiscoef(0, i, fct.GETnum().GETcoefTab(i));
 		
 		
 
-		_D.editsize(1, 1);
+		_D->editsize(1, 1);
 	}
 	else
 		std::cout << std::endl << "______Order of Num = " << fct.GETden().GETorder() << "  > Order of Den = " << fct.GETnum().GETorder();
@@ -145,11 +204,11 @@ void SYSETATDiscret::simulation(const std::string& namefile, Signal& signal, Mat
 	std::ofstream reponse(namefile);
 	std::ostringstream repy;
 	std::string rep;
-	Matrice dx(_A.GETlength(), 1), y(1, 1);
+	Matrice dx(_A->GETlength(), 1), y(1, 1);
 
 	for (unsigned int i = 0; i < signal.GETnbech(); i++){
-		dx = _A * x0 + _B * signal.GETthiscoef(i);
-		y = _C * x0 + _D * signal.GETthiscoef(i);
+		dx = *_A * x0 + *_B * signal.GETthiscoef(i);
+		y = *_C * x0 + *_D * signal.GETthiscoef(i);
 		yOut[i] = y.GETthiscoef(0, 0);
 		x0 = dx;
 		repy << std::endl << signal.GETdeltaT() * i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
@@ -170,10 +229,16 @@ std::string SYSETATDiscret::printOn(bool on)const{
 	std::ostringstream stream;
 
 	stream << std::endl << std::endl << "Forme Compagne de Commande";
-	stream << std::endl << "Matrice Ac :" << _A << std::endl << "Matrice Bc :" << _B << std::endl << "Matrice Cc :" << _C << std::endl << "Matrice D :" << _D;
+	stream << std::endl << "Matrice Ac :" << *_A << std::endl
+						<< "Matrice Bc :" << *_B << std::endl
+						<< "Matrice Cc :" << *_C << std::endl
+						<< "Matrice D :" << *_D;
+
 	stream << std::endl << std::endl << "Forme Compagne d'Observabilite";
-	stream << std::endl << "Matrice Ao :" << transposition(_A) << std::endl << "Matrice Bo :" << transposition(_B)
-		<< std::endl << "Matrice Co :" << transposition(_C) << std::endl << "Matrice D :" << _D;
+	stream << std::endl << "Matrice Ao :" << transposition(*_A) << std::endl
+						<< "Matrice Bo :" << transposition(*_B) << std::endl
+						<< "Matrice Co :" << transposition(*_C) << std::endl
+						<< "Matrice D :" << *_D;
 
 	equation = stream.str();
 	if (on)
@@ -220,7 +285,7 @@ void testSYSETATDiscret(){
 	*/
 
 	Echelon E(50, 0.1, 10.0);
-	Matrice x0(sys.GETA().GETlength(), 1);
+	Matrice x0(sys.GETA()->GETlength(), 1);
 	x0.SETthiscoef(0, 0, 0.1);
 
 	std::cout << std::endl << std::endl << std::endl << "Reponse temporelle avec E = 10.0" << std::endl;

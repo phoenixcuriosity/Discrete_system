@@ -37,6 +37,7 @@
 #include <stdexcept>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 
 #include "../SDL2-2.0.9/include/SDL.h"
 #include "../SDL2-2.0.9/include/SDL_ttf.h"

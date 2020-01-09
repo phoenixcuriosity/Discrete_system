@@ -253,10 +253,10 @@ void Matrice::editsize(unsigned int length, unsigned int height)
 		for (unsigned int i = 0; i < length; i++)
 			buffer[i] = new double[height];
 
-		unsigned int maxLength = maxM(_length, length);
-		unsigned int maxHeight = maxM(_height, height);
-		unsigned int minLength = minM(_length, length);
-		unsigned int minHeight = minM(_height, height);
+		unsigned int maxLength = std::max(_length, length);
+		unsigned int maxHeight = std::max(_height, height);
+		unsigned int minLength = std::min(_length, length);
+		unsigned int minHeight = std::min(_height, height);
 
 		for (unsigned int i = 0; i < minLength; i++)
 		{

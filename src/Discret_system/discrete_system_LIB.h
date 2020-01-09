@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.0
+	last modification on this file on version: 3.1
 	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -96,6 +96,10 @@ struct Var
 {
 	// variable permettant de quitter la boucle principale donc le jeu
 	bool continuer = true;
+
+	int argc = 0;
+
+	char** argv = nullptr;
 
 	/*
 		état de la sélection du joueur

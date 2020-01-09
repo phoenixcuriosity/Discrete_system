@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.0
+	last modification on this file on version: 3.1
 	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
@@ -900,15 +900,15 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 	sysinfo.sysetatDiscret->SETeditSizeD(1, 1);
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
-		"Length of A : " + std::to_string(sysinfo.sysetatDiscret->GETA().GETlength()) + " and Height of A : " + std::to_string(sysinfo.sysetatDiscret->GETA().GETheight()),
+		"Length of A : " + std::to_string(sysinfo.sysetatDiscret->GETA()->GETlength()) + " and Height of A : " + std::to_string(sysinfo.sysetatDiscret->GETA()->GETheight()),
 		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent, center_x);
 	IHM::rendueEcran(sysinfo);
 
 	displayStateSystem(sysinfo);
 
-	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETA().GETlength(); i++)
+	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETA()->GETlength(); i++)
 	{
-		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETA().GETheight(); j++)
+		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETA()->GETheight(); j++)
 		{
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 75, center_x);
@@ -921,14 +921,14 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
-		"Length of B : " + std::to_string(sysinfo.sysetatDiscret->GETB().GETlength()) + " and Height of B : " + std::to_string(sysinfo.sysetatDiscret->GETB().GETlength()),
+		"Length of B : " + std::to_string(sysinfo.sysetatDiscret->GETB()->GETlength()) + " and Height of B : " + std::to_string(sysinfo.sysetatDiscret->GETB()->GETlength()),
 		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent, center_x);
 	IHM::rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
 
-	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETB().GETlength(); i++)
+	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETB()->GETlength(); i++)
 	{
-		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETB().GETheight(); j++)
+		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETB()->GETheight(); j++)
 		{
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 125, center_x);
@@ -941,14 +941,14 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
-		"Length of C : " + std::to_string(sysinfo.sysetatDiscret->GETC().GETlength()) + " and Height of C : " + std::to_string(sysinfo.sysetatDiscret->GETC().GETheight()),
+		"Length of C : " + std::to_string(sysinfo.sysetatDiscret->GETC()->GETlength()) + " and Height of C : " + std::to_string(sysinfo.sysetatDiscret->GETC()->GETheight()),
 		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, center_x);
 	IHM::rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
 
-	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETC().GETlength(); i++)
+	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETC()->GETlength(); i++)
 	{
-		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETC().GETheight(); j++)
+		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETC()->GETheight(); j++)
 		{
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 175, center_x);
@@ -961,7 +961,7 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
-		"Length of D : " + std::to_string(sysinfo.sysetatDiscret->GETD().GETlength()) + " and Height of D : " + std::to_string(sysinfo.sysetatDiscret->GETD().GETheight()),
+		"Length of D : " + std::to_string(sysinfo.sysetatDiscret->GETD()->GETlength()) + " and Height of D : " + std::to_string(sysinfo.sysetatDiscret->GETD()->GETheight()),
 		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, nonTransparent, center_x);
 	rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
@@ -1014,14 +1014,14 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 	stream << std::fixed << std::setprecision(4);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 		blended, "Matrix A", { 0, 64, 255, 255 }, NoColor, 16, 100, initspace += 16);
-	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETA().GETlength(); i++)
+	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETA()->GETlength(); i++)
 	{
 		stream << "|";
-		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETA().GETheight(); j++)
-			if(sysinfo.sysetatDiscret->GETA().GETthiscoef(i, j) >= 0)
-				stream << "   " << sysinfo.sysetatDiscret->GETA().GETthiscoef(i, j) << " ";
+		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETA()->GETheight(); j++)
+			if(sysinfo.sysetatDiscret->GETA()->GETthiscoef(i, j) >= 0)
+				stream << "   " << sysinfo.sysetatDiscret->GETA()->GETthiscoef(i, j) << " ";
 			else 
-				stream << "  -" << abs(sysinfo.sysetatDiscret->GETA().GETthiscoef(i, j)) << " ";
+				stream << "  -" << abs(sysinfo.sysetatDiscret->GETA()->GETthiscoef(i, j)) << " ";
 		stream << "|";
 		texte = stream.str();
 		stream.str("");
@@ -1033,11 +1033,11 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 	initspace = 100;
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 		blended, "Matrix B", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
-	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETB().GETlength(); i++)
+	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETB()->GETlength(); i++)
 	{
 		stream << "|";
-		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETB().GETheight(); j++)
-			stream << " " << sysinfo.sysetatDiscret->GETB().GETthiscoef(i, j) << " ";
+		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETB()->GETheight(); j++)
+			stream << " " << sysinfo.sysetatDiscret->GETB()->GETthiscoef(i, j) << " ";
 		stream << "|";
 		texte = stream.str();
 		stream.str("");
@@ -1049,11 +1049,11 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 	initspace += 32;
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 		blended, "Matrix C", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
-	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETC().GETlength(); i++)
+	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETC()->GETlength(); i++)
 	{
 		stream << "|";
-		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETC().GETheight(); j++)
-			stream << " " << sysinfo.sysetatDiscret->GETC().GETthiscoef(i, j) << " ";
+		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETC()->GETheight(); j++)
+			stream << " " << sysinfo.sysetatDiscret->GETC()->GETthiscoef(i, j) << " ";
 		stream << "|";
 		texte = stream.str();
 		stream.str("");
@@ -1065,7 +1065,7 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 	initspace += 32;
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 		blended, "Matrix D", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
-	stream << "| " << sysinfo.sysetatDiscret->GETD().GETthiscoef(0, 0) << " |";
+	stream << "| " << sysinfo.sysetatDiscret->GETD()->GETthiscoef(0, 0) << " |";
 	texte = stream.str();
 	stream.str("");
 	stream.clear();
@@ -1203,7 +1203,7 @@ void IHM::displayReponseTemp(Sysinfo& sysinfo, Signal& sig)
 			blended, "|", { 255, 255, 255, 255 }, NoColor, 16, 50, initspace += 16, center_x);
 
 
-	Matrice X0(sysinfo.sysetatDiscret->GETA().GETlength(), 1);
+	Matrice X0(sysinfo.sysetatDiscret->GETA()->GETlength(), 1);
 
 	double* yOut = new double[sig.GETnbech()];
 	sysinfo.sysetatDiscret->simulation("bin/files/ReponseTemporelle.txt", sig, X0, yOut);

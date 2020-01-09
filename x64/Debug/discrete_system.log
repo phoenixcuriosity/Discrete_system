@@ -1,54 +1,47 @@
 ﻿  Complexe.cpp
   End.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\End.cpp(33,20): warning C4150: deletion of pointer to incomplete type 'FCTDiscret'; no destructor called
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LIB.h(55): message : see declaration of 'FCTDiscret'
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\End.cpp(48,24): warning C4150: deletion of pointer to incomplete type 'SYSETATDiscret'; no destructor called
   FCTDiscret.cpp
   IHM.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LIB.h(59): message : see declaration of 'SYSETATDiscret'
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(346,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(453,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,16): warning C4189: 'yminphase': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(848,10): warning C4189: 'increment': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(820,10): warning C4189: 'amplitudePhase': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(849,10): warning C4189: 'nbpointParDecade': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,33): warning C4189: 'ymaxphase': local variable is initialized but not referenced
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.h(96,1): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(346,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(453,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,16): warning C4189: 'yminphase': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(848,10): warning C4189: 'increment': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(820,10): warning C4189: 'amplitudePhase': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(849,10): warning C4189: 'nbpointParDecade': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,33): warning C4189: 'ymaxphase': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.h(96,1): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message : see reference to function template instantiation 'void deleteDyTabPlayerAndTextures<std::vector<Texte *,std::allocator<Texte *>>>(T &,const std::string &)' being compiled
+          with
+          [
+              T=std::vector<Texte *,std::allocator<Texte *>>
+          ]
   LoadConfig.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message : see reference to function template instantiation 'void deleteDyTabPlayerAndTextures<std::vector<Texte *,std::allocator<_Ty>>>(T &,const std::string &)' being compiled
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :         with
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :         [
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :             _Ty=Texte *,
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :             T=std::vector<Texte *,std::allocator<Texte *>>
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message :         ]
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(36,39): warning C4100: 'sysinfo': unreferenced formal parameter
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(145,32): warning C4459: declaration of 'fontFile' hides global declaration
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(36,39): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(145,32): warning C4459: declaration of 'fontFile' hides global declaration
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.h(56,19): message : see declaration of 'fontFile'
   main.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.h(56,19): message : see declaration of 'fontFile'
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\main.cpp(29,26): warning C4100: 'argv': unreferenced formal parameter
   Matrice.cpp
   Polynome.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\main.cpp(29,14): warning C4100: 'argc': unreferenced formal parameter
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(166,33): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(197,33): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(279,33): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
   Signal.cpp
   SYSETATDiscret.cpp
   Texture.cpp
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(239,33): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(462): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(464): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(462,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(464,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(477): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(479): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(477,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(479,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(588): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(590): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(588,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(590,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(603): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(605): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(603,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(462): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(464): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(462,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(464,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(477): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(479): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(477,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(479,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(588): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(590): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(588,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(590,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(603): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(605): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(603,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(605,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
   Generating Code...
-C:\Users\robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(605,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-  discrete_system.vcxproj -> C:\Users\robin\Documents\GitHub\discrete_system\x64\Debug\discrete_system.exe
+  discrete_system.vcxproj -> C:\Users\Robin\Documents\GitHub\discrete_system\x64\Debug\discrete_system.exe

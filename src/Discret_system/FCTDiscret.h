@@ -2,7 +2,8 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.10
+	last modification on this file on version:3.1
+	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -39,6 +40,8 @@ public: // constructeurs et destructeur
 	FCTDiscret(const FCTDiscret&);
 	~FCTDiscret();
 
+	void allocate(Polynome num, Polynome den);
+
 public: // opérations entre 2 objets FCTDiscret
 	virtual FCTDiscret& operator = (const FCTDiscret&);
 	friend bool operator ==(const FCTDiscret& a, const FCTDiscret& b);
@@ -46,23 +49,25 @@ public: // opérations entre 2 objets FCTDiscret
 	friend FCTDiscret operator-(const FCTDiscret&, const FCTDiscret&);
 	friend FCTDiscret operator*(const FCTDiscret&, const FCTDiscret&);
 
-	friend FCTDiscret addition(const FCTDiscret& a, const FCTDiscret& b);
-	friend FCTDiscret soustraction(const FCTDiscret& a, const FCTDiscret& b);
-	friend FCTDiscret multiplication(const FCTDiscret& a, const FCTDiscret& b);
-
 public: // assesseurs
+	void SETjuryPtr(const Matrice* J);
+	void SETnumPtr(const Polynome* a);
+	void SETdenPtr(const Polynome* a);
 	void SETjury(const Matrice& J);
-	void SETnum(const Polynome &a);
-	void SETden(const Polynome &a);
+	void SETnum(const Polynome& a);
+	void SETden(const Polynome& a);
 	void SETdeltaT(double);
 	void SETnumOrder(unsigned int order);
 	void SETdenOrder(unsigned int order);
 	void SETnumThisCoef(unsigned int order, double userValue);
 	void SETdenThisCoef(unsigned int order, double userValue);
 
-	Matrice GETjury()const;
-	Polynome GETnum() const;
-	Polynome GETden() const;
+	Matrice* GETjuryPtr()const;
+	Polynome* GETnumPtr() const;
+	Polynome* GETdenPtr() const;
+	Matrice& GETjury()const;
+	Polynome& GETnum() const;
+	Polynome& GETden() const;
 	double GETdeltaT() const;
 
 public: // affichage
@@ -81,13 +86,10 @@ public: // opérations sur l'objet
 public:
 	friend void testFCTDiscret();
 
-protected:
-	virtual Polynome allocate(double order) const;
-
 private:
-	Matrice _jury;
-	Polynome _num;
-	Polynome _den;
+	Matrice* _jury;
+	Polynome* _num;
+	Polynome* _den;
 	double _deltaT;
 };
 

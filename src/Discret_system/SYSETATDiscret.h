@@ -2,7 +2,8 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.9
+	last modification on this file on version:3.1
+	file version 2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -40,10 +41,10 @@ public: // opérations entre 2 objets SYSETATDiscret
 	friend bool operator ==(const SYSETATDiscret&, const SYSETATDiscret&);
 
 public: // assesseurs
-	void SETA(const Matrice&);
-	void SETB(const Matrice&);
-	void SETC(const Matrice&);
-	void SETD(const Matrice&);
+	void SETA(const Matrice*);
+	void SETB(const Matrice*);
+	void SETC(const Matrice*);
+	void SETD(const Matrice*);
 	void SETTe(unsigned int Te);
 	void SETeditSizeA(unsigned int length, unsigned int height);
 	void SETeditSizeB(unsigned int length, unsigned int height);
@@ -53,10 +54,10 @@ public: // assesseurs
 	void SETthisCoefB(unsigned int i, unsigned int j, double userValue);
 	void SETthisCoefC(unsigned int i, unsigned int j, double userValue);
 	void SETthisCoefD(unsigned int i, unsigned int j, double userValue);
-	Matrice GETA()const;
-	Matrice GETB()const;
-	Matrice GETC()const;
-	Matrice GETD()const;
+	Matrice* GETA()const;
+	Matrice* GETB()const;
+	Matrice* GETC()const;
+	Matrice* GETD()const;
 	double GETTe()const;
 	
 public: // affichage
@@ -71,7 +72,10 @@ public:
 	friend void testSYSETATDiscret();
 
 private:
-	Matrice _A, _B, _C, _D;
+	Matrice *_A,
+			*_B,
+			*_C,
+			*_D;
 	double _Te;
 };
 

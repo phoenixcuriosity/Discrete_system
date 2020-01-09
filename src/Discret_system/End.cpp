@@ -3,7 +3,7 @@
 	Discrete_system
 	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
 	last modification on this file on version: 3.0
-	file version 2.0
+	file version 2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -23,7 +23,8 @@
 */
 
 #include "End.h"
-
+#include "FCTDiscret.h"
+#include "SYSETATDiscret.h"
 
 void End::deleteFCTDiscret(FCTDiscret* fctDiscret)
 {
