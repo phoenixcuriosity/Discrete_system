@@ -24,11 +24,11 @@
     <ClInclude Include="src\Discret_system\End.h" />
     <ClInclude Include="src\Discret_system\FCTDiscret.h" />
     <ClInclude Include="src\Discret_system\IHM.h" />
+    <ClInclude Include="src\Discret_system\KeyboardMouse.h" />
     <ClInclude Include="src\Discret_system\LIB.h" />
     <ClInclude Include="src\Discret_system\LoadConfig.h" />
     <ClInclude Include="src\Discret_system\Matrice.h" />
     <ClInclude Include="src\Discret_system\Polynome.h" />
-    <ClInclude Include="src\Discret_system\resource.h" />
     <ClInclude Include="src\Discret_system\Signal.h" />
     <ClInclude Include="src\Discret_system\SYSETATDiscret.h" />
     <ClInclude Include="src\Discret_system\Texture.h" />
@@ -38,6 +38,7 @@
     <ClCompile Include="src\Discret_system\End.cpp" />
     <ClCompile Include="src\Discret_system\FCTDiscret.cpp" />
     <ClCompile Include="src\Discret_system\IHM.cpp" />
+    <ClCompile Include="src\Discret_system\KeyboardMouse.cpp" />
     <ClCompile Include="src\Discret_system\LoadConfig.cpp" />
     <ClCompile Include="src\Discret_system\main.cpp" />
     <ClCompile Include="src\Discret_system\Matrice.cpp" />

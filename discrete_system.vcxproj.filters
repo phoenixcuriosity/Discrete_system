@@ -24,9 +24,6 @@
     <ClInclude Include="src\Discret_system\LIB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Discret_system\resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Discret_system\Complexe.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
     <ClInclude Include="src\Discret_system\SYSETATDiscret.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Discret_system\Texture.h">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="src\Discret_system\Signal.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
@@ -58,6 +52,12 @@
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="src\Discret_system\End.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Discret_system\Texture.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Discret_system\KeyboardMouse.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,13 +86,16 @@
     <ClCompile Include="src\Discret_system\SYSETATDiscret.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Discret_system\Texture.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="src\Discret_system\LoadConfig.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
     <ClCompile Include="src\Discret_system\End.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Discret_system\Texture.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Discret_system\KeyboardMouse.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
   </ItemGroup>

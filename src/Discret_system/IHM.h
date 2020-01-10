@@ -1,9 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.0
-	file version 2.0
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.2
+	file version 2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -34,7 +34,8 @@
 #include "Texture.h"
 
 
-class IHM{
+class IHM
+{
 public:
 
 	/*
@@ -55,25 +56,14 @@ public:
 	 */
 	static void logfileconsole(const std::string& msg);
 
-	/*
-	 * NAME : eventSDL
-	 * ROLE : Prise en compte des évenements SDL (souris/clavier)
-	 * INPUT  PARAMETERS : struct Sysinfo& : structure globale du programme
-	 * OUTPUT PARAMETERS : Action réaliser par des évenements SDL
-	 * RETURNED VALUE    : void
-	 */
-	static void eventSDL(Sysinfo& sysinfo);
-
-	
-
 public:
 
 	
 	static void rendueEcran(Sysinfo&);
-	static void mouse(Sysinfo&, SDL_Event);
+	static void rendueEcranFCT(Sysinfo& sysinfo);
+	static void rendueEcranSYSETAT(Sysinfo& sysinfo);
 
-	static unsigned int CinNumberUnsignedInt(Sysinfo&, const std::string& msg, unsigned int, unsigned int);
-	static double CinNumberDouble(Sysinfo&, const std::string& msg, unsigned int, unsigned int);
+	
 	static void CreateNumDen(Sysinfo& sysinfo);
 	static void displayTF(Sysinfo& sysinfo);
 	static void displayJury(Sysinfo& sysinfo);
@@ -86,25 +76,8 @@ public:
 	static void createRamp(Sysinfo& sysinfo, Rampe& ramp);
 	static void createSinus(Sysinfo& sysinfo, Sinus& sinus);
 	static void displayReponseTemp(Sysinfo& sysinfo, Signal& sig);
-
-	static void deleteAll(Sysinfo&);
 };
 
-
-template<class T>
-void deleteDyTabPlayerAndTextures(T& dytab, const std::string& name) {
-	unsigned int size = dytab.size();
-	for (unsigned int i = 0; i < size; i++) {
-		IHM::logfileconsole("Delete " + name + " n:" + std::to_string(i) + " name = " + dytab[i]->GETname() + " Success");
-		delete dytab[i];
-	}
-	for (unsigned int i = 0; i < size; i++)
-		dytab.pop_back();
-	if (dytab.size() != 0)
-		IHM::logfileconsole("___________ERROR : " + name + ".size() != 0");
-	else
-		IHM::logfileconsole("Delete ALL " + name + " Success");
-}
 
 #endif
 

@@ -1,9 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.1
-	file version 2.0
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.2
+	file version 2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -94,6 +94,8 @@ struct Fichier
 };
 struct Var
 {
+	bool waitEvent = true;
+
 	// variable permettant de quitter la boucle principale donc le jeu
 	bool continuer = true;
 
@@ -130,15 +132,14 @@ struct AllTextes
 {
 	TTF_Font *font[MAX_FONT];
 
-	std::vector<Texte*> txtEcranTitre;
-
-	std::vector<Texte*> CreateNumDen;
+	std::unordered_map<std::string, Texte*> txtEcranTitre;
+	std::unordered_map<std::string, Texte*> CreateNumDen;
 };
 struct AllButtons
 {
-	std::vector<ButtonTexte*> ecranTitre;
-	std::vector<ButtonTexte*> ecranFCT;
-	std::vector<ButtonTexte*> ecranSYSETAT;
+	std::unordered_map<std::string, ButtonTexte*> ecranTitre;
+	std::unordered_map<std::string, ButtonTexte*> ecranFCT;
+	std::unordered_map<std::string, ButtonTexte*> ecranSYSETAT;
 };
 //---------------------- Structure niveau 0 ---------------------------------------------------------------------------------------------------------
 struct Sysinfo 

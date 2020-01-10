@@ -2,19 +2,28 @@
   End.cpp
   FCTDiscret.cpp
   IHM.cpp
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(346,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(453,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,16): warning C4189: 'yminphase': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(848,10): warning C4189: 'increment': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(820,10): warning C4189: 'amplitudePhase': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(849,10): warning C4189: 'nbpointParDecade': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(842,33): warning C4189: 'ymaxphase': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.h(96,1): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(1268): message : see reference to function template instantiation 'void deleteDyTabPlayerAndTextures<std::vector<Texte *,std::allocator<Texte *>>>(T &,const std::string &)' being compiled
-          with
-          [
-              T=std::vector<Texte *,std::allocator<Texte *>>
-          ]
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(541,16): warning C4189: 'yminphase': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(547,10): warning C4189: 'increment': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(519,10): warning C4189: 'amplitudePhase': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(548,10): warning C4189: 'nbpointParDecade': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\IHM.cpp(541,33): warning C4189: 'ymaxphase': local variable is initialized but not referenced
+  KeyboardMouse.cpp
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(124,48): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(128,45): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(132,47): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(137,48): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(143,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(148,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(152,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(156,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(160,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(164,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(168,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(172,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(176,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(180,43): warning C4100: 'sysinfo': unreferenced formal parameter
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(431,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
+C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(541,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
   LoadConfig.cpp
 C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(36,39): warning C4100: 'sysinfo': unreferenced formal parameter
 C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(145,32): warning C4459: declaration of 'fontFile' hides global declaration
@@ -27,21 +36,5 @@ C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(
   Signal.cpp
   SYSETATDiscret.cpp
   Texture.cpp
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(462): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(464): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(462,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(464,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(477): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(479): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(477,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(479,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(588): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(590): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(588,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(590,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(603): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(605): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(603,69): warning C4238: nonstandard extension used: class rvalue used as lvalue
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.cpp(605,79): warning C4238: nonstandard extension used: class rvalue used as lvalue
   Generating Code...
   discrete_system.vcxproj -> C:\Users\Robin\Documents\GitHub\discrete_system\x64\Debug\discrete_system.exe

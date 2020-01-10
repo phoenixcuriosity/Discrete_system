@@ -1,7 +1,7 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
 	last modification on this file on version:2.10
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system

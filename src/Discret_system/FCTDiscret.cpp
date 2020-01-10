@@ -1,7 +1,7 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
 	last modification on this file on version: 3.1
 	file version 2.0
 
@@ -307,7 +307,13 @@ bool FCTDiscret::tabJury()
 		ligne2.SETorder(ligne2.GETorder() - 1);
 		for (unsigned int i = 0, j = ligne2.GETorder(); i <= ligne2.GETorder(), j >= 0; i++, j--)
 		{
-			ligne2.SETcoefTab(i, ((ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i)) - (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))));
+			ligne2.SETcoefTab
+			(	i,
+				(
+					(ligne1.GETcoefTab(0) * ligne1.GETcoefTab(i))
+					- (ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - i))
+				)
+			);
 			if (j == 0) break;
 		}
 		if (ligne2.GETorder() > 2) 
@@ -373,7 +379,10 @@ bool FCTDiscret::tabJury()
 	for (unsigned int i = 0; i <= _den->GETorder(); i++)
 		somme += _den->GETcoefTab(i) * pow(-1, i);
 	stream << std::endl << "D(-1) = " << somme;
-	if ((somme > 0 && (_den->GETorder() % 2) == 0) || (somme < 0 && (_den->GETorder() % 2) == 1))
+	if	(	
+			(somme > 0 && (_den->GETorder() % 2) == 0)
+		||	(somme < 0 && (_den->GETorder() % 2) == 1)
+		)
 	{
 		stream << "	Ok";
 		condition++;
@@ -438,7 +447,8 @@ bool FCTDiscret::Bode(double wMin, double wMax, unsigned int nbpoint, double** g
 
 
 	unsigned int o = 0;
-	if (reponse){
+	if (reponse)
+	{
 		for (double i = wMin; i <= wMax; i += increment)
 		{
 			Z = Complexe::tfReIm(1, i * _deltaT);

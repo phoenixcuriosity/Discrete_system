@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2018 (robin.sauter@orange.fr)
-	last modification on this file on version:2.11
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
+	last modification on this file on version:3.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -38,6 +38,7 @@
 #include <iomanip>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
 #include "../SDL2-2.0.9/include/SDL.h"
 #include "../SDL2-2.0.9/include/SDL_ttf.h"

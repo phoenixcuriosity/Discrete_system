@@ -1,9 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.0
-	file version 2.0
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.2
+	file version 2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -164,113 +164,271 @@ void LoadConfig::loadAllTextures(Sysinfo& sysinfo)
 	// ______Writetxt_____ 
 	sysinfo.var.stateScreen = STATEecrantitre;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
-		sysinfo.allTextes.txtEcranTitre, blended, "Dev version: 2.11", White, NoColor, 16, 0, 0, nonTransparent);
+		sysinfo.allTextes.txtEcranTitre, blended, "Dev version: 3.1", White, NoColor, 16, 0, 0, nonTransparent, no_angle);
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
-		sysinfo.allTextes.txtEcranTitre, blended, "Developed by SAUTER Robin", White, NoColor, 16, 0, 16, nonTransparent);
+		sysinfo.allTextes.txtEcranTitre, blended, "Developed by SAUTER Robin", White, NoColor, 16, 0, 16, nonTransparent, no_angle);
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
-		sysinfo.allTextes.txtEcranTitre, blended, "Discret System", { 0, 255, 255, 255 }, NoColor, 28, SCREEN_WIDTH / 2, 25, nonTransparent, center_x);
+		sysinfo.allTextes.txtEcranTitre, blended, "Discret System", { 0, 255, 255, 255 }, NoColor, 28, SCREEN_WIDTH / 2, 25, nonTransparent, no_angle, center_x);
 
 
 	sysinfo.var.stateScreen = STATEfunctionTransfer;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Transfert Function", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Transfert Function", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATETFcreateNumDen;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Create the Transfer Function", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Create the Transfer Function", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATETFcreateBode;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Create Bode", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Create Bode", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATETFdisplayBode;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Display Bode", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Display Bode", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATEstateSystem;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "State System", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "State System", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATESScreateMatrice;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Create Matrix A, B, C and D", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Create Matrix A, B, C and D", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATESSsimulate;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Simulate", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Simulate", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
 	sysinfo.var.stateScreen = STATEreponseTemporelle;
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Simulation", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, center_x);
+		blended, "Simulation", { 0, 255, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 0, nonTransparent, no_angle, center_x);
 
-	// ______Buttons_____
+
+
+	/* **********************************************************
+	 *							Button							*
+	 ********************************************************** */
+
+
+	 /*** STATEecrantitre ***/
 	sysinfo.var.stateScreen = STATEecrantitre;
 	int spacemenu = 64, initspacemenu = 200;
 
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
-		shaded, "Transfer Function", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
-		shaded, "State System", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
-		shaded, "Closed Loop", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
-		shaded, "Quit", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
 
+	ButtonTexte::createButtonTexte
+	(	sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
+		shaded, "Transfer Function", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
+		shaded, "State System", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+	
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
+		shaded, "Closed Loop", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+	
+	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranTitre,
+		shaded, "Quit", WriteColorButton, BackColorButton, 26, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+
+
+
+
+
+	/*** STATEfunctionTransfer ***/
 	sysinfo.var.stateScreen = STATEfunctionTransfer;
 	spacemenu = 48, initspacemenu = 100;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Create the Transfer Function", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Display the Transfer Function", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Jury", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Bode", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Create the Transfer Function", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Display the Transfer Function", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Jury", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Bode", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+
+
+
+
+
+	/*** STATETFcreateBode ***/
 
 	sysinfo.var.stateScreen = STATETFcreateBode;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Main menu (1)", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
+
+
+
+
+
+	/*** STATETFdisplayBode ***/
 
 	sysinfo.var.stateScreen = STATETFdisplayBode;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranFCT,
+		shaded, "Main menu (2)", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
 
 
+
+
+
+	/*** STATEstateSystem ***/
 
 	sysinfo.var.stateScreen = STATEstateSystem;
 	spacemenu = 48, initspacemenu = 100;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Edit Matrix A, B, C and D", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Compute A, B, C and D", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Display the State System", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Simulate", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu, nonTransparent, center);
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Edit Matrix A, B, C and D", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Compute A, B, C and D", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Display the State System", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Simulate", WriteColorButton, BackColorButton, 24, SCREEN_WIDTH / 2, initspacemenu += spacemenu,
+		nonTransparent, no_angle, center
+	);
+
+
+
+
+
+
+	/*** STATESScreateMatrice ***/
 
 	sysinfo.var.stateScreen = STATESScreateMatrice;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Main menu (1)", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
+
+
+
+
+
+
+	/*** STATESSsimulate ***/
 
 	sysinfo.var.stateScreen = STATESSsimulate;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Step", WriteColorButton, BackColorButton, 24, 100, 100, nonTransparent);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Ramp", WriteColorButton, BackColorButton, 24, 200, 100, nonTransparent);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Sinus", WriteColorButton, BackColorButton, 24, 300, 100, nonTransparent);
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Import Signal", WriteColorButton, BackColorButton, 24, 400, 100, nonTransparent);
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Main menu (2)", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Step", WriteColorButton, BackColorButton, 24, 100, 100,
+		nonTransparent, no_angle
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Ramp", WriteColorButton, BackColorButton, 24, 200, 100,
+		nonTransparent, no_angle
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Sinus", WriteColorButton, BackColorButton, 24, 300, 100,
+		nonTransparent, no_angle
+	);
+
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Import Signal", WriteColorButton, BackColorButton, 24, 400, 100,
+		nonTransparent, no_angle
+	);
+
+
+
+
+
+	/*** STATEreponseTemporelle ***/
 
 	sysinfo.var.stateScreen = STATEreponseTemporelle;
-	ButtonTexte::createButtonTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
-		shaded, "Main menu", WriteColorButton, BackColorButton, 24, 0, 0, nonTransparent);
+	ButtonTexte::createButtonTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allButtons.ecranSYSETAT,
+		shaded, "Main menu (3)", WriteColorButton, BackColorButton, 24, 0, 0,
+		nonTransparent, no_angle
+	);
 
 }
 

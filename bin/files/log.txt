@@ -1,119 +1,68 @@
 
 _________START PROGRAM_________
-Dev version: 3.0
+Dev version: 3.1
 Created by SAUTER Robin
 This is a free software, you can redistribute it and/or modify it
 
-Create ButtonTexte n:0 msg = Transfer Function Success
-Create ButtonTexte n:1 msg = State System Success
-Create ButtonTexte n:2 msg = Closed Loop Success
-Create ButtonTexte n:3 msg = Quit Success
-Create ButtonTexte n:0 msg = Main menu Success
-Create ButtonTexte n:1 msg = Create the Transfer Function Success
-Create ButtonTexte n:2 msg = Display the Transfer Function Success
-Create ButtonTexte n:3 msg = Jury Success
-Create ButtonTexte n:4 msg = Bode Success
-Create ButtonTexte n:5 msg = Main menu Success
-Create ButtonTexte n:6 msg = Main menu Success
-Create ButtonTexte n:0 msg = Main menu Success
-Create ButtonTexte n:1 msg = Edit Matrix A, B, C and D Success
-Create ButtonTexte n:2 msg = Compute A, B, C and D Success
-Create ButtonTexte n:3 msg = Display the State System Success
-Create ButtonTexte n:4 msg = Simulate Success
-Create ButtonTexte n:5 msg = Main menu Success
-Create ButtonTexte n:6 msg = Main menu Success
-Create ButtonTexte n:7 msg = Step Success
-Create ButtonTexte n:8 msg = Ramp Success
-Create ButtonTexte n:9 msg = Sinus Success
-Create ButtonTexte n:10 msg = Import Signal Success
-Create ButtonTexte n:11 msg = Main menu Success
+[INFO]___: Create ButtonTexte n:0 msg = Transfer Function Success
+[INFO]___: Create ButtonTexte n:1 msg = State System Success
+[INFO]___: Create ButtonTexte n:2 msg = Closed Loop Success
+[INFO]___: Create ButtonTexte n:3 msg = Quit Success
+[INFO]___: Create ButtonTexte n:0 msg = Main menu Success
+[INFO]___: Create ButtonTexte n:1 msg = Create the Transfer Function Success
+[INFO]___: Create ButtonTexte n:2 msg = Display the Transfer Function Success
+[INFO]___: Create ButtonTexte n:3 msg = Jury Success
+[INFO]___: Create ButtonTexte n:4 msg = Bode Success
+[INFO]___: Create ButtonTexte n:5 msg = Main menu (1) Success
+[INFO]___: Create ButtonTexte n:6 msg = Main menu (2) Success
+[INFO]___: Create ButtonTexte n:0 msg = Main menu Success
+[INFO]___: Create ButtonTexte n:1 msg = Edit Matrix A, B, C and D Success
+[INFO]___: Create ButtonTexte n:2 msg = Compute A, B, C and D Success
+[INFO]___: Create ButtonTexte n:3 msg = Display the State System Success
+[INFO]___: Create ButtonTexte n:4 msg = Simulate Success
+[INFO]___: Create ButtonTexte n:5 msg = Main menu (1) Success
+[INFO]___: Create ButtonTexte n:6 msg = Main menu (2) Success
+[INFO]___: Create ButtonTexte n:7 msg = Step Success
+[INFO]___: Create ButtonTexte n:8 msg = Ramp Success
+[INFO]___: Create ButtonTexte n:9 msg = Sinus Success
+[INFO]___: Create ButtonTexte n:10 msg = Import Signal Success
+[INFO]___: Create ButtonTexte n:11 msg = Main menu (3) Success
 _ Start mainLoop _
-_ Start CreateNumDen _
-_ End CreateNumDen _
-_ Start displayTF _
-_ End displayTF _
-_ Start displayJury _
-_ End displayJury _
-_ Start computeABCD _
-_ End computeABCD _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start createMatrice _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ End createMatrice _
-_ Start displayStateSystem _
-_ End displayStateSystem _
+[INFO]__: keySDLK_ESCAPE
 *********_________ Start DeleteAll _________*********
-Delete txtEcranTitre n:0 name = Dev version: 2.11 Success
-Delete txtEcranTitre n:1 name = Developed by SAUTER Robin Success
-Delete txtEcranTitre n:2 name = Discret System Success
-Delete txtEcranTitre n:3 name = Transfert Function Success
-Delete txtEcranTitre n:4 name = Create the Transfer Function Success
-Delete txtEcranTitre n:5 name = Create Bode Success
-Delete txtEcranTitre n:6 name = Display Bode Success
-Delete txtEcranTitre n:7 name = State System Success
-Delete txtEcranTitre n:8 name = Create Matrix A, B, C and D Success
-Delete txtEcranTitre n:9 name = Simulate Success
-Delete txtEcranTitre n:10 name = Simulation Success
-Delete txtEcranTitre n:11 name = Length of A : 2 and Height of A : 2 Success
-Delete txtEcranTitre n:12 name = Length of B : 2 and Height of B : 2 Success
-Delete txtEcranTitre n:13 name = Length of C : 1 and Height of C : 2 Success
-Delete txtEcranTitre n:14 name = Length of D : 1 and Height of D : 1 Success
-Delete ALL txtEcranTitre Success
-Delete CreateNumDen n:0 name = Order of the Numerator : 1 Success
-Delete CreateNumDen n:1 name = Order of the Denominator : 3 Success
-Delete CreateNumDen n:2 name = Sampling time : 1.000000 Success
-Delete ALL CreateNumDen Success
-Delete ecranTitre n:0 name = Transfer Function Success
-Delete ecranTitre n:1 name = State System Success
-Delete ecranTitre n:2 name = Closed Loop Success
-Delete ecranTitre n:3 name = Quit Success
-Delete ALL ecranTitre Success
-Delete ecranFCT n:0 name = Main menu Success
-Delete ecranFCT n:1 name = Create the Transfer Function Success
-Delete ecranFCT n:2 name = Display the Transfer Function Success
-Delete ecranFCT n:3 name = Jury Success
-Delete ecranFCT n:4 name = Bode Success
-Delete ecranFCT n:5 name = Main menu Success
-Delete ecranFCT n:6 name = Main menu Success
-Delete ALL ecranFCT Success
-Delete ecranSYSETAT n:0 name = Main menu Success
-Delete ecranSYSETAT n:1 name = Edit Matrix A, B, C and D Success
-Delete ecranSYSETAT n:2 name = Compute A, B, C and D Success
-Delete ecranSYSETAT n:3 name = Display the State System Success
-Delete ecranSYSETAT n:4 name = Simulate Success
-Delete ecranSYSETAT n:5 name = Main menu Success
-Delete ecranSYSETAT n:6 name = Main menu Success
-Delete ecranSYSETAT n:7 name = Step Success
-Delete ecranSYSETAT n:8 name = Ramp Success
-Delete ecranSYSETAT n:9 name = Sinus Success
-Delete ecranSYSETAT n:10 name = Import Signal Success
-Delete ecranSYSETAT n:11 name = Main menu Success
-Delete ALL ecranSYSETAT Success
+[INFO]___: Delete txtEcranTitre name = Dev version: 3.1 Success
+[INFO]___: Delete txtEcranTitre name = Developed by SAUTER Robin Success
+[INFO]___: Delete txtEcranTitre name = Discret System Success
+[INFO]___: Delete txtEcranTitre name = Simulation Success
+[INFO]___: Delete txtEcranTitre name = Transfert Function Success
+[INFO]___: Delete txtEcranTitre name = Create the Transfer Function Success
+[INFO]___: Delete txtEcranTitre name = State System Success
+[INFO]___: Delete txtEcranTitre name = Display Bode Success
+[INFO]___: Delete txtEcranTitre name = Create Matrix A, B, C and D Success
+[INFO]___: Delete txtEcranTitre name = Create Bode Success
+[INFO]___: Delete txtEcranTitre name = Simulate Success
+[INFO]___: Delete ecranTitre name = Quit Success
+[INFO]___: Delete ecranTitre name = Transfer Function Success
+[INFO]___: Delete ecranTitre name = State System Success
+[INFO]___: Delete ecranTitre name = Closed Loop Success
+[INFO]___: Delete ecranFCT name = Display the Transfer Function Success
+[INFO]___: Delete ecranFCT name = Create the Transfer Function Success
+[INFO]___: Delete ecranFCT name = Main menu Success
+[INFO]___: Delete ecranFCT name = Jury Success
+[INFO]___: Delete ecranFCT name = Main menu (1) Success
+[INFO]___: Delete ecranFCT name = Bode Success
+[INFO]___: Delete ecranFCT name = Main menu (2) Success
+[INFO]___: Delete ecranSYSETAT name = Step Success
+[INFO]___: Delete ecranSYSETAT name = Edit Matrix A, B, C and D Success
+[INFO]___: Delete ecranSYSETAT name = Simulate Success
+[INFO]___: Delete ecranSYSETAT name = Main menu Success
+[INFO]___: Delete ecranSYSETAT name = Compute A, B, C and D Success
+[INFO]___: Delete ecranSYSETAT name = Display the State System Success
+[INFO]___: Delete ecranSYSETAT name = Main menu (1) Success
+[INFO]___: Delete ecranSYSETAT name = Main menu (2) Success
+[INFO]___: Delete ecranSYSETAT name = Ramp Success
+[INFO]___: Delete ecranSYSETAT name = Sinus Success
+[INFO]___: Delete ecranSYSETAT name = Import Signal Success
+[INFO]___: Delete ecranSYSETAT name = Main menu (3) Success
 *********_________ End DeleteAll _________*********
-_ End mainLoop _
+last msg before exit : [INFO]__: keySDLK_ESCAPE

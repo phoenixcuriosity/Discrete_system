@@ -1,9 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.1
-	file version 2.0
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.2
+	file version 2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -25,7 +25,7 @@
 #include "IHM.h"
 #include "discrete_system_LIB.h"
 #include "LIB.h"
-
+#include "KeyboardMouse.h"
 #include "End.h"
 
 
@@ -39,7 +39,7 @@
 void IHM::showStartSuccess()
 {
 	logfileconsole("_________START PROGRAM_________");
-	logfileconsole("Dev version: 3.0");
+	logfileconsole("Dev version: 3.1");
 	logfileconsole("Created by SAUTER Robin");
 	logfileconsole("This is a free software, you can redistribute it and/or modify it\n");
 }
@@ -64,525 +64,136 @@ void IHM::logfileconsole(const std::string& msg)
 		std::cout << std::endl << "ERREUR: Impossible d'ouvrir le Fichier : " << logtxt;
 }
 
-/*
-* NAME : eventSDL
-* ROLE : Prise en compte des évenements SDL (souris/clavier)
-* INPUT  PARAMETERS : struct Sysinfo& : structure globale du programme
-* OUTPUT PARAMETERS : Action réaliser par des évenements SDL
-* RETURNED VALUE    : void
-*/
-void IHM::eventSDL(Sysinfo& sysinfo)
+void IHM::rendueEcran(Sysinfo& sysinfo)
 {
-	SDL_Event event;
-
-	SDL_WaitEvent(&event);
-	switch (event.type)
-	{
-	case SDL_QUIT:	// permet de quitter
-		sysinfo.var.continuer = false;
-		break;
-	case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_F5:
-
-			break;
-		case SDLK_F6:
-
-			break;
-		case SDLK_ESCAPE:
-			sysinfo.var.continuer = false;
-			break;
-		case SDLK_SPACE:
-
-			break;
-		case SDLK_KP_1:
-			break;
-		}
-		break;
-	case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
-		IHM::mouse(sysinfo, event);
-		break;
-	case SDL_MOUSEWHEEL:
-		break;
-	}
-}
-
-
-
-void IHM::rendueEcran(Sysinfo& sysinfo){
 	SDL_RenderClear(sysinfo.screen.renderer);
 	
-	for (unsigned int i = 0; i < sysinfo.allTextes.txtEcranTitre.size(); i++)
-		sysinfo.allTextes.txtEcranTitre[i]->renderTextureTestStates(sysinfo.var.stateScreen, sysinfo.var.select);
+	switch (sysinfo.var.stateScreen)
+	{
 
-	if (sysinfo.var.stateScreen == STATEecrantitre) {
-		for (unsigned int i = 0; i < sysinfo.allButtons.ecranTitre.size(); i++)
-			sysinfo.allButtons.ecranTitre[i]->renderButtonTexte(sysinfo.var.stateScreen);
+	/* *********************************************************
+	 *					  STATEecrantitre					   *
+	 ********************************************************* */
+
+	case STATEecrantitre:
+		
+		for (const auto& n : sysinfo.allTextes.txtEcranTitre)
+		{
+			n.second->renderTextureTestStates(sysinfo.var.stateScreen, sysinfo.var.select);
+		}
+
+		for (const auto& n : sysinfo.allButtons.ecranTitre)
+		{
+			n.second->renderButtonTexte(sysinfo.var.stateScreen);
+		}
+
+		break;
+
+	/* *********************************************************
+	 *					 STATEfunctionTransfer				   *
+	 ********************************************************* */
+
+	case STATEfunctionTransfer:
+
+		rendueEcranFCT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATETFcreateNumDen				   *
+	 ********************************************************* */
+
+	case STATETFcreateNumDen:
+
+		rendueEcranFCT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATEfunctionTransfer				   *
+	 ********************************************************* */
+
+	case STATETFcreateBode:
+
+		rendueEcranFCT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATETFdisplayBode					   *
+	 ********************************************************* */
+
+	case STATETFdisplayBode:
+
+		rendueEcranFCT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATEstateSystem					   *
+	 ********************************************************* */
+
+	case STATEstateSystem:
+
+		rendueEcranSYSETAT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATESScreateMatrice				   *
+	 ********************************************************* */
+
+	case STATESScreateMatrice:
+
+		rendueEcranSYSETAT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATESSsimulate					   *
+	 ********************************************************* */
+
+	case STATESSsimulate:
+
+		rendueEcranSYSETAT(sysinfo);
+
+		break;
+
+	/* *********************************************************
+	 *					 STATEreponseTemporelle				   *
+	 ********************************************************* */
+
+	case STATEreponseTemporelle:
+
+		rendueEcranSYSETAT(sysinfo);
+
+		break;
+
 	}
-	else if (sysinfo.var.stateScreen == STATEfunctionTransfer || sysinfo.var.stateScreen == STATETFcreateNumDen
-		|| sysinfo.var.stateScreen == STATETFcreateBode || sysinfo.var.stateScreen == STATETFdisplayBode) {
-		for (unsigned int i = 0; i < sysinfo.allButtons.ecranFCT.size(); i++)
-			sysinfo.allButtons.ecranFCT[i]->renderButtonTexte(sysinfo.var.stateScreen);
-		for (unsigned int i = 0; i < sysinfo.allTextes.CreateNumDen.size(); i++)
-			sysinfo.allTextes.CreateNumDen[i]->renderTextureTestStates(sysinfo.var.stateScreen, sysinfo.var.select);
-	}
-	else if (sysinfo.var.stateScreen == STATEstateSystem || sysinfo.var.stateScreen == STATESScreateMatrice
-		|| sysinfo.var.stateScreen == STATESSsimulate || sysinfo.var.stateScreen == STATEreponseTemporelle) {
-		for (unsigned int i = 0; i < sysinfo.allButtons.ecranSYSETAT.size(); i++)
-			sysinfo.allButtons.ecranSYSETAT[i]->renderButtonTexte(sysinfo.var.stateScreen);
-	}
+
 	SDL_RenderPresent(sysinfo.screen.renderer);
 }
 
-void IHM::mouse(Sysinfo& sysinfo, SDL_Event event)
+void IHM::rendueEcranFCT(Sysinfo& sysinfo)
 {
-	/*
-	Handle Mouse Event
-	BUTTON_LEFT
-	BUTTON_RIGHT
-
-	*/
-
-
-	if (event.button.button == SDL_BUTTON_LEFT)
+	for (const auto& n : sysinfo.allTextes.CreateNumDen)
 	{
-
-
-
-
-		
-		if (sysinfo.var.stateScreen == STATEecrantitre)
-		{
-			for (unsigned int i = 0; i < sysinfo.allButtons.ecranTitre.size(); i++) { // recherche si une bouton est dans ces coordonnées
-
-			// boutons du main menu
-
-				if	(
-						sysinfo.allButtons.ecranTitre[i]
-						->searchButtonTexte("Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y)
-					)
-				{
-					sysinfo.var.stateScreen = STATEfunctionTransfer;
-					rendueEcran(sysinfo);
-					break;
-				}
-				else if (
-							sysinfo.allButtons.ecranTitre[i]
-							->searchButtonTexte("State System", sysinfo.var.stateScreen, event.button.x, event.button.y)
-						)
-				{
-					sysinfo.var.stateScreen = STATEstateSystem;
-					rendueEcran(sysinfo);
-					break;
-				}
-				else if (
-							sysinfo.allButtons.ecranTitre[i]
-							->searchButtonTexte("Closed Loop", sysinfo.var.stateScreen, event.button.x, event.button.y)
-						)
-				{
-					// Todo
-					break;
-				}
-				else if (
-							sysinfo.allButtons.ecranTitre[i]
-							->searchButtonTexte("Quit", sysinfo.var.stateScreen, event.button.x, event.button.y)
-						)
-				{
-					sysinfo.var.continuer = false;
-					break;
-				}
-			}
-		}
-
-
-
-
-
-		else if (
-					sysinfo.var.stateScreen == STATEfunctionTransfer || sysinfo.var.stateScreen == STATETFcreateNumDen
-					|| sysinfo.var.stateScreen == STATETFcreateBode || sysinfo.var.stateScreen == STATETFdisplayBode
-				)
-		{
-			for (unsigned int i = 0; i < sysinfo.allButtons.ecranFCT.size(); i++)
-			{
-				if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Main menu", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					sysinfo.var.stateScreen = STATEecrantitre;
-					rendueEcran(sysinfo);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Create the Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					CreateNumDen(sysinfo);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Display the Transfer Function", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					displayTF(sysinfo);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Jury", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					displayJury(sysinfo);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranFCT[i]->searchButtonTexte("Bode", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					displayBode(sysinfo);
-					break;
-				}
-			}
-		}
-
-
-
-
-
-		else if (sysinfo.var.stateScreen == STATEstateSystem || sysinfo.var.stateScreen == STATESScreateMatrice
-			|| sysinfo.var.stateScreen == STATESSsimulate || sysinfo.var.stateScreen == STATEreponseTemporelle)
-		{
-			for (unsigned int i = 0; i < sysinfo.allButtons.ecranSYSETAT.size(); i++)
-			{
-				if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Main menu", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					sysinfo.var.stateScreen = STATEecrantitre;
-					rendueEcran(sysinfo);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Edit Matrix A, B, C and D", sysinfo.var.stateScreen, event.button.x, event.button.y)) 
-				{
-					createMatrice(sysinfo);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Compute A, B, C and D", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					if (sysinfo.fctDiscret->GETden().GETorder() > 0)
-						computeABCD(sysinfo);
-					else
-						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
-							"Order of Denominator is 0", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 130, 148, center_y);
-					SDL_RenderPresent(sysinfo.screen.renderer);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Display the State System", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					if (sysinfo.sysetatDiscret == nullptr)
-						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
-							"SS doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 196, center_y);
-					else {
-						displayStateSystem(sysinfo);
-						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
-							"OK", { 0, 255, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 196, center_y);
-					}
-					SDL_RenderPresent(sysinfo.screen.renderer);
-
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Simulate", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					if (sysinfo.sysetatDiscret == nullptr)
-						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
-							"SS doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 244, center_y);
-					else {
-						sysinfo.var.stateScreen = STATESSsimulate;
-						rendueEcran(sysinfo);
-
-					}
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Step", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
-					rendueEcran(sysinfo);
-					Echelon step;
-					createSignal(sysinfo, step);
-					createStep(sysinfo, step);
-					sysinfo.var.stateScreen = STATEreponseTemporelle;
-					rendueEcran(sysinfo);
-					displayReponseTemp(sysinfo, step);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Ramp", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
-					rendueEcran(sysinfo);
-					Rampe ramp;
-					createSignal(sysinfo, ramp);
-					createRamp(sysinfo, ramp);
-					sysinfo.var.stateScreen = STATEreponseTemporelle;
-					rendueEcran(sysinfo);
-					displayReponseTemp(sysinfo, ramp);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Sinus", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					//Sinus sinus(500, 0.1, 1, 1, 0);
-					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
-					rendueEcran(sysinfo);
-					Sinus sinus;
-					createSignal(sysinfo, sinus);
-					createSinus(sysinfo, sinus);
-					sysinfo.var.stateScreen = STATEreponseTemporelle;
-					rendueEcran(sysinfo);
-					displayReponseTemp(sysinfo, sinus);
-					break;
-				}
-				else if (sysinfo.allButtons.ecranSYSETAT[i]->searchButtonTexte("Import Signal", sysinfo.var.stateScreen, event.button.x, event.button.y))
-				{
-					sysinfo.allButtons.ecranSYSETAT[i]->changeOn();
-					rendueEcran(sysinfo);
-					break;
-				}
-			}
-		}
+		n.second->renderTextureTestStates(sysinfo.var.stateScreen, sysinfo.var.select);
 	}
-}
-unsigned int IHM::CinNumberUnsignedInt(Sysinfo& sysinfo, const std::string& msg, unsigned int x, unsigned int y){
-	bool continuer = true;
-	unsigned int number = 0;
-	int8_t digit = 0;
-	SDL_Event event;
-	int SDL_EnableUNICODE(1); // on azerty
-	
-	while (continuer){
-		SDL_WaitEvent(&event);
-		switch (event.type){
-		case SDL_QUIT:	// permet de quitter
-			sysinfo.var.continuer = false;
-			continuer = false;
-			break;
-		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
-			switch (event.key.keysym.sym) {
-			case SDLK_ESCAPE:
-				sysinfo.var.continuer = false;
-				continuer = false;
-				break;
-			case SDLK_BACKSPACE:
-				number = 0;
-				digit = 0;
-				break;
-			case SDLK_RETURN:
-				continuer = false;
-				break;
-			case SDLK_KP_ENTER:
-				continuer = false;
-				break;
-			case SDLK_1:
-				digit = 1;
-				break;
-			case SDLK_2:
-				digit = 2;
-				break;
-			case SDLK_3:
-				digit = 3;
-				break;
-			case SDLK_4:
-				digit = 4;
-				break;
-			case SDLK_5:
-				digit = 5;
-				break;
-			case SDLK_6:
-				digit = 6;
-				break;
-			case SDLK_7:
-				digit = 7;
-				break;
-			case SDLK_8:
-				digit = 8;
-				break;
-			case SDLK_9:
-				digit = 9;
-				break;
-			case SDLK_KP_0:
-				digit = 0;
-				break;
-			case SDLK_KP_1:
-				digit = 1;
-				break;
-			case SDLK_KP_2:
-				digit = 2;
-				break;
-			case SDLK_KP_3:
-				digit = 3;
-				break;
-			case SDLK_KP_4:
-				digit = 4;
-				break;
-			case SDLK_KP_5:
-				digit = 5;
-				break;
-			case SDLK_KP_6:
-				digit = 6;
-				break;
-			case SDLK_KP_7:
-				digit = 7;
-				break;
-			case SDLK_KP_8:
-				digit = 8;
-				break;
-			case SDLK_KP_9:
-				digit = 9;
-				break;
-			}
-			if (continuer){
-				if (digit != -1){
-					number = (number * 10) + digit;
-					digit = -1;
-					IHM::rendueEcran(sysinfo);
-					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-						blended,"Press ENTER to validate", { 255, 0, 0, 255 }, NoColor, 16, 0, 50);
-					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-						blended, "Press Backspace to retry", { 255, 0, 0, 255 }, NoColor, 16, 0, 66);
-					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-						blended, msg + std::to_string(number), { 0, 64, 255, 255 }, NoColor, 18, x, y, center_x);
-					SDL_RenderPresent(sysinfo.screen.renderer);
-				}
-			}
-			break;
-		}
-	}
-	return number;
-}
-double IHM::CinNumberDouble(Sysinfo& sysinfo, const std::string& msg, unsigned int x, unsigned int y){
-	bool continuer = true, postive = true, puissancePositive = true;
-	double number = 0, digit = 0;
-	unsigned int p = 1;
-	SDL_Event event;
-	int SDL_EnableUNICODE(1); // on azerty
 
-	while (continuer){
-		SDL_WaitEvent(&event);
-		switch (event.type){
-		case SDL_QUIT:	// permet de quitter
-			sysinfo.var.continuer = false;
-			continuer = false;
-			digit = -1;
-			number = 0;
-			break;
-		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
-			switch (event.key.keysym.sym) {
-			case SDLK_ESCAPE:
-				sysinfo.var.continuer = false;
-				continuer = false;
-				digit = -1;
-				number = 0;
-				break;
-			case SDLK_BACKSPACE:
-				postive = true;
-				puissancePositive = true;
-				number = 0;
-				digit = 0;
-				break;
-			case SDLK_RETURN:
-				continuer = false;
-				break;
-			case SDLK_KP_ENTER:
-				continuer = false;
-				break;
-			case SDLK_KP_MINUS:
-				postive = false;
-				break;
-			case SDLK_KP_PLUS:
-				postive = true;
-				break;
-			case SDLK_KP_PERIOD:
-				puissancePositive = false;
-				break;
-			case SDLK_1:
-				digit = 1;
-				break;
-			case SDLK_2:
-				digit = 2;
-				break;
-			case SDLK_3:
-				digit = 3;
-				break;
-			case SDLK_4:
-				digit = 4;
-				break;
-			case SDLK_5:
-				digit = 5;
-				break;
-			case SDLK_6:
-				digit = 6;
-				break;
-			case SDLK_7:
-				digit = 7;
-				break;
-			case SDLK_8:
-				digit = 8;
-				break;
-			case SDLK_9:
-				digit = 9;
-				break;
-			case SDLK_KP_0:
-				digit = 0;
-				break;
-			case SDLK_KP_1:
-				digit = 1;
-				break;
-			case SDLK_KP_2:
-				digit = 2;
-				break;
-			case SDLK_KP_3:
-				digit = 3;
-				break;
-			case SDLK_KP_4:
-				digit = 4;
-				break;
-			case SDLK_KP_5:
-				digit = 5;
-				break;
-			case SDLK_KP_6:
-				digit = 6;
-				break;
-			case SDLK_KP_7:
-				digit = 7;
-				break;
-			case SDLK_KP_8:
-				digit = 8;
-				break;
-			case SDLK_KP_9:
-				digit = 9;
-				break;
-			}
-			if (continuer){
-				if (digit != -1){
-					rendueEcran(sysinfo);
-					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-						blended, "Press ENTER to validate", { 255, 0, 0, 255 }, NoColor, 16, 0, 50);
-					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-						blended, "Press Backspace to retry", { 255, 0, 0, 255 }, NoColor, 16, 0, 66);
-					
-					if (puissancePositive){
-						number = (number * 10) + digit;
-						if (!postive)
-							number = -number;
-						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-							blended, msg + std::to_string(number), { 0, 64, 255, 255 }, NoColor, 18, x, y, center_x);
-					}
-					else{
-						number += (digit / pow(10, p));
-						p++;
-						if (!postive)
-							number = -number;
-						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-							blended, msg + std::to_string(number), { 0, 64, 255, 255 }, NoColor, 18, x, y, center_x);
-					}
-					SDL_RenderPresent(sysinfo.screen.renderer);
-					digit = -1;
-				}
-			}
-			break;
-		}
-	}
-	return number;
+	for (const auto& n : sysinfo.allButtons.ecranFCT)
+	{
+		n.second->renderButtonTexte(sysinfo.var.stateScreen);
+	}	
 }
 
-
-
+void IHM::rendueEcranSYSETAT(Sysinfo& sysinfo)
+{
+	for (const auto& n : sysinfo.allButtons.ecranSYSETAT)
+	{
+		n.second->renderButtonTexte(sysinfo.var.stateScreen);
+	}
+}
 
 
 
@@ -590,6 +201,10 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 {
 	IHM::logfileconsole("_ Start CreateNumDen _");
 
+
+	/* *********************************************************
+	 *							Num							   *
+	 ********************************************************* */
 
 	sysinfo.var.stateScreen = STATETFcreateNumDen;
 	
@@ -599,59 +214,125 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 	sysinfo.allTextes.CreateNumDen.clear();
 	rendueEcran(sysinfo);
 
-	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 50);
-	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Order of the Numerator : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, center_x);
+	Texte::writeTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 50,
+		no_angle
+	);
+
+	Texte::writeTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		blended, "Order of the Numerator : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50,
+		no_angle, center_x
+	);
 	SDL_RenderPresent(sysinfo.screen.renderer);
 
 
-	sysinfo.fctDiscret->SETnumOrder(CinNumberUnsignedInt(sysinfo, "Order of the Numerator : ", SCREEN_WIDTH / 2, 50));
-	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
+
+	sysinfo.fctDiscret->SETnumOrder
+		(KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Order of the Numerator : ", SCREEN_WIDTH / 2, 50));
+
+
+	Texte::loadTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
 		blended, "Order of the Numerator : " + std::to_string(sysinfo.fctDiscret->GETnum().GETorder()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent,
+		no_angle, center_x
+	);
+
 	rendueEcran(sysinfo);
 
 
 	for (unsigned int z = 0; z <= sysinfo.fctDiscret->GETnum().GETorder(); z++)
 	{
-		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "coef order:" + std::to_string(z) + " = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 75, center_x);
+		Texte::writeTexte
+		(sysinfo.screen.renderer, sysinfo.allTextes.font,
+			blended, "coef order:" + std::to_string(z) + " = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 75,
+			no_angle, center_x
+		);
+
 		SDL_RenderPresent(sysinfo.screen.renderer);
 
-		sysinfo.fctDiscret->SETnumThisCoef(z, CinNumberDouble(sysinfo, "coef order:" + std::to_string(z) + " = ", SCREEN_WIDTH / 2, 75));
+		sysinfo.fctDiscret->SETnumThisCoef
+			(z, KeyboardMouse::CinNumberDouble(sysinfo, "coef order:" + std::to_string(z) + " = ", SCREEN_WIDTH / 2, 75));
+		
 		rendueEcran(sysinfo);
 	}
 
 
-	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Order of the Denominator : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, center_x);
+	/* *********************************************************
+	 *							Den							   *
+	 ********************************************************* */
+
+
+	Texte::writeTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		blended, "Order of the Denominator : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100,
+		no_angle, center_x
+	);
+
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sysinfo.fctDiscret->SETdenOrder(CinNumberUnsignedInt(sysinfo, "Order of the Denominator : ", SCREEN_WIDTH / 2, 100));
-	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
+
+	sysinfo.fctDiscret->SETdenOrder
+		(KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Order of the Denominator : ", SCREEN_WIDTH / 2, 100));
+	
+	
+	Texte::loadTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
 		blended, "Order of the Denominator : " + std::to_string(sysinfo.fctDiscret->GETden().GETorder()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent,
+		no_angle, center_x
+	);
+
 	rendueEcran(sysinfo);
+
 	for (unsigned int z = 0; z <= sysinfo.fctDiscret->GETden().GETorder(); z++)
 	{
-		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "coef order:" + std::to_string(z) + " = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 125, center_x);
+		Texte::writeTexte
+		(sysinfo.screen.renderer, sysinfo.allTextes.font,
+			blended, "coef order:" + std::to_string(z) + " = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 125,
+			no_angle, center_x
+		);
+
 		SDL_RenderPresent(sysinfo.screen.renderer);
-		sysinfo.fctDiscret->SETdenThisCoef(z, CinNumberDouble(sysinfo, "coef order:" + std::to_string(z) + " = ", SCREEN_WIDTH / 2, 125));
+
+		sysinfo.fctDiscret->SETdenThisCoef
+			(z, KeyboardMouse::CinNumberDouble(sysinfo, "coef order:" + std::to_string(z) + " = ", SCREEN_WIDTH / 2, 125));
+		
 		rendueEcran(sysinfo);
 	}
 
-	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Sampling time : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, center_x);
+
+	/* *********************************************************
+	 *						Sampling time					   *
+	 ********************************************************* */
+
+	Texte::writeTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		blended, "Sampling time : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150,
+		no_angle, center_x
+	);
+
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sysinfo.fctDiscret->SETdeltaT(CinNumberDouble(sysinfo, "Sampling time : ", SCREEN_WIDTH / 2, 150));
-	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
+
+	sysinfo.fctDiscret->SETdeltaT
+		(KeyboardMouse::CinNumberDouble(sysinfo, "Sampling time : ", SCREEN_WIDTH / 2, 150));
+
+	Texte::loadTexte
+	(sysinfo.screen.renderer, sysinfo.allTextes.font,
+		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
 		blended, "Sampling time : " + std::to_string(sysinfo.fctDiscret->GETdeltaT()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent,
+		no_angle, center_x
+	);
+
 	rendueEcran(sysinfo);
 
 	sysinfo.var.stateScreen = STATEfunctionTransfer;
 	rendueEcran(sysinfo);
+
 	IHM::logfileconsole("_ End CreateNumDen _");
 }
 
@@ -668,8 +349,12 @@ void IHM::displayTF(Sysinfo& sysinfo)
 
 	if (sysinfo.fctDiscret == nullptr)
 	{
-		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 148, center_y);
+		Texte::writeTexte
+		(sysinfo.screen.renderer, sysinfo.allTextes.font,
+			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 148,
+			no_angle, center_y
+		);
+
 		SDL_RenderPresent(sysinfo.screen.renderer);
 	}
 	else
@@ -681,13 +366,27 @@ void IHM::displayTF(Sysinfo& sysinfo)
 			barre += "-";
 
 		stream << sysinfo.fctDiscret->GETnum().printOn(false); texte = stream.str(); stream.str(""); stream.clear();
-		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, texte, { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 550, center_x);
-		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, barre, { 0, 64, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 564, center_x);
+
+		Texte::writeTexte
+		(sysinfo.screen.renderer, sysinfo.allTextes.font,
+			blended, texte, { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 550,
+			no_angle, center_x
+		);
+
+		Texte::writeTexte
+		(sysinfo.screen.renderer, sysinfo.allTextes.font,
+			blended, barre, { 0, 64, 255, 255 }, NoColor, 24, SCREEN_WIDTH / 2, 564,
+			no_angle, center_x
+		);
+
 		stream << sysinfo.fctDiscret->GETden().printOn(false); texte = stream.str(); stream.str(""); stream.clear();
-		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, texte, { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 580, center_x);
+
+		Texte::writeTexte
+		(sysinfo.screen.renderer, sysinfo.allTextes.font,
+			blended, texte, { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 580,
+			no_angle, center_x
+		);
+
 		SDL_RenderPresent(sysinfo.screen.renderer);
 	}
 	IHM::logfileconsole("_ End displayTF _");
@@ -705,17 +404,17 @@ void IHM::displayJury(Sysinfo& sysinfo)
 	if (sysinfo.fctDiscret == nullptr)
 	{
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 196, center_y);
+			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 196, no_angle, center_y);
 		SDL_RenderPresent(sysinfo.screen.renderer);
 	}
 	else
 	{
 		if (sysinfo.fctDiscret->tabJury())
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "The system is stable", { 0, 255, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 100, 196, center_y);
+				blended, "The system is stable", { 0, 255, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 100, 196, no_angle, center_y);
 		else
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "The system is unstable", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 100, 196, center_y);
+				blended, "The system is unstable", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 100, 196, no_angle, center_y);
 
 		for (unsigned int i = 0; i < sysinfo.fctDiscret->GETjury().GETlength(); i++)
 		{
@@ -730,7 +429,7 @@ void IHM::displayJury(Sysinfo& sysinfo)
 			stream.str("");
 			stream.clear();
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, texte, { 255, 255, 255, 255 }, NoColor, 16, 100, initspace += 16);
+				blended, texte, { 255, 255, 255, 255 }, NoColor, 16, 100, initspace += 16, no_angle);
 		}
 	}
 	SDL_RenderPresent(sysinfo.screen.renderer);
@@ -750,7 +449,7 @@ void IHM::displayBode(Sysinfo& sysinfo)
 	if (sysinfo.fctDiscret == nullptr) 
 	{
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 244, center_y);
+			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 175, 244, no_angle, center_y);
 		SDL_RenderPresent(sysinfo.screen.renderer);
 	}
 	else 
@@ -758,33 +457,33 @@ void IHM::displayBode(Sysinfo& sysinfo)
 		sysinfo.var.stateScreen = STATETFcreateBode;
 		IHM::rendueEcran(sysinfo);
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "W min : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, center_x);
+			blended, "W min : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, no_angle, center_x);
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 50);
+			blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 50, no_angle);
 		SDL_RenderPresent(sysinfo.screen.renderer);
-		wmin = IHM::CinNumberDouble(sysinfo, "W min : ", SCREEN_WIDTH / 2, 50);
+		wmin = KeyboardMouse::CinNumberDouble(sysinfo, "W min : ", SCREEN_WIDTH / 2, 50);
 		Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-			blended, "W min : " + std::to_string(wmin), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent, center_x);
+			blended, "W min : " + std::to_string(wmin), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent, no_angle, center_x);
 		IHM::rendueEcran(sysinfo);
 
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "W max : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, center_x);
+			blended, "W max : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, no_angle, center_x);
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 100);
+			blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 100, no_angle);
 		SDL_RenderPresent(sysinfo.screen.renderer);
-		wmax = IHM::CinNumberDouble(sysinfo, "W max : ", SCREEN_WIDTH / 2, 100);
+		wmax = KeyboardMouse::CinNumberDouble(sysinfo, "W max : ", SCREEN_WIDTH / 2, 100);
 		Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-			blended, "W max : " + std::to_string(wmax), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent, center_x);
+			blended, "W max : " + std::to_string(wmax), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent, no_angle, center_x);
 		IHM::rendueEcran(sysinfo);
 
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "Number of points : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, center_x);
+			blended, "Number of points : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, no_angle, center_x);
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 150);
+			blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 150, no_angle);
 		SDL_RenderPresent(sysinfo.screen.renderer);
-		nbpoint = IHM::CinNumberUnsignedInt(sysinfo, "Number of points : ", SCREEN_WIDTH / 2, 150);
+		nbpoint = KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Number of points : ", SCREEN_WIDTH / 2, 150);
 		Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-			blended, "Number of points : " + std::to_string(nbpoint), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, center_x);
+			blended, "Number of points : " + std::to_string(nbpoint), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, no_angle, center_x);
 		IHM::rendueEcran(sysinfo);
 
 		sysinfo.var.stateScreen = STATETFdisplayBode;
@@ -825,17 +524,17 @@ void IHM::displayBode(Sysinfo& sysinfo)
 			barre += "-";
 		barre += ">w(2xPixf)";
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, barre, { 255, 255, 255, 255 }, NoColor, 16, 40, 460, center_y);
+			blended, barre, { 255, 255, 255, 255 }, NoColor, 16, 40, 460, no_angle, center_y);
 		barre = "";
 		unsigned int initspace = 14;
 		for (unsigned int z = 0; z < 30; z++)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "|", { 255, 255, 255, 255 }, NoColor, 16, 50, initspace += 16, center_x);
+				blended, "|", { 255, 255, 255, 255 }, NoColor, 16, 50, initspace += 16, no_angle, center_x);
 
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, std::to_string(wmin), { 255, 255, 255, 255 }, NoColor, 10, 30, 472, center_y);
+			blended, std::to_string(wmin), { 255, 255, 255, 255 }, NoColor, 10, 30, 472, no_angle, center_y);
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, std::to_string(wmax), { 255, 255, 255, 255 }, NoColor, 10, 530, 472, center_y);
+			blended, std::to_string(wmax), { 255, 255, 255, 255 }, NoColor, 10, 530, 472, no_angle, center_y);
 
 		unsigned int x0 = 50, xmax = 550;
 		unsigned int ymingain = 30, ymaxgain = 230;
@@ -856,8 +555,12 @@ void IHM::displayBode(Sysinfo& sysinfo)
 
 		for (unsigned int z = x0, n = 0; z < xmax, n < 10; z += (unsigned int)pasGraph[n], n++)
 		{
-			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "+", { 255, 0, 0, 255 }, NoColor, 8, x0 + z, ymaxgain - (unsigned int)((gainPhase[1][n] / amplitudeGain) * (ymaxgain - ymingain)), center);
+			Texte::writeTexte
+			(sysinfo.screen.renderer, sysinfo.allTextes.font,
+				blended, "+", { 255, 0, 0, 255 }, NoColor, 8,
+				x0 + z, ymaxgain - (unsigned int)((gainPhase[1][n] / amplitudeGain) * (ymaxgain - ymingain)),
+				no_angle, center
+			);
 			//writetxt(sysinfo, "+", { 0, 255, 0, 255 }, 8, x0 + z, yminphase - ((gainPhase[2][n] / amplitudePhase) * (ymaxphase - yminphase)), center);
 		}
 		SDL_RenderPresent(sysinfo.screen.renderer);
@@ -889,11 +592,11 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Length or height of A : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, center_x);
+		blended, "Length or height of A : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 50);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 50, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	length = IHM::CinNumberUnsignedInt(sysinfo, "Length or height of A : ", SCREEN_WIDTH / 2, 50);
+	length = KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Length or height of A : ", SCREEN_WIDTH / 2, 50);
 	sysinfo.sysetatDiscret->SETeditSizeA(length, length);
 	sysinfo.sysetatDiscret->SETeditSizeB(length, 1);
 	sysinfo.sysetatDiscret->SETeditSizeC(1, length);
@@ -901,7 +604,7 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
 		"Length of A : " + std::to_string(sysinfo.sysetatDiscret->GETA()->GETlength()) + " and Height of A : " + std::to_string(sysinfo.sysetatDiscret->GETA()->GETheight()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent, no_angle, center_x);
 	IHM::rendueEcran(sysinfo);
 
 	displayStateSystem(sysinfo);
@@ -911,9 +614,9 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETA()->GETheight(); j++)
 		{
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 75, center_x);
+				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 75, no_angle, center_x);
 			SDL_RenderPresent(sysinfo.screen.renderer);
-			sysinfo.sysetatDiscret->SETthisCoefA(i, j, IHM::CinNumberDouble(sysinfo, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", SCREEN_WIDTH / 2, 75));
+			sysinfo.sysetatDiscret->SETthisCoefA(i, j, KeyboardMouse::CinNumberDouble(sysinfo, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", SCREEN_WIDTH / 2, 75));
 			IHM::rendueEcran(sysinfo);
 			displayStateSystem(sysinfo);
 		}
@@ -922,7 +625,7 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
 		"Length of B : " + std::to_string(sysinfo.sysetatDiscret->GETB()->GETlength()) + " and Height of B : " + std::to_string(sysinfo.sysetatDiscret->GETB()->GETlength()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent, no_angle, center_x);
 	IHM::rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
 
@@ -931,9 +634,9 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETB()->GETheight(); j++)
 		{
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 125, center_x);
+				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 125, no_angle, center_x);
 			SDL_RenderPresent(sysinfo.screen.renderer);
-			sysinfo.sysetatDiscret->SETthisCoefB(i, j, IHM::CinNumberDouble(sysinfo, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", SCREEN_WIDTH / 2, 125));
+			sysinfo.sysetatDiscret->SETthisCoefB(i, j, KeyboardMouse::CinNumberDouble(sysinfo, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", SCREEN_WIDTH / 2, 125));
 			IHM::rendueEcran(sysinfo);
 			displayStateSystem(sysinfo);
 		}
@@ -942,7 +645,7 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
 		"Length of C : " + std::to_string(sysinfo.sysetatDiscret->GETC()->GETlength()) + " and Height of C : " + std::to_string(sysinfo.sysetatDiscret->GETC()->GETheight()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, no_angle, center_x);
 	IHM::rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
 
@@ -951,9 +654,9 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 		for (unsigned int j = 0; j < sysinfo.sysetatDiscret->GETC()->GETheight(); j++)
 		{
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 175, center_x);
+				blended, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 175, no_angle, center_x);
 			SDL_RenderPresent(sysinfo.screen.renderer);
-			sysinfo.sysetatDiscret->SETthisCoefC(i, j, IHM::CinNumberDouble(sysinfo, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", SCREEN_WIDTH / 2, 175));
+			sysinfo.sysetatDiscret->SETthisCoefC(i, j, KeyboardMouse::CinNumberDouble(sysinfo, "coef [" + std::to_string(i) + "][" + std::to_string(j) + "] = ", SCREEN_WIDTH / 2, 175));
 			IHM::rendueEcran(sysinfo);
 			displayStateSystem(sysinfo);
 		}
@@ -962,14 +665,14 @@ void IHM::createMatrice(Sysinfo& sysinfo)
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select,
 		sysinfo.allTextes.txtEcranTitre, blended,
 		"Length of D : " + std::to_string(sysinfo.sysetatDiscret->GETD()->GETlength()) + " and Height of D : " + std::to_string(sysinfo.sysetatDiscret->GETD()->GETheight()),
-		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, nonTransparent, center_x);
+		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "coef [0][0] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 225, center_x);
+		blended, "coef [0][0] = ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 225, no_angle, center_x);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sysinfo.sysetatDiscret->SETthisCoefD(0, 0, CinNumberDouble(sysinfo, "coef [0][0] = ", SCREEN_WIDTH / 2, 225));
+	sysinfo.sysetatDiscret->SETthisCoefD(0, 0, KeyboardMouse::CinNumberDouble(sysinfo, "coef [0][0] = ", SCREEN_WIDTH / 2, 225));
 	rendueEcran(sysinfo);
 	displayStateSystem(sysinfo);
 
@@ -984,7 +687,7 @@ void IHM::computeABCD(Sysinfo& sysinfo)
 	IHM::logfileconsole("_ Start computeABCD _");
 	if (sysinfo.fctDiscret == nullptr)
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
+			blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 148, no_angle, center_y);
 	else
 	{
 		End::deleteSYSETATDiscret(sysinfo.sysetatDiscret);
@@ -994,11 +697,11 @@ void IHM::computeABCD(Sysinfo& sysinfo)
 		{
 			sysinfo.sysetatDiscret->calculABCD(*sysinfo.fctDiscret);
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "OK", { 0, 255, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 148, center_y);
+				blended, "OK", { 0, 255, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 148, no_angle, center_y);
 		}
 		else
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "Order of Num >= Den", { 255, 0, 0, 255 }, NoColor, 14, (SCREEN_WIDTH / 2) + 150, 148, center_y);
+				blended, "Order of Num >= Den", { 255, 0, 0, 255 }, NoColor, 14, (SCREEN_WIDTH / 2) + 150, 148, no_angle, center_y);
 	}
 	SDL_RenderPresent(sysinfo.screen.renderer);
 	IHM::logfileconsole("_ End computeABCD _");
@@ -1013,7 +716,7 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 	std::string texte; std::ostringstream stream;
 	stream << std::fixed << std::setprecision(4);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Matrix A", { 0, 64, 255, 255 }, NoColor, 16, 100, initspace += 16);
+		blended, "Matrix A", { 0, 64, 255, 255 }, NoColor, 16, 100, initspace += 16, no_angle);
 	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETA()->GETlength(); i++)
 	{
 		stream << "|";
@@ -1027,12 +730,12 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 		stream.str("");
 		stream.clear();
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 100, initspace += 16);
+			blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 100, initspace += 16, no_angle);
 	}
 
 	initspace = 100;
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Matrix B", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
+		blended, "Matrix B", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16, no_angle);
 	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETB()->GETlength(); i++)
 	{
 		stream << "|";
@@ -1043,12 +746,12 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 		stream.str("");
 		stream.clear();
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
+			blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16, no_angle);
 	}
 
 	initspace += 32;
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Matrix C", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
+		blended, "Matrix C", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16, no_angle);
 	for (unsigned int i = 0; i < sysinfo.sysetatDiscret->GETC()->GETlength(); i++)
 	{
 		stream << "|";
@@ -1059,18 +762,18 @@ void IHM::displayStateSystem(Sysinfo& sysinfo)
 		stream.str("");
 		stream.clear();
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
+			blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16, no_angle);
 	}
 
 	initspace += 32;
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Matrix D", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
+		blended, "Matrix D", { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16, no_angle);
 	stream << "| " << sysinfo.sysetatDiscret->GETD()->GETthiscoef(0, 0) << " |";
 	texte = stream.str();
 	stream.str("");
 	stream.clear();
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16);
+		blended, texte, { 0, 64, 255, 255 }, NoColor, 16, 0, initspace += 16, no_angle);
 
 	SDL_RenderPresent(sysinfo.screen.renderer);
 	IHM::logfileconsole("_ End displayStateSystem _");
@@ -1083,23 +786,23 @@ void IHM::createSignal(Sysinfo& sysinfo, Signal& sig)
 {
 	IHM::logfileconsole("_ Start createSignal _");
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Number of samples : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, center_x);
+		blended, "Number of samples : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 150);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 150, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sig.SETnbech(CinNumberUnsignedInt(sysinfo, "Number of samples : ", SCREEN_WIDTH / 2, 150));
+	sig.SETnbech(KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Number of samples : ", SCREEN_WIDTH / 2, 150));
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Number of samples : " + std::to_string(sig.GETnbech()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, center_x);
+		blended, "Number of samples : " + std::to_string(sig.GETnbech()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 150, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "DeltaT : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, center_x);
+		blended, "DeltaT : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 200);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 200, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sig.SETdeltaT(CinNumberDouble(sysinfo, "DeltaT : ", SCREEN_WIDTH / 2, 200));
+	sig.SETdeltaT(KeyboardMouse::CinNumberDouble(sysinfo, "DeltaT : ", SCREEN_WIDTH / 2, 200));
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "DeltaT : " + std::to_string(sig.GETdeltaT()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, nonTransparent, center_x);
+		blended, "DeltaT : " + std::to_string(sig.GETdeltaT()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 200, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	IHM::logfileconsole("_ End createSignal _");
@@ -1113,13 +816,13 @@ void IHM::createStep(Sysinfo& sysinfo, Echelon& step)
 	IHM::logfileconsole("_ Start createStep _");
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Amplitude : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, center_x);
+		blended, "Amplitude : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 70, 250);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 70, 250, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	step.SETamplitude(CinNumberDouble(sysinfo, "Amplitude : ", SCREEN_WIDTH / 2, 250));
+	step.SETamplitude(KeyboardMouse::CinNumberDouble(sysinfo, "Amplitude : ", SCREEN_WIDTH / 2, 250));
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Amplitude : " + std::to_string(step.GETamplitude()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, center_x);
+		blended, "Amplitude : " + std::to_string(step.GETamplitude()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	IHM::logfileconsole("_ End createStep _");
@@ -1133,13 +836,13 @@ void IHM::createRamp(Sysinfo& sysinfo, Rampe& ramp)
 	IHM::logfileconsole("_ Start createRamp _");
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Slope : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, center_x);
+		blended, "Slope : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 250);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 50, 250, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	ramp.SETslope(CinNumberDouble(sysinfo, "Slope : ", SCREEN_WIDTH / 2, 250));
+	ramp.SETslope(KeyboardMouse::CinNumberDouble(sysinfo, "Slope : ", SCREEN_WIDTH / 2, 250));
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Slope : " + std::to_string(ramp.GETslope()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, nonTransparent, center_x);
+		blended, "Slope : " + std::to_string(ramp.GETslope()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	IHM::logfileconsole("_ End createRamp _");
@@ -1152,33 +855,33 @@ void IHM::createSinus(Sysinfo& sysinfo, Sinus& sinus)
 	IHM::logfileconsole("_ Start createSinus _");
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Amplitude : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, center_x);
+		blended, "Amplitude : ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 70, 250);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 70, 250, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sinus.SETamplitude(CinNumberDouble(sysinfo, "Amplitude : ", SCREEN_WIDTH / 2, 250));
+	sinus.SETamplitude(KeyboardMouse::CinNumberDouble(sysinfo, "Amplitude : ", SCREEN_WIDTH / 2, 250));
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Amplitude : " + std::to_string(sinus.GETamplitude()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, nonTransparent, center_x);
+		blended, "Amplitude : " + std::to_string(sinus.GETamplitude()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 250, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Angular velocity (w): ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 300, center_x);
+		blended, "Angular velocity (w): ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 300, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 300);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 100, 300, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sinus.SETw(CinNumberDouble(sysinfo, "Angular velocity (w): ", SCREEN_WIDTH / 2, 300));
+	sinus.SETw(KeyboardMouse::CinNumberDouble(sysinfo, "Angular velocity (w): ", SCREEN_WIDTH / 2, 300));
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Angular velocity (w): " + std::to_string(sinus.GETw()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 300, nonTransparent, center_x);
+		blended, "Angular velocity (w): " + std::to_string(sinus.GETw()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 300, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Phase (phi): ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 350, center_x);
+		blended, "Phase (phi): ", { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 350, no_angle, center_x);
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 70, 350);
+		blended, "Enter a number", { 255, 215, 0, 255 }, NoColor, 18, SCREEN_WIDTH / 2 + 70, 350, no_angle);
 	SDL_RenderPresent(sysinfo.screen.renderer);
-	sinus.SETdephasage(CinNumberDouble(sysinfo, "Phase (phi): ", SCREEN_WIDTH / 2, 350));
+	sinus.SETdephasage(KeyboardMouse::CinNumberDouble(sysinfo, "Phase (phi): ", SCREEN_WIDTH / 2, 350));
 	Texte::loadTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.txtEcranTitre,
-		blended, "Phase (phi): " + std::to_string(sinus.GETdephasage()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 350, nonTransparent, center_x);
+		blended, "Phase (phi): " + std::to_string(sinus.GETdephasage()), { 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 350, nonTransparent, no_angle, center_x);
 	rendueEcran(sysinfo);
 
 	IHM::logfileconsole("_ End createSinus _");
@@ -1195,12 +898,12 @@ void IHM::displayReponseTemp(Sysinfo& sysinfo, Signal& sig)
 		barre += "-";
 	barre += ">t(s)";
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, barre, { 255, 255, 255, 255 }, NoColor, 16, 40, 250, center_y);
+		blended, barre, { 255, 255, 255, 255 }, NoColor, 16, 40, 250, no_angle, center_y);
 	barre = "";
 	unsigned int initspace = 34;
 	for (unsigned int z = 0; z < 30; z++)
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "|", { 255, 255, 255, 255 }, NoColor, 16, 50, initspace += 16, center_x);
+			blended, "|", { 255, 255, 255, 255 }, NoColor, 16, 50, initspace += 16, no_angle, center_x);
 
 
 	Matrice X0(sysinfo.sysetatDiscret->GETA()->GETlength(), 1);
@@ -1228,58 +931,33 @@ void IHM::displayReponseTemp(Sysinfo& sysinfo, Signal& sig)
 
 	unsigned int pasGraph = (xmax - xmin) / sig.GETnbech();
 	Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-		blended, std::to_string(max), { 255, 0, 0, 255 }, NoColor, 8, 20, 50, center);
+		blended, std::to_string(max), { 255, 0, 0, 255 }, NoColor, 8, 20, 50, no_angle, center);
 	for (unsigned int z = xmin, n = 0; z < xmax, n < sig.GETnbech(); z += pasGraph, n++)
 	{
 		Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-			blended, "|", { 255, 255, 255, 255 }, NoColor, 8, z, y0, center);
+			blended, "|", { 255, 255, 255, 255 }, NoColor, 8, z, y0, no_angle, center);
 
 		if (sig.GETthiscoef(n) > 0)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, 
-				blended, "+", { 255, 0, 0, 255 }, NoColor, 8, z, y0 - (unsigned int)((sig.GETthiscoef(n) / max) * (y0 - ymax)), center);
+				blended, "+", { 255, 0, 0, 255 }, NoColor, 8, z, y0 - (unsigned int)((sig.GETthiscoef(n) / max) * (y0 - ymax)), no_angle, center);
 		else if (sig.GETthiscoef(n) < 0)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "+", { 255, 0, 0, 255 }, NoColor, 8, z, y0 + (unsigned int)((sig.GETthiscoef(n) / min) * (ymin - y0)), center);
+				blended, "+", { 255, 0, 0, 255 }, NoColor, 8, z, y0 + (unsigned int)((sig.GETthiscoef(n) / min) * (ymin - y0)), no_angle, center);
 
 		if (yOut[n] > 0)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "+", { 0, 255, 0, 255 }, NoColor, 8, z, y0 - (unsigned int)((yOut[n] / max) * (y0 - ymax)), center);
+				blended, "+", { 0, 255, 0, 255 }, NoColor, 8, z, y0 - (unsigned int)((yOut[n] / max) * (y0 - ymax)), no_angle, center);
 		else if (yOut[n] < 0)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, "+", { 0, 255, 0, 255 }, NoColor, 8, z, y0 + (unsigned int)((yOut[n] / min) * (ymin - y0)), center);
+				blended, "+", { 0, 255, 0, 255 }, NoColor, 8, z, y0 + (unsigned int)((yOut[n] / min) * (ymin - y0)), no_angle, center);
 
 		if (n == 10)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
-				blended, std::to_string(sig.GETdeltaT() * 10), { 255, 255, 255, 255 }, NoColor, 8, z, y0 + 10, center);
+				blended, std::to_string(sig.GETdeltaT() * 10), { 255, 255, 255, 255 }, NoColor, 8, z, y0 + 10, no_angle, center);
 	}
 	delete[] yOut;
 	SDL_RenderPresent(sysinfo.screen.renderer);
 	IHM::logfileconsole("_ Start displayReponseTemp _");
-}
-
-
-
-
-void IHM::deleteAll(Sysinfo& sysinfo){
-	logfileconsole("*********_________ Start DeleteAll _________*********");
-	for (unsigned int i = 1; i < MAX_FONT; i++)
-		TTF_CloseFont(sysinfo.allTextes.font[i]);
-
-	deleteDyTabPlayerAndTextures(sysinfo.allTextes.txtEcranTitre, "txtEcranTitre");
-	deleteDyTabPlayerAndTextures(sysinfo.allTextes.CreateNumDen, "CreateNumDen");
-
-	deleteDyTabPlayerAndTextures(sysinfo.allButtons.ecranTitre, "ecranTitre");
-	deleteDyTabPlayerAndTextures(sysinfo.allButtons.ecranFCT, "ecranFCT");
-	deleteDyTabPlayerAndTextures(sysinfo.allButtons.ecranSYSETAT, "ecranSYSETAT");
-
-	End::deleteFCTDiscret(sysinfo.fctDiscret);
-	End::deleteSYSETATDiscret(sysinfo.sysetatDiscret);
-
-	SDL_DestroyRenderer(sysinfo.screen.renderer);
-	SDL_DestroyWindow(sysinfo.screen.window);
-	sysinfo.screen.renderer = nullptr;
-	sysinfo.screen.window = nullptr;
-	logfileconsole("*********_________ End DeleteAll _________*********");
 }
 
 /*

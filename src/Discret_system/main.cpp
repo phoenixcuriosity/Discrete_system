@@ -1,9 +1,9 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2019 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.0
-	file version 2.0
+	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
+	last modification on this file on version: 3.2
+	file version 2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -25,10 +25,13 @@
 
 #include "IHM.h"
 #include "LoadConfig.h"
+#include "End.h"
+#include "KeyboardMouse.h"
 
 int main(int argc, char *argv[])
 {
 	Sysinfo sysinfo;
+	End::initPtrSysinfo(sysinfo);
 
 	sysinfo.var.argc = argc;
 	sysinfo.var.argv = argv;
@@ -48,9 +51,9 @@ int main(int argc, char *argv[])
 		IHM::logfileconsole("_ Start mainLoop _");
 		while (sysinfo.var.continuer) 
 		{
-			IHM::eventSDL(sysinfo);
+			KeyboardMouse::eventSDL(sysinfo);
 		}
-		IHM::deleteAll(sysinfo);
+		End::deleteAll(sysinfo);
 		IHM::logfileconsole("_ End mainLoop _");
 	}
 	else
