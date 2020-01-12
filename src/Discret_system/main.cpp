@@ -3,7 +3,7 @@
 	Discrete_system
 	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
 	last modification on this file on version: 3.2
-	file version 2.1
+	file version 2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -36,28 +36,47 @@ int main(int argc, char *argv[])
 	sysinfo.var.argc = argc;
 	sysinfo.var.argv = argv;
 
-	LoadConfig::initSysinfo(sysinfo);
-	LoadConfig::initsdl(sysinfo);
-
-	if (LoadConfig::initfile(sysinfo.fichier))
+	try
 	{
-		IHM::showStartSuccess();
-
-		LoadConfig::loadAllTextures(sysinfo);
-
-		sysinfo.var.stateScreen = STATEecrantitre;
-		IHM::rendueEcran(sysinfo);
-
-		IHM::logfileconsole("_ Start mainLoop _");
-		while (sysinfo.var.continuer) 
-		{
-			KeyboardMouse::eventSDL(sysinfo);
-		}
-		End::deleteAll(sysinfo);
-		IHM::logfileconsole("_ End mainLoop _");
+		LoadConfig::initSysinfo(sysinfo);
+		LoadConfig::initSDL(sysinfo.screen, sysinfo.allTextes.font);
 	}
-	else
-		return EXIT_FAILURE;
+	catch (const std::string& msg)
+	{
+		End::exitError(msg);
+	}
+	
+	/* 
+	 * try/catch générale
+	 * Utilisé si tous les autres try/catch n'ont pas d'action
+	 */
+	try
+	{
+		if (LoadConfig::initfile(sysinfo.fichier))
+		{
+			IHM::showStartSuccess();
+
+			LoadConfig::loadAllTextures(sysinfo);
+
+			sysinfo.var.stateScreen = STATEecrantitre;
+			IHM::rendueEcran(sysinfo);
+
+			IHM::logfileconsole("_ Start mainLoop _");
+			while (sysinfo.var.continuer)
+			{
+				KeyboardMouse::eventSDL(sysinfo);
+			}
+			End::deleteAll(sysinfo);
+			IHM::logfileconsole("_ End mainLoop _");
+		}
+		else
+			return EXIT_FAILURE;
+	}
+	catch (const std::string & msg)
+	{
+		End::exitError(msg);
+	}
+	
 
 	return EXIT_SUCCESS;
 }

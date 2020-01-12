@@ -105,51 +105,68 @@ bool LoadConfig::initfile(Fichier& file)
 * OUTPUT PARAMETERS : variables SDL initialisées
 * RETURNED VALUE    : void
 */
-void LoadConfig::initsdl(Sysinfo& sysinfo)
+bool LoadConfig::initSDL(Screen& screen, TTF_Font* font[])
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		std::cout << std::endl << "SDL could not initialize! SDL_Error: " << SDL_GetError();
-	}	
+		IHM::logfileconsole("[ERROR]___: SDL could not initialize! SDL_Error: " + (std::string)SDL_GetError());
+		return false;
+	}
 	else
 	{
-		sysinfo.screen.window = SDL_CreateWindow("Discret System", 200, 200, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+
+
+		screen.window = SDL_CreateWindow("Discrete_system",
+			200, 200,
+			SCREEN_WIDTH, SCREEN_HEIGHT,
+			SDL_WINDOW_OPENGL);
 
 		//	SDL_WINDOW_FULLSCREEN_DESKTOP or SDL_WINDOW_FULLSCREEN
-		if (sysinfo.screen.window == nullptr)
+		if (screen.window == nullptr)
 		{
 			SDL_Quit();
-		}	
-		else
-			IHM::logfileconsole("CreateWindow Success");
-
-		sysinfo.screen.renderer = SDL_CreateRenderer(sysinfo.screen.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		if (sysinfo.screen.renderer == nullptr)
-		{
-			SDL_DestroyWindow(sysinfo.screen.window);
-			SDL_Quit();
+			return false;
 		}
 		else
-			IHM::logfileconsole("CreateRenderer Success");
+		{
+			IHM::logfileconsole("[INFO]___: CreateWindow Success");
+		}
+
+		screen.renderer = SDL_CreateRenderer(screen.window, -1, SDL_RENDERER_ACCELERATED);
+		//| SDL_RENDERER_PRESENTVSYNC
+		if (screen.renderer == nullptr)
+		{
+			SDL_DestroyWindow(screen.window);
+			SDL_Quit();
+			return false;
+		}
+		else
+		{
+			IHM::logfileconsole("[INFO]___: CreateRenderer Success");
+		}
 
 		if (TTF_Init() != 0)
 		{
-			SDL_DestroyRenderer(sysinfo.screen.renderer);
-			SDL_DestroyWindow(sysinfo.screen.window);
+			SDL_DestroyRenderer(screen.renderer);
+			SDL_DestroyWindow(screen.window);
 			SDL_Quit();
+			return false;
 		}
 		else
-			IHM::logfileconsole("TTF_Init Success");
+		{
+			IHM::logfileconsole("[INFO]___: TTF_Init Success");
+		}
 
+		for (Uint8 i(1); i < MAX_FONT; i++)
+		{
+			font[i] = TTF_OpenFont(fontFile.c_str(), i);
+		}
 
-		const std::string fontFile = "arial.ttf";
-
-		for (unsigned int i = 1; i < MAX_FONT; i++)
-			sysinfo.allTextes.font[i] = TTF_OpenFont(fontFile.c_str(), i);
-
-		IHM::logfileconsole("SDL_Init Success");
+		IHM::logfileconsole("[INFO]___: SDL_Init Success");
+		return true;
 	}
 }
+
 
 /*
 * NAME : loadAllTextures

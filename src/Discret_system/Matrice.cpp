@@ -23,6 +23,8 @@
 
 #include "Matrice.h"
 
+#include "IHM.h"
+
 Matrice::Matrice() : _tab(allocate(1, 1)), _length(1), _height(1), _stringSize(0)
 {
 }
@@ -52,6 +54,10 @@ Matrice::~Matrice()
 		}
 		delete[] _tab;
 		_tab = nullptr;
+	}
+	else
+	{
+		IHM::logfileconsole("[ERROR]___: Matrice::~Matrice : _tab == nullptr");
 	}
 }
 
@@ -87,22 +93,7 @@ bool operator==(const Matrice& A, const Matrice& B)
 	}
 	return false;
 }
-Matrice operator+(const Matrice& a, const Matrice& b)
-{
-	Matrice resultat = addition(a, b);
-	return resultat;
-}
-Matrice operator-(const Matrice& a, const Matrice& b)
-{
-	Matrice resultat = soustraction(a, b);
-	return resultat;
-}
-Matrice operator*(const Matrice& a, const Matrice& b)
-{
-	Matrice resultat = multiplication(a, b);
-	return resultat;
-}
-Matrice addition(const Matrice& A, const Matrice& B)
+Matrice operator+(const Matrice& A, const Matrice& B)
 {
 	Matrice addition(A._length, A._height);
 	if (Matrice::assertSize(A._length, A._height, B._length, B._height))
@@ -115,7 +106,7 @@ Matrice addition(const Matrice& A, const Matrice& B)
 	}
 	return addition;
 }
-Matrice soustraction(const Matrice& A, const Matrice& B)
+Matrice operator-(const Matrice& A, const Matrice& B)
 {
 	Matrice soustraction(A._length, A._height);
 	if (Matrice::assertSize(A._length, A._height, B._length, B._height))
@@ -128,10 +119,10 @@ Matrice soustraction(const Matrice& A, const Matrice& B)
 	}
 	return soustraction;
 }
-Matrice multiplication(const Matrice& A, const Matrice& B)
+Matrice operator*(const Matrice& A, const Matrice& B)
 {
 	double somme = 0;
-	
+
 	if (A._height == B._length)
 	{
 		Matrice multiplication(A._length, B._height);
@@ -150,31 +141,33 @@ Matrice multiplication(const Matrice& A, const Matrice& B)
 	else if (A._length == 1 && A._height == 1)
 	{
 		Matrice multiplication(B.GETlength(), B.GETheight());
-		for (unsigned int iB = 0; iB < B.GETlength(); iB++) 
+		for (unsigned int iB = 0; iB < B.GETlength(); iB++)
 		{
 			for (unsigned int jB = 0; jB < B.GETheight(); jB++)
-				multiplication.SETthiscoef(iB, jB, A.GETthiscoef(0,0) * B.GETthiscoef(iB, jB));
+				multiplication.SETthiscoef(iB, jB, A.GETthiscoef(0, 0) * B.GETthiscoef(iB, jB));
 		}
 		return multiplication;
 	}
-	else if (B._length == 1 && B._height == 1) 
+	else if (B._length == 1 && B._height == 1)
 	{
 		Matrice multiplication(A.GETlength(), A.GETheight());
-		for (unsigned int iA = 0; iA < A.GETlength(); iA++) 
+		for (unsigned int iA = 0; iA < A.GETlength(); iA++)
 		{
 			for (unsigned int jA = 0; jA < A.GETheight(); jA++)
 				multiplication.SETthiscoef(iA, jA, B.GETthiscoef(0, 0) * A.GETthiscoef(iA, jA));
 		}
 		return multiplication;
 	}
-	else 
+	else
 	{
 		Matrice multiplication(1, 1);
 		std::cout << std::endl << "___________Matrice : Error multiplication : A._lenght != B._height";
 		return multiplication;
 	}
-	
 }
+
+
+
 void Matrice::SETthiscoef(unsigned int i, unsigned int j, double userValue)
 {
 	if (assertIndex(i, j))

@@ -28,7 +28,24 @@ This is a free software, you can redistribute it and/or modify it
 [INFO]___: Create ButtonTexte n:10 msg = Import Signal Success
 [INFO]___: Create ButtonTexte n:11 msg = Main menu (3) Success
 _ Start mainLoop _
-[INFO]__: keySDLK_ESCAPE
+_ Start createMatrice _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ Start displayStateSystem _
+_ End displayStateSystem _
+_ End createMatrice _
 *********_________ Start DeleteAll _________*********
 [INFO]___: Delete txtEcranTitre name = Dev version: 3.1 Success
 [INFO]___: Delete txtEcranTitre name = Developed by SAUTER Robin Success
@@ -38,9 +55,13 @@ _ Start mainLoop _
 [INFO]___: Delete txtEcranTitre name = Create the Transfer Function Success
 [INFO]___: Delete txtEcranTitre name = State System Success
 [INFO]___: Delete txtEcranTitre name = Display Bode Success
+[INFO]___: Delete txtEcranTitre name = Length of D : 1 and Height of D : 1 Success
 [INFO]___: Delete txtEcranTitre name = Create Matrix A, B, C and D Success
 [INFO]___: Delete txtEcranTitre name = Create Bode Success
 [INFO]___: Delete txtEcranTitre name = Simulate Success
+[INFO]___: Delete txtEcranTitre name = Length of A : 1 and Height of A : 1 Success
+[INFO]___: Delete txtEcranTitre name = Length of B : 1 and Height of B : 1 Success
+[INFO]___: Delete txtEcranTitre name = Length of C : 1 and Height of C : 1 Success
 [INFO]___: Delete ecranTitre name = Quit Success
 [INFO]___: Delete ecranTitre name = Transfer Function Success
 [INFO]___: Delete ecranTitre name = State System Success
@@ -65,4 +86,4 @@ _ Start mainLoop _
 [INFO]___: Delete ecranSYSETAT name = Import Signal Success
 [INFO]___: Delete ecranSYSETAT name = Main menu (3) Success
 *********_________ End DeleteAll _________*********
-last msg before exit : [INFO]__: keySDLK_ESCAPE
+_ End mainLoop _

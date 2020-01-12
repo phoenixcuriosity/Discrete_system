@@ -57,7 +57,7 @@ public:
 	 * OUTPUT PARAMETERS : variables SDL initialisées
 	 * RETURNED VALUE    : void
 	 */
-	static void initsdl(Sysinfo& sysinfo);
+	static bool initSDL(Screen& screen, TTF_Font* font[]);
 
 	/*
 	 * NAME : loadAllTextures

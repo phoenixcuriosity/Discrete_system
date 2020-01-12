@@ -22,17 +22,11 @@ C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse
 C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(172,43): warning C4100: 'sysinfo': unreferenced formal parameter
 C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(176,43): warning C4100: 'sysinfo': unreferenced formal parameter
 C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(180,43): warning C4100: 'sysinfo': unreferenced formal parameter
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(431,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\KeyboardMouse.cpp(541,6): warning C4189: 'SDL_EnableUNICODE': local variable is initialized but not referenced
   LoadConfig.cpp
 C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(36,39): warning C4100: 'sysinfo': unreferenced formal parameter
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\LoadConfig.cpp(145,32): warning C4459: declaration of 'fontFile' hides global declaration
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Texture.h(56,19): message : see declaration of 'fontFile'
   main.cpp
   Matrice.cpp
   Polynome.cpp
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(197,33): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Robin\Documents\GitHub\discrete_system\src\Discret_system\Polynome.cpp(279,33): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
   Signal.cpp
   SYSETATDiscret.cpp
   Texture.cpp

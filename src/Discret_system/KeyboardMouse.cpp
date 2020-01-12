@@ -329,16 +329,24 @@ void KeyboardMouse::mouse(Sysinfo& sysinfo, SDL_Event event)
 				else if (sysinfo.allButtons.ecranSYSETAT["Compute A, B, C and D"]
 							->searchButtonTexte(sysinfo.var.stateScreen, event.button.x, event.button.y))
 				{
-
-					if (sysinfo.fctDiscret->GETden().GETorder() > 0)
-						IHM::computeABCD(sysinfo);
+					if (sysinfo.fctDiscret == nullptr)
+					{
+						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
+							blended, "TF doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 148, no_angle, center_y);
+					}
 					else
-						Texte::writeTexte
-						(sysinfo.screen.renderer, sysinfo.allTextes.font,
-							blended, "Order of Denominator is 0", { 255, 0, 0, 255 }, NoColor,
-							16, (SCREEN_WIDTH / 2) + 130, 148,
-							no_angle, center_y
-						);
+					{
+						if (sysinfo.fctDiscret->GETden().GETorder() > 0)
+							IHM::computeABCD(sysinfo);
+						else
+							Texte::writeTexte
+							(sysinfo.screen.renderer, sysinfo.allTextes.font,
+								blended, "Order of Denominator is 0", { 255, 0, 0, 255 }, NoColor,
+								16, (SCREEN_WIDTH / 2) + 130, 148,
+								no_angle, center_y
+							);
+					}
+					
 
 					SDL_RenderPresent(sysinfo.screen.renderer);
 					break;
@@ -349,7 +357,8 @@ void KeyboardMouse::mouse(Sysinfo& sysinfo, SDL_Event event)
 					if (sysinfo.sysetatDiscret == nullptr)
 						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
 							"SS doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 196, no_angle, center_y);
-					else {
+					else
+					{
 						IHM::displayStateSystem(sysinfo);
 						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
 							"OK", { 0, 255, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 196, no_angle, center_y);
@@ -364,11 +373,12 @@ void KeyboardMouse::mouse(Sysinfo& sysinfo, SDL_Event event)
 					if (sysinfo.sysetatDiscret == nullptr)
 						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font, blended,
 							"SS doesn't exist", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 150, 244, no_angle, center_y);
-					else {
+					else
+					{
 						sysinfo.var.stateScreen = STATESSsimulate;
 						IHM::rendueEcran(sysinfo);
-
 					}
+					SDL_RenderPresent(sysinfo.screen.renderer);
 					break;
 				}
 				else if (sysinfo.allButtons.ecranSYSETAT["Step"]
@@ -428,17 +438,19 @@ unsigned int KeyboardMouse::CinNumberUnsignedInt(Sysinfo& sysinfo, const std::st
 	unsigned int number = 0;
 	int8_t digit = 0;
 	SDL_Event event;
-	int SDL_EnableUNICODE(1); // on azerty
 
-	while (continuer) {
+	while (continuer)
+	{
 		SDL_WaitEvent(&event);
-		switch (event.type) {
+		switch (event.type)
+		{
 		case SDL_QUIT:	// permet de quitter
 			sysinfo.var.continuer = false;
 			continuer = false;
 			break;
 		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
-			switch (event.key.keysym.sym) {
+			switch (event.key.keysym.sym)
+			{
 			case SDLK_ESCAPE:
 				sysinfo.var.continuer = false;
 				continuer = false;
@@ -511,8 +523,10 @@ unsigned int KeyboardMouse::CinNumberUnsignedInt(Sysinfo& sysinfo, const std::st
 				digit = 9;
 				break;
 			}
-			if (continuer) {
-				if (digit != -1) {
+			if (continuer)
+			{
+				if (digit != -1)
+				{
 					number = (number * 10) + digit;
 					digit = -1;
 					IHM::rendueEcran(sysinfo);
@@ -526,6 +540,10 @@ unsigned int KeyboardMouse::CinNumberUnsignedInt(Sysinfo& sysinfo, const std::st
 				}
 			}
 			break;
+		case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
+			mouse(sysinfo, event);
+			return NULL;
+			break;
 		}
 	}
 	return number;
@@ -538,11 +556,12 @@ double KeyboardMouse::CinNumberDouble(Sysinfo& sysinfo, const std::string& msg, 
 	double number = 0, digit = 0;
 	unsigned int p = 1;
 	SDL_Event event;
-	int SDL_EnableUNICODE(1); // on azerty
 
-	while (continuer) {
+	while (continuer) 
+	{
 		SDL_WaitEvent(&event);
-		switch (event.type) {
+		switch (event.type) 
+		{
 		case SDL_QUIT:	// permet de quitter
 			sysinfo.var.continuer = false;
 			continuer = false;
@@ -550,7 +569,8 @@ double KeyboardMouse::CinNumberDouble(Sysinfo& sysinfo, const std::string& msg, 
 			number = 0;
 			break;
 		case SDL_KEYDOWN: // test sur le type d'événement touche enfoncé
-			switch (event.key.keysym.sym) {
+			switch (event.key.keysym.sym)
+			{
 			case SDLK_ESCAPE:
 				sysinfo.var.continuer = false;
 				continuer = false;
@@ -636,22 +656,26 @@ double KeyboardMouse::CinNumberDouble(Sysinfo& sysinfo, const std::string& msg, 
 				digit = 9;
 				break;
 			}
-			if (continuer) {
-				if (digit != -1) {
+			if (continuer)
+			{
+				if (digit != -1)
+				{
 					IHM::rendueEcran(sysinfo);
 					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 						blended, "Press ENTER to validate", { 255, 0, 0, 255 }, NoColor, 16, 0, 50, no_angle);
 					Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 						blended, "Press Backspace to retry", { 255, 0, 0, 255 }, NoColor, 16, 0, 66, no_angle);
 
-					if (puissancePositive) {
+					if (puissancePositive)
+					{
 						number = (number * 10) + digit;
 						if (!postive)
 							number = -number;
 						Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 							blended, msg + std::to_string(number), { 0, 64, 255, 255 }, NoColor, 18, x, y, no_angle, center_x);
 					}
-					else {
+					else 
+					{
 						number += (digit / pow(10, p));
 						p++;
 						if (!postive)
@@ -663,6 +687,10 @@ double KeyboardMouse::CinNumberDouble(Sysinfo& sysinfo, const std::string& msg, 
 					digit = -1;
 				}
 			}
+			break;
+		case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
+			mouse(sysinfo, event);
+			return NULL;
 			break;
 		}
 	}

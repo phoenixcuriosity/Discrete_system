@@ -42,10 +42,6 @@ public: // opérations entre 2 Matrices
 	friend Matrice operator-(const Matrice&, const Matrice&);
 	friend Matrice operator*(const Matrice&, const Matrice&);
 
-	friend Matrice addition(const Matrice&, const Matrice&);
-	friend Matrice soustraction(const Matrice&, const Matrice&);
-	friend Matrice multiplication(const Matrice&, const Matrice&);
-
 public: // assesseurs
 	void SETthiscoef(unsigned int i, unsigned int j, double userValue);
 	double GETthiscoef(unsigned int i, unsigned int j)const;

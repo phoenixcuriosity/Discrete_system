@@ -360,7 +360,7 @@ void IHM::displayTF(Sysinfo& sysinfo)
 	else
 	{
 		unsigned int stringSize = 0;
-		stringSize = max(sysinfo.fctDiscret->GETnum().GETstringSize(), sysinfo.fctDiscret->GETden().GETstringSize());
+		stringSize = std::max(sysinfo.fctDiscret->GETnum().GETstringSize(), sysinfo.fctDiscret->GETden().GETstringSize());
 
 		for (unsigned int i = 0; i < sysinfo.fctDiscret->GETden().GETstringSize(); i++)
 			barre += "-";
@@ -515,8 +515,8 @@ void IHM::displayBode(Sysinfo& sysinfo)
 				phaseMin = gainPhase[2][i];
 		}
 
-		double amplitudeGain = max(abs(gainMax), abs(gainMin));
-		double amplitudePhase = max(abs(phaseMax), abs(phaseMin));
+		double amplitudeGain = std::max(abs(gainMax), abs(gainMin));
+		double amplitudePhase = std::max(abs(phaseMax), abs(phaseMin));
 
 		std::string barre;
 		barre = "";
