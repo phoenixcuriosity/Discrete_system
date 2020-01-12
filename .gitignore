@@ -1,5 +1,7 @@
 #Perso
 *.ipch
+*.vs
+*Debug
 
 # Prerequisites
 *.d
@@ -17,7 +19,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-
+#*.dll
 
 # Fortran module files
 *.mod
@@ -27,7 +29,13 @@
 *.lai
 *.la
 *.a
+#*.lib
+*.tlog
+*.pdb
+*.ilk
 
 # Executables
+#*.exe
 *.out
 *.app
+
