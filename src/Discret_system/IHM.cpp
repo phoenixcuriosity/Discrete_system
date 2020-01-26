@@ -229,14 +229,14 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 
 
 
-	sysinfo.fctDiscret->SETnumOrder
+	sysinfo.fctDiscret->GETnum()->SETorder
 		(KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Order of the Numerator : ", SCREEN_WIDTH / 2, 50));
 
 
 	Texte::loadTexte
 	(sysinfo.screen.renderer, sysinfo.allTextes.font,
 		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
-		blended, "Order of the Numerator : " + std::to_string(sysinfo.fctDiscret->GETnum().GETorder()),
+		blended, "Order of the Numerator : " + std::to_string(sysinfo.fctDiscret->GETnum()->GETorder()),
 		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 50, nonTransparent,
 		no_angle, center_x
 	);
@@ -244,7 +244,7 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 	rendueEcran(sysinfo);
 
 
-	for (unsigned int z = 0; z <= sysinfo.fctDiscret->GETnum().GETorder(); z++)
+	for (unsigned int z = 0; z <= sysinfo.fctDiscret->GETnum()->GETorder(); z++)
 	{
 		Texte::writeTexte
 		(sysinfo.screen.renderer, sysinfo.allTextes.font,
@@ -254,7 +254,7 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 
 		SDL_RenderPresent(sysinfo.screen.renderer);
 
-		sysinfo.fctDiscret->SETnumThisCoef
+		sysinfo.fctDiscret->GETnum()->SETcoefTab
 			(z, KeyboardMouse::CinNumberDouble(sysinfo, "coef order:" + std::to_string(z) + " = ", SCREEN_WIDTH / 2, 75));
 		
 		rendueEcran(sysinfo);
@@ -274,21 +274,21 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 
 	SDL_RenderPresent(sysinfo.screen.renderer);
 
-	sysinfo.fctDiscret->SETdenOrder
+	sysinfo.fctDiscret->GETden()->SETorder
 		(KeyboardMouse::CinNumberUnsignedInt(sysinfo, "Order of the Denominator : ", SCREEN_WIDTH / 2, 100));
 	
 	
 	Texte::loadTexte
 	(sysinfo.screen.renderer, sysinfo.allTextes.font,
 		sysinfo.var.stateScreen, sysinfo.var.select, sysinfo.allTextes.CreateNumDen,
-		blended, "Order of the Denominator : " + std::to_string(sysinfo.fctDiscret->GETden().GETorder()),
+		blended, "Order of the Denominator : " + std::to_string(sysinfo.fctDiscret->GETden()->GETorder()),
 		{ 0, 64, 255, 255 }, NoColor, 18, SCREEN_WIDTH / 2, 100, nonTransparent,
 		no_angle, center_x
 	);
 
 	rendueEcran(sysinfo);
 
-	for (unsigned int z = 0; z <= sysinfo.fctDiscret->GETden().GETorder(); z++)
+	for (unsigned int z = 0; z <= sysinfo.fctDiscret->GETden()->GETorder(); z++)
 	{
 		Texte::writeTexte
 		(sysinfo.screen.renderer, sysinfo.allTextes.font,
@@ -298,7 +298,7 @@ void IHM::CreateNumDen(Sysinfo& sysinfo)
 
 		SDL_RenderPresent(sysinfo.screen.renderer);
 
-		sysinfo.fctDiscret->SETdenThisCoef
+		sysinfo.fctDiscret->GETden()->SETcoefTab
 			(z, KeyboardMouse::CinNumberDouble(sysinfo, "coef order:" + std::to_string(z) + " = ", SCREEN_WIDTH / 2, 125));
 		
 		rendueEcran(sysinfo);
@@ -360,12 +360,12 @@ void IHM::displayTF(Sysinfo& sysinfo)
 	else
 	{
 		unsigned int stringSize = 0;
-		stringSize = std::max(sysinfo.fctDiscret->GETnum().GETstringSize(), sysinfo.fctDiscret->GETden().GETstringSize());
+		stringSize = std::max(sysinfo.fctDiscret->GETnum()->GETstringSize(), sysinfo.fctDiscret->GETden()->GETstringSize());
 
-		for (unsigned int i = 0; i < sysinfo.fctDiscret->GETden().GETstringSize(); i++)
+		for (unsigned int i = 0; i < sysinfo.fctDiscret->GETden()->GETstringSize(); i++)
 			barre += "-";
 
-		stream << sysinfo.fctDiscret->GETnum().printOn(false); texte = stream.str(); stream.str(""); stream.clear();
+		stream << sysinfo.fctDiscret->GETnum()->printOn(false); texte = stream.str(); stream.str(""); stream.clear();
 
 		Texte::writeTexte
 		(sysinfo.screen.renderer, sysinfo.allTextes.font,
@@ -379,7 +379,7 @@ void IHM::displayTF(Sysinfo& sysinfo)
 			no_angle, center_x
 		);
 
-		stream << sysinfo.fctDiscret->GETden().printOn(false); texte = stream.str(); stream.str(""); stream.clear();
+		stream << sysinfo.fctDiscret->GETden()->printOn(false); texte = stream.str(); stream.str(""); stream.clear();
 
 		Texte::writeTexte
 		(sysinfo.screen.renderer, sysinfo.allTextes.font,
@@ -416,14 +416,14 @@ void IHM::displayJury(Sysinfo& sysinfo)
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,
 				blended, "The system is unstable", { 255, 0, 0, 255 }, NoColor, 16, (SCREEN_WIDTH / 2) + 100, 196, no_angle, center_y);
 
-		for (unsigned int i = 0; i < sysinfo.fctDiscret->GETjury().GETlength(); i++)
+		for (unsigned int i = 0; i < sysinfo.fctDiscret->GETjury()->GETlength(); i++)
 		{
 			stream << "|";
-			for (unsigned int j = 0; j < sysinfo.fctDiscret->GETjury().GETheight(); j++)
-				if(sysinfo.fctDiscret->GETjury().GETthiscoef(i, j) >= 0)
-					stream << "    " << sysinfo.fctDiscret->GETjury().GETthiscoef(i, j) << " ";
+			for (unsigned int j = 0; j < sysinfo.fctDiscret->GETjury()->GETheight(); j++)
+				if(sysinfo.fctDiscret->GETjury()->GETthiscoef(i, j) >= 0)
+					stream << "    " << sysinfo.fctDiscret->GETjury()->GETthiscoef(i, j) << " ";
 				else
-					stream << "   -" << abs(sysinfo.fctDiscret->GETjury().GETthiscoef(i, j)) << " ";
+					stream << "   -" << abs(sysinfo.fctDiscret->GETjury()->GETthiscoef(i, j)) << " ";
 			stream << "|";
 			texte = stream.str();
 			stream.str("");
@@ -693,7 +693,7 @@ void IHM::computeABCD(Sysinfo& sysinfo)
 		End::deleteSYSETATDiscret(sysinfo.sysetatDiscret);
 		sysinfo.sysetatDiscret = new SYSETATDiscret;
 
-		if (sysinfo.fctDiscret->GETden().GETorder() > sysinfo.fctDiscret->GETnum().GETorder())
+		if (sysinfo.fctDiscret->GETden()->GETorder() > sysinfo.fctDiscret->GETnum()->GETorder())
 		{
 			sysinfo.sysetatDiscret->calculABCD(*sysinfo.fctDiscret);
 			Texte::writeTexte(sysinfo.screen.renderer, sysinfo.allTextes.font,

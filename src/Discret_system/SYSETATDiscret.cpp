@@ -160,39 +160,44 @@ double SYSETATDiscret::GETTe()const
 
 
 
-void SYSETATDiscret::calculABCD(const FCTDiscret& fct){
+void SYSETATDiscret::calculABCD(const FCTDiscret& fct)
+{
 	/*
 		Calcul des matrices A, B, C et D
 	*/
 
-	if (fct.GETden().GETorder() >= fct.GETnum().GETorder()){
-		_A->editsize(fct.GETden().GETorder(), fct.GETden().GETorder());
-		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
-			_A->SETthiscoef(fct.GETden().GETorder() - 1, i,
-				-(fct.GETden().GETcoefTab(i) / fct.GETden().GETcoefTab(fct.GETden().GETorder())));
+	if (fct.GETden()->GETorder() >= fct.GETnum()->GETorder())
+	{
+		_A->editsize(fct.GETden()->GETorder(), fct.GETden()->GETorder());
+		for (unsigned int i = 0; i < fct.GETden()->GETorder(); i++)
+		{
+			_A->SETthiscoef(fct.GETden()->GETorder() - 1, i,
+				-(fct.GETden()->GETcoefTab(i) / fct.GETden()->GETcoefTab(fct.GETden()->GETorder())));
 		}
-		for (unsigned int i = 0; i < fct.GETden().GETorder(); i++) {
-			for (unsigned int j = 1; j < fct.GETden().GETorder(); j++) {
+		for (unsigned int i = 0; i < fct.GETden()->GETorder(); i++)
+		{
+			for (unsigned int j = 1; j < fct.GETden()->GETorder(); j++)
+			{
 				_A->SETthiscoef(i, j, 1);
 				i++;
 			}
 		}
 		
 
-		_B->editsize(fct.GETden().GETorder(), 1);
-		_B->SETthiscoef(_B->GETlength() - 1, 0, 1 / fct.GETden().GETcoefTab(fct.GETden().GETorder()));
+		_B->editsize(fct.GETden()->GETorder(), 1);
+		_B->SETthiscoef(_B->GETlength() - 1, 0, 1 / fct.GETden()->GETcoefTab(fct.GETden()->GETorder()));
 		
 
-		_C->editsize(1, fct.GETden().GETorder());
-		for (unsigned int i = 0; i <= fct.GETnum().GETorder(); i++) 
-			_C->SETthiscoef(0, i, fct.GETnum().GETcoefTab(i));
+		_C->editsize(1, fct.GETden()->GETorder());
+		for (unsigned int i = 0; i <= fct.GETnum()->GETorder(); i++)
+			_C->SETthiscoef(0, i, fct.GETnum()->GETcoefTab(i));
 		
 		
 
 		_D->editsize(1, 1);
 	}
 	else
-		std::cout << std::endl << "______Order of Num = " << fct.GETden().GETorder() << "  > Order of Den = " << fct.GETnum().GETorder();
+		std::cout << std::endl << "______Order of Num = " << fct.GETden()->GETorder() << "  > Order of Den = " << fct.GETnum()->GETorder();
 }
 
 
@@ -252,15 +257,15 @@ void testSYSETATDiscret(){
 
 
 	FCTDiscret fct;
-	fct.SETnumOrder(1);
-	fct.SETnumThisCoef(0, 1);
-	fct.SETnumThisCoef(1, -0.63);
-	fct.SETdenOrder(4);
-	fct.SETdenThisCoef(0, 0);
-	fct.SETdenThisCoef(1, -0.6);
-	fct.SETdenThisCoef(2, 1);
-	fct.SETdenThisCoef(3, 0.01);
-	fct.SETdenThisCoef(4, 2);
+	fct.GETnum()->SETorder(1);
+	fct.GETnum()->SETcoefTab(0, 1);
+	fct.GETnum()->SETcoefTab(1, -0.63);
+	fct.GETden()->SETorder(4);
+	fct.GETden()->SETcoefTab(0, 0);
+	fct.GETden()->SETcoefTab(1, -0.6);
+	fct.GETden()->SETcoefTab(2, 1);
+	fct.GETden()->SETcoefTab(3, 0.01);
+	fct.GETden()->SETcoefTab(4, 2);
 	//fct.SETdenThisCoef(5, -0.359);
 	//fct.SETdenThisCoef(6, 5);
 	std::cout << std::endl << std::endl << std::endl << "fct = " << std::endl << fct;

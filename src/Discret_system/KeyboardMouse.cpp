@@ -336,7 +336,7 @@ void KeyboardMouse::mouse(Sysinfo& sysinfo, SDL_Event event)
 					}
 					else
 					{
-						if (sysinfo.fctDiscret->GETden().GETorder() > 0)
+						if (sysinfo.fctDiscret->GETden()->GETorder() > 0)
 							IHM::computeABCD(sysinfo);
 						else
 							Texte::writeTexte

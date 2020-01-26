@@ -136,17 +136,10 @@ public:
 	inline void SETnum(const Polynome& a)				{ *_num = a; };
 	inline void SETden(const Polynome& a)				{ *_den = a; };
 	inline void SETdeltaT(double deltaT)				{ _deltaT = deltaT; };
-	inline void SETnumOrder(unsigned int order)			{ _num->SETorder(order); };
-	inline void SETdenOrder(unsigned int order)			{ _den->SETorder(order); };
-	inline void SETnumThisCoef(unsigned int index, double userValue) { _num->SETcoefTab(index, userValue); };
-	inline void SETdenThisCoef(unsigned int index, double userValue) { _den->SETcoefTab(index, userValue); };
 
-	inline Matrice* GETjuryPtr() const			{ return _jury; };
-	inline Polynome* GETnumPtr() const			{ return _num; };
-	inline Polynome* GETdenPtr() const			{ return _den; };
-	inline Matrice& GETjury() const				{ return *_jury; };
-	inline Polynome& GETnum() const				{ return *_num; };
-	inline Polynome& GETden() const				{ return *_den; };
+	inline Matrice* GETjury() const			{ return _jury; };
+	inline Polynome* GETnum() const			{ return _num; };
+	inline Polynome* GETden() const			{ return _den; };
 	inline double GETdeltaT() const				{ return _deltaT; };
 	
 

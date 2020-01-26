@@ -58,7 +58,7 @@ FCTDiscret::FCTDiscret(Polynome& num, Polynome& den, double deltaT)
 FCTDiscret::FCTDiscret(const FCTDiscret& F)
 : _jury(nullptr), _num(nullptr), _den(nullptr), _deltaT(F.GETdeltaT())
 {
-	allocate(F.GETnum(), F.GETden());
+	allocate(*F.GETnum(), *F.GETden());
 }
 FCTDiscret::~FCTDiscret()
 {
@@ -154,9 +154,9 @@ bool operator==(const FCTDiscret& a, const FCTDiscret& b)
 FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b)
 {
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum() * b.GETden());
-	resultat.SETnum(resultat.GETnum() + b.GETnum() * a.GETden());
-	resultat.SETden(a.GETden() * b.GETden());
+	resultat.SETnum(*a.GETnum() * *b.GETden());
+	resultat.SETnum(*resultat.GETnum() + *b.GETnum() * *a.GETden());
+	resultat.SETden(*a.GETden() * *b.GETden());
 	return resultat;
 }
 
@@ -172,9 +172,9 @@ FCTDiscret operator+(const FCTDiscret& a, const FCTDiscret& b)
 FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b)
 {
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum() * b.GETden());
-	resultat.SETnum(resultat.GETnum() - b.GETnum() * a.GETden());
-	resultat.SETden(a.GETden() * b.GETden());
+	resultat.SETnum(*a.GETnum() * *b.GETden());
+	resultat.SETnum(*resultat.GETnum() - *b.GETnum() * *a.GETden());
+	resultat.SETden(*a.GETden() * *b.GETden());
 	return resultat;
 }
 
@@ -190,8 +190,8 @@ FCTDiscret operator-(const FCTDiscret& a, const FCTDiscret& b)
 FCTDiscret operator*(const FCTDiscret& a, const FCTDiscret& b)
 {
 	FCTDiscret resultat;
-	resultat.SETnum(a.GETnum() * b.GETnum());
-	resultat.SETden(a.GETden() * b.GETden());
+	resultat.SETnum(*a.GETnum() * *b.GETnum());
+	resultat.SETden(*a.GETden() * *b.GETden());
 	return resultat;
 }
 
@@ -529,8 +529,8 @@ void closeLoop(const FCTDiscret& openLoop, const FCTDiscret& returnLoop)
 	den = 1.0 + openLoop * returnLoop;
 
 	FCTDiscret resultat;
-	resultat.SETnum(num.GETnum() * num.GETden());
-	resultat.SETden(den.GETnum() * num.GETden());
+	resultat.SETnum(*num.GETnum() * *num.GETden());
+	resultat.SETden(*den.GETnum() * *num.GETden());
 
 	std::cout << std::endl << std::endl << "CloseLoop" << std::endl << resultat << std::endl;
 }
@@ -552,6 +552,7 @@ void testFCTDiscret()
 	a.grow(2), a.SETcoefTab(0, 51), a.SETcoefTab(1, -512);
 
 	FCTDiscret fct1(b, a, 10.3);
+
 	b.SETcoefTab(0, 7.3);
 	b.SETcoefTab(1, -91);
 	FCTDiscret fct2(a, b, 10.3);
@@ -564,14 +565,14 @@ void testFCTDiscret()
 	FCTDiscret fctsoustraction = fct1 - fct2;
 	stream << std::endl << "soustraction de fct1 - fct2,  Fonctions de transfert :" << std::endl << fctsoustraction << std::endl;
 	
-	stream << std::endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
-	fct1.SETnumOrder(5);
-	stream << std::endl << "taille du num de fct1 = " << fct1.GETnum().GETorder();
-	fct1.SETnumThisCoef(4, 5.6), fct1.SETnumThisCoef(3, -5.6);
+	stream << std::endl << "taille du num de fct1 = " << fct1.GETnum()->GETorder();
+	fct1.GETnum()->SETorder(5);
+	stream << std::endl << "taille du num de fct1 = " << fct1.GETnum()->GETorder();
+	fct1.GETnum()->SETcoefTab(4, 5.6), fct1.GETnum()->SETcoefTab(3, -5.6);
 	stream << std::endl << "Fct1 :" << std::endl << fct1 << std::endl << std::endl;
 	FCTDiscret integ;
-	integ.SETnumOrder(0), integ.SETnumThisCoef(0, 1);
-	integ.SETdenOrder(1), integ.SETdenThisCoef(1, 1);
+	integ.GETnum()->SETorder(0), integ.GETnum()->SETcoefTab(0, 1);
+	integ.GETden()->SETorder(1), integ.GETden()->SETcoefTab(1, 1);
 	stream << std::endl << "integ = " << std::endl << integ << std::endl;
 	stream << std::endl << "integ * fct1 = " << std::endl << (integ * fct1) << std::endl;
 
