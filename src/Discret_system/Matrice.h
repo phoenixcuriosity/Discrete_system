@@ -213,7 +213,7 @@ public:
 	static void deAllocate
 	(
 		unsigned int length,
-		double** tab
+		double*** tab
 	);
 
 	/* ----------------------------------------------------------------------------------- */
@@ -373,7 +373,7 @@ public:
 	/* ROLE : Rempli la Matrice de taille length * height de valeur value				   */
 	/* INPUT  PARAMETERS : unsigned int length : Nombre de colonnes						   */
 	/* INPUT  PARAMETERS : unsigned int height : Nombre de lignes						   */
-	/* INPUT  PARAMETERS : double** tab	: Matrice à remplir								   */
+	/* INPUT  PARAMETERS : double*** tab : Ptr Matrice à remplir						   */
 	/* INPUT  PARAMETERS : double value : Valeur à appliquer							   */
 	/* OUTPUT PARAMETERS : Matrice remplie de value										   */
 	/* RETURNED VALUE    : void															   */
@@ -383,7 +383,7 @@ public:
 	(
 		unsigned int length,
 		unsigned int height,
-		double** tab,
+		double*** tab,
 		double value
 	);
 

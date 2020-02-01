@@ -155,7 +155,7 @@ _height(M._height)
 /* ----------------------------------------------------------------------------------- */
 Matrice::~Matrice()
 {
-	deAllocate(_length, _tab);
+	deAllocate(_length, &_tab);
 }
 
 
@@ -223,11 +223,7 @@ double** Matrice::allocate
 		for (unsigned int i(0); i < length; i++)
 			buffer[i] = new double[height];
 
-		for (unsigned int i(0); i < length; i++)
-		{
-			for (unsigned int j(0); j < height; j++)
-				buffer[i][j] = userValue;
-		}
+		fillTabLoop(length, height, &buffer, userValue);
 	}
 	return buffer;
 }
@@ -272,18 +268,18 @@ double** Matrice::allocate
 void Matrice::deAllocate
 (
 	unsigned int length,
-	double** tab
+	double*** tab
 )
 {
 	if (nullptr != tab)
 	{
 		for (unsigned int i(0); i < length; i++)
 		{
-			delete[] tab[i];
-			tab[i] = nullptr;
+			delete[] *tab[i];
+			*tab[i] = nullptr;
 		}
-		delete[] tab;
-		tab = nullptr;
+		delete[] *tab;
+		*tab = nullptr;
 	}
 	else
 	{
@@ -416,7 +412,7 @@ Matrice& Matrice::operator=
 	if (this != &M) 
 	{
 		if (_tab != nullptr)
-			deAllocate(_length, _tab);
+			deAllocate(_length, &_tab);
 		_length = M._length;
 		_height = M._height;
 		_tab = allocate(M);
@@ -618,7 +614,7 @@ Matrice operator*
 /* ROLE : Rempli la Matrice de taille length * height de valeur value				   */
 /* INPUT  PARAMETERS : unsigned int length : Nombre de colonnes						   */
 /* INPUT  PARAMETERS : unsigned int height : Nombre de lignes						   */
-/* INPUT  PARAMETERS : double** tab	: Matrice à remplir								   */
+/* INPUT  PARAMETERS : double*** tab : Ptr Matrice à remplir						   */
 /* INPUT  PARAMETERS : double value : Valeur à appliquer							   */
 /* OUTPUT PARAMETERS : Matrice remplie de value										   */
 /* RETURNED VALUE    : Matrice														   */
@@ -628,7 +624,7 @@ void Matrice::fillTabLoop
 (
 	unsigned int length,
 	unsigned int height,
-	double** tab,
+	double*** tab,
 	double value
 
 )
@@ -637,7 +633,7 @@ void Matrice::fillTabLoop
 	{
 		for (unsigned int j(0); j < height; j++)
 		{
-			tab[i][j] = value;
+			*tab[i][j] = value;
 		}
 	}
 }
@@ -676,7 +672,7 @@ Matrice transposition
 /* ----------------------------------------------------------------------------------- */
 void Matrice::zero()
 {
-	fillTabLoop(_length, _height, _tab, 0);
+	fillTabLoop(_length, _height, &_tab, 0);
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -690,7 +686,7 @@ void Matrice::zero()
 /* ----------------------------------------------------------------------------------- */
 void Matrice::ones()
 {
-	fillTabLoop(_length, _height, _tab, 1);
+	fillTabLoop(_length, _height, &_tab, 1);
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -872,7 +868,7 @@ void Matrice::editSize
 			std::cout << std::endl << "[ERROR]___: Matrice::editSize : cas impossible";
 		}
 
-		deAllocate(_length, _tab);
+		deAllocate(_length, &_tab);
 		_tab = buffer;
 		_length = length;
 		_height = height;
@@ -909,7 +905,7 @@ void Matrice::growOneLOneC()
 		}		
 	}
 
-	deAllocate(_length, _tab);
+	deAllocate(_length, &_tab);
 	_tab = buffer;
 	_length++;
 	_height++;
