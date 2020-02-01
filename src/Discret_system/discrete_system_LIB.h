@@ -2,8 +2,8 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.2
-	file version 2.1
+	last modification on this file on version: 3.5
+	file version 2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -41,35 +41,38 @@ const Uint16 SCREEN_WIDTH = 640;
 // hauteur de la fenetre SDL en pixel
 const Uint16 SCREEN_HEIGHT = 640;
 
-
+const double Pi = 3.14159265358979323846;
 
 /* *********************************************************
 						 Enum
   ********************************************************* */
 
 // différents état de l'écran
-enum : Uint8	{
-					STATEnothing,
-					STATEecrantitre,
-					STATEfunctionTransfer,
-					STATETFcreateNumDen,
-					STATETFcreateBode,
-					STATETFdisplayBode,
-					STATEstateSystem,
-					STATESScreateMatrice,
-					STATESSsimulate,
-					STATEreponseTemporelle,
-					STATEclosedLoop,
-					STATEtests
-				};
+enum STATE_TYPE: Uint8
+{
+	STATEnothing,
+	STATEecrantitre,
+	STATEfunctionTransfer,
+	STATETFcreateNumDen,
+	STATETFcreateBode,
+	STATETFdisplayBode,
+	STATEstateSystem,
+	STATESScreateMatrice,
+	STATESSsimulate,
+	STATEreponseTemporelle,
+	STATEclosedLoop,
+	STATEtests
+};
 
 // spécifications de la séléction
-enum : Uint8 {	selectnothing,
-				NotToSelect,
-				selectcreate,
-				selectinspect,
-				selectmove
-			};
+enum SELECT_TYPE: Uint8
+{	
+	selectnothing,
+	NotToSelect,
+	selectcreate,
+	selectinspect,
+	selectmove
+};
 
 
 
@@ -107,7 +110,7 @@ struct Var
 		état de la sélection du joueur
 		enum : Uint8 { selectnothing, NotToSelect, selectcreate, selectinspect, selectmove };
 	*/
-	Uint8 select = selectnothing;
+	SELECT_TYPE select = selectnothing;
 
 	/*
 		état de l'écran du joueur
@@ -117,7 +120,7 @@ struct Var
 						STATEclosedLoop, STATEtests
 					}
 	*/
-	Uint8 stateScreen = STATEnothing;
+	STATE_TYPE stateScreen = STATEnothing;
 
 	Uint16 mouse_x = 0;
 	Uint16 mouse_y = 0;

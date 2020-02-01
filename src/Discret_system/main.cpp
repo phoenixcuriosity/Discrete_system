@@ -2,8 +2,8 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.2
-	file version 2.2
+	last modification on this file on version: 3.5
+	file version 2.3
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -28,7 +28,25 @@
 #include "End.h"
 #include "KeyboardMouse.h"
 
-int main(int argc, char *argv[])
+/* ----------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------- */
+/* NAME : main																		   */
+/* ROLE : Création et initailisation de la struture globale Sysinfo					   */
+/* ROLE : Init SDL																	   */
+/* ROLE : Load xml informations														   */
+/* ROLE : Load Textures																   */
+/* ROLE : Play																		   */
+/* INPUT  PARAMETERS : int argc 													   */
+/* INPUT  PARAMETERS : char *argv[] 												   */
+/* OUTPUT PARAMETERS : Play															   */
+/* RETURNED VALUE    : int -> EXIT_SUCCESS / EXIT_FAILURE							   */	
+/* ------------------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------------- */
+int main
+(
+	int argc,
+	char *argv[]
+)
 {
 	Sysinfo sysinfo;
 	End::initPtrSysinfo(sysinfo);
@@ -46,10 +64,10 @@ int main(int argc, char *argv[])
 		End::exitError(msg);
 	}
 	
-	/* 
-	 * try/catch générale
-	 * Utilisé si tous les autres try/catch n'ont pas d'action
-	 */
+	/* ---------------------------------------------------------------------- */
+	/* try/catch générale													  */
+	/* Utilisé si tous les autres try/catch n'ont pas d'action				  */
+	/* ---------------------------------------------------------------------- */
 	try
 	{
 		if (LoadConfig::initfile(sysinfo.fichier))

@@ -38,7 +38,10 @@ Sysinfo* ptrSysinfo = nullptr;
  *						 Fonctions							*
  ********************************************************** */
 
-void End::initPtrSysinfo(Sysinfo& sysinfo)
+void End::initPtrSysinfo
+(
+	Sysinfo& sysinfo
+)
 {
 	ptrSysinfo = &sysinfo;
 }
@@ -50,10 +53,13 @@ void End::initPtrSysinfo(Sysinfo& sysinfo)
 * OUTPUT PARAMETERS : FCTDiscret* = nullptr
 * RETURNED VALUE    : void
 */
-void End::deleteFCTDiscret(FCTDiscret* fctDiscret)
+void End::deleteFCTDiscret
+(
+	FCTDiscret* fctDiscret
+)
 {
 	/* Erase last FCT */
-	if (fctDiscret != nullptr)
+	if (nullptr != fctDiscret)
 	{
 		delete fctDiscret;
 	}
@@ -70,10 +76,13 @@ void End::deleteFCTDiscret(FCTDiscret* fctDiscret)
 * OUTPUT PARAMETERS : SYSETATDiscret* = nullptr
 * RETURNED VALUE    : void
 */
-void End::deleteSYSETATDiscret(SYSETATDiscret* sysetatDiscret)
+void End::deleteSYSETATDiscret
+(
+	SYSETATDiscret* sysetatDiscret
+)
 {
 	/* Erase previous sysinfo.sysetatDiscret */
-	if (sysetatDiscret != nullptr)
+	if (nullptr != sysetatDiscret)
 	{
 		delete sysetatDiscret;
 	}
@@ -92,7 +101,10 @@ void End::deleteSYSETATDiscret(SYSETATDiscret* sysetatDiscret)
 * OUTPUT PARAMETERS : EXIT_FAILURE
 * RETURNED VALUE    : void
 */
-void End::exitError(const std::string& msg)
+void End::exitError
+(
+	const std::string& msg
+)
 {
 	IHM::logfileconsole(msg);
 	deleteAll(*ptrSysinfo);
@@ -107,7 +119,10 @@ void End::exitError(const std::string& msg)
 * OUTPUT PARAMETERS : delete Ptr
 * RETURNED VALUE    : void
 */
-void End::deleteAll(Sysinfo& sysinfo)
+void End::deleteAll
+(
+	Sysinfo& sysinfo
+)
 {
 	IHM::logfileconsole("*********_________ Start DeleteAll _________*********");
 	for (unsigned int i = 1; i < MAX_FONT; i++)
@@ -130,7 +145,11 @@ void End::deleteAll(Sysinfo& sysinfo)
 	IHM::logfileconsole("*********_________ End DeleteAll _________*********");
 }
 
-void End::deleteTexture(std::unordered_map<std::string, Texture*>& unmap, const std::string& name)
+void End::deleteTexture
+(
+	std::unordered_map<std::string, Texture*>& unmap,
+	const std::string& name
+)
 {
 	for (const auto& n : unmap)
 	{
@@ -146,7 +165,11 @@ void End::deleteTexture(std::unordered_map<std::string, Texture*>& unmap, const 
 	}
 }
 
-void End::deleteTexte(std::unordered_map<std::string, Texte*>& unmap, const std::string& name)
+void End::deleteTexte
+(
+	std::unordered_map<std::string, Texte*>& unmap,
+	const std::string& name
+)
 {
 	for (const auto& n : unmap)
 	{
@@ -162,7 +185,11 @@ void End::deleteTexte(std::unordered_map<std::string, Texte*>& unmap, const std:
 	}
 }
 
-void End::deleteButtonTexte(std::unordered_map<std::string, ButtonTexte*>& unmap, const std::string& name)
+void End::deleteButtonTexte
+(
+	std::unordered_map<std::string, ButtonTexte*>& unmap,
+	const std::string& name
+)
 {
 	for (const auto& n : unmap)
 	{

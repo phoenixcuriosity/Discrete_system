@@ -39,7 +39,10 @@ public:
 	 * OUTPUT PARAMETERS : ptrSysinfo* = &sysinfo
 	 * RETURNED VALUE    : void
 	 */
-	static void initPtrSysinfo(Sysinfo& sysinfo);
+	static void initPtrSysinfo
+	(
+		Sysinfo& sysinfo
+	);
 
 	/*
 	 * NAME : deleteFCTDiscret
@@ -48,7 +51,10 @@ public:
 	 * OUTPUT PARAMETERS : FCTDiscret* = nullptr
 	 * RETURNED VALUE    : void
 	 */
-	static void deleteFCTDiscret(FCTDiscret* fCTDiscret);
+	static void deleteFCTDiscret
+	(
+		FCTDiscret* fCTDiscret
+	);
 
 	/*
 	 * NAME : deleteSYSETATDiscret
@@ -57,7 +63,10 @@ public:
 	 * OUTPUT PARAMETERS : SYSETATDiscret* = nullptr
 	 * RETURNED VALUE    : void
 	 */
-	static void deleteSYSETATDiscret(SYSETATDiscret* sysetatDiscret);
+	static void deleteSYSETATDiscret
+	(
+		SYSETATDiscret* sysetatDiscret
+	);
 
 	/*
 	 * NAME : exitError
@@ -68,7 +77,10 @@ public:
 	 * OUTPUT PARAMETERS : EXIT_FAILURE
 	 * RETURNED VALUE    : void
 	 */
-	static void exitError(const std::string& msg);
+	static void exitError
+	(
+		const std::string& msg
+	);
 
 	/*
 	 * NAME : deleteAll
@@ -77,13 +89,28 @@ public:
 	 * OUTPUT PARAMETERS : delete Ptr
 	 * RETURNED VALUE    : void
 	 */
-	static void deleteAll(Sysinfo&);
+	static void deleteAll
+	(
+		Sysinfo&
+	);
 
-	static void deleteTexture(std::unordered_map<std::string, Texture*>& unmap, const std::string& name);
+	static void deleteTexture
+	(
+		std::unordered_map<std::string, Texture*>& unmap,
+		const std::string& name
+	);
 
-	static void deleteTexte(std::unordered_map<std::string, Texte*>& unmap, const std::string& name);
+	static void deleteTexte
+	(
+		std::unordered_map<std::string, Texte*>& unmap,
+		const std::string& name
+	);
 
-	static void deleteButtonTexte(std::unordered_map<std::string, ButtonTexte*>& unmap, const std::string& name);
+	static void deleteButtonTexte
+	(
+		std::unordered_map<std::string, ButtonTexte*>& unmap,
+		const std::string& name
+	);
 };
 
 #endif // !End_H

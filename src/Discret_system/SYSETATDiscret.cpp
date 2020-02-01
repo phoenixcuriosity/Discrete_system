@@ -105,19 +105,19 @@ void SYSETATDiscret::SETTe(unsigned int nbech)
 
 void SYSETATDiscret::SETeditSizeA(unsigned int length, unsigned int height)
 {
-	_A->editsize(length, height);
+	_A->editSize(length, height);
 }
 void SYSETATDiscret::SETeditSizeB(unsigned int length, unsigned int height)
 {
-	_B->editsize(length, height);
+	_B->editSize(length, height);
 }
 void SYSETATDiscret::SETeditSizeC(unsigned int length, unsigned int height)
 {
-	_C->editsize(length, height);
+	_C->editSize(length, height);
 }
 void SYSETATDiscret::SETeditSizeD(unsigned int length, unsigned int height)
 {
-	_D->editsize(length, height);
+	_D->editSize(length, height);
 }
 void SYSETATDiscret::SETthisCoefA(unsigned int i, unsigned int j, double userValue)
 {
@@ -168,7 +168,7 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct)
 
 	if (fct.GETden()->GETorder() >= fct.GETnum()->GETorder())
 	{
-		_A->editsize(fct.GETden()->GETorder(), fct.GETden()->GETorder());
+		_A->editSize(fct.GETden()->GETorder(), fct.GETden()->GETorder());
 		for (unsigned int i = 0; i < fct.GETden()->GETorder(); i++)
 		{
 			_A->SETthiscoef(fct.GETden()->GETorder() - 1, i,
@@ -184,17 +184,17 @@ void SYSETATDiscret::calculABCD(const FCTDiscret& fct)
 		}
 		
 
-		_B->editsize(fct.GETden()->GETorder(), 1);
+		_B->editSize(fct.GETden()->GETorder(), 1);
 		_B->SETthiscoef(_B->GETlength() - 1, 0, 1 / fct.GETden()->GETcoefTab(fct.GETden()->GETorder()));
 		
 
-		_C->editsize(1, fct.GETden()->GETorder());
+		_C->editSize(1, fct.GETden()->GETorder());
 		for (unsigned int i = 0; i <= fct.GETnum()->GETorder(); i++)
 			_C->SETthiscoef(0, i, fct.GETnum()->GETcoefTab(i));
 		
 		
 
-		_D->editsize(1, 1);
+		_D->editSize(1, 1);
 	}
 	else
 		std::cout << std::endl << "______Order of Num = " << fct.GETden()->GETorder() << "  > Order of Den = " << fct.GETnum()->GETorder();

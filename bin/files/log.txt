@@ -28,24 +28,32 @@ This is a free software, you can redistribute it and/or modify it
 [INFO]___: Create ButtonTexte n:10 msg = Import Signal Success
 [INFO]___: Create ButtonTexte n:11 msg = Main menu (3) Success
 _ Start mainLoop _
-_ Start createMatrice _
+_ Start CreateNumDen _
+_ End CreateNumDen _
+_ Start displayTF _
+_ End displayTF _
+_ Start displayJury _
+_ End displayJury _
+_ Start CreateNumDen _
+_ End CreateNumDen _
+_ Start displayTF _
+_ End displayTF _
+_ Start displayJury _
+_ End displayJury _
+_ Start displayTF _
+_ End displayTF _
+_ Start displayTF _
+_ End displayTF _
+_ Start computeABCD _
+_ End computeABCD _
 _ Start displayStateSystem _
 _ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ Start displayStateSystem _
-_ End displayStateSystem _
-_ End createMatrice _
+_ Start createSignal _
+_ End createSignal _
+_ Start createStep _
+_ End createStep _
+_ Start displayReponseTemp _
+_ Start displayReponseTemp _
 *********_________ Start DeleteAll _________*********
 [INFO]___: Delete txtEcranTitre name = Dev version: 3.1 Success
 [INFO]___: Delete txtEcranTitre name = Developed by SAUTER Robin Success
@@ -53,15 +61,16 @@ _ End createMatrice _
 [INFO]___: Delete txtEcranTitre name = Simulation Success
 [INFO]___: Delete txtEcranTitre name = Transfert Function Success
 [INFO]___: Delete txtEcranTitre name = Create the Transfer Function Success
+[INFO]___: Delete txtEcranTitre name = Number of samples : 100 Success
 [INFO]___: Delete txtEcranTitre name = State System Success
 [INFO]___: Delete txtEcranTitre name = Display Bode Success
-[INFO]___: Delete txtEcranTitre name = Length of D : 1 and Height of D : 1 Success
 [INFO]___: Delete txtEcranTitre name = Create Matrix A, B, C and D Success
 [INFO]___: Delete txtEcranTitre name = Create Bode Success
 [INFO]___: Delete txtEcranTitre name = Simulate Success
-[INFO]___: Delete txtEcranTitre name = Length of A : 1 and Height of A : 1 Success
-[INFO]___: Delete txtEcranTitre name = Length of B : 1 and Height of B : 1 Success
-[INFO]___: Delete txtEcranTitre name = Length of C : 1 and Height of C : 1 Success
+[INFO]___: Delete txtEcranTitre name = DeltaT : 1.000000 Success
+[INFO]___: Delete CreateNumDen name = Order of the Numerator : 1 Success
+[INFO]___: Delete CreateNumDen name = Order of the Denominator : 5 Success
+[INFO]___: Delete CreateNumDen name = Sampling time : 1.000000 Success
 [INFO]___: Delete ecranTitre name = Quit Success
 [INFO]___: Delete ecranTitre name = Transfer Function Success
 [INFO]___: Delete ecranTitre name = State System Success
