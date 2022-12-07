@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+
+	<FilePaths>
+		<Bode>bin/files/Bode.txt</Bode>
+		<Load>bin/files/load.txt</Load>
+		<ReponseTemporelle>bin/files/ReponseTemporelle.txt</ReponseTemporelle>
+		<ColorShadingVert>shaders/ColorShading.vert</ColorShadingVert>
+		<ColorShadingFrag>shaders/ColorShading.frag</ColorShadingFrag>
+		<ImagesPath>bin/image/</ImagesPath>
+		<GUIPath>GUI</GUIPath>
+	</FilePaths>
+</Config>
