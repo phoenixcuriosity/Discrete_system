@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
+	file version 4.0.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -38,6 +38,7 @@ m_nextScreenIndexMenu(INIT_SCREEN_INDEX),
 m_gui(),
 m_file(file),
 m_fctDiscret(m_fctDiscret),
+m_isStable(false),
 m_isInitialize(false)
 {
 	build();
@@ -147,60 +148,180 @@ bool FCTMenuScreen::onEntry()
 	return true;
 }
 
-void FCTMenuScreen::initHUDText(const std::string& msg)
+void FCTMenuScreen::initHUDText(unsigned int msgType)
 {
 	m_gui.spriteBatchHUDStatic.begin();
 
-	std::string dummy{ msg };
+	if (msgType >= display_FCT)
+	{
+		m_gui.spriteFont->draw
+		(
+			m_gui.spriteBatchHUDStatic,
+			m_gui.s_numFCT.c_str(),
+			glm::vec2
+			(
+				float(m_gui.window->GETscreenWidth() / 2),
+				float(m_gui.window->GETscreenHeight() - 64)
+			), // offset pos
+			glm::vec2(0.64f), // size
+			0.0f,
+			RealEngine2D::COLOR_GOLD,
+			RealEngine2D::Justification::MIDDLE
+		);
+		m_gui.spriteFont->draw
+		(
+			m_gui.spriteBatchHUDStatic,
+			m_gui.s_barFCT.c_str(),
+			glm::vec2
+			(
+				float(m_gui.window->GETscreenWidth() / 2),
+				float(m_gui.window->GETscreenHeight()) - 104.f
+			), // offset pos
+			glm::vec2(0.64f), // size
+			0.0f,
+			RealEngine2D::COLOR_GOLD,
+			RealEngine2D::Justification::MIDDLE
+		);
+		m_gui.spriteFont->draw
+		(
+			m_gui.spriteBatchHUDStatic,
+			m_gui.s_denFCT.c_str(),
+			glm::vec2
+			(
+				float(m_gui.window->GETscreenWidth() / 2),
+				float(m_gui.window->GETscreenHeight()) - 154.f
+			), // offset pos
+			glm::vec2(0.64f), // size
+			0.0f,
+			RealEngine2D::COLOR_GOLD,
+			RealEngine2D::Justification::MIDDLE
+		);
+		
+		if (msgType >= display_FCT_JuryTab)
+		{
+			const float yL{ 36.f };
+			unsigned int index{ 0 };
+			std::string dummy{ m_gui.s_jury };
+			std::string dummyDisplay{};
 
-	std::string num{ dummy.substr(0, dummy.find_first_of("\n")) };
-	dummy.erase(0, dummy.find_first_of("\n") + 1);
-	std::string bar{ dummy.substr(0, dummy.find_first_of("\n")) };
-	dummy.erase(0, dummy.find_first_of("\n") + 1);
-	std::string den{ dummy };
+			size_t pos{ 0 };
+			while ((pos = dummy.find("\t")) != std::string::npos)
+			{
+				dummy.replace(pos, 1, "   ");
+			}
 
-	m_gui.spriteFont->draw
-	(
-		m_gui.spriteBatchHUDStatic,
-		num.c_str(),
-		glm::vec2
-		(
-			float(m_gui.window->GETscreenWidth() / 2),
-			float(m_gui.window->GETscreenHeight() / 2) 
-		), // offset pos
-		glm::vec2(0.64f), // size
-		0.0f,
-		RealEngine2D::COLOR_GOLD,
-		RealEngine2D::Justification::MIDDLE
-	);
-	m_gui.spriteFont->draw
-	(
-		m_gui.spriteBatchHUDStatic,
-		bar.c_str(),
-		glm::vec2
-		(
-			float(m_gui.window->GETscreenWidth() / 2),
-			float(m_gui.window->GETscreenHeight() / 2) - 50.f
-		), // offset pos
-		glm::vec2(0.64f), // size
-		0.0f,
-		RealEngine2D::COLOR_GOLD,
-		RealEngine2D::Justification::MIDDLE
-	);
-	m_gui.spriteFont->draw
-	(
-		m_gui.spriteBatchHUDStatic,
-		den.c_str(),
-		glm::vec2
-		(
-			float(m_gui.window->GETscreenWidth() / 2),
-			float(m_gui.window->GETscreenHeight() / 2) - 100.f
-		), // offset pos
-		glm::vec2(0.64f), // size
-		0.0f,
-		RealEngine2D::COLOR_GOLD,
-		RealEngine2D::Justification::MIDDLE
-	);
+			m_gui.spriteFont->draw
+			(
+				m_gui.spriteBatchHUDStatic,
+				"Jury table :",
+				glm::vec2
+				(
+					float(m_gui.window->GETscreenWidth() / 2),
+					m_gui.window->GETscreenHeight() - 200 - index * yL
+				), // offset pos
+				glm::vec2(0.48f), // size
+				0.0f,
+				RealEngine2D::COLOR_LIGHT_GREY,
+				RealEngine2D::Justification::RIGHT
+			);
+			index++;
+			while (dummy.find("|") != std::string::npos)
+			{
+				dummyDisplay = dummy.substr(0, dummy.find_first_of("\n"));
+				dummy.erase(0, dummy.find_first_of("\n") + 1);
+
+				m_gui.spriteFont->draw
+				(
+					m_gui.spriteBatchHUDStatic,
+					dummyDisplay.c_str(),
+					glm::vec2
+					(
+						float(m_gui.window->GETscreenWidth() / 2),
+						m_gui.window->GETscreenHeight() - 200 - index * yL
+					), // offset pos
+					glm::vec2(0.48f), // size
+					0.0f,
+					RealEngine2D::COLOR_DARK_GREY,
+					RealEngine2D::Justification::MIDDLE
+				);
+				index++;
+			}
+
+			/* Stability */
+			m_gui.spriteFont->draw
+			(
+				m_gui.spriteBatchHUDStatic,
+				"Jury's stability conditions :",
+				glm::vec2
+				(
+					float(m_gui.window->GETscreenWidth() / 2),
+					m_gui.window->GETscreenHeight() - 200 - index * yL
+				), // offset pos
+				glm::vec2(0.48f), // size
+				0.0f,
+				RealEngine2D::COLOR_LIGHT_GREY,
+				RealEngine2D::Justification::RIGHT
+			);
+			index++;
+			RealEngine2D::ColorRGBA8 colorS;
+			for (unsigned int loopIndex{ 0 }; loopIndex < JURY_STABILITY_CONDITIONS; loopIndex++)
+			{
+				dummyDisplay = dummy.substr(0, dummy.find_first_of("\n"));
+				dummy.erase(0, dummy.find_first_of("\n") + 1);
+
+				
+				if (dummyDisplay.find("Not") != std::string::npos)
+				{
+					colorS = RealEngine2D::COLOR_RED;
+				}
+				else
+				{
+					colorS = RealEngine2D::COLOR_GREEN;
+				}
+
+				m_gui.spriteFont->draw
+				(
+					m_gui.spriteBatchHUDStatic,
+					dummyDisplay.c_str(),
+					glm::vec2
+					(
+						float(m_gui.window->GETscreenWidth() / 2),
+						m_gui.window->GETscreenHeight() - 200 - index * yL
+					), // offset pos
+					glm::vec2(0.48f), // size
+					0.0f,
+					colorS,
+					RealEngine2D::Justification::MIDDLE
+				);
+				index++;
+			}
+
+			std::string msgStable{"The FCT is not stable"};
+			colorS = RealEngine2D::COLOR_RED;
+			if (m_isStable)
+			{
+				msgStable = "The FCT is stable";
+				colorS = RealEngine2D::COLOR_GREEN;
+			}
+			m_gui.spriteFont->draw
+			(
+				m_gui.spriteBatchHUDStatic,
+				msgStable.c_str(),
+				glm::vec2
+				(
+					float(m_gui.window->GETscreenWidth() / 2),
+					m_gui.window->GETscreenHeight() - 200 - index * yL
+				), // offset pos
+				glm::vec2(0.48f), // size
+				0.0f,
+				colorS,
+				RealEngine2D::Justification::MIDDLE
+			);
+			
+		}
+	}
+
+	
 
 	m_gui.spriteBatchHUDStatic.end();
 }
@@ -283,7 +404,17 @@ bool FCTMenuScreen::onsecondOrdreButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	m_fctDiscret->secondOrdre();
 	m_isInitialize = true;
-	initHUDText(m_fctDiscret->printOn());
+
+	std::string dummy{ m_fctDiscret->printOn() };
+
+	m_gui.s_numFCT = dummy.substr(0, dummy.find_first_of("\n"));
+	dummy.erase(0, dummy.find_first_of("\n") + 1);
+	m_gui.s_barFCT = dummy.substr(0, dummy.find_first_of("\n"));
+	dummy.erase(0, dummy.find_first_of("\n") + 1);
+	m_gui.s_denFCT = dummy;
+
+	initHUDText(display_FCT);
+
 	return true;
 }
 
@@ -291,7 +422,13 @@ bool FCTMenuScreen::onJuryButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	if (m_fctDiscret->isInitialize())
 	{
-		m_fctDiscret->tabJury();
+		std::ostringstream stream;
+		m_isStable = m_fctDiscret->tabJury(stream);
+		m_gui.s_jury = stream.str();
+		/* erase 1st \n */
+		m_gui.s_jury.erase(0, 1);
+
+		initHUDText(display_FCT_JuryTab);
 	}
 	return true;
 }

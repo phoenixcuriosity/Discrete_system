@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
+	file version 4.0.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -495,10 +495,9 @@ void FCTDiscret::secondOrdre()
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------------- */
-bool FCTDiscret::tabJury()
+bool FCTDiscret::tabJury(std::ostringstream& stream)
 {
 	std::string tableauJury("");
-	std::ostringstream stream;
 
 	/* ---------------------------------------------------------------------- */
 	/* 1ere Partie															  */
@@ -552,7 +551,7 @@ bool FCTDiscret::tabJury()
 	}
 	
 	 
-	stream << std::endl << std::endl << "table of Jury = " << *_jury;
+	stream << *_jury;
 
 	/* ---------------------------------------------------------------------- */
 	/* 2ème Partie															  */
@@ -565,7 +564,7 @@ bool FCTDiscret::tabJury()
 	/* condition abs(a0) < an												  */
 	/* ---------------------------------------------------------------------- */
 
-	stream << std::endl << std::endl << "abs(a0) = " << abs(_den->GETcoefTab(0));
+	stream << std::endl << "abs(a0) = " << abs(_den->GETcoefTab(0));
 	if (abs(_den->GETcoefTab(0)) < _den->GETcoefTab(_den->GETorder()))
 	{
 		stream << " < a" << _den->GETorder() << " = " << _den->GETcoefTab(_den->GETorder()) << "	Ok";
@@ -599,21 +598,24 @@ bool FCTDiscret::tabJury()
 	for (unsigned int i(0); i <= _den->GETorder(); i++)
 		somme += _den->GETcoefTab(i) * pow(-1, i);
 	stream << std::endl << "D(-1) = " << somme;
-	if	(	
-			(	
-				somme > 0.0
-				&&
-				(_den->GETorder() % 2) == 0
-			)
-			||
-			(
-				somme < 0.0
-				&&
-				(_den->GETorder() % 2) == 1
-			)
+	if	(
+			somme > 0.0
+			&&
+			(_den->GETorder() % 2) == 0
 		)
 	{
-		stream << "	Ok";
+		stream << " / positive sum / n pair / Ok";
+		condition++;
+	}
+	else
+	if
+		(
+			somme < 0.0
+			&&
+			(_den->GETorder() % 2) == 1
+		)
+	{
+		stream << " / negative sum / n impair / Ok";
 		condition++;
 	}
 	else

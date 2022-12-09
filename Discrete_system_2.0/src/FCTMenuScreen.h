@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
+	file version 4.0.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -45,6 +45,13 @@
 struct File;
 struct GUI_Parameters;
 
+typedef enum
+{
+	nothing = 0,
+	display_FCT = 1,
+	display_FCT_JuryTab = 2
+} FCT_msgType;
+
 typedef struct
 {
 	RealEngine2D::GUI gui;
@@ -61,6 +68,11 @@ typedef struct
 	CEGUI::PushButton* secondOrdreButton;
 	CEGUI::PushButton* juryProcessButton;
 	CEGUI::PushButton* returnMainMenu;
+
+	std::string s_numFCT;
+	std::string s_barFCT;
+	std::string s_denFCT;
+	std::string s_jury;
 
 } FCTMenuGUI;
 
@@ -86,7 +98,7 @@ public:
 
 private:
 
-	virtual void initHUDText(const std::string& msg);
+	virtual void initHUDText(unsigned int msgType);
 
 public:
 
@@ -114,6 +126,7 @@ private:
 
 	/* Fonctionnal data */
 	FCTDiscret* m_fctDiscret;
+	bool m_isStable;
 
 	bool m_isInitialize;
 };

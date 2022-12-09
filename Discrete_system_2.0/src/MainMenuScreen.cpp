@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
+	file version 4.0.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -215,7 +215,7 @@ void MainMenuScreen::initHUDText()
 	m_gui.spriteFont->draw
 	(
 		m_gui.spriteBatchHUDStatic,
-		"Robin SAUTER 2018-2022\nDev branch 2.0.1",
+		"Robin SAUTER 2018-2022\nDev branch 4.0.1",
 		glm::vec2(0.f,0.f), // offset pos
 		glm::vec2(0.24f), // size
 		0.0f,
