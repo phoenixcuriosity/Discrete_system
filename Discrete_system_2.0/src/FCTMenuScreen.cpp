@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.1
+	file version 4.0.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -88,35 +88,8 @@ bool FCTMenuScreen::onEntry()
 		m_gui.spriteBatchHUDStatic.init();
 
 		//initHUDText();
-
-		m_gui.secondOrdreButton = static_cast<CEGUI::PushButton*>
-			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
-				{ 0, 0.1f, 0.15f, 0.05f },
-				RealEngine2D::NOT_BY_PERCENT,
-				"SecondOrdre"));
-
-		m_gui.secondOrdreButton->setText("Pre-filled Second Order");
-		m_gui.secondOrdreButton->subscribeEvent
-		(
-			CEGUI::PushButton::EventClicked,
-			CEGUI::Event::Subscriber(&FCTMenuScreen::onsecondOrdreButtonClicked, this)
-		);
-
-		m_gui.juryProcessButton = static_cast<CEGUI::PushButton*>
-			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
-				{ 0, 0.2f, 0.15f, 0.05f },
-				RealEngine2D::NOT_BY_PERCENT,
-				"Jury"));
-
-		m_gui.juryProcessButton->setText("Process Jury table");
-		m_gui.juryProcessButton->subscribeEvent
-		(
-			CEGUI::PushButton::EventClicked,
-			CEGUI::Event::Subscriber(&FCTMenuScreen::onJuryButtonClicked, this)
-		);
-
+		float yDisplay{ 0.1f }, ydelta{ 0.05f };
+		unsigned int indexDisplay{ 0 };
 
 		m_gui.returnMainMenu = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
@@ -131,6 +104,71 @@ bool FCTMenuScreen::onEntry()
 			CEGUI::PushButton::EventClicked,
 			CEGUI::Event::Subscriber(&FCTMenuScreen::onReturnMainMenuClicked, this)
 		);
+
+		m_gui.secondOrdreButton = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				"AlfiskoSkin/Button",
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"SecondOrdre"));
+
+		m_gui.secondOrdreButton->setText("Pre-filled Second Order");
+		m_gui.secondOrdreButton->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onsecondOrdreButtonClicked, this)
+		);
+		indexDisplay++;
+
+		m_gui.integButton = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				"AlfiskoSkin/Button",
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"integ"));
+
+		m_gui.integButton->setText("Pre-filled Integrator");
+		m_gui.integButton->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onIntegButtonClicked, this)
+		);
+		indexDisplay++;
+		m_gui.createFCT = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				"AlfiskoSkin/Button",
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"createFCT"));
+
+		m_gui.createFCT->setText("Create/Modify FCT");
+		m_gui.createFCT->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onIntegButtonClicked, this)
+		);
+		indexDisplay++;
+		indexDisplay++;
+
+		m_gui.juryProcessButton = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				"AlfiskoSkin/Button",
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"Jury"));
+
+		m_gui.juryProcessButton->setText("Process Jury table");
+		m_gui.juryProcessButton->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onJuryButtonClicked, this)
+		);
+		m_gui.juryProcessButton->hide();
+		indexDisplay++;
+		
+
+
+		
 
 
 		m_gui.gui.setMouseCursor("AlfiskoSkin/MouseArrow");
@@ -148,7 +186,7 @@ bool FCTMenuScreen::onEntry()
 	return true;
 }
 
-void FCTMenuScreen::initHUDText(unsigned int msgType)
+void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 {
 	m_gui.spriteBatchHUDStatic.begin();
 
@@ -403,18 +441,14 @@ void FCTMenuScreen::update()
 bool FCTMenuScreen::onsecondOrdreButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	m_fctDiscret->secondOrdre();
-	m_isInitialize = true;
+	fctHUDfilled();
+	return true;
+}
 
-	std::string dummy{ m_fctDiscret->printOn() };
-
-	m_gui.s_numFCT = dummy.substr(0, dummy.find_first_of("\n"));
-	dummy.erase(0, dummy.find_first_of("\n") + 1);
-	m_gui.s_barFCT = dummy.substr(0, dummy.find_first_of("\n"));
-	dummy.erase(0, dummy.find_first_of("\n") + 1);
-	m_gui.s_denFCT = dummy;
-
-	initHUDText(display_FCT);
-
+bool FCTMenuScreen::onIntegButtonClicked(const CEGUI::EventArgs& /* e */)
+{
+	m_fctDiscret->interg();
+	fctHUDfilled();
 	return true;
 }
 
@@ -438,4 +472,21 @@ bool FCTMenuScreen::onReturnMainMenuClicked(const CEGUI::EventArgs& /* e */)
 	m_nextScreenIndexMenu = MAINMENU_SCREEN_INDEX;
 	m_currentState = RealEngine2D::ScreenState::CHANGE_PREVIOUS;
 	return true;
+}
+
+void FCTMenuScreen::fctHUDfilled()
+{
+	m_isInitialize = true;
+
+	std::string dummy{ m_fctDiscret->printOn() };
+
+	m_gui.s_numFCT = dummy.substr(0, dummy.find_first_of("\n"));
+	dummy.erase(0, dummy.find_first_of("\n") + 1);
+	m_gui.s_barFCT = dummy.substr(0, dummy.find_first_of("\n"));
+	dummy.erase(0, dummy.find_first_of("\n") + 1);
+	m_gui.s_denFCT = dummy;
+
+	initHUDText(display_FCT);
+
+	m_gui.juryProcessButton->show();
 }

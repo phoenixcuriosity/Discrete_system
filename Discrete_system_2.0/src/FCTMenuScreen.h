@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.1
+	file version 4.0.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -66,6 +66,8 @@ typedef struct
 	RealEngine2D::Window* window;
 
 	CEGUI::PushButton* secondOrdreButton;
+	CEGUI::PushButton* integButton;
+	CEGUI::PushButton* createFCT;
 	CEGUI::PushButton* juryProcessButton;
 	CEGUI::PushButton* returnMainMenu;
 
@@ -98,7 +100,7 @@ public:
 
 private:
 
-	virtual void initHUDText(unsigned int msgType);
+	virtual void initHUDText(FCT_msgType msgType);
 
 public:
 
@@ -110,8 +112,11 @@ private:
 
 
 	bool onsecondOrdreButtonClicked(const CEGUI::EventArgs& e);
+	bool onIntegButtonClicked(const CEGUI::EventArgs& e);
 	bool onJuryButtonClicked(const CEGUI::EventArgs& e);
 	bool onReturnMainMenuClicked(const CEGUI::EventArgs& e);
+
+	void fctHUDfilled();
 
 
 public:
