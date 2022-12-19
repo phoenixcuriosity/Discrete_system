@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.2
+	file version 4.0.3
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -25,6 +25,15 @@
 #include "ScreenIndices.h"
 
 #include "App.h"
+
+
+#define GUI_DISPLAY_FCT_SIZE 0.64f
+#define GUI_DISPLAY_JURY_SIZE 0.48f
+#define GUI_DISPLAY_SIZE_REF 1920.f
+#define GUI_DISPLAY_FCT_SPACE_FACTOR 100.f
+#define GUI_FACTOR_SIZE GUI_DISPLAY_FCT_SIZE / GUI_DISPLAY_SIZE_REF
+#define GUI_SPACE_FCT_Y GUI_FACTOR_SIZE * GUI_DISPLAY_FCT_SPACE_FACTOR
+
 
 FCTMenuScreen::FCTMenuScreen
 (
@@ -192,44 +201,51 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 
 	if (msgType >= display_FCT)
 	{
+		const float deltaYGUI{ GUI_SPACE_FCT_Y * float(m_gui.window->GETscreenWidth())};
+		const glm::vec2 sizeGUI{ GUI_FACTOR_SIZE * float(m_gui.window->GETscreenWidth())};
+		const float screenWidthDiv2{ float(m_gui.window->GETscreenWidth()) / 2.f };
+		unsigned int index{ 1 };
+
 		m_gui.spriteFont->draw
 		(
 			m_gui.spriteBatchHUDStatic,
 			m_gui.s_numFCT.c_str(),
 			glm::vec2
 			(
-				float(m_gui.window->GETscreenWidth() / 2),
-				float(m_gui.window->GETscreenHeight() - 64)
+				float(screenWidthDiv2),
+				float(m_gui.window->GETscreenHeight() - deltaYGUI)
 			), // offset pos
-			glm::vec2(0.64f), // size
+			sizeGUI, // size
 			0.0f,
 			RealEngine2D::COLOR_GOLD,
 			RealEngine2D::Justification::MIDDLE
 		);
+		index++;
 		m_gui.spriteFont->draw
 		(
 			m_gui.spriteBatchHUDStatic,
 			m_gui.s_barFCT.c_str(),
 			glm::vec2
 			(
-				float(m_gui.window->GETscreenWidth() / 2),
-				float(m_gui.window->GETscreenHeight()) - 104.f
+				float(screenWidthDiv2),
+				float(m_gui.window->GETscreenHeight()) - index * deltaYGUI
 			), // offset pos
-			glm::vec2(0.64f), // size
+			sizeGUI, // size
 			0.0f,
 			RealEngine2D::COLOR_GOLD,
 			RealEngine2D::Justification::MIDDLE
 		);
+		index++;
 		m_gui.spriteFont->draw
 		(
 			m_gui.spriteBatchHUDStatic,
 			m_gui.s_denFCT.c_str(),
 			glm::vec2
 			(
-				float(m_gui.window->GETscreenWidth() / 2),
-				float(m_gui.window->GETscreenHeight()) - 154.f
+				float(screenWidthDiv2),
+				float(m_gui.window->GETscreenHeight()) - index * deltaYGUI
 			), // offset pos
-			glm::vec2(0.64f), // size
+			sizeGUI, // size
 			0.0f,
 			RealEngine2D::COLOR_GOLD,
 			RealEngine2D::Justification::MIDDLE
@@ -238,7 +254,6 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 		if (msgType >= display_FCT_JuryTab)
 		{
 			const float yL{ 36.f };
-			unsigned int index{ 0 };
 			std::string dummy{ m_gui.s_jury };
 			std::string dummyDisplay{};
 
