@@ -1,7 +1,7 @@
 #Perso
 *.ipch
 *.vs
-*Debug
+
 
 # Prerequisites
 *.d
