@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.3
+	file version 4.0.4
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -21,19 +21,42 @@
 
 */
 
+/* *********************************************************
+ *						Include							   *
+ ********************************************************* */
+
 #include "FCTMenuScreen.h"
 #include "ScreenIndices.h"
 
+/* 
+	include for struct parameters
+		File
+		GUI_Parameters
+*/
 #include "App.h"
 
+/* *********************************************************
+ *						Constantes						   *
+ ********************************************************* */
 
-#define GUI_DISPLAY_FCT_SIZE 0.64f
-#define GUI_DISPLAY_JURY_SIZE 0.48f
+#define GUI_DISPLAY_FCT_SIZE 0.8f
+#define GUI_DISPLAY_JURY_SIZE 0.64f
+
 #define GUI_DISPLAY_SIZE_REF 1920.f
-#define GUI_DISPLAY_FCT_SPACE_FACTOR 100.f
-#define GUI_FACTOR_SIZE GUI_DISPLAY_FCT_SIZE / GUI_DISPLAY_SIZE_REF
-#define GUI_SPACE_FCT_Y GUI_FACTOR_SIZE * GUI_DISPLAY_FCT_SPACE_FACTOR
 
+#define GUI_DISPLAY_FCT_SPACE_FACTOR 100.f
+
+#define GUI_FACTOR_SIZE GUI_DISPLAY_FCT_SIZE / GUI_DISPLAY_SIZE_REF
+#define GUI_FACTOR_JURY_SIZE GUI_DISPLAY_JURY_SIZE / GUI_DISPLAY_SIZE_REF
+
+#define GUI_SPACE_FCT_Y GUI_FACTOR_SIZE * GUI_DISPLAY_FCT_SPACE_FACTOR
+#define GUI_SPACE_JURY_Y GUI_FACTOR_JURY_SIZE * GUI_DISPLAY_FCT_SPACE_FACTOR
+
+#define GUI_SPACE_BETWEEN_FCT_JURY 2.f
+
+ /* *********************************************************
+  *						Classe	 						    *
+  ********************************************************* */
 
 FCTMenuScreen::FCTMenuScreen
 (
@@ -204,58 +227,46 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 		const float deltaYGUI{ GUI_SPACE_FCT_Y * float(m_gui.window->GETscreenWidth())};
 		const glm::vec2 sizeGUI{ GUI_FACTOR_SIZE * float(m_gui.window->GETscreenWidth())};
 		const float screenWidthDiv2{ float(m_gui.window->GETscreenWidth()) / 2.f };
-		unsigned int index{ 1 };
+
+		float yLine{ float(m_gui.window->GETscreenHeight()) - deltaYGUI };
 
 		m_gui.spriteFont->draw
 		(
 			m_gui.spriteBatchHUDStatic,
 			m_gui.s_numFCT.c_str(),
-			glm::vec2
-			(
-				float(screenWidthDiv2),
-				float(m_gui.window->GETscreenHeight() - deltaYGUI)
-			), // offset pos
-			sizeGUI, // size
-			0.0f,
+			{ screenWidthDiv2, yLine },
+			sizeGUI, NO_DEPTH,
 			RealEngine2D::COLOR_GOLD,
 			RealEngine2D::Justification::MIDDLE
 		);
-		index++;
+		yLine -= deltaYGUI;
 		m_gui.spriteFont->draw
 		(
 			m_gui.spriteBatchHUDStatic,
 			m_gui.s_barFCT.c_str(),
-			glm::vec2
-			(
-				float(screenWidthDiv2),
-				float(m_gui.window->GETscreenHeight()) - index * deltaYGUI
-			), // offset pos
-			sizeGUI, // size
-			0.0f,
+			{ screenWidthDiv2, yLine },
+			sizeGUI, NO_DEPTH,
 			RealEngine2D::COLOR_GOLD,
 			RealEngine2D::Justification::MIDDLE
 		);
-		index++;
+		yLine -= deltaYGUI;
 		m_gui.spriteFont->draw
 		(
 			m_gui.spriteBatchHUDStatic,
 			m_gui.s_denFCT.c_str(),
-			glm::vec2
-			(
-				float(screenWidthDiv2),
-				float(m_gui.window->GETscreenHeight()) - index * deltaYGUI
-			), // offset pos
-			sizeGUI, // size
-			0.0f,
+			{ screenWidthDiv2, yLine },
+			sizeGUI, NO_DEPTH,
 			RealEngine2D::COLOR_GOLD,
 			RealEngine2D::Justification::MIDDLE
 		);
 		
 		if (msgType >= display_FCT_JuryTab)
 		{
-			const float yL{ 36.f };
+			const float deltaYGUIJURY{ GUI_SPACE_JURY_Y * float(m_gui.window->GETscreenWidth()) };
+			const glm::vec2 sizeGUIJURY{ GUI_FACTOR_JURY_SIZE * float(m_gui.window->GETscreenWidth()) };
 			std::string dummy{ m_gui.s_jury };
 			std::string dummyDisplay{};
+
 
 			size_t pos{ 0 };
 			while ((pos = dummy.find("\t")) != std::string::npos)
@@ -263,21 +274,17 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 				dummy.replace(pos, 1, "   ");
 			}
 
+			yLine -= GUI_SPACE_BETWEEN_FCT_JURY * deltaYGUIJURY;
 			m_gui.spriteFont->draw
 			(
 				m_gui.spriteBatchHUDStatic,
 				"Jury table :",
-				glm::vec2
-				(
-					float(m_gui.window->GETscreenWidth() / 2),
-					m_gui.window->GETscreenHeight() - 200 - index * yL
-				), // offset pos
-				glm::vec2(0.48f), // size
-				0.0f,
+				{ screenWidthDiv2, yLine },
+				sizeGUI, NO_DEPTH,
 				RealEngine2D::COLOR_LIGHT_GREY,
 				RealEngine2D::Justification::RIGHT
 			);
-			index++;
+			yLine -= deltaYGUIJURY;
 			while (dummy.find("|") != std::string::npos)
 			{
 				dummyDisplay = dummy.substr(0, dummy.find_first_of("\n"));
@@ -287,17 +294,12 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 				(
 					m_gui.spriteBatchHUDStatic,
 					dummyDisplay.c_str(),
-					glm::vec2
-					(
-						float(m_gui.window->GETscreenWidth() / 2),
-						m_gui.window->GETscreenHeight() - 200 - index * yL
-					), // offset pos
-					glm::vec2(0.48f), // size
-					0.0f,
+					{ screenWidthDiv2, yLine },
+					sizeGUI, NO_DEPTH,
 					RealEngine2D::COLOR_DARK_GREY,
 					RealEngine2D::Justification::MIDDLE
 				);
-				index++;
+				yLine -= deltaYGUIJURY;
 			}
 
 			/* Stability */
@@ -305,17 +307,12 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 			(
 				m_gui.spriteBatchHUDStatic,
 				"Jury's stability conditions :",
-				glm::vec2
-				(
-					float(m_gui.window->GETscreenWidth() / 2),
-					m_gui.window->GETscreenHeight() - 200 - index * yL
-				), // offset pos
-				glm::vec2(0.48f), // size
-				0.0f,
+				{ screenWidthDiv2, yLine },
+				sizeGUI, NO_DEPTH,
 				RealEngine2D::COLOR_LIGHT_GREY,
 				RealEngine2D::Justification::RIGHT
 			);
-			index++;
+			yLine -= deltaYGUIJURY;
 			RealEngine2D::ColorRGBA8 colorS;
 			for (unsigned int loopIndex{ 0 }; loopIndex < JURY_STABILITY_CONDITIONS; loopIndex++)
 			{
@@ -336,17 +333,12 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 				(
 					m_gui.spriteBatchHUDStatic,
 					dummyDisplay.c_str(),
-					glm::vec2
-					(
-						float(m_gui.window->GETscreenWidth() / 2),
-						m_gui.window->GETscreenHeight() - 200 - index * yL
-					), // offset pos
-					glm::vec2(0.48f), // size
-					0.0f,
+					{ screenWidthDiv2, yLine },
+					sizeGUI, NO_DEPTH,
 					colorS,
 					RealEngine2D::Justification::MIDDLE
 				);
-				index++;
+				yLine -= deltaYGUIJURY;
 			}
 
 			std::string msgStable{"The FCT is not stable"};
@@ -360,13 +352,8 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 			(
 				m_gui.spriteBatchHUDStatic,
 				msgStable.c_str(),
-				glm::vec2
-				(
-					float(m_gui.window->GETscreenWidth() / 2),
-					m_gui.window->GETscreenHeight() - 200 - index * yL
-				), // offset pos
-				glm::vec2(0.48f), // size
-				0.0f,
+				{ screenWidthDiv2, yLine },
+				sizeGUI, NO_DEPTH,
 				colorS,
 				RealEngine2D::Justification::MIDDLE
 			);

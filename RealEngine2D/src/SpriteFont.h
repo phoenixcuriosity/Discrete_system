@@ -51,6 +51,8 @@ namespace RealEngine2D {
         LEFT, MIDDLE, RIGHT
     };
 
+#define NO_DEPTH 0.f
+
     class SpriteFont {
     public:
         SpriteFont() {};
