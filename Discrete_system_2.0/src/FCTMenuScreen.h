@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.2
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.0.6
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -45,12 +45,29 @@
 struct File;
 struct GUI_Parameters;
 
+#define ERROR_ORDER_FCT_CREATION_TOOL -1
+#define MIN_ORDER_FCT_CREATION_TOOL 0
+
 typedef enum
 {
-	nothing = 0,
-	display_FCT = 1,
-	display_FCT_JuryTab = 2
+	FCT_msgType_nothing		= 0,
+	display_FCT				= 1,
+	display_FCT_JuryTab	    = 2
 } FCT_msgType;
+
+typedef enum
+{
+	InputToNumDen_nothing = 0,
+	num					  = 1,
+	den					  = 2
+} InputToNumDen;
+
+typedef struct
+{
+	InputToNumDen inputToNumDen;
+	double currentCoef;
+	int order;
+} FCTCreationTool;
 
 typedef struct
 {
@@ -67,9 +84,16 @@ typedef struct
 
 	CEGUI::PushButton* secondOrdreButton;
 	CEGUI::PushButton* integButton;
+
 	CEGUI::PushButton* createFCT;
+	CEGUI::PushButton* SetNum;
+	CEGUI::PushButton* SetDen;
+
 	CEGUI::PushButton* juryProcessButton;
+
 	CEGUI::PushButton* returnMainMenu;
+
+	CEGUI::Editbox* editBox;
 
 	std::string s_numFCT;
 	std::string s_barFCT;
@@ -101,6 +125,8 @@ public:
 private:
 
 	virtual void initHUDText(FCT_msgType msgType);
+	virtual void CreateModifyFCT();
+	virtual void KeyMouseinput(const SDL_Event& ev);
 
 public:
 
@@ -113,6 +139,9 @@ private:
 
 	bool onsecondOrdreButtonClicked(const CEGUI::EventArgs& e);
 	bool onIntegButtonClicked(const CEGUI::EventArgs& e);
+	bool onCreateModifyFCTButtonClicked(const CEGUI::EventArgs& e);
+	bool onSetNumButtonClicked(const CEGUI::EventArgs& e);
+	bool onSetDenButtonClicked(const CEGUI::EventArgs& e);
 	bool onJuryButtonClicked(const CEGUI::EventArgs& e);
 	bool onReturnMainMenuClicked(const CEGUI::EventArgs& e);
 
@@ -132,6 +161,8 @@ private:
 	/* Fonctionnal data */
 	FCTDiscret* m_fctDiscret;
 	bool m_isStable;
+
+	FCTCreationTool m_FCTCreationTool;
 
 	bool m_isInitialize;
 };

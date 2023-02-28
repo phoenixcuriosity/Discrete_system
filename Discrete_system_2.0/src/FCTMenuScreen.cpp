@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.4
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.0.6
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -54,6 +54,15 @@
 
 #define GUI_SPACE_BETWEEN_FCT_JURY 2.f
 
+#define GUI_SKIN_THEME std::string("AlfiskoSkin")
+#define GUI_SKIN_THEME_SCHEME GUI_SKIN_THEME + std::string(".scheme")
+#define GUI_SKIN_THEME_BUTTON GUI_SKIN_THEME + std::string("/Button")
+#define GUI_SKIN_THEME_Editbox GUI_SKIN_THEME + std::string("/Editbox")
+#define GUI_SKIN_THEME_MOUSE GUI_SKIN_THEME + std::string("/MouseArrow")
+#define GUI_SKIN_FONT std::string("DejaVuSans-12")
+
+#define GUI_HIDE_NORMAL_CURSOR int(0)
+
  /* *********************************************************
   *						Classe	 						    *
   ********************************************************* */
@@ -71,6 +80,7 @@ m_gui(),
 m_file(file),
 m_fctDiscret(m_fctDiscret),
 m_isStable(false),
+m_FCTCreationTool(),
 m_isInitialize(false)
 {
 	build();
@@ -109,9 +119,9 @@ bool FCTMenuScreen::onEntry()
 	{
 		m_gui.gui.init(m_file->GUIPath);
 
-		m_gui.gui.loadScheme("AlfiskoSkin.scheme");
+		m_gui.gui.loadScheme(GUI_SKIN_THEME_SCHEME);
 
-		m_gui.gui.setFont("DejaVuSans-12");
+		m_gui.gui.setFont(GUI_SKIN_FONT);
 
 		m_gui.cameraHUD.init(m_game->getWindow().GETscreenWidth(), m_game->getWindow().GETscreenHeight());
 		m_gui.cameraHUD.SETposition(glm::vec2(m_game->getWindow().GETscreenWidth() / 2, m_game->getWindow().GETscreenHeight() / 2));
@@ -125,7 +135,7 @@ bool FCTMenuScreen::onEntry()
 
 		m_gui.returnMainMenu = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
+				GUI_SKIN_THEME_BUTTON,
 				{ 0, 0, 0.15, 0.05 },
 				RealEngine2D::NOT_BY_PERCENT,
 				"Return"));
@@ -139,7 +149,7 @@ bool FCTMenuScreen::onEntry()
 
 		m_gui.secondOrdreButton = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
+				GUI_SKIN_THEME_BUTTON,
 				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
 				RealEngine2D::NOT_BY_PERCENT,
 				"SecondOrdre"));
@@ -154,7 +164,7 @@ bool FCTMenuScreen::onEntry()
 
 		m_gui.integButton = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
+				GUI_SKIN_THEME_BUTTON,
 				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
 				RealEngine2D::NOT_BY_PERCENT,
 				"integ"));
@@ -168,7 +178,7 @@ bool FCTMenuScreen::onEntry()
 		indexDisplay++;
 		m_gui.createFCT = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
+				GUI_SKIN_THEME_BUTTON,
 				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
 				RealEngine2D::NOT_BY_PERCENT,
 				"createFCT"));
@@ -177,14 +187,14 @@ bool FCTMenuScreen::onEntry()
 		m_gui.createFCT->subscribeEvent
 		(
 			CEGUI::PushButton::EventClicked,
-			CEGUI::Event::Subscriber(&FCTMenuScreen::onIntegButtonClicked, this)
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onCreateModifyFCTButtonClicked, this)
 		);
 		indexDisplay++;
 		indexDisplay++;
 
 		m_gui.juryProcessButton = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
-				"AlfiskoSkin/Button",
+				GUI_SKIN_THEME_BUTTON,
 				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
 				RealEngine2D::NOT_BY_PERCENT,
 				"Jury"));
@@ -199,15 +209,56 @@ bool FCTMenuScreen::onEntry()
 		indexDisplay++;
 		
 
+		indexDisplay++;
+		indexDisplay++;
+		m_gui.SetNum = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				GUI_SKIN_THEME_BUTTON,
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"SetNum"));
 
+		m_gui.SetNum->setText("Set Num");
+		m_gui.SetNum->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onSetNumButtonClicked, this)
+		);
+		m_gui.SetNum->hide();
+
+		indexDisplay++;
+		m_gui.SetDen = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				GUI_SKIN_THEME_BUTTON,
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"SetDen"));
+
+		m_gui.SetDen->setText("Set Den");
+		m_gui.SetDen->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onSetDenButtonClicked, this)
+		);
+		m_gui.SetDen->hide();
+
+		indexDisplay++;
+		indexDisplay++;
+		indexDisplay++;
+		m_gui.editBox = static_cast<CEGUI::Editbox*>
+			(m_gui.gui.createWidget(
+				GUI_SKIN_THEME_Editbox,
+				{ 0, yDisplay + ydelta * indexDisplay, 0.2f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"editBox"));
 		
 
 
-		m_gui.gui.setMouseCursor("AlfiskoSkin/MouseArrow");
+		m_gui.gui.setMouseCursor(GUI_SKIN_THEME_MOUSE);
 		m_gui.gui.showMouseCursor();
 
 		/* HIDE normal mouse cursor */
-		SDL_ShowCursor(0);
+		SDL_ShowCursor(GUI_HIDE_NORMAL_CURSOR);
 	}
 	else
 	{
@@ -437,6 +488,7 @@ void FCTMenuScreen::update()
 	{
 		m_gui.gui.onSDLEvent(ev, m_game->getInputManager());
 		m_game->onSDLEvent(ev);
+		KeyMouseinput(ev);
 	}
 }
 
@@ -451,6 +503,28 @@ bool FCTMenuScreen::onIntegButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	m_fctDiscret->interg();
 	fctHUDfilled();
+	return true;
+}
+
+bool FCTMenuScreen::onCreateModifyFCTButtonClicked(const CEGUI::EventArgs& /* e */)
+{
+	CreateModifyFCT();
+	return true;
+}
+
+bool FCTMenuScreen::onSetNumButtonClicked(const CEGUI::EventArgs& /* e */)
+{
+	m_FCTCreationTool.inputToNumDen = InputToNumDen::num;
+	m_FCTCreationTool.currentCoef = 0.0;
+	m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
+	return true;
+}
+
+bool FCTMenuScreen::onSetDenButtonClicked(const CEGUI::EventArgs& /* e */)
+{
+	m_FCTCreationTool.inputToNumDen = InputToNumDen::den;
+	m_FCTCreationTool.currentCoef = 0.0;
+	m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
 	return true;
 }
 
@@ -491,4 +565,75 @@ void FCTMenuScreen::fctHUDfilled()
 	initHUDText(display_FCT);
 
 	m_gui.juryProcessButton->show();
+}
+
+void FCTMenuScreen::CreateModifyFCT()
+{
+	m_gui.SetNum->show();
+	m_gui.SetDen->show();
+}
+
+void FCTMenuScreen::KeyMouseinput(const SDL_Event& ev)
+{
+	if (m_FCTCreationTool.inputToNumDen > InputToNumDen::InputToNumDen_nothing)
+	{
+		if (m_game->getInputManager().isKeyDown(SDLK_KP_ENTER))
+		{
+			if (m_FCTCreationTool.order > ERROR_ORDER_FCT_CREATION_TOOL)
+			{
+				/* Fill coef tab by order */
+
+				m_FCTCreationTool.currentCoef = std::stod(m_gui.editBox->getText().c_str());
+				m_gui.editBox->setText(EMPTY_STRING);
+
+				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::num)
+				{
+					m_fctDiscret->GETnum()->SETcoefTab(m_FCTCreationTool.order, m_FCTCreationTool.currentCoef);
+				}
+				else
+				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::den)
+				{
+					m_fctDiscret->GETden()->SETcoefTab(m_FCTCreationTool.order, m_FCTCreationTool.currentCoef);
+				}
+				else
+				{
+					/* Do nothing */
+				}
+				
+				if (m_FCTCreationTool.order > MIN_ORDER_FCT_CREATION_TOOL)
+				{
+					m_FCTCreationTool.order--;
+				}
+				else
+				{
+					/* Stop iteration */
+					m_FCTCreationTool.inputToNumDen = InputToNumDen::InputToNumDen_nothing;
+					m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
+				}
+
+				fctHUDfilled();
+			}
+			else
+			{
+				/* Set order to Num or Den */
+
+				m_FCTCreationTool.order = int8_t(std::stoi(m_gui.editBox->getText().c_str()));
+				m_gui.editBox->setText(EMPTY_STRING);
+
+				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::num)
+				{
+					m_fctDiscret->GETnum()->SETorder(m_FCTCreationTool.order);
+				}
+				else
+				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::den)
+				{
+					m_fctDiscret->GETden()->SETorder(m_FCTCreationTool.order);
+				}
+				else
+				{
+					/* Do nothing */
+				}
+			}
+		}	
+	}
 }
