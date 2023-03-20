@@ -51,6 +51,9 @@
     <ClCompile Include="src\Signal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LIBUTI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\LIB.h">
@@ -87,6 +90,18 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Signal.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LIBUTI.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FCTMenuScreen_GUI.h">
+      <Filter>Source Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BodeMenuScreen_GUI.h">
+      <Filter>Source Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BodeGraphData.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

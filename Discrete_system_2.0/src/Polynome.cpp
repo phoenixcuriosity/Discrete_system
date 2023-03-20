@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -151,11 +151,7 @@ _stringSize(0)
 /* ----------------------------------------------------------------------------------- */
 Polynome::~Polynome()
 {
-	if (nullptr != _tab)
-	{
-		delete   _tab;
-		_tab = nullptr;
-	}
+	clearPolynome();
 }
 
 /* *********************************************************
@@ -503,6 +499,17 @@ void fillOpPlus
 		outPlus.SETcoefTab(i, a.GETcoefTab(i));
 	for (unsigned int i(0); i <= maxSize; i++)
 		outPlus.SETcoefTab(i, outPlus.GETcoefTab(i) - b.GETcoefTab(i));
+}
+
+int Polynome::clearPolynome()
+{
+	if (nullptr != _tab)
+	{
+		delete   _tab;
+		_tab = nullptr;
+	}
+	_order = 0;
+	return 0;
 }
 
 

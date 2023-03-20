@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.0.6
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -50,9 +50,12 @@ struct GUI_Parameters;
 
 typedef enum
 {
-	FCT_msgType_nothing		= 0,
-	display_FCT				= 1,
-	display_FCT_JuryTab	    = 2
+	FCT_msgType_nothing			= 0,
+	display_FCT					= 1,
+	display_FCT_JuryTab			= 2,
+	FCT_CreationTool_order_Num	= 3,
+	FCT_CreationTool_order_Den	= 4,
+	FCT_CreationTool_coef		= 5
 } FCT_msgType;
 
 typedef enum
@@ -90,6 +93,7 @@ typedef struct
 	CEGUI::PushButton* SetDen;
 
 	CEGUI::PushButton* juryProcessButton;
+	CEGUI::PushButton* BodeGraphButton;
 
 	CEGUI::PushButton* returnMainMenu;
 
@@ -143,10 +147,11 @@ private:
 	bool onSetNumButtonClicked(const CEGUI::EventArgs& e);
 	bool onSetDenButtonClicked(const CEGUI::EventArgs& e);
 	bool onJuryButtonClicked(const CEGUI::EventArgs& e);
+	bool onBodeGraphButtonClicked(const CEGUI::EventArgs& e);
 	bool onReturnMainMenuClicked(const CEGUI::EventArgs& e);
 
 	void fctHUDfilled();
-
+	void FCTCreationToolFonction();
 
 public:
 

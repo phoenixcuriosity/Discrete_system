@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -58,7 +58,6 @@ const std::string EMPTY_STRING = "";
 /* Define 0 for module use */
 #define MODULO_ZERO 0
 
-typedef struct t_bode t_bode;
 typedef struct Screen Screen;
 typedef struct Fichier Fichier;
 typedef struct Var Var;
@@ -79,6 +78,6 @@ class Texte;
 class ButtonImage;
 class ButtonTexte;
 
-typedef std::vector<t_bode> BodeGraph;
+
 
 #endif

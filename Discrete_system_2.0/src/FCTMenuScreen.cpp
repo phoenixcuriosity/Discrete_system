@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.0.6
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -35,33 +35,14 @@
 */
 #include "App.h"
 
-/* *********************************************************
- *						Constantes						   *
- ********************************************************* */
+/*
+    Include for computeValueToScale
+*/
+#include "LIBUTI.h"
 
-#define GUI_DISPLAY_FCT_SIZE 0.8f
-#define GUI_DISPLAY_JURY_SIZE 0.64f
+#include "FCTMenuScreen_GUI.h"
 
-#define GUI_DISPLAY_SIZE_REF 1920.f
 
-#define GUI_DISPLAY_FCT_SPACE_FACTOR 100.f
-
-#define GUI_FACTOR_SIZE GUI_DISPLAY_FCT_SIZE / GUI_DISPLAY_SIZE_REF
-#define GUI_FACTOR_JURY_SIZE GUI_DISPLAY_JURY_SIZE / GUI_DISPLAY_SIZE_REF
-
-#define GUI_SPACE_FCT_Y GUI_FACTOR_SIZE * GUI_DISPLAY_FCT_SPACE_FACTOR
-#define GUI_SPACE_JURY_Y GUI_FACTOR_JURY_SIZE * GUI_DISPLAY_FCT_SPACE_FACTOR
-
-#define GUI_SPACE_BETWEEN_FCT_JURY 2.f
-
-#define GUI_SKIN_THEME std::string("AlfiskoSkin")
-#define GUI_SKIN_THEME_SCHEME GUI_SKIN_THEME + std::string(".scheme")
-#define GUI_SKIN_THEME_BUTTON GUI_SKIN_THEME + std::string("/Button")
-#define GUI_SKIN_THEME_Editbox GUI_SKIN_THEME + std::string("/Editbox")
-#define GUI_SKIN_THEME_MOUSE GUI_SKIN_THEME + std::string("/MouseArrow")
-#define GUI_SKIN_FONT std::string("DejaVuSans-12")
-
-#define GUI_HIDE_NORMAL_CURSOR int(0)
 
  /* *********************************************************
   *						Classe	 						    *
@@ -248,10 +229,25 @@ bool FCTMenuScreen::onEntry()
 		m_gui.editBox = static_cast<CEGUI::Editbox*>
 			(m_gui.gui.createWidget(
 				GUI_SKIN_THEME_Editbox,
-				{ 0, yDisplay + ydelta * indexDisplay, 0.2f, 0.05f },
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
 				RealEngine2D::NOT_BY_PERCENT,
 				"editBox"));
 		
+		indexDisplay++;
+		indexDisplay++;
+		m_gui.BodeGraphButton = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				GUI_SKIN_THEME_BUTTON,
+				{ 0, yDisplay + ydelta * indexDisplay, 0.15f, 0.05f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"BodeGraph"));
+
+		m_gui.BodeGraphButton->setText("Display Bode Graph");
+		m_gui.BodeGraphButton->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&FCTMenuScreen::onBodeGraphButtonClicked, this)
+		);
 
 
 		m_gui.gui.setMouseCursor(GUI_SKIN_THEME_MOUSE);
@@ -311,7 +307,7 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 			RealEngine2D::Justification::MIDDLE
 		);
 		
-		if (msgType >= display_FCT_JuryTab)
+		if (msgType == display_FCT_JuryTab)
 		{
 			const float deltaYGUIJURY{ GUI_SPACE_JURY_Y * float(m_gui.window->GETscreenWidth()) };
 			const glm::vec2 sizeGUIJURY{ GUI_FACTOR_JURY_SIZE * float(m_gui.window->GETscreenWidth()) };
@@ -410,6 +406,52 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 			);
 			
 		}
+		else
+		if (msgType == FCT_CreationTool_order_Num)
+		{
+			yLine -= deltaYGUI;
+			m_gui.spriteFont->draw
+			(
+				m_gui.spriteBatchHUDStatic,
+				"Enter a order for the Numerator",
+				{ screenWidthDiv2, yLine },
+				sizeGUI, NO_DEPTH,
+				RealEngine2D::COLOR_BLUE,
+				RealEngine2D::Justification::MIDDLE
+			);
+		}
+		else
+		if (msgType == FCT_CreationTool_order_Den)
+		{
+			yLine -= deltaYGUI;
+			m_gui.spriteFont->draw
+			(
+				m_gui.spriteBatchHUDStatic,
+				"Enter a order for the Denomitor",
+				{ screenWidthDiv2, yLine },
+				sizeGUI, NO_DEPTH,
+				RealEngine2D::COLOR_BLUE,
+				RealEngine2D::Justification::MIDDLE
+			);
+		}
+		else
+		if (msgType == FCT_CreationTool_coef)
+		{
+			yLine -= deltaYGUI;
+			m_gui.spriteFont->draw
+			(
+				m_gui.spriteBatchHUDStatic,
+				std::string("Enter a Coefficient for the order " + std::to_string(m_FCTCreationTool.order)).c_str(),
+				{ screenWidthDiv2, yLine },
+				sizeGUI, NO_DEPTH,
+				RealEngine2D::COLOR_BLUE,
+				RealEngine2D::Justification::MIDDLE
+			);
+		}
+		else
+		{
+			/* Do nothing */
+		}
 	}
 
 	
@@ -460,13 +502,6 @@ void FCTMenuScreen::draw()
 	/* --- Render --- */
 	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-	//m_gui.spriteBatchHUDDynamic.begin();
-
-
-	//m_gui.spriteBatchHUDDynamic.end();
-
-	//m_gui.spriteBatchHUDDynamic.renderBatch();
-
 	m_gui.spriteBatchHUDStatic.renderBatch();
 
 
@@ -496,6 +531,7 @@ bool FCTMenuScreen::onsecondOrdreButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	m_fctDiscret->secondOrdre();
 	fctHUDfilled();
+	initHUDText(display_FCT);
 	return true;
 }
 
@@ -503,6 +539,7 @@ bool FCTMenuScreen::onIntegButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	m_fctDiscret->interg();
 	fctHUDfilled();
+	initHUDText(display_FCT);
 	return true;
 }
 
@@ -517,6 +554,8 @@ bool FCTMenuScreen::onSetNumButtonClicked(const CEGUI::EventArgs& /* e */)
 	m_FCTCreationTool.inputToNumDen = InputToNumDen::num;
 	m_FCTCreationTool.currentCoef = 0.0;
 	m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
+	fctHUDfilled();
+	initHUDText(FCT_CreationTool_order_Num);
 	return true;
 }
 
@@ -525,6 +564,8 @@ bool FCTMenuScreen::onSetDenButtonClicked(const CEGUI::EventArgs& /* e */)
 	m_FCTCreationTool.inputToNumDen = InputToNumDen::den;
 	m_FCTCreationTool.currentCoef = 0.0;
 	m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
+	fctHUDfilled();
+	initHUDText(FCT_CreationTool_order_Den);
 	return true;
 }
 
@@ -532,6 +573,9 @@ bool FCTMenuScreen::onJuryButtonClicked(const CEGUI::EventArgs& /* e */)
 {
 	if (m_fctDiscret->isInitialize())
 	{
+		m_gui.SetNum->hide();
+		m_gui.SetDen->hide();
+
 		std::ostringstream stream;
 		m_isStable = m_fctDiscret->tabJury(stream);
 		m_gui.s_jury = stream.str();
@@ -540,6 +584,13 @@ bool FCTMenuScreen::onJuryButtonClicked(const CEGUI::EventArgs& /* e */)
 
 		initHUDText(display_FCT_JuryTab);
 	}
+	return true;
+}
+
+bool FCTMenuScreen::onBodeGraphButtonClicked(const CEGUI::EventArgs& /* e */)
+{
+	m_nextScreenIndexMenu = BODE_SCREEN_INDEX;
+	m_currentState = RealEngine2D::ScreenState::CHANGE_NEXT;
 	return true;
 }
 
@@ -562,8 +613,6 @@ void FCTMenuScreen::fctHUDfilled()
 	dummy.erase(0, dummy.find_first_of("\n") + 1);
 	m_gui.s_denFCT = dummy;
 
-	initHUDText(display_FCT);
-
 	m_gui.juryProcessButton->show();
 }
 
@@ -571,6 +620,7 @@ void FCTMenuScreen::CreateModifyFCT()
 {
 	m_gui.SetNum->show();
 	m_gui.SetDen->show();
+	m_fctDiscret->setToInitialized();
 }
 
 void FCTMenuScreen::KeyMouseinput(const SDL_Event& ev)
@@ -579,61 +629,75 @@ void FCTMenuScreen::KeyMouseinput(const SDL_Event& ev)
 	{
 		if (m_game->getInputManager().isKeyDown(SDLK_KP_ENTER))
 		{
-			if (m_FCTCreationTool.order > ERROR_ORDER_FCT_CREATION_TOOL)
-			{
-				/* Fill coef tab by order */
-
-				m_FCTCreationTool.currentCoef = std::stod(m_gui.editBox->getText().c_str());
-				m_gui.editBox->setText(EMPTY_STRING);
-
-				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::num)
-				{
-					m_fctDiscret->GETnum()->SETcoefTab(m_FCTCreationTool.order, m_FCTCreationTool.currentCoef);
-				}
-				else
-				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::den)
-				{
-					m_fctDiscret->GETden()->SETcoefTab(m_FCTCreationTool.order, m_FCTCreationTool.currentCoef);
-				}
-				else
-				{
-					/* Do nothing */
-				}
-				
-				if (m_FCTCreationTool.order > MIN_ORDER_FCT_CREATION_TOOL)
-				{
-					m_FCTCreationTool.order--;
-				}
-				else
-				{
-					/* Stop iteration */
-					m_FCTCreationTool.inputToNumDen = InputToNumDen::InputToNumDen_nothing;
-					m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
-				}
-
-				fctHUDfilled();
-			}
-			else
-			{
-				/* Set order to Num or Den */
-
-				m_FCTCreationTool.order = int8_t(std::stoi(m_gui.editBox->getText().c_str()));
-				m_gui.editBox->setText(EMPTY_STRING);
-
-				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::num)
-				{
-					m_fctDiscret->GETnum()->SETorder(m_FCTCreationTool.order);
-				}
-				else
-				if (m_FCTCreationTool.inputToNumDen == InputToNumDen::den)
-				{
-					m_fctDiscret->GETden()->SETorder(m_FCTCreationTool.order);
-				}
-				else
-				{
-					/* Do nothing */
-				}
-			}
+			FCTCreationToolFonction();
 		}	
 	}
+}
+
+void FCTMenuScreen::FCTCreationToolFonction()
+{
+	if (m_FCTCreationTool.order > ERROR_ORDER_FCT_CREATION_TOOL)
+	{
+		/* Fill coef tab by order */
+
+		m_FCTCreationTool.currentCoef = std::stod(m_gui.editBox->getText().c_str());
+		m_gui.editBox->setText(EMPTY_STRING);
+
+		if (m_FCTCreationTool.inputToNumDen == InputToNumDen::num)
+		{
+			m_fctDiscret->GETnum()->SETcoefTab(m_FCTCreationTool.order, m_FCTCreationTool.currentCoef);
+		}
+		else
+		if (m_FCTCreationTool.inputToNumDen == InputToNumDen::den)
+		{
+			m_fctDiscret->GETden()->SETcoefTab(m_FCTCreationTool.order, m_FCTCreationTool.currentCoef);
+		}
+		else
+		{
+			/* Do nothing */
+		}
+
+		fctHUDfilled();
+
+		if (m_FCTCreationTool.order > MIN_ORDER_FCT_CREATION_TOOL)
+		{
+			m_FCTCreationTool.order--;
+			initHUDText(FCT_CreationTool_coef);
+		}
+		else
+		{
+			/* Stop iteration */
+			m_FCTCreationTool.inputToNumDen = InputToNumDen::InputToNumDen_nothing;
+			m_FCTCreationTool.order = ERROR_ORDER_FCT_CREATION_TOOL;
+			m_fctDiscret->SETdeltaT(0.01);
+			initHUDText(display_FCT);
+		}
+		
+	}
+	else
+	{
+		/* Set order to Num or Den */
+
+		/* Use of std::stoul to avoid negative order */
+		m_FCTCreationTool.order = int8_t(std::stoul(m_gui.editBox->getText().c_str()));
+		m_gui.editBox->setText(EMPTY_STRING);
+
+		if (m_FCTCreationTool.inputToNumDen == InputToNumDen::num)
+		{
+			m_fctDiscret->GETnum()->SETorder(m_FCTCreationTool.order);
+		}
+		else
+		if (m_FCTCreationTool.inputToNumDen == InputToNumDen::den)
+		{
+			m_fctDiscret->GETden()->SETorder(m_FCTCreationTool.order);
+		}
+		else
+		{
+			/* Do nothing */
+		}
+
+		fctHUDfilled();
+		initHUDText(FCT_CreationTool_coef);
+	}
+	
 }

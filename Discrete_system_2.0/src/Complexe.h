@@ -1,9 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	last modification on this file on version: 3.5
-	file version 2.1
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -27,6 +26,8 @@
 
 #include "LIB.h"
 #include "Polynome.h"
+
+const double COMPLEXE_UNIT_REAL = 1.0;
 
 class Complexe
 {

@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.1
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -29,6 +29,8 @@
 #include "FCTDiscret.h"
 
 #include "Complexe.h"
+
+#include "LIBUTI.h"
 
 /* *********************************************************
  *					Class FCTDiscret					   *
@@ -456,6 +458,8 @@ void FCTDiscret::interg()
 	_num->SETcoefTab(1, 1);
 	_den->SETcoefTab(0, -1);
 	_den->SETcoefTab(1, 1);
+	_deltaT = 0.01;
+	m_isInitialize = true;
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -477,6 +481,7 @@ void FCTDiscret::secondOrdre()
 	_den->SETcoefTab(0, -0.1);
 	_den->SETcoefTab(1, 0.5);
 	_den->SETcoefTab(2, 1);
+	_deltaT = 0.01;
 	m_isInitialize = true;
 }
 
@@ -518,7 +523,11 @@ bool FCTDiscret::tabJury(std::ostringstream& stream)
 	while (ligne2.GETorder() > MIN_ORDER_DEN_TAB_JURY)
 	{
 		ligne2.SETorder(ligne2.GETorder() - 1);
-		for (int i(0), j(ligne2.GETorder()); i <= (int)ligne2.GETorder(), j >= 0; i++, j--)
+		for (
+				int i(0), j(ligne2.GETorder());
+				(i <= (int)ligne2.GETorder()) && (j >= 0);
+				i++, j--
+			)
 		{
 			ligne2.SETcoefTab
 			(	(unsigned int)i,
@@ -536,7 +545,11 @@ bool FCTDiscret::tabJury(std::ostringstream& stream)
 			{
 				_jury->SETthiscoef(_jury->GETlength() - 2, i, ligne2.GETcoefTab(i));
 			}
-			for (int i(0), j = (int)ligne2.GETorder(); i <= (int)ligne2.GETorder(), j >= 0; i++, j--)
+			for (
+					int i(0), j = (int)ligne2.GETorder();
+					(i <= (int)ligne2.GETorder()) && (j >= 0);
+					i++, j--
+				)
 			{
 				_jury->SETthiscoef(_jury->GETlength() - 1, (unsigned int)i, ligne2.GETcoefTab((unsigned int)j));
 			}
@@ -674,47 +687,63 @@ bool FCTDiscret::Bode
 	double wMin,
 	double wMax,
 	unsigned int nbpoint,
+	unsigned int* nbOfDecade,
 	BodeGraph& bodeGraph
 )
 {
 	std::ofstream reponse("bin/files/Bode.txt");
 	std::string texte("");
 	std::ostringstream stream;
-	/*
-	double amplitude(wMax - wMin);
-	double increment(amplitude / nbpoint);
-	Complexe Z, c, cnum, cden;
+	
+	Complexe Z, c;
 	t_bode blank;
 
+	/* In case of second call */
+	bodeGraph.clear();
 
-	if (wMin == 0)
-		wMin = 0.001;
-
-
-	unsigned int o(0);
-	if (reponse)
+	/* 
+		In Bode, freq = 0.0 does not exist 
+		Limitation to a minimum value
+	*/
+	if (checkDIVDen(wMin) == false)
 	{
-		for (double i(wMin); i <= wMax; i += increment)
+		wMin = BODE_FREQ_MIN;
+	}
+
+	const int firstDecade{ (int)std::floor(log10(wMin)) };
+	const int LastDecade{ (int)std::ceil(log10(wMax)) };
+	*nbOfDecade = (unsigned int)(LastDecade - firstDecade);
+	
+	int currentDecade{ firstDecade };
+	const unsigned int nbPointPerDecade{ nbpoint / *nbOfDecade };
+
+	double offset{ 0.0 };
+	double increment{ 0.0 };
+	for (unsigned int l{ 0 }; l < *nbOfDecade; l++)
+	{
+		offset = std::pow(TEN_POWER, currentDecade);
+		increment = ((double)BODE_FREQ_INCR_FACTOR * offset) / (double)nbPointPerDecade;
+
+		for (unsigned int j{ 0 }; j < nbPointPerDecade; j++)
 		{
-			Z = Complexe::tfReIm(1, i * _deltaT);
-			cnum = Complexe::tfPolynomeComplexe(*_num, Z);
-			cden = Complexe::tfPolynomeComplexe(*_den, Z);
-			c = cnum / cden;
-			blank.freq = i;
-			blank.gain = 20 * log10(Complexe::module(c));
+			blank.freq = (double)j * increment + offset;
+
+			Z = Complexe::tfReIm(COMPLEXE_UNIT_REAL, blank.freq * _deltaT);
+
+			c = Complexe::tfPolynomeComplexe(*_num, Z) / Complexe::tfPolynomeComplexe(*_den, Z);
+
+			blank.gain = (double)BODE_GAIN_FACTOR * log10(Complexe::module(c));
 			blank.phase = -Complexe::arg(c);
+
 			stream << std::endl << blank.freq << " , " << blank.gain << " , " << blank.phase;
-			o++;
 			bodeGraph.push_back(blank);
 		}
-		texte = stream.str();
-		reponse << texte;
-		std::cout << texte;
-		return true;
+		currentDecade++;
 	}
-	else
-		return false;
-	*/
+	texte = stream.str();
+	reponse << texte;
+	std::cout << texte;
+	
 	return false;
 }
 

@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.1
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -32,6 +32,7 @@
 
 #include "Polynome.h"
 #include "Matrice.h"
+#include "BodeGraphData.h"
 
 /* *********************************************************
  *						Constantes						   *
@@ -42,6 +43,15 @@ const Uint8 JURY_STABILITY_CONDITIONS = 4;
 
 /* minimal order of the denominator to be process in Jury */
 const Uint8 MIN_ORDER_DEN_TAB_JURY = 2;
+
+const double BODE_FREQ_MIN = 1e-6;
+
+const unsigned int TEN_POWER = (unsigned int)10;
+
+const unsigned int BODE_GAIN_FACTOR = (unsigned int)20;
+
+const unsigned int BODE_FREQ_INCR_FACTOR = (unsigned int)9;
+
 
 /* *********************************************************
  *					Class FCTDiscret					   *
@@ -362,6 +372,7 @@ public:
 		double wMin,
 		double wMax,
 		unsigned int nbpoint,
+		unsigned int* nbOfDecade,
 		BodeGraph& bodeGraph
 	);
 
@@ -417,6 +428,8 @@ public:
 	inline double GETdeltaT() const { return _deltaT; };
 	
 	inline bool isInitialize()const { return m_isInitialize; };
+	inline void setToInitialized() { m_isInitialize = true; };
+	inline void setToNotInitialized() { m_isInitialize = false; };
 
 private:
 

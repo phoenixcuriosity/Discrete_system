@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -28,7 +28,7 @@
 
 #include <RealEngine2D/src/IGameScreen.h>
 
-#include <vector>
+#include "BodeGraphData.h"
 
 #include <RealEngine2D\src\Vertex.h>
 #include <RealEngine2D\src\GLSLProgram.h>
@@ -44,6 +44,21 @@
 
 struct File;
 struct GUI_Parameters;
+
+typedef struct
+{
+	double maxGain;
+	double minGain;
+
+	double maxPhase;
+	double minPhase;
+} MaxValues;
+
+typedef struct
+{
+	std::string xAxis;
+	std::string yAxis;
+} AxisData;
 
 typedef struct
 {
@@ -97,6 +112,14 @@ private:
 
 	bool onReturnMainMenuClicked(const CEGUI::EventArgs& e);
 
+private:
+
+	void displayBodeGraph();
+
+	void searchMaxValues();
+
+	void createAxis();
+
 
 public:
 
@@ -110,6 +133,12 @@ private:
 
 	/* Fonctionnal data */
 	FCTDiscret* m_fctDiscret;
+
+	BodeGraph m_rawCalculatedBodeGraph;
+	BodeGraph m_displayCalculatedBodeGraph;
+
+	MaxValues m_maxValues;
+	AxisData m_axisData;
 
 	bool m_isInitialize;
 };

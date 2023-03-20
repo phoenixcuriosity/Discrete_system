@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.1.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -328,6 +328,8 @@ public:
 		Polynome& outPlus
 	);
 
+	int clearPolynome();
+
 public: 
 
 	/* *********************************************************
@@ -447,6 +449,9 @@ private:
 	double* _tab;
 	mutable unsigned int _stringSize;
 };
+
+/* Polynome to transform negative Polynome to Positive */
+const Polynome NEGATIVE_2_POSITIVE_COEF = -1.0;
 
 #endif // !Polynome_H
 

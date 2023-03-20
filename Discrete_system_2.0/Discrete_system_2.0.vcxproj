@@ -141,6 +141,7 @@
     <ClCompile Include="src\Discrete_system_2.0.cpp" />
     <ClCompile Include="src\FCTDiscret.cpp" />
     <ClCompile Include="src\FCTMenuScreen.cpp" />
+    <ClCompile Include="src\LIBUTI.cpp" />
     <ClCompile Include="src\MainMenuScreen.cpp" />
     <ClCompile Include="src\Matrice.cpp" />
     <ClCompile Include="src\Polynome.cpp" />
@@ -149,11 +150,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\BodeGraphData.h" />
     <ClInclude Include="src\BodeMenuScreen.h" />
+    <ClInclude Include="src\BodeMenuScreen_GUI.h" />
     <ClInclude Include="src\Complexe.h" />
     <ClInclude Include="src\FCTDiscret.h" />
     <ClInclude Include="src\FCTMenuScreen.h" />
+    <ClInclude Include="src\FCTMenuScreen_GUI.h" />
     <ClInclude Include="src\LIB.h" />
+    <ClInclude Include="src\LIBUTI.h" />
     <ClInclude Include="src\MainMenuScreen.h" />
     <ClInclude Include="src\Matrice.h" />
     <ClInclude Include="src\Polynome.h" />
