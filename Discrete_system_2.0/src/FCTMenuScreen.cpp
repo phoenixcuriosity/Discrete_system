@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -98,20 +98,28 @@ bool FCTMenuScreen::onEntry()
 {
 	if (!m_isInitialize)
 	{
+
+		/* --- m_gui.gui --- */
+
 		m_gui.gui.init(m_file->GUIPath);
 
 		m_gui.gui.loadScheme(GUI_SKIN_THEME_SCHEME);
 
 		m_gui.gui.setFont(GUI_SKIN_FONT);
 
+		/* --- m_gui.cameraHUD --- */
+
 		m_gui.cameraHUD.init(m_game->getWindow().GETscreenWidth(), m_game->getWindow().GETscreenHeight());
 		m_gui.cameraHUD.SETposition(glm::vec2(m_game->getWindow().GETscreenWidth() / 2, m_game->getWindow().GETscreenHeight() / 2));
+
+		/* --- m_gui.spriteBatch --- */
 
 		m_gui.spriteBatchHUDDynamic.init();
 		m_gui.spriteBatchHUDStatic.init();
 
-		//initHUDText();
-		float yDisplay{ 0.1f }, ydelta{ 0.05f };
+		/* --- m_gui --- */
+
+		static const float yDisplay{ 0.1f }, ydelta{ 0.05f };
 		unsigned int indexDisplay{ 0 };
 
 		m_gui.returnMainMenu = static_cast<CEGUI::PushButton*>
@@ -265,6 +273,19 @@ bool FCTMenuScreen::onEntry()
 	return true;
 }
 
+void FCTMenuScreen::onExit()
+{
+	/* Do nothing */
+}
+
+
+/* ----------------------------------------------------------------------------------- */
+/* NAME: initHUDText																   */
+/* ROLE: Shall display initial text													   */
+/* IN: void			 																   */
+/* OUT: void																		   */
+/* RVALUE: void																		   */
+/* ------------------------------------------------------------------------------------*/
 void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 {
 	m_gui.spriteBatchHUDStatic.begin();
@@ -459,15 +480,21 @@ void FCTMenuScreen::initHUDText(FCT_msgType msgType)
 	m_gui.spriteBatchHUDStatic.end();
 }
 
-void FCTMenuScreen::onExit()
-{
-	/* Do nothing */
-}
 
 
 //----------------------------------------------------------GameLoop----------------------------------------------------------------//
 
 
+void FCTMenuScreen::update()
+{
+	SDL_Event ev{};
+	while (SDL_PollEvent(&ev))
+	{
+		m_gui.gui.onSDLEvent(ev, m_game->getInputManager());
+		m_game->onSDLEvent(ev);
+		KeyMouseinput(ev);
+	}
+}
 
 void FCTMenuScreen::draw()
 {
@@ -513,18 +540,36 @@ void FCTMenuScreen::draw()
 	m_gui.gui.draw();
 }
 
-
-
-
-void FCTMenuScreen::update()
+/* ----------------------------------------------------------------------------------- */
+/* NAME: KeyMouseinput																   */
+/* ROLE: Shall interprets user's inputs			 									   */
+/* IN: ev : user input from SDL event												   */
+/* OUT: void																		   */
+/* RVALUE: void																		   */
+/* ------------------------------------------------------------------------------------*/
+void FCTMenuScreen::KeyMouseinput(const SDL_Event& ev)
 {
-	SDL_Event ev{};
-	while (SDL_PollEvent(&ev))
+	if (m_FCTCreationTool.inputToNumDen > InputToNumDen::InputToNumDen_nothing)
 	{
-		m_gui.gui.onSDLEvent(ev, m_game->getInputManager());
-		m_game->onSDLEvent(ev);
-		KeyMouseinput(ev);
+		if (m_game->getInputManager().isKeyDown(SDLK_KP_ENTER))
+		{
+			FCTCreationToolFonction();
+		}
 	}
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* NAME: CreateModifyFCT															   */
+/* ROLE: Shall initialize the FCT from users input									   */
+/* IN: void			 																   */
+/* OUT: void																		   */
+/* RVALUE: void																		   */
+/* ------------------------------------------------------------------------------------*/
+void FCTMenuScreen::CreateModifyFCT()
+{
+	m_gui.SetNum->show();
+	m_gui.SetDen->show();
+	m_fctDiscret->setToInitialized();
 }
 
 bool FCTMenuScreen::onsecondOrdreButtonClicked(const CEGUI::EventArgs& /* e */)
@@ -616,23 +661,9 @@ void FCTMenuScreen::fctHUDfilled()
 	m_gui.juryProcessButton->show();
 }
 
-void FCTMenuScreen::CreateModifyFCT()
-{
-	m_gui.SetNum->show();
-	m_gui.SetDen->show();
-	m_fctDiscret->setToInitialized();
-}
 
-void FCTMenuScreen::KeyMouseinput(const SDL_Event& ev)
-{
-	if (m_FCTCreationTool.inputToNumDen > InputToNumDen::InputToNumDen_nothing)
-	{
-		if (m_game->getInputManager().isKeyDown(SDLK_KP_ENTER))
-		{
-			FCTCreationToolFonction();
-		}	
-	}
-}
+
+
 
 void FCTMenuScreen::FCTCreationToolFonction()
 {

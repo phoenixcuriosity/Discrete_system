@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -128,17 +128,42 @@ public:
 
 private:
 
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: initHUDText																   */
+	/* ROLE: Shall display initial text													   */
+	/* IN: void			 																   */
+	/* OUT: void																		   */
+	/* RVALUE: void																		   */
+	/* ------------------------------------------------------------------------------------*/
 	virtual void initHUDText(FCT_msgType msgType);
-	virtual void CreateModifyFCT();
-	virtual void KeyMouseinput(const SDL_Event& ev);
+
+	
 
 public:
 
 	virtual void update() override;
 	virtual void draw() override;
 
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: KeyMouseinput																   */
+	/* ROLE: Shall interprets user's inputs			 									   */
+	/* IN: ev : user input from SDL event												   */
+	/* OUT: void																		   */
+	/* RVALUE: void																		   */
+	/* ------------------------------------------------------------------------------------*/
+	virtual void KeyMouseinput(const SDL_Event& ev);
+
 
 private:
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: CreateModifyFCT															   */
+	/* ROLE: Shall initialize the FCT from users input									   */
+	/* IN: void			 																   */
+	/* OUT: void																		   */
+	/* RVALUE: void																		   */
+	/* ------------------------------------------------------------------------------------*/
+	virtual void CreateModifyFCT();
 
 
 	bool onsecondOrdreButtonClicked(const CEGUI::EventArgs& e);

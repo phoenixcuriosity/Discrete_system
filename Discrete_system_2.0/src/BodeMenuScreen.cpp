@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -35,6 +35,11 @@
 #define BODE_GAIN_MAX_VALUE 999999999.0;
 #define BODE_PHASE_MIN_VALUE -999999999.0;
 #define BODE_PHASE_MAX_VALUE 999999999.0;
+
+const unsigned int OFFSET_BODEGRAPH_NB_DECADE = 1;
+
+
+const int MAX_DECADE_CONVERSION = 2;
 
 BodeMenuScreen::BodeMenuScreen
 (
@@ -105,7 +110,6 @@ bool BodeMenuScreen::onEntry()
 		m_gui.spriteBatchHUDDynamic.init();
 		m_gui.spriteBatchHUDStatic.init();
 
-		initHUDText();
 
 		m_gui.returnMainMenu = static_cast<CEGUI::PushButton*>
 			(m_gui.gui.createWidget(
@@ -122,11 +126,37 @@ bool BodeMenuScreen::onEntry()
 		);
 
 
+		m_gui.editBodeGraph = static_cast<CEGUI::PushButton*>
+			(m_gui.gui.createWidget(
+				"AlfiskoSkin/Button",
+				{ 0.f, 0.15f, 0.2f, 0.1f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"EditGraph"));
+
+		m_gui.editBodeGraph->setText("Edit Bode Graph");
+		m_gui.editBodeGraph->subscribeEvent
+		(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(&BodeMenuScreen::onEditBodeGraphClicked, this)
+		);
+
+		m_gui.editBoxBodeGraph = static_cast<CEGUI::Editbox*>
+			(m_gui.gui.createWidget(
+				GUI_SKIN_THEME_Editbox,
+				{ 0.25f, 0.5f, 0.5f, 0.08f },
+				RealEngine2D::NOT_BY_PERCENT,
+				"editBoxBode"));
+		m_gui.editBoxBodeGraph->hide();
+
+
 		m_gui.gui.setMouseCursor("AlfiskoSkin/MouseArrow");
 		m_gui.gui.showMouseCursor();
 
 		/* HIDE normal mouse cursor */
 		SDL_ShowCursor(0);
+
+
+		m_gui.bodeInputGUI = BodeInputGUI::editFreqMin;
 
 		m_isInitialize = true;
 	}
@@ -141,9 +171,54 @@ bool BodeMenuScreen::onEntry()
 
 void BodeMenuScreen::initHUDText()
 {
+	static const float deltaYGUI{ GUI_SPACE_FCT_Y * float(m_gui.window->GETscreenWidth()) };
+	static const glm::vec2 sizeGUI{ GUI_FACTOR_SIZE * float(m_gui.window->GETscreenWidth()) };
+	static const float screenWidthDiv2{ float(m_gui.window->GETscreenWidth()) / 2.f };
+
+	float yLine{ float(m_gui.window->GETscreenHeight()) - deltaYGUI };
+
 	m_gui.spriteBatchHUDStatic.begin();
 
-	displayBodeGraph();
+	switch (m_gui.bodeInputGUI)
+	{
+	case BodeInputGUI::editFreqMin:
+		m_gui.spriteFont->draw
+		(
+			m_gui.spriteBatchHUDStatic,
+			"Edit Min Freq",
+			{ screenWidthDiv2, yLine },
+			sizeGUI, NO_DEPTH,
+			RealEngine2D::COLOR_LIGHT_GREY,
+			RealEngine2D::Justification::MIDDLE
+		);
+		break;
+	case BodeInputGUI::editFreqMax:
+		m_gui.spriteFont->draw
+		(
+			m_gui.spriteBatchHUDStatic,
+			"Edit Max Freq",
+			{ screenWidthDiv2, yLine },
+			sizeGUI, NO_DEPTH,
+			RealEngine2D::COLOR_LIGHT_GREY,
+			RealEngine2D::Justification::MIDDLE
+		);
+		break;
+	case BodeInputGUI::editNbPoint:
+		m_gui.spriteFont->draw
+		(
+			m_gui.spriteBatchHUDStatic,
+			"Edit number of points",
+			{ screenWidthDiv2, yLine },
+			sizeGUI, NO_DEPTH,
+			RealEngine2D::COLOR_LIGHT_GREY,
+			RealEngine2D::Justification::MIDDLE
+		);
+		break;
+	default:
+		/* Do nothing */
+		break;
+	}
+	
 
 	m_gui.spriteBatchHUDStatic.end();
 }
@@ -157,7 +232,13 @@ void BodeMenuScreen::onExit()
 //----------------------------------------------------------GameLoop----------------------------------------------------------------//
 
 
-
+/* ----------------------------------------------------------------------------------- */
+/* NAME: draw																		   */
+/* ROLE: Cyclic function every app cycle / draw			 							   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: none																		   */
+/* ------------------------------------------------------------------------------------*/
 void BodeMenuScreen::draw()
 {
 	m_gui.cameraHUD.update();
@@ -209,9 +290,13 @@ void BodeMenuScreen::draw()
 	m_gui.gui.draw();
 }
 
-
-
-
+/* ----------------------------------------------------------------------------------- */
+/* NAME: update																		   */
+/* ROLE: Cyclic function every app cycle			 								   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: none																		   */
+/* ------------------------------------------------------------------------------------*/
 void BodeMenuScreen::update()
 {
 	SDL_Event ev{};
@@ -219,9 +304,73 @@ void BodeMenuScreen::update()
 	{
 		m_gui.gui.onSDLEvent(ev, m_game->getInputManager());
 		m_game->onSDLEvent(ev);
+		KeyMouseinput(ev);
 	}
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: KeyMouseinput																   */
+/* ROLE: Shall interprets user's inputs			 									   */
+/* IN: ev : user input from SDL event												   */
+/* OUT: void																		   */
+/* RVALUE: void																		   */
+/* ------------------------------------------------------------------------------------*/
+void BodeMenuScreen::KeyMouseinput(const SDL_Event& /* ev */)
+{
+	if (m_game->getInputManager().isKeyDown(SDLK_KP_ENTER))
+	{
+		switch (m_gui.bodeInputGUI)
+		{
+		case BodeInputGUI::editFreqMin:
+			m_axisData.freqMin = std::stod(m_gui.editBoxBodeGraph->getText().c_str());
+			m_gui.bodeInputGUI = BodeInputGUI::editFreqMax;
+			initHUDText();
+			break;
+		case BodeInputGUI::editFreqMax:
+		{
+			m_axisData.freqMax = std::stod(m_gui.editBoxBodeGraph->getText().c_str());
+			m_gui.bodeInputGUI = BodeInputGUI::editNbPoint;
+
+			int maxDecade{ (int)std::ceil(log10(m_axisData.freqMax)) };
+			if (maxDecade > MAX_DECADE_CONVERSION)
+			{
+				m_fctDiscret->SETdeltaT
+				(
+					std::pow(TEN_POWER, -(maxDecade - MAX_DECADE_CONVERSION))
+				);
+			}
+			else
+			{
+				/* Do nothing */
+
+				/* Default Value is 0.1s */
+			}
+
+			initHUDText();
+			break;
+		}
+		case BodeInputGUI::editNbPoint:
+			m_axisData.nbpoint = (unsigned int)std::stoi(m_gui.editBoxBodeGraph->getText().c_str());
+			m_gui.editBoxBodeGraph->hide();
+			m_gui.editBodeGraph->hide();
+			displayBodeGraph();
+			break;
+		default:
+			/* Do nothing */
+			break;
+		}
+
+		m_gui.editBoxBodeGraph->setText(EMPTY_STRING);
+	}
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* NAME: onReturnMainMenuClicked													   */
+/* ROLE: Return to main menu							 							   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: bool : always true														   */
+/* ------------------------------------------------------------------------------------*/
 bool BodeMenuScreen::onReturnMainMenuClicked(const CEGUI::EventArgs& /* e */)
 {
 	m_nextScreenIndexMenu = MAINMENU_SCREEN_INDEX;
@@ -229,13 +378,39 @@ bool BodeMenuScreen::onReturnMainMenuClicked(const CEGUI::EventArgs& /* e */)
 	return true;
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: onReturnMainMenuClicked													   */
+/* ROLE: Start to edit Bode graph						 							   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: bool : always true														   */
+/* ------------------------------------------------------------------------------------*/
+bool BodeMenuScreen::onEditBodeGraphClicked(const CEGUI::EventArgs& e)
+{
+	m_gui.editBoxBodeGraph->show();
+	initHUDText();
+	return true;
+}
 
-
+/* ----------------------------------------------------------------------------------- */
+/* NAME: displayBodeGraph															   */
+/* ROLE: Display Bode graph with min/max freq and nb points							   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: none																		   */
+/* ------------------------------------------------------------------------------------*/
 void BodeMenuScreen::displayBodeGraph()
 {
-	unsigned int nbOfDecade{ 0 }, nbpoint{ 10000 };
-	m_fctDiscret->Bode(10, 10000.0, nbpoint, &nbOfDecade, m_rawCalculatedBodeGraph);
-	const glm::vec2 sizeGUI{ GUI_FACTOR_SIZE * float(m_gui.window->GETscreenWidth()) / 2.0f };
+	m_fctDiscret->Bode
+	(
+		m_axisData.freqMin,
+		m_axisData.freqMax,
+		m_axisData.nbpoint,
+		&(m_axisData.nbOfDecade),
+		m_rawCalculatedBodeGraph
+	);
+
+	static const glm::vec2 sizeGUI{ GUI_FACTOR_SIZE * float(m_gui.window->GETscreenWidth()) / 2.0f };
 
 	createAxis();
 
@@ -243,34 +418,40 @@ void BodeMenuScreen::displayBodeGraph()
 
 	m_displayCalculatedBodeGraph.resize(m_rawCalculatedBodeGraph.size());
 
-	const double screenWidth{ (double)m_gui.window->GETscreenWidth() };
-	const double screenHeight{ (double)m_gui.window->GETscreenHeight() };
-	const unsigned int scPerDecade{ (unsigned int)std::floor((screenWidth - screenWidth / 16.0) / (double)nbOfDecade) };
-	const unsigned int endLoop{ nbpoint / nbOfDecade };
+	static const double screenWidth{ (double)m_gui.window->GETscreenWidth() };
+	static const double screenHeight{ (double)m_gui.window->GETscreenHeight() };
+	static const unsigned int scPerDecade{ (unsigned int)std::floor((screenWidth - screenWidth / 16.0) / (double)m_axisData.nbOfDecade) };
+	static const unsigned int endLoop{ m_axisData.nbpoint / m_axisData.nbOfDecade };
+	static const double screenHeightDIV32{ screenHeight / 32.0 };
+	static const double screenHeightDIV16Bor{ screenHeight - screenHeight / 16.0 };
+	static const double screenWidthDIV32{ screenWidth / 32.0 };
 	unsigned int currentIndex{ 0 };
-	for (unsigned int j{ 1 }; j < nbOfDecade + 1; j++)
+
+	m_gui.spriteBatchHUDStatic.begin();
+
+	for (unsigned int j{ OFFSET_BODEGRAPH_NB_DECADE }; j < m_axisData.nbOfDecade + OFFSET_BODEGRAPH_NB_DECADE; j++)
 	{
 
-		for (unsigned int ic = 0; ic < endLoop; ic++)
+		for (unsigned int ic{ 0 }; ic < endLoop; ic++)
 		{
-			currentIndex = ic + ((j - 1) * endLoop);
+			currentIndex = ic + ((j - OFFSET_BODEGRAPH_NB_DECADE) * endLoop);
 			m_displayCalculatedBodeGraph[currentIndex].gain = computeValueToScale
 			(
 				m_rawCalculatedBodeGraph[currentIndex].gain,
 				m_maxValues.minGain,
 				m_maxValues.maxGain,
-				screenHeight / 32.0,
-				screenHeight - screenHeight / 16.0
+				screenHeightDIV32,
+				screenHeightDIV16Bor
 			);
 
 
 			m_displayCalculatedBodeGraph[currentIndex].freq = computeValueToScale
 			(
 				m_rawCalculatedBodeGraph[currentIndex].freq,
-				m_rawCalculatedBodeGraph[((j - 1) * endLoop)].freq,
-				m_rawCalculatedBodeGraph[(j * endLoop) - 1].freq,
-				(screenWidth / 32.0) + ((j - 1) * scPerDecade),
-				(screenWidth / 32.0) + (j * scPerDecade)
+				m_rawCalculatedBodeGraph[((j - OFFSET_BODEGRAPH_NB_DECADE) * endLoop)].freq,
+				m_rawCalculatedBodeGraph[(j * endLoop) - OFFSET_BODEGRAPH_NB_DECADE].freq,
+				screenWidthDIV32 + ((j - OFFSET_BODEGRAPH_NB_DECADE) * scPerDecade),
+				screenWidthDIV32 + (j * scPerDecade)
 			);
 
 
@@ -279,8 +460,8 @@ void BodeMenuScreen::displayBodeGraph()
 				m_rawCalculatedBodeGraph[currentIndex].phase,
 				m_maxValues.minPhase,
 				m_maxValues.maxPhase,
-				screenHeight / 32.0,
-				screenHeight - screenHeight / 16.0
+				screenHeightDIV32,
+				screenHeightDIV16Bor
 			);
 
 
@@ -332,9 +513,16 @@ void BodeMenuScreen::displayBodeGraph()
 		RealEngine2D::Justification::LEFT
 	);
 
+	m_gui.spriteBatchHUDStatic.end();
 }
 
-
+/* ----------------------------------------------------------------------------------- */
+/* NAME: searchMaxValues															   */
+/* ROLE: Search min/max Gain and Phase in m_rawCalculatedBodeGraph					   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: none																		   */
+/* ------------------------------------------------------------------------------------*/
 void BodeMenuScreen::searchMaxValues()
 {
 	for (unsigned int ic = 0; ic < m_rawCalculatedBodeGraph.size(); ic++)
@@ -361,6 +549,13 @@ void BodeMenuScreen::searchMaxValues()
 	}
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: createAxis																	   */
+/* ROLE: Create axis x and y														   */
+/* IN: none																			   */
+/* OUT: none																		   */
+/* RVALUE: none																		   */
+/* ------------------------------------------------------------------------------------*/
 void BodeMenuScreen::createAxis()
 {
 	const unsigned int xAxisSize = (unsigned int)std::ceil((m_gui.window->GETscreenWidth()) / (5.f));
@@ -377,5 +572,5 @@ void BodeMenuScreen::createAxis()
 	{
 		m_axisData.yAxis += "|\n";
 	}
-
 }
+

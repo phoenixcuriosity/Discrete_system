@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -42,8 +42,18 @@
 #include <RealEngine2D/src/AudioEngine.h>
 #include <RealEngine2D/src/GUI.h>
 
+
+
+
 struct File;
 struct GUI_Parameters;
+
+typedef enum 
+{
+	editFreqMin = 1,
+	editFreqMax = 2,
+	editNbPoint = 3
+}BodeInputGUI;
 
 typedef struct
 {
@@ -58,11 +68,17 @@ typedef struct
 {
 	std::string xAxis;
 	std::string yAxis;
+	unsigned int nbOfDecade;
+	unsigned int nbpoint;
+	double freqMin;
+	double freqMax;
 } AxisData;
 
 typedef struct
 {
 	RealEngine2D::GUI gui;
+
+	BodeInputGUI bodeInputGUI;
 
 	std::shared_ptr<RealEngine2D::SpriteFont> spriteFont;
 	RealEngine2D::GLSLProgram* gLSLProgram;
@@ -74,6 +90,9 @@ typedef struct
 	RealEngine2D::Window* window;
 
 	CEGUI::PushButton* returnMainMenu;
+	CEGUI::PushButton* editBodeGraph;
+
+	CEGUI::Editbox* editBoxBodeGraph;
 
 } BodeMenuGUI;
 
@@ -106,11 +125,13 @@ public:
 	virtual void update() override;
 	virtual void draw() override;
 
+	void KeyMouseinput(const SDL_Event& ev);
 
 private:
 
 
 	bool onReturnMainMenuClicked(const CEGUI::EventArgs& e);
+	bool onEditBodeGraphClicked(const CEGUI::EventArgs& e);
 
 private:
 

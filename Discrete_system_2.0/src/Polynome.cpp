@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -37,14 +37,12 @@
  ********************************************************* */
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : Polynome																	   */
 /* ROLE : Constructeur par défaut													   */
 /* INPUT  PARAMETERS : void			 												   */
 /* OUTPUT PARAMETERS : Création d'un objet Polynome	d'ordre 1 -> X + 1				   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome::Polynome()
 :
 _order(1),
@@ -54,7 +52,6 @@ _stringSize(0)
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : Polynome																	   */
 /* ROLE : Constructeur / ordre du Polynome											   */
 /* ROLE : Polynome a((unsigned int)2) est la seule façon de créer un polynome d'ordre 2*/
@@ -63,7 +60,6 @@ _stringSize(0)
 /* OUTPUT PARAMETERS : exemple : X^order + X^(order-1) + .... + X + 1				   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome::Polynome
 (
 	unsigned int size
@@ -76,14 +72,12 @@ _stringSize(0)
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : Polynome																	   */
 /* ROLE : Constructeur / cast de la valeur en entrée (Polynome d'ordre 0)			   */
 /* INPUT  PARAMETERS : double userValue : valeur du Polynome d'ordre 0				   */
 /* OUTPUT PARAMETERS : Polynome d'ordre 0 / valeur = userValue						   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome::Polynome
 (
 	double userValue
@@ -96,7 +90,6 @@ _stringSize(0)
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : Polynome																	   */
 /* ROLE : Polynome d'ordre order avec les coefficents tab[]							   */
 /* INPUT  PARAMETERS : unsigned int order : ordre du Polynome						   */
@@ -106,8 +99,6 @@ _stringSize(0)
 /* OUTPUT PARAMETERS : .... + tab[1] * X + tab[0] * 1								   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 Polynome::Polynome
 (
 	unsigned int size,
@@ -121,14 +112,12 @@ _stringSize(0)
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : Polynome																	   */
 /* ROLE : Constructeur par recopie													   */
 /* INPUT  PARAMETERS : const Polynome& P : Polynome à copier						   */
 /* OUTPUT PARAMETERS : Recopie du Polynome en entrée								   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome::Polynome
 (
 	const Polynome& P
@@ -141,14 +130,12 @@ _stringSize(0)
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : ~Polynome																	   */
 /* ROLE : Destructeur de la classe Polynome											   */
 /* INPUT  PARAMETERS : void															   */
 /* OUTPUT PARAMETERS : Objet Polynome détruit										   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome::~Polynome()
 {
 	clearPolynome();
@@ -159,14 +146,12 @@ Polynome::~Polynome()
  ********************************************************* */
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Création d'un tableau de coefficents 1 de taille size 					   */
 /* INPUT  PARAMETERS : unsigned int size : taille du tableau de coefficents			   */
 /* OUTPUT PARAMETERS : Création d'un tableau de coefficents 1 de taille size		   */
 /* RETURNED VALUE    : double* : tableau de coefficents								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double* Polynome::allocate
 (
 	unsigned int size
@@ -179,7 +164,6 @@ double* Polynome::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Création d'un tableau de coefficents unique userValue de taille size 		   */
 /* INPUT  PARAMETERS : unsigned int size : taille du tableau de coefficents			   */
@@ -187,7 +171,6 @@ double* Polynome::allocate
 /* OUTPUT PARAMETERS : Création d'un tableau de coefficents de taille size			   */
 /* RETURNED VALUE    : double* : tableau de coefficents								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double* Polynome::allocate
 (
 	unsigned int size,
@@ -201,7 +184,6 @@ double* Polynome::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Création d'un tableau de coefficents tab[] de taille size 				   */
 /* INPUT  PARAMETERS : unsigned int size : taille du tableau de coefficents			   */
@@ -209,7 +191,6 @@ double* Polynome::allocate
 /* OUTPUT PARAMETERS : Création d'un tableau de coefficents tab[] de taille size	   */
 /* RETURNED VALUE    : double* : tableau de coefficents								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double* Polynome::allocate
 (
 	unsigned int size,
@@ -223,14 +204,12 @@ double* Polynome::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Recopie et Création d'un tableau de coefficents							   */
 /* INPUT  PARAMETERS : const Polynome& P : Polynome à recopier						   */
 /* OUTPUT PARAMETERS : Recopie du Polynome											   */
 /* RETURNED VALUE    : double* : tableau de coefficents								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double* Polynome::allocate
 (
 	const Polynome& P
@@ -243,7 +222,6 @@ double* Polynome::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : assertIndex																   */
 /* ROLE : Test si l'index en entrée est dans le range du tableau de coefficent		   */
 /* ROLE : Min : 0 (implicite car unsigned int)									       */
@@ -252,7 +230,6 @@ double* Polynome::allocate
 /* OUTPUT PARAMETERS : In Range or Out Of Range										   */
 /* RETURNED VALUE    : bool : false -> Out Of Range / true -> In Range				   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 bool Polynome::assertIndex
 (
 	unsigned int index
@@ -275,14 +252,12 @@ bool Polynome::assertIndex
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator =																   */
 /* ROLE : Redéfinition de l'opérateur =												   */
 /* INPUT  PARAMETERS : const Polynome& P : objet permettant l'égalisation			   */
 /* OUTPUT PARAMETERS : this = P														   */
 /* RETURNED VALUE    : Polynome& : return this										   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome& Polynome::operator=
 (
 	const Polynome& a
@@ -299,7 +274,6 @@ Polynome& Polynome::operator=
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator ==																   */
 /* ROLE : Redéfinition de l'opérateur ==											   */
 /* ROLE : Comparaison entre les 2 Polynome en Input									   */
@@ -308,7 +282,6 @@ Polynome& Polynome::operator=
 /* OUTPUT PARAMETERS : Comparaison													   */
 /* RETURNED VALUE    : bool : == -> true // != -> false								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 bool operator==
 (
 	const Polynome& a,
@@ -329,7 +302,6 @@ bool operator==
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator+																	   */
 /* ROLE : Redéfinition de l'opérateur +												   */
 /* ROLE : Addition entre les 2 Inputs												   */
@@ -338,7 +310,6 @@ bool operator==
 /* OUTPUT PARAMETERS : résultat de l'addition (a + b)								   */
 /* RETURNED VALUE    : Polynome : retourne un objet résultat de l'addition			   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome operator+
 (
 	const Polynome& a,
@@ -352,7 +323,7 @@ Polynome operator+
 	unsigned int maxSize(std::max(a.GETorder(), b.GETorder()));
 	unsigned int minSize(std::min(a.GETorder(), b.GETorder()));
 
-	if (!checkNewOrder(a, b, &maxSize, opPolyn::Plus))
+	if (!checkNewOrder(a, b, opPolyn::Plus, &maxSize))
 	{
 		/* Case a - b = 0.0 */
 		return 0.0;
@@ -375,7 +346,6 @@ Polynome operator+
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator-																	   */
 /* ROLE : Redéfinition de l'opérateur -												   */
 /* ROLE : Soustraction entre les 2 Inputs											   */
@@ -384,7 +354,6 @@ Polynome operator+
 /* OUTPUT PARAMETERS : résultat de soustraction (a - b)								   */
 /* RETURNED VALUE    : Polynome : retourne un objet résultat de la soustraction		   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome operator-
 (
 	const Polynome& a,
@@ -398,7 +367,7 @@ Polynome operator-
 	unsigned int maxSize(std::max(a.GETorder(), b.GETorder()));
 	unsigned int minSize(std::min(a.GETorder(), b.GETorder()));
 
-	if (!checkNewOrder(a, b, &maxSize, opPolyn::Minus))
+	if (!checkNewOrder(a, b, opPolyn::Minus, &maxSize))
 	{ 
 		/* Case a - b = 0.0 */
 		return 0.0;
@@ -423,18 +392,14 @@ Polynome operator-
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator*																	   */
 /* ROLE : Redéfinition de l'opérateur *												   */
 /* ROLE : Multiplication entre les 2 Inputs											   */
-/* INPUT  PARAMETERS : const Polynome& a : un objet Polynome 						   */
-/* INPUT  PARAMETERS : const Polynome& b : un objet Polynome						   */
-/* OUTPUT PARAMETERS : résultat de la multiplication (a * b)						   */
-/* RETURNED VALUE    : Polynome : retourne un objet résultat de la multiplication	   */
+/* RVALUE: résultat de la multiplication (a * b)									   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Polynome operator*
 (
+	/* IN */
 	const Polynome& a,
 	const Polynome& b
 )
@@ -450,12 +415,19 @@ Polynome operator*
 	return newPolynome;
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: checkNewOrder																   */
+/* ROLE: Check the real size of a Polynome											   */
+/* RVALUE: true: No diff ; false: the order has been reduced						   */
+/* ------------------------------------------------------------------------------------*/
 bool checkNewOrder
 (
+	/* IN */
 	const Polynome& a,
 	const Polynome& b,
-	unsigned int* maxSize,
-	opPolyn operatorPoly
+	const opPolyn operatorPoly,
+	/* OUT */
+	unsigned int* maxSize
 )
 {
 	unsigned int varSizeA(a.GETorder()), varSizeB(b.GETorder());
@@ -463,9 +435,17 @@ bool checkNewOrder
 	while (varSizeA == varSizeB)
 	{
 		if	(
-				(a.GETcoefTab(varSizeA) - b.GETcoefTab(varSizeB) == 0.0 && operatorPoly == opPolyn::Minus)
+				(
+					(a.GETcoefTab(varSizeA) - b.GETcoefTab(varSizeB) == 0.0)
+					&& 
+					(operatorPoly == opPolyn::Minus)
+				)
 				||
-				(a.GETcoefTab(varSizeA) + b.GETcoefTab(varSizeB) == 0.0 && operatorPoly == opPolyn::Plus)
+				(
+					(a.GETcoefTab(varSizeA) + b.GETcoefTab(varSizeB) == 0.0)
+					&&
+					(operatorPoly == opPolyn::Plus)
+				)
 			)
 		{
 			if (*maxSize == 0)
@@ -487,20 +467,38 @@ bool checkNewOrder
 	return true;
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: fillOpPlus																	   */
+/* ROLE:																			   */
+/* RVALUE: None																		   */
+/* ------------------------------------------------------------------------------------*/
 void fillOpPlus
 (
+	/* IN */
 	const Polynome& a,
 	const Polynome& b,
-	unsigned int maxSize,
+	const unsigned int maxSize,
+	/* IN/OUT */
 	Polynome& outPlus
 )
 {
 	for (unsigned int i(0); i <= maxSize; i++)
+	{
 		outPlus.SETcoefTab(i, a.GETcoefTab(i));
+	}
+
 	for (unsigned int i(0); i <= maxSize; i++)
+	{
 		outPlus.SETcoefTab(i, outPlus.GETcoefTab(i) - b.GETcoefTab(i));
+	}
+
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: clearPolynome																   */
+/* ROLE: Clear and delete the Polynome, to zero										   */
+/* RVALUE: 0 : NO_ERROR																   */
+/* ------------------------------------------------------------------------------------*/
 int Polynome::clearPolynome()
 {
 	if (nullptr != _tab)
@@ -512,6 +510,24 @@ int Polynome::clearPolynome()
 	return 0;
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: getByCopyReversePolynomeOrder												   */
+/* ROLE: Set dest value in inverse order than src									   */
+/* RVALUE: void																		   */
+/* ------------------------------------------------------------------------------------*/
+void getByCopyReversePolynomeOrder
+(
+	/* IN */
+	const Polynome& src,
+	/* OUT */
+	Polynome& dest
+)
+{
+	for (int i((int)src.GETorder()); i >= 0; i--)
+	{
+		dest.SETcoefTab((src.GETorder() - i), src.GETcoefTab(i));
+	}
+}
 
 
 /* *********************************************************
@@ -520,36 +536,28 @@ int Polynome::clearPolynome()
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator[]																   */
-/* ROLE : Redéfinition de l'opérateur []											   */
-/* ROLE : Accède à la valeur index du tableau de coefficients						   */
-/* INPUT  PARAMETERS : unsigned int index 											   */
-/* OUTPUT PARAMETERS : valeur à l'index index du tableau de coefficients			   */
-/* RETURNED VALUE    : double : valeur à l'index index du tableau de coefficients	   */
+/* ROLE : Operator redifinition []													   */
+/* ROLE : Access Polynome's values with []											   */
+/* RVALUE: Value at the index														   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double Polynome::operator[]
 (
 	unsigned int index
-)
+)const
 {
 	return GETcoefTab(index);
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
-/* NAME : grow																		   */
-/* ROLE : Créer un nouveau tableau ayant une case de plus ... 						   */
-/* ROLE : ... avec la nouvelle valeur de l'utilisateur userValue					   */
-/* INPUT  PARAMETERS : double userValue : Valeur à ajouter au tableau 				   */
-/* OUTPUT PARAMETERS : Agrandissement du tableau avec une nouvelle valeur			   */
-/* RETURNED VALUE    : void															   */
+/* NAME: grow																		   */
+/* ROLE: Grow the actual Polynome by 1 order with userValue 						   */
+/* RVALUE: void																		   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Polynome::grow
 (
-	double userValue
+	/* IN */
+	const double userValue
 )
 {
 	double* newTab(allocate(++_order));
@@ -563,13 +571,32 @@ void Polynome::grow
 	_tab = newTab;
 }
 
+/* ----------------------------------------------------------------------------------- */
+/* NAME: isNegative																	   */
+/* ROLE: Check if the last order is negative										   */
+/* RVALUE: true if negative ; false if positive										   */
+/* ------------------------------------------------------------------------------------*/
+bool Polynome::isNegative()const
+{
+	return _tab[_order] < 0 ? true : false;
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* NAME: inverseSign																   */
+/* ROLE: Inverse the sign for each order of the Polynome							   */
+/* RVALUE: None																		   */
+/* ------------------------------------------------------------------------------------*/
+void Polynome::inverseSign()
+{
+	*this = -1.0 * *this;
+}
+
 
 /* *********************************************************
  *						 affichage						   *
  ********************************************************* */
 
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : operator<<																   */
 /* ROLE : Redéfinition de l'opérateur <<											   */
@@ -580,7 +607,6 @@ void Polynome::grow
 /* OUTPUT PARAMETERS : affichage textuelle du Polynome sur la console				   */
 /* RETURNED VALUE    : std::ostream& : std::cout, ...								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 std::ostream& operator <<
 (
 	std::ostream& os,
@@ -591,7 +617,6 @@ std::ostream& operator <<
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : printOn																	   */
 /* ROLE : Création d'une représentation visuelle du Polynome						   */
 /* INPUT  PARAMETERS : bool on = true : si true -> affichage direct ... 			   */
@@ -599,7 +624,6 @@ std::ostream& operator <<
 /* OUTPUT PARAMETERS : chaine de caratères représentant le Polynome					   */
 /* RETURNED VALUE    : std::string : chaine de caratères							   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 std::string Polynome::printOn
 (
 	bool on
@@ -650,7 +674,6 @@ std::string Polynome::printOn
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : testPolynome																   */
 /* ROLE : For DEV only																   */
 /* ROLE : Test des méthodes et fonctions de la classe Polynome						   */
@@ -658,7 +681,6 @@ std::string Polynome::printOn
 /* OUTPUT PARAMETERS : Test de la classe											   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Polynome::testPolynome()
 {
 	std::string polynome("");

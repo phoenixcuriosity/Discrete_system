@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.0
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -52,6 +52,8 @@ const unsigned int BODE_GAIN_FACTOR = (unsigned int)20;
 
 const unsigned int BODE_FREQ_INCR_FACTOR = (unsigned int)9;
 
+const unsigned int MAX_LOOP_ITERATION_JURY_TAB = (unsigned int)100;
+
 
 /* *********************************************************
  *					Class FCTDiscret					   *
@@ -67,17 +69,14 @@ public:
 
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : FCTDiscret																   */
 	/* ROLE : Constructeur par défaut													   */
 	/* INPUT  PARAMETERS : void			 												   */
 	/* OUTPUT PARAMETERS : Création d'un objet FCTDiscret : num = 1 / den = 1			   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	FCTDiscret();
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : FCTDiscret																   */
 	/* ROLE : Constructeur par cast du numérateur										   */
@@ -85,13 +84,11 @@ public:
 	/* OUTPUT PARAMETERS : Création d'un objet FCTDiscret : num / 1						   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	FCTDiscret
 	(
 		double
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : FCTDiscret																   */
 	/* ROLE : Constructeur par num et den avec deltaT sa période						   */
@@ -101,7 +98,6 @@ public:
 	/* OUTPUT PARAMETERS : Création d'un objet FCTDiscret :	num / den					   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	FCTDiscret
 	(
 		Polynome& num,
@@ -110,20 +106,17 @@ public:
 	);
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : FCTDiscret																   */
 	/* ROLE : Constructeur par Recopie													   */
 	/* INPUT  PARAMETERS : const FCTDiscret& : Objet à recopier		 					   */
 	/* OUTPUT PARAMETERS : Création d'un objet FCTDiscret recopie de l'entrée			   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	FCTDiscret
 	(
 		const FCTDiscret&
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : ~FCTDiscret																   */
 	/* ROLE : Destructeur de la classe FCTDiscret										   */
@@ -131,10 +124,8 @@ public:
 	/* OUTPUT PARAMETERS : Objet FCTDiscret détruit										   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	~FCTDiscret();
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : allocate																	   */
 	/* ROLE : Allocation de la mémoire pour _num, _den et _jury							   */
@@ -143,7 +134,6 @@ public:
 	/* OUTPUT PARAMETERS : new : _num, _den , _jury										   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	void allocate
 	(
 		Polynome num,
@@ -151,14 +141,12 @@ public:
 	);
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : deallocate																   */
 	/* ROLE : Déallocation de la mémoire pour _num, _den et _jury						   */
 	/* INPUT  PARAMETERS : void															   */
 	/* OUTPUT PARAMETERS : delete : _num, _den , _jury									   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	void deallocate();
 
 
@@ -169,20 +157,17 @@ public:
 
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : operator =																   */
 	/* ROLE : Redéfinition de l'opérateur =												   */
 	/* INPUT  PARAMETERS : const FCTDiscret& F : objet permettant l'égalisation			   */
 	/* OUTPUT PARAMETERS : this = F														   */
 	/* RETURNED VALUE    : FCTDiscret& : return this									   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	virtual FCTDiscret& operator =
 	(
 		const FCTDiscret& F
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : operator ==																   */
 	/* ROLE : Redéfinition de l'opérateur =												   */
@@ -192,14 +177,12 @@ public:
 	/* OUTPUT PARAMETERS : Comparaison													   */
 	/* RETURNED VALUE    : bool : == -> true // != -> false								   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	friend bool operator ==
 	(
 		const FCTDiscret& a,
 		const FCTDiscret& b
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : operator+																	   */
 	/* ROLE : Redéfinition de l'opérateur +												   */
@@ -209,14 +192,12 @@ public:
 	/* OUTPUT PARAMETERS : résultat de l'addition (a + b)								   */
 	/* RETURNED VALUE    : FCTDiscret : retourne un objet résultat de l'addition		   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	friend FCTDiscret operator+
 	(
 		const FCTDiscret& a,
 		const FCTDiscret& b
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : operator-																	   */
 	/* ROLE : Redéfinition de l'opérateur -												   */
@@ -226,14 +207,12 @@ public:
 	/* OUTPUT PARAMETERS : résultat de la soustraction (a - b)							   */
 	/* RETURNED VALUE    : FCTDiscret : retourne un objet résultat de la soustraction	   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	friend FCTDiscret operator-
 	(
 		const FCTDiscret& a,
 		const FCTDiscret& b
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : operator*																	   */
 	/* ROLE : Redéfinition de l'opérateur *												   */
@@ -243,20 +222,23 @@ public:
 	/* OUTPUT PARAMETERS : résultat de la multiplication (a * b)						   */
 	/* RETURNED VALUE    : FCTDiscret : retourne un objet résultat de la Multiplication	   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	friend FCTDiscret operator*
 	(
 		const FCTDiscret& a,
 		const FCTDiscret& b
 	);
 
-	friend void getByCopyReversePolynomeOrder(const Polynome& src, Polynome& dest);
-
-
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: setFirstL																	   */
+	/* ROLE: Fill the first two matrix rows	with srcOrder and srcReverse				   */
+	/* RVALUE: void																		   */
+	/* ----------------------------------------------------------------------------------- */
 	friend void setFirstL
 	(
+		/* IN */
 		const Polynome* srcOrder,
 		const Polynome* srcReverse,
+		/* OUT */
 		Matrice* dest
 	);
 
@@ -268,7 +250,6 @@ public:
 
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : operator<<																   */
 	/* ROLE : Redéfinition de l'opérateur <<											   */
 	/* ROLE : Envoi sur le ostream (std::cout, ...) une forme textuelle ...				   */
@@ -278,7 +259,6 @@ public:
 	/* OUTPUT PARAMETERS : affichage textuelle de la FCTDiscret sur la console			   */
 	/* RETURNED VALUE    : std::ostream& : std::cout, ...								   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	inline friend std::ostream& operator<<
 	(
 		std::ostream& os,
@@ -289,7 +269,6 @@ public:
 	};
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : printOn																	   */
 	/* ROLE : Création d'une représentation visuelle de la FCTDiscret					   */
 	/* INPUT  PARAMETERS : bool on = true : si true -> affichage direct ...				   */
@@ -297,7 +276,6 @@ public:
 	/* OUTPUT PARAMETERS : chaine de caratères représentant la FCTDiscret				   */
 	/* RETURNED VALUE    : std::string : chaine de caratères							   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	const std::string printOn
 	(
 		bool on = true
@@ -311,7 +289,6 @@ public:
 
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : interg																	   */
 	/* ROLE : Initialisation de la FCTDiscret en integrateur							   */
 	/* ROLE : num : ordre 1 -> num = Z + 1												   */
@@ -320,10 +297,8 @@ public:
 	/* OUTPUT PARAMETERS : La FCTDiscret est de type integrateur						   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	void interg();
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : secondOrdre																   */
 	/* ROLE : Initialisation de la FCTDiscret en second ordre							   */
@@ -333,50 +308,108 @@ public:
 	/* OUTPUT PARAMETERS : La FCTDiscret est de type second ordre						   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	void secondOrdre();
 
 public:
 
 	/* *********************************************************
-	 *					opérations sur l'objet				   *
+	 *						  JURY							   *
 	 ********************************************************* */
 
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: tabJury																	   */
+	/* ROLE: Création du tableau de Jury (objet Matrice)								   */
+	/* ROLE: Calcul du critère de Jury permettant de statuer sur la stabilité du système   */
+	/* RVALUE: false is not stable ; true is stable										   */
+	/* ------------------------------------------------------------------------------------*/
+	bool tabJury
+	(
+		/* OUT */
+		std::ostringstream& stream
+	);
+
+private:
+
+	/* *********************************************************
+	 *					Utilities  JURY						   *
+	 ********************************************************* */
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
-	/* NAME : tabJury																	   */
-	/* ROLE : Création du tableau de Jury (objet Matrice)								   */
-	/* ROLE : Calcul du critère de Jury permettant de statuer sur la stabilité du système  */
-	/* INPUT  PARAMETERS : void															   */
-	/* OUTPUT PARAMETERS : Matrice de Jury complétée et status de la stabilité			   */
-	/* RETURNED VALUE    : void															   */
+	/* NAME: fillProcessTabJury															   */
+	/* ROLE: Création du tableau de Jury (objet Matrice)								   */
+	/* ROLE: Calcul du critère de Jury permettant de statuer sur la stabilité du système   */
+	/* RVALUE: void																		   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
-	bool tabJury(std::ostringstream& stream);
+	int fillProcessTabJury
+	(
+		/* OUT */
+		Polynome& finalLine
+	);
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
-	/* NAME : Bode																		   */
-	/* ROLE : Représentation visuelle de diagramme de Bode de la FCTDiscret				   */
-	/* INPUT  PARAMETERS : double wMin : fréquence min									   */
-	/* INPUT  PARAMETERS : double wMax : fréquence max									   */
-	/* INPUT  PARAMETERS : unsigned int nbpoint : nombre de pts entre min et max		   */
-	/* INPUT  PARAMETERS : double** gainPhase : Matrice des points du diagramme			   */
-	/* OUTPUT PARAMETERS : diagramme de Bode											   */
-	/* RETURNED VALUE    : bool															   */
+	/* NAME: firstCondition																   */
+	/* ROLE: condition abs(a0) < an														   */
+	/* RVALUE: false invalid ; true valid												   */
 	/* ------------------------------------------------------------------------------------*/
+	bool firstCondition
+	(
+		/* OUT */
+		std::ostringstream& stream
+	);
+
 	/* ----------------------------------------------------------------------------------- */
+	/* NAME: secondCondition															   */
+	/* ROLE: condition D(1) > 0															   */
+	/* RVALUE: false invalid ; true valid												   */
+	/* ------------------------------------------------------------------------------------*/
+	bool secondCondition
+	(
+		/* OUT */
+		std::ostringstream& stream
+	);
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: thirdCondition																   */
+	/* ROLE: condition D(-1) > 0 si n pair et ondition D(-1) < 0 si n impair			   */
+	/* RVALUE: false invalid ; true valid												   */
+	/* ------------------------------------------------------------------------------------*/
+	bool thirdCondition
+	(
+		/* OUT */
+		std::ostringstream& stream
+	);
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: thirdCondition																   */
+	/* ROLE: condition Q0 > Q2															   */
+	/* RVALUE: false invalid ; true valid												   */
+	/* ------------------------------------------------------------------------------------*/
+	bool fourthCondition
+	(
+		/* OUT */
+		std::ostringstream& stream,
+		/* IN */
+		Polynome& finalLine
+	);
+
+public:
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: Bode																		   */
+	/* ROLE: Représentation visuelle de diagramme de Bode de la FCTDiscret				   */
+	/* RVALUE: bool																		   */
+	/* ------------------------------------------------------------------------------------*/
 	bool Bode
 	(
-		double wMin,
-		double wMax,
-		unsigned int nbpoint,
+		/* IN */
+		const double wMin,
+		const double wMax,
+		const unsigned int nbpoint,
+		/* OUT */
 		unsigned int* nbOfDecade,
 		BodeGraph& bodeGraph
 	);
 
-	/* ----------------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME : closeLoop																	   */
 	/* ROLE : Calcul de la Boucle Fermée												   */
@@ -385,7 +418,6 @@ public:
 	/* OUTPUT PARAMETERS : Boucle Fermée												   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	friend void closeLoop
 	(
 		const FCTDiscret& openLoop,
@@ -400,7 +432,6 @@ public:
 
 
 	/* ----------------------------------------------------------------------------------- */
-	/* ----------------------------------------------------------------------------------- */
 	/* NAME : testFCTDiscret															   */
 	/* ROLE : For DEV only																   */
 	/* ROLE : Test des méthodes et fonctions de la classe FCTDiscret					   */
@@ -408,7 +439,6 @@ public:
 	/* OUTPUT PARAMETERS : Test de la classe											   */
 	/* RETURNED VALUE    : void															   */
 	/* ------------------------------------------------------------------------------------*/
-	/* ----------------------------------------------------------------------------------- */
 	friend void testFCTDiscret();
 
 public:
