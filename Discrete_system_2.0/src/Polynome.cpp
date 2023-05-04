@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.0
+	file version 4.2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -26,6 +26,8 @@
  ********************************************************* */
 
 #include "Polynome.h"
+
+#include "LIBUTI.h"
 
 /* *********************************************************
  *					Class FCTDiscret					   *
@@ -87,6 +89,26 @@ _order(0),
 _tab(allocate(0, userValue)),
 _stringSize(0)
 {
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* NAME : Polynome																	   */
+/* ROLE : Constructeur / cast de la valeur en entrée (Polynome d'ordre 0)			   */
+/* INPUT  PARAMETERS : double userValue : valeur du Polynome d'ordre 0				   */
+/* OUTPUT PARAMETERS : Polynome d'ordre 0 / valeur = userValue						   */
+/* RETURNED VALUE    : void															   */
+/* ------------------------------------------------------------------------------------*/
+Polynome::Polynome
+(
+	unsigned int order,
+	double userValue
+)
+:
+_order(order),
+_tab(allocate(order, userValue)),
+_stringSize(0)
+{
+
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -292,7 +314,7 @@ bool operator==
 	{
 		for (unsigned int i(0); i < a.GETorder(); i++)
 		{
-			if (b.GETcoefTab(i) != a.GETcoefTab(i))
+			if (b[i] != a[i])
 				return false;
 		}
 		return true;
@@ -302,16 +324,14 @@ bool operator==
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* NAME : operator+																	   */
-/* ROLE : Redéfinition de l'opérateur +												   */
-/* ROLE : Addition entre les 2 Inputs												   */
-/* INPUT  PARAMETERS : const Polynome& a : un objet Polynome 						   */
-/* INPUT  PARAMETERS : const Polynome& b : un objet Polynome						   */
-/* OUTPUT PARAMETERS : résultat de l'addition (a + b)								   */
-/* RETURNED VALUE    : Polynome : retourne un objet résultat de l'addition			   */
+/* NAME: operator+																	   */
+/* ROLE: Redéfinition de l'opérateur +												   */
+/* ROLE: Addition entre les 2 Inputs												   */
+/* RVALUE: retourne un objet résultat de l'addition	a + b 							   */
 /* ------------------------------------------------------------------------------------*/
 Polynome operator+
 (
+	/* IN */
 	const Polynome& a,
 	const Polynome& b
 )
@@ -320,42 +340,40 @@ Polynome operator+
 	/* addition de 2 polynomes												  */
 	/* en choisissant la nouvelle taille par le plus grand ordre			  */
 	/* ---------------------------------------------------------------------- */
-	unsigned int maxSize(std::max(a.GETorder(), b.GETorder()));
-	unsigned int minSize(std::min(a.GETorder(), b.GETorder()));
-
-	if (!checkNewOrder(a, b, opPolyn::Plus, &maxSize))
-	{
-		/* Case a - b = 0.0 */
-		return 0.0;
-	}
+	const unsigned int maxSize(std::max(a.GETorder(), b.GETorder()));
+	const unsigned int minSize(std::min(a.GETorder(), b.GETorder()));
 
 	if (maxSize == a.GETorder())
 	{
-		Polynome newPolynome(a);
-		for (unsigned int i(0); i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + b.GETcoefTab(i));
-		return newPolynome;
+		Polynome plusP{ a };
+		for (unsigned int i{ 0 }; i <= minSize; i++)
+		{
+			plusP[i] += b[i];
+		}
+		checkNewOrder(plusP);
+		return plusP;
 	}
 	else
 	{
-		Polynome newPolynome(b);
-		for (unsigned int i(0); i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) + a.GETcoefTab(i));
-		return newPolynome;
+		Polynome plusP{ b };
+		for (unsigned int i{ 0 }; i <= minSize; i++)
+		{
+			plusP[i] += a[i];
+		}
+		checkNewOrder(plusP);
+		return plusP;
 	}
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* NAME : operator-																	   */
-/* ROLE : Redéfinition de l'opérateur -												   */
-/* ROLE : Soustraction entre les 2 Inputs											   */
-/* INPUT  PARAMETERS : const Polynome& a : un objet Polynome 						   */
-/* INPUT  PARAMETERS : const Polynome& b : un objet Polynome						   */
-/* OUTPUT PARAMETERS : résultat de soustraction (a - b)								   */
-/* RETURNED VALUE    : Polynome : retourne un objet résultat de la soustraction		   */
+/* NAME: operator-																	   */
+/* ROLE: Redéfinition de l'opérateur -												   */
+/* ROLE: Soustraction entre les 2 Inputs											   */
+/* RVALUE: un objet résultat de la soustraction	a - b								   */
 /* ------------------------------------------------------------------------------------*/
 Polynome operator-
 (
+	/* IN */
 	const Polynome& a,
 	const Polynome& b
 )
@@ -364,31 +382,30 @@ Polynome operator-
 	/* soustraction de 2 polynomes											  */
 	/* en choisissant la nouvelle taille par le plus grand ordre			  */
 	/* ---------------------------------------------------------------------- */
-	unsigned int maxSize(std::max(a.GETorder(), b.GETorder()));
-	unsigned int minSize(std::min(a.GETorder(), b.GETorder()));
+	const unsigned int maxSize{ std::max(a.GETorder(), b.GETorder()) };
+	const unsigned int minSize{ std::min(a.GETorder(), b.GETorder()) };
 
-	if (!checkNewOrder(a, b, opPolyn::Minus, &maxSize))
-	{ 
-		/* Case a - b = 0.0 */
-		return 0.0;
-	}
-
-	Polynome newPolynome(maxSize);
 	if (a.GETorder() == maxSize)
 	{
-		for (unsigned int i(0); i <= maxSize; i++)
-			newPolynome.SETcoefTab(i, a.GETcoefTab(i));
-		for (unsigned int i(0); i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - b.GETcoefTab(i));
+		Polynome minusP{ a };
+		for (unsigned int i{ 0 }; i <= minSize; i++)
+		{
+			minusP[i] -= b[i];
+		}
+		checkNewOrder(minusP);
+		return minusP;
 	}
 	else
 	{
-		for (unsigned int i(0); i <= maxSize; i++)
-			newPolynome.SETcoefTab(i, b.GETcoefTab(i));
-		for (unsigned int i(0); i <= minSize; i++)
-			newPolynome.SETcoefTab(i, newPolynome.GETcoefTab(i) - a.GETcoefTab(i));
+		Polynome minusP{ b };
+		minusP.inverseSign();
+		for (unsigned int i{ 0 }; i <= minSize; i++)
+		{
+			minusP[i] += a[i];
+		}
+		checkNewOrder(minusP);
+		return minusP;
 	}
-	return newPolynome;
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -404,94 +421,46 @@ Polynome operator*
 	const Polynome& b
 )
 {
-	unsigned int maxSize(a.GETorder() + b.GETorder());
+	const unsigned int maxSize{ a.GETorder() + b.GETorder() };
 
-	Polynome newPolynome(maxSize);
+	Polynome newPolynome{ maxSize, INITIAL_VALUE_MULT };
 	for (unsigned int i(0); i <= a.GETorder(); i++)
 	{
 		for (unsigned int j(0); j <= b.GETorder(); j++)
-			newPolynome.SETcoefTab(i + j, newPolynome.GETcoefTab(i + j) + a.GETcoefTab(i) * b.GETcoefTab(j));
+		{
+			newPolynome[i + j] += a[i] * b[j];
+		}
 	}
+	checkNewOrder(newPolynome);
 	return newPolynome;
 }
 
 /* ----------------------------------------------------------------------------------- */
 /* NAME: checkNewOrder																   */
 /* ROLE: Check the real size of a Polynome											   */
-/* RVALUE: true: No diff ; false: the order has been reduced						   */
+/* RVALUE: false: No diff ; true: the order has been reduced						   */
 /* ------------------------------------------------------------------------------------*/
 bool checkNewOrder
 (
-	/* IN */
-	const Polynome& a,
-	const Polynome& b,
-	const opPolyn operatorPoly,
-	/* OUT */
-	unsigned int* maxSize
+	/* INOUT */
+	Polynome& newPolynome
 )
 {
-	unsigned int varSizeA(a.GETorder()), varSizeB(b.GETorder());
-
-	while (varSizeA == varSizeB)
+	/* No check for 0 order -> i > 0 */
+	for (int i(newPolynome.GETorder()); i > 0; i--)
 	{
-		if	(
-				(
-					(a.GETcoefTab(varSizeA) - b.GETcoefTab(varSizeB) == 0.0)
-					&& 
-					(operatorPoly == opPolyn::Minus)
-				)
-				||
-				(
-					(a.GETcoefTab(varSizeA) + b.GETcoefTab(varSizeB) == 0.0)
-					&&
-					(operatorPoly == opPolyn::Plus)
-				)
-			)
+		if (checkMinDouble(newPolynome[(unsigned int)i]) == ValidityCheckMinDouble::InvalidRange)
 		{
-			if (*maxSize == 0)
-			{
-				/* Case if a - b = 0.0 */
-				/* Case if a + b = 0.0 */
-				return false;
-			}
-
-			(*maxSize)--;
-			varSizeA--;
-			varSizeB--;
+			newPolynome.shrink();
 		}
 		else
 		{
-			return true;
+			/* Fast return, if there is value different from 0.0 */
+			return false;
 		}
 	}
-	return true;
-}
-
-/* ----------------------------------------------------------------------------------- */
-/* NAME: fillOpPlus																	   */
-/* ROLE:																			   */
-/* RVALUE: None																		   */
-/* ------------------------------------------------------------------------------------*/
-void fillOpPlus
-(
-	/* IN */
-	const Polynome& a,
-	const Polynome& b,
-	const unsigned int maxSize,
-	/* IN/OUT */
-	Polynome& outPlus
-)
-{
-	for (unsigned int i(0); i <= maxSize; i++)
-	{
-		outPlus.SETcoefTab(i, a.GETcoefTab(i));
-	}
-
-	for (unsigned int i(0); i <= maxSize; i++)
-	{
-		outPlus.SETcoefTab(i, outPlus.GETcoefTab(i) - b.GETcoefTab(i));
-	}
-
+	/* newPolynome is order 0 */
+	return false;
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -525,7 +494,7 @@ void getByCopyReversePolynomeOrder
 {
 	for (int i((int)src.GETorder()); i >= 0; i--)
 	{
-		dest.SETcoefTab((src.GETorder() - i), src.GETcoefTab(i));
+		dest[(src.GETorder() - i)] = src[i];
 	}
 }
 
@@ -541,9 +510,10 @@ void getByCopyReversePolynomeOrder
 /* ROLE : Access Polynome's values with []											   */
 /* RVALUE: Value at the index														   */
 /* ------------------------------------------------------------------------------------*/
-double Polynome::operator[]
+double& Polynome::operator[]
 (
-	unsigned int index
+	/* IN */
+	const unsigned int index
 )const
 {
 	return GETcoefTab(index);
@@ -572,6 +542,23 @@ void Polynome::grow
 }
 
 /* ----------------------------------------------------------------------------------- */
+/* NAME: Shrink																		   */
+/* ROLE: Shrink the actual Polynome by 1 order										   */
+/* RVALUE: void																		   */
+/* ------------------------------------------------------------------------------------*/
+void Polynome::shrink()
+{
+	double* newTab(allocate(--_order));
+
+	for (unsigned int i(0); i <= _order; i++)
+		newTab[i] = _tab[i];
+
+	delete[] _tab;
+
+	_tab = newTab;
+}
+
+/* ----------------------------------------------------------------------------------- */
 /* NAME: isNegative																	   */
 /* ROLE: Check if the last order is negative										   */
 /* RVALUE: true if negative ; false if positive										   */
@@ -588,7 +575,7 @@ bool Polynome::isNegative()const
 /* ------------------------------------------------------------------------------------*/
 void Polynome::inverseSign()
 {
-	*this = -1.0 * *this;
+	*this = INVERSE_POLYNOME * *this;
 }
 
 
@@ -688,6 +675,7 @@ void Polynome::testPolynome()
 
 
 	stream << std::endl << "___TEST POLYNOME___";
+
 	Polynome a((unsigned int)5);
 	a.SETcoefTab(3, 1);
 	a.SETcoefTab(1, 69.1);
@@ -708,8 +696,8 @@ void Polynome::testPolynome()
 		stream << std::endl << "polynomes identique : a et b";
 	else
 		stream << std::endl << "polynomes different : a et b";
-	
-	
+
+
 	Polynome addition = a + b;
 	stream << std::endl << "addition de a + b = " << addition;
 	Polynome soustraction1 = a - b;
@@ -735,6 +723,17 @@ void Polynome::testPolynome()
 	stream << std::endl << "Z + 2 = " << Z + 2.0;
 	stream << std::endl << "Z - 2 = " << Z - 2.0 << std::endl << std::endl;
 
+	Polynome m{ (unsigned int)2 }, n{ (unsigned int)2 };
+	m[0] = 0.5;
+	m[1] = -100.5;
+	m[2] = 0.5;
+	n[0] = -0.25;
+	n[1] = -0.5;
+	n[2] = 0.5;
+	stream << std::endl << "Polynome m = " << m;
+	stream << std::endl << "Polynome n = " << n;
+	stream << std::endl << "soustraction de m - n = " << (m - n);
+
 	polynome = stream.str();
 	std::cout << polynome;
 
@@ -748,6 +747,8 @@ void Polynome::testPolynome()
 	Polynome yy{ -1.0 * xx };
 
 	Polynome zz{ xx + yy };
+
+	
 }
 
 
@@ -798,14 +799,14 @@ unsigned int Polynome::GETorder() const
 {
 	return _order;
 }
-double Polynome::GETcoefTab
+double& Polynome::GETcoefTab
 (
 	unsigned int index
 ) const
 {
 	if (assertIndex(index))
 		return _tab[index];
-	return 0;
+	return _tab[0];
 }
 unsigned int Polynome::GETstringSize() const
 {

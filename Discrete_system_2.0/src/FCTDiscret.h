@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.0
+	file version 4.2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -44,6 +44,8 @@ const Uint8 JURY_STABILITY_CONDITIONS = 4;
 /* minimal order of the denominator to be process in Jury */
 const Uint8 MIN_ORDER_DEN_TAB_JURY = 2;
 
+const Uint8 ORDER_ZERO_P = 0;
+
 const double BODE_FREQ_MIN = 1e-6;
 
 const unsigned int TEN_POWER = (unsigned int)10;
@@ -53,6 +55,7 @@ const unsigned int BODE_GAIN_FACTOR = (unsigned int)20;
 const unsigned int BODE_FREQ_INCR_FACTOR = (unsigned int)9;
 
 const unsigned int MAX_LOOP_ITERATION_JURY_TAB = (unsigned int)100;
+
 
 
 /* *********************************************************

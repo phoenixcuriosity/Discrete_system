@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -39,13 +39,22 @@ bool checkMinMaxValidityRange
 	}
 }
 
-bool checkDIVDen(double value)
+/* ----------------------------------------------------------------------------------- */
+/* NAME: checkMinDouble																   */
+/* ROLE: Check if the value is not in range of precision : +-PRECISION_DIV			   */
+/* RVALUE: false -> value out of range ; true : value in range						   */
+/* ------------------------------------------------------------------------------------*/
+ValidityCheckMinDouble checkMinDouble
+(
+	/* IN */
+	const double value
+)
 {
 	if (value < PRECISION_DIV && value > -PRECISION_DIV)
 	{
-		return false;
+		return ValidityCheckMinDouble::InvalidRange;
 	}
-	return true;
+	return ValidityCheckMinDouble::ValidRange;
 }
 
 double computeValueToScale
@@ -64,7 +73,11 @@ double computeValueToScale
 		double rangeValue(maxValue - minValue);
 		double rangeScale(maxScale - minScale);
 
-		if ((checkDIVDen(rangeValue) == false) || (checkDIVDen(divToScaleSize) == false))
+		if	(
+				(checkMinDouble(rangeValue) == ValidityCheckMinDouble::InvalidRange)
+				||
+				(checkMinDouble(divToScaleSize) == ValidityCheckMinDouble::InvalidRange)
+			)
 		{
 			return 0.0;
 		}

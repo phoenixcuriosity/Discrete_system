@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.0.1
+	file version 4.2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -36,6 +36,10 @@
 
 /* Définition d'un Polynome d'ordre 0 -> 1 coefficent  */
 const Uint8 ORDER_ZERO = 1;
+
+const double INVERSE_POLYNOME = -1.0;
+
+const double INITIAL_VALUE_MULT = 0.0;
 
 
 enum class opPolyn : bool 
@@ -89,6 +93,19 @@ public:
 	/* ------------------------------------------------------------------------------------*/
 	Polynome
 	(
+		double userValue
+	);
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME : Polynome																	   */
+	/* ROLE : Constructeur / cast de la valeur en entrée (Polynome d'ordre 0)			   */
+	/* INPUT  PARAMETERS : double userValue : valeur du Polynome d'ordre 0				   */
+	/* OUTPUT PARAMETERS : Polynome d'ordre 0 / valeur = userValue						   */
+	/* RETURNED VALUE    : void															   */
+	/* ------------------------------------------------------------------------------------*/
+	Polynome
+	(
+		unsigned int order,
 		double userValue
 	);
 
@@ -236,33 +253,29 @@ public:
 	);
 
 	/* ----------------------------------------------------------------------------------- */
-	/* NAME : operator+																	   */
-	/* ROLE : Redéfinition de l'opérateur +												   */
-	/* ROLE : Addition entre les 2 Inputs												   */
-	/* INPUT  PARAMETERS : const Polynome& a : un objet Polynome 						   */
-	/* INPUT  PARAMETERS : const Polynome& b : un objet Polynome						   */
-	/* OUTPUT PARAMETERS : résultat de l'addition (a + b)								   */
-	/* RETURNED VALUE    : Polynome : retourne un objet résultat de l'addition			   */
+	/* NAME: operator+																	   */
+	/* ROLE: Redéfinition de l'opérateur +												   */
+	/* ROLE: Addition entre les 2 Inputs												   */
+	/* RVALUE: retourne un objet résultat de l'addition	a + b 							   */
 	/* ------------------------------------------------------------------------------------*/
 	friend Polynome operator+
 	(
-		const Polynome&,
-		const Polynome&
+		/* IN */
+		const Polynome& a,
+		const Polynome& b
 	);
 
 	/* ----------------------------------------------------------------------------------- */
-	/* NAME : operator-																	   */
-	/* ROLE : Redéfinition de l'opérateur -												   */
-	/* ROLE : Soustraction entre les 2 Inputs											   */
-	/* INPUT  PARAMETERS : const Polynome& a : un objet Polynome 						   */
-	/* INPUT  PARAMETERS : const Polynome& b : un objet Polynome						   */
-	/* OUTPUT PARAMETERS : résultat de soustraction (a - b)								   */
-	/* RETURNED VALUE    : Polynome : retourne un objet résultat de la soustraction		   */
+	/* NAME: operator-																	   */
+	/* ROLE: Redéfinition de l'opérateur -												   */
+	/* ROLE: Soustraction entre les 2 Inputs											   */
+	/* RVALUE: un objet résultat de la soustraction	a - b								   */
 	/* ------------------------------------------------------------------------------------*/
 	friend Polynome operator-
 	(
-		const Polynome&,
-		const Polynome&
+		/* IN */
+		const Polynome& a,
+		const Polynome& b
 	);
 
 	/* ----------------------------------------------------------------------------------- */
@@ -280,30 +293,13 @@ public:
 
 	/* ----------------------------------------------------------------------------------- */
 	/* NAME: checkNewOrder																   */
-	/* ROLE:																			   */
-	/* RVALUE:																			   */
+	/* ROLE: Check the real size of a Polynome											   */
+	/* RVALUE: false: No diff ; true: the order has been reduced						   */
 	/* ------------------------------------------------------------------------------------*/
 	friend bool checkNewOrder
 	(
-		/* IN */
-		const Polynome& a,
-		const Polynome& b,
-		const opPolyn operatorPoly,
-		/* OUT */
-		unsigned int* maxSize
-	);
-
-	/* ----------------------------------------------------------------------------------- */
-	/* NAME: fillOpPlus																	   */
-	/* ROLE:																			   */
-	/* RVALUE: None																		   */
-	/* ------------------------------------------------------------------------------------*/
-	friend void fillOpPlus
-	(
-		const Polynome& a,
-		const Polynome& b,
-		unsigned int maxSize,
-		Polynome& outPlus
+		/* INOUT */
+		Polynome& newPolynome
 	);
 
 	/* ----------------------------------------------------------------------------------- */
@@ -339,9 +335,10 @@ public:
 	/* ROLE : Access Polynome's values with []											   */
 	/* RVALUE: Value at the index														   */
 	/* ------------------------------------------------------------------------------------*/
-	double operator[]
+	double& operator[]
 	(
-		unsigned int index
+		/* IN */
+		const unsigned int index
 	)const;
 
 	/* ----------------------------------------------------------------------------------- */
@@ -354,6 +351,13 @@ public:
 		/* IN */
 		const double userValue
 	);
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: Shrink																		   */
+	/* ROLE: Shrink the actual Polynome by 1 order										   */
+	/* RVALUE: void																		   */
+	/* ------------------------------------------------------------------------------------*/
+	void shrink();
 
 
 public:
@@ -440,7 +444,7 @@ public:
 	void SETcoefTab		(unsigned int index, double userValue);
 
 	unsigned int GETorder() const;
-	double GETcoefTab(unsigned int index) const;
+	double& GETcoefTab(unsigned int index) const;
 	unsigned int GETstringSize() const;
 
 private:

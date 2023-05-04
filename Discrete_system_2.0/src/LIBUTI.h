@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.1.0
+	file version 4.2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -26,7 +26,22 @@
 
 #define PRECISION_DIV 1e-12
 
-bool checkDIVDen(double value);
+enum class ValidityCheckMinDouble : bool
+{
+	InvalidRange = false,
+	ValidRange = true
+};
+
+/* ----------------------------------------------------------------------------------- */
+/* NAME: checkMinDouble																   */
+/* ROLE: Check if the value is not in range of precision : +-PRECISION_DIV			   */
+/* RVALUE: false -> value out of range ; true : value in range						   */
+/* ------------------------------------------------------------------------------------*/
+ValidityCheckMinDouble checkMinDouble
+(
+	/* IN */
+	const double value
+);
 
 double computeValueToScale
 (

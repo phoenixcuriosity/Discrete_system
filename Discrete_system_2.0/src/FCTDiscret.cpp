@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.0
+	file version 4.2.1
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -566,14 +566,11 @@ int FCTDiscret::fillProcessTabJury
 				i++, j--
 			)
 		{
-			finalLine.SETcoefTab
+			finalLine[(unsigned int)i] = 
 			(
-				(unsigned int)i,
-				(
-					(ligne1.GETcoefTab(0) * ligne1.GETcoefTab((unsigned int)i))
-					-
-					(ligne1.GETcoefTab(ligne1.GETorder()) * ligne1.GETcoefTab(ligne1.GETorder() - (unsigned int)i))
-				)
+				(ligne1[0] * ligne1[(unsigned int)i])
+				-
+				(ligne1[ligne1.GETorder()] * ligne1[ligne1.GETorder() - (unsigned int)i])
 			);
 		}
 
@@ -583,7 +580,7 @@ int FCTDiscret::fillProcessTabJury
 
 			for (unsigned int i(0); i <= finalLine.GETorder(); i++)
 			{
-				_jury->SETthiscoef(_jury->GETlength() - 2, i, finalLine.GETcoefTab(i));
+				_jury->SETthiscoef(_jury->GETlength() - 2, i, finalLine[i]);
 			}
 
 			for (
@@ -592,7 +589,7 @@ int FCTDiscret::fillProcessTabJury
 					i++, j--
 				)
 			{
-				_jury->SETthiscoef(_jury->GETlength() - 1, (unsigned int)i, finalLine.GETcoefTab((unsigned int)j));
+				_jury->SETthiscoef(_jury->GETlength() - 1, (unsigned int)i, finalLine[(unsigned int)j]);
 			}
 		}
 		else
@@ -600,7 +597,7 @@ int FCTDiscret::fillProcessTabJury
 			_jury->editSize(_jury->GETlength() + 1, _den->GETorder() + 1);
 			for (unsigned int i(0); i <= finalLine.GETorder(); i++)
 			{
-				_jury->SETthiscoef(_jury->GETlength() - 1, i, finalLine.GETcoefTab(i));
+				_jury->SETthiscoef(_jury->GETlength() - 1, i, finalLine[i]);
 			}
 		}
 		ligne1 = finalLine;
@@ -619,15 +616,15 @@ bool FCTDiscret::firstCondition
 	std::ostringstream& stream
 )
 {
-	stream << std::endl << "abs(a0) = " << abs(_den->GETcoefTab(0));
-	if (abs(_den->GETcoefTab(0)) < _den->GETcoefTab(_den->GETorder()))
+	stream << std::endl << "abs(a0) = " << abs((*_den)[0]);
+	if (abs((*_den)[0]) < (*_den)[_den->GETorder()])
 	{
-		stream << " < a" << _den->GETorder() << " = " << _den->GETcoefTab(_den->GETorder()) << "	Ok";
+		stream << " < a" << _den->GETorder() << " = " << (*_den)[_den->GETorder()] << "	Ok";
 		return true;
 	}
 	else
 	{
-		stream << " > a" << _den->GETorder() << " = " << _den->GETcoefTab(_den->GETorder()) << "	Not Ok";
+		stream << " > a" << _den->GETorder() << " = " << (*_den)[_den->GETorder()] << "	Not Ok";
 		return false;
 	}		
 }
@@ -646,7 +643,7 @@ bool FCTDiscret::secondCondition
 	double somme{ 0.0 };
 	for (unsigned int i(0); i <= _den->GETorder(); i++)
 	{
-		somme += _den->GETcoefTab(i);
+		somme += (*_den)[i];
 	}
 
 	stream << std::endl << "D(1) = " << somme;
@@ -676,7 +673,7 @@ bool FCTDiscret::thirdCondition
 	double somme{ 0.0 };
 	for (unsigned int i(0); i <= _den->GETorder(); i++)
 	{
-		somme += _den->GETcoefTab(i) * pow(-1, i);
+		somme += (*_den)[i] * pow(-1, i);
 	}
 
 	stream << std::endl << "D(-1) = " << somme;
@@ -724,15 +721,15 @@ bool FCTDiscret::fourthCondition
 	if (_den->GETorder() > MIN_ORDER_DEN_TAB_JURY)
 	{
 
-		stream << std::endl << "Q0 = " << abs(finalLine.GETcoefTab(0));
-		if (abs(finalLine.GETcoefTab(0)) > abs(finalLine.GETcoefTab(2)))
+		stream << std::endl << "Q0 = " << abs(finalLine[ORDER_ZERO_P]);
+		if (abs(finalLine[ORDER_ZERO_P]) > abs(finalLine[MIN_ORDER_DEN_TAB_JURY]))
 		{
-			stream << " > Q2 = " << abs(finalLine.GETcoefTab(2)) << "	Ok";
+			stream << " > Q2 = " << abs(finalLine[MIN_ORDER_DEN_TAB_JURY]) << "	Ok";
 			return true;
 		}
 		else
 		{
-			stream << " < Q2 = " << abs(finalLine.GETcoefTab(2)) << "	Not Ok";
+			stream << " < Q2 = " << abs(finalLine[MIN_ORDER_DEN_TAB_JURY]) << "	Not Ok";
 			return false;
 		}		
 	}
@@ -773,7 +770,7 @@ bool FCTDiscret::Bode
 		Limitation to a minimum value
 	*/
 	double l_wMin{ wMin };
-	if (checkDIVDen(wMin) == false)
+	if (checkMinDouble(wMin) == ValidityCheckMinDouble::InvalidRange)
 	{
 		l_wMin = BODE_FREQ_MIN;
 	}
