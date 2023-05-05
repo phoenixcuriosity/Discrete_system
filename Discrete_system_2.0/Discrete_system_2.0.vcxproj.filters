@@ -54,6 +54,9 @@
     <ClCompile Include="src\Discrete_system_2.0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SYSEtatDiscretMenuScreen.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\LIB.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="src\BodeGraphData.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SYSEtatDiscretMenuScreen.h">
+      <Filter>Source Files\Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

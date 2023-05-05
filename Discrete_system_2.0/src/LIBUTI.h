@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.1
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -25,6 +25,8 @@
 #define LIBUTI_H
 
 #define PRECISION_DIV 1e-12
+
+#include <string>
 
 enum class ValidityCheckMinDouble : bool
 {
@@ -53,6 +55,7 @@ double computeValueToScale
 	int divToScaleSize = 1
 );
 
+std::string inverseLineRead(const std::string& txt);
 
 #endif // !LIBUTI_H
 

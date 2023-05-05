@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.1
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -22,6 +22,8 @@
 */
 
 #include "LIBUTI.h"
+
+#include "LIB.h"
 
 bool checkMinMaxValidityRange
 (
@@ -98,4 +100,21 @@ double computeValueToScale
 	{
 		throw("[ERROR]___: computeValueToScale : checkMinMaxValidityRange");
 	}
+}
+
+
+std::string inverseLineRead(const std::string& txt)
+{
+	std::string inverseTxt{ EMPTY_STRING }, tmp{ EMPTY_STRING };
+
+	for (int i{ 0 }; i < txt.size(); i++)
+	{
+		tmp.push_back(txt[i]);
+		if (txt[i] == '\n' || txt[i] == '\0')
+		{
+			inverseTxt.insert(0, tmp);
+			tmp.clear();
+		}
+	}
+	return inverseTxt;
 }

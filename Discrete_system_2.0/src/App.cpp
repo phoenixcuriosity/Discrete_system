@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -40,7 +40,7 @@ m_gLSLProgram(),
 m_file(),
 m_logger(),
 m_fctDiscret(),
-m_sysetatDiscret(INIT_TO_NULLPTR)
+m_sysetatDiscret()
 {
 	/* Do nothing */
 }
@@ -108,7 +108,7 @@ void App::addScreens()
 		(
 			&m_file,
 			&m_fctDiscret,
-			m_sysetatDiscret,
+			&m_sysetatDiscret,
 			AppToScreenParameters
 		);
 
@@ -126,11 +126,20 @@ void App::addScreens()
 			AppToScreenParameters
 		);
 
+	m_SYSEtatDiscretMenuScreen = std::make_shared<SYSEtatDiscretMenuScreen>
+		(
+			&m_file,
+			&m_sysetatDiscret,
+			&m_fctDiscret,
+			AppToScreenParameters
+		);
+
 
 	/* Add Screen to listed Screen */
 	m_screenList->addScreen(m_mainMenuScreen);
 	m_screenList->addScreen(m_FCTMenuScreen);
 	m_screenList->addScreen(m_BodeMenuScreen);
+	m_screenList->addScreen(m_SYSEtatDiscretMenuScreen);
 
 	/* Set default Screen */
 	m_screenList->setScreen(m_mainMenuScreen->GETscreenIndex());

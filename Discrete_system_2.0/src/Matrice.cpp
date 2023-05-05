@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -37,7 +37,6 @@
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : Matrice																	   */
 /* ROLE : Constructeur par défaut													   */
 /* INPUT  PARAMETERS : void			 												   */
@@ -45,16 +44,15 @@
 /* OUTPUT PARAMETERS : 		( 0 | 0 )											       */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice::Matrice()
 :
 _tab(allocate(1, 1)),
 _length(1),
-_height(1)
+_height(1),
+m_displayPrecision(DEFAULT_DISPLAY_PRECISION)
 {
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : Matrice																	   */
 /* ROLE : Constructeur cast d'un double vers un objet Matice						   */
@@ -63,7 +61,6 @@ _height(1)
 /* OUTPUT PARAMETERS : 		( Value | Value )									       */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice::Matrice
 (
 	double Value
@@ -71,11 +68,11 @@ Matrice::Matrice
 :
 _tab(allocate(1, 1, Value)),
 _length(1),
-_height(1)
+_height(1),
+m_displayPrecision(DEFAULT_DISPLAY_PRECISION)
 {
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : Matrice																	   */
 /* ROLE : Constructeur par taille													   */
@@ -86,7 +83,6 @@ _height(1)
 /* OUTPUT PARAMETERS : 		( 0 | ... | 0 )											   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice::Matrice
 (
 	unsigned int lenght,
@@ -95,11 +91,11 @@ Matrice::Matrice
 :
 _tab(allocate(lenght, height)),
 _length(lenght),
-_height(height)
+_height(height),
+m_displayPrecision(DEFAULT_DISPLAY_PRECISION)
 {
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : Matrice																	   */
 /* ROLE : Constructeur par taille et par valeur	de tab								   */
@@ -110,7 +106,6 @@ _height(height)
 /* OUTPUT PARAMETERS : 		( tab[0][height] | ... | tab[lenght][height] )			   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice::Matrice
 (
 	double** tab,
@@ -119,11 +114,11 @@ Matrice::Matrice
 )
 : _tab(tab),
 _length(lenght),
-_height(height)
+_height(height),
+m_displayPrecision(DEFAULT_DISPLAY_PRECISION)
 {
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : Matrice																	   */
 /* ROLE : Constructeur par défaut													   */
@@ -131,7 +126,6 @@ _height(height)
 /* OUTPUT PARAMETERS : Matrice résultat de la copie de celle d'entrée				   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice::Matrice
 (
 	const Matrice& M
@@ -139,11 +133,11 @@ Matrice::Matrice
 :
 _tab(allocate(M)), 
 _length(M._length),
-_height(M._height)
+_height(M._height),
+m_displayPrecision(DEFAULT_DISPLAY_PRECISION)
 {
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : ~Matrice																	   */
 /* ROLE : Destructeur de la classe Matrice											   */
@@ -151,7 +145,6 @@ _height(M._height)
 /* OUTPUT PARAMETERS : Objet Matrice détruit										   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice::~Matrice()
 {
 	deAllocate(_length, _tab);
@@ -164,7 +157,6 @@ Matrice::~Matrice()
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Alloue un tableau de taille length et height de type double initialisé à 0   */
 /* INPUT  PARAMETERS : unsigned int lenght : Nombre de colonnes						   */
@@ -172,7 +164,6 @@ Matrice::~Matrice()
 /* OUTPUT PARAMETERS : Matrice de taille length et height contenant les 0			   */
 /* RETURNED VALUE    : double** : matrice de taille length et height contenant les 0   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double** Matrice::allocate
 (
 	unsigned int length,
@@ -196,7 +187,6 @@ double** Matrice::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Alloue un tableau de tableau de taille length et height ...				   */
 /* ROLE : ... de type double initialisé à Value										   */
@@ -206,7 +196,6 @@ double** Matrice::allocate
 /* OUTPUT PARAMETERS : Matrice de taille length et height contenant les Value		   */
 /* RETURNED VALUE    : double** : matrice de taille length et height				   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double** Matrice::allocate
 (
 	unsigned int length,
@@ -228,14 +217,12 @@ double** Matrice::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : allocate																	   */
 /* ROLE : Recopie de l'attribut _tab de la Matrice en entrée						   */
 /* INPUT  PARAMETERS : const Matrice& : Matrice de recopie							   */
 /* OUTPUT PARAMETERS : Matrice de taille length et height contenant la recopie 		   */
 /* RETURNED VALUE    : double** : matrice de taille length et height				   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 double** Matrice::allocate
 (
 	const Matrice& P
@@ -255,7 +242,6 @@ double** Matrice::allocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : deAllocate																   */
 /* ROLE : Détruit l'allocation dynamique de tab										   */
 /* INPUT  PARAMETERS : unsigned int lenght : Nombre de colonnes						   */
@@ -263,7 +249,6 @@ double** Matrice::allocate
 /* OUTPUT PARAMETERS : delete tab													   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Matrice::deAllocate
 (
 	unsigned int length,
@@ -290,7 +275,6 @@ void Matrice::deAllocate
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : assertIndex																   */
 /* ROLE : Test in range pour length et height comparé à ceux dans la Matrice		   */
 /* INPUT  PARAMETERS : unsigned int lenght : Nombre de colonnes						   */
@@ -299,7 +283,6 @@ void Matrice::deAllocate
 /* RETURNED VALUE    : bool : false -> length and/or height Out Of Range of Matrice	   */
 /* RETURNED VALUE    : bool : true -> length and height In Range of Matrice			   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 bool Matrice::assertIndex
 (
 	unsigned int lenght,
@@ -320,7 +303,6 @@ bool Matrice::assertIndex
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : assertRange																   */
 /* ROLE : Test in range > 0 et MAX_MATRICE_SIZE										   */
 /* INPUT  PARAMETERS : unsigned int lenght : Nombre de colonnes						   */
@@ -329,11 +311,11 @@ bool Matrice::assertIndex
 /* RETURNED VALUE    : bool : false -> length and/or height Out Of Range of Matrice	   */
 /* RETURNED VALUE    : bool : true -> length and height In Range of Matrice			   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 bool Matrice::assertRange
 (
-	unsigned int length,
-	unsigned int height
+	/* IN */
+	const unsigned int length,
+	const unsigned int height
 )const
 {
 	if	(
@@ -356,7 +338,6 @@ bool Matrice::assertRange
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : assertSize																   */
 /* ROLE : Test le premier couple == deuxième couple									   */
 /* INPUT  PARAMETERS : unsigned int lenghtA : Nombre de colonnes Matrice A			   */
@@ -367,13 +348,13 @@ bool Matrice::assertRange
 /* RETURNED VALUE    : bool : false -> length and/or height Out Of Range of Matrice	   */
 /* RETURNED VALUE    : bool : true -> length and height In Range of Matrice			   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 bool Matrice::assertSize
 (
-	unsigned int lenghtA,
-	unsigned int heightA,
-	unsigned int lenghtB,
-	unsigned int heightB
+	/* IN */
+	const unsigned int lenghtA,
+	const unsigned int heightA,
+	const unsigned int lenghtB,
+	const unsigned int heightB
 )
 {
 	if	(
@@ -398,14 +379,12 @@ bool Matrice::assertSize
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator =																   */
 /* ROLE : Redéfinition de l'opérateur =												   */
 /* INPUT  PARAMETERS : const Matrice& P : objet permettant l'égalisation			   */
 /* OUTPUT PARAMETERS : this = P														   */
 /* RETURNED VALUE    : Matrice& : return this										   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice& Matrice::operator=
 (
 	const Matrice& M
@@ -423,7 +402,6 @@ Matrice& Matrice::operator=
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator ==																   */
 /* ROLE : Redéfinition de l'opérateur ==											   */
 /* ROLE : Comparaison entre les 2 Polynome en Input									   */
@@ -432,7 +410,6 @@ Matrice& Matrice::operator=
 /* OUTPUT PARAMETERS : Comparaison													   */
 /* RETURNED VALUE    : bool : == -> true // != -> false								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 bool operator==
 (
 	const Matrice& A,
@@ -459,7 +436,6 @@ bool operator==
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator+																	   */
 /* ROLE : Redéfinition de l'opérateur +												   */
 /* ROLE : Addition entre les 2 Inputs												   */
@@ -468,7 +444,6 @@ bool operator==
 /* OUTPUT PARAMETERS : résultat de l'addition (a + b)								   */
 /* RETURNED VALUE    : Matrice : retourne un objet résultat de l'addition			   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice operator+
 (
 	const Matrice& A,
@@ -488,7 +463,6 @@ Matrice operator+
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator-																	   */
 /* ROLE : Redéfinition de l'opérateur -												   */
 /* ROLE : Soustraction entre les 2 Inputs											   */
@@ -497,7 +471,6 @@ Matrice operator+
 /* OUTPUT PARAMETERS : résultat de soustraction (a - b)								   */
 /* RETURNED VALUE    : Matrice : retourne un objet résultat de la soustraction		   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice operator-
 (
 	const Matrice& A, 
@@ -517,7 +490,6 @@ Matrice operator-
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator*																	   */
 /* ROLE : Redéfinition de l'opérateur *												   */
 /* ROLE : Multiplication entre les 2 Inputs											   */
@@ -526,7 +498,6 @@ Matrice operator-
 /* OUTPUT PARAMETERS : résultat de la multiplication (a * b)						   */
 /* RETURNED VALUE    : Matrice : retourne un objet résultat de la multiplication	   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice operator*
 (
 	const Matrice& A,
@@ -611,7 +582,6 @@ Matrice operator*
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : fillTabLoop																   */
 /* ROLE : Rempli la Matrice de taille length * height de valeur value				   */
 /* INPUT  PARAMETERS : unsigned int length : Nombre de colonnes						   */
@@ -621,7 +591,6 @@ Matrice operator*
 /* OUTPUT PARAMETERS : Matrice remplie de value										   */
 /* RETURNED VALUE    : Matrice														   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Matrice::fillTabLoop
 (
 	unsigned int length,
@@ -641,14 +610,12 @@ void Matrice::fillTabLoop
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : transposition																   */
 /* ROLE : Transpose la Matrice en entrée											   */
 /* INPUT  PARAMETERS : const Matrice& : Matrice à transposer						   */
 /* OUTPUT PARAMETERS : Transposé de la Matrice en entrée							   */
 /* RETURNED VALUE    : Matrice														   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 Matrice transposition
 (
 	const Matrice& A
@@ -664,20 +631,17 @@ Matrice transposition
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : zero																		   */
 /* ROLE : Rempli la Matrice de taille length * height de 0							   */
 /* INPUT  PARAMETERS : void															   */
 /* OUTPUT PARAMETERS : Matrice remplie de 0											   */
 /* RETURNED VALUE    : Matrice														   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Matrice::zero()
 {
 	fillTabLoop(_length, _height, _tab, 0);
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : ones																		   */
 /* ROLE : Rempli la Matrice de taille length * height de 1							   */
@@ -685,13 +649,11 @@ void Matrice::zero()
 /* OUTPUT PARAMETERS : Matrice remplie de 1											   */
 /* RETURNED VALUE    : Matrice														   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Matrice::ones()
 {
 	fillTabLoop(_length, _height, _tab, 1);
 }
 
-/* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* NAME : editSize																	   */
 /* ROLE : Changement de taille de la Matrice 										   */
@@ -701,7 +663,6 @@ void Matrice::ones()
 /* OUTPUT PARAMETERS : Matrice agrandie ou rapetissie								   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Matrice::editSize
 (
 	unsigned int length,
@@ -883,14 +844,12 @@ void Matrice::editSize
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : growOneLOneC																   */
 /* ROLE : Agrandie de 1 le nombre colonnes et de lignes de la Matrice  				   */
 /* INPUT  PARAMETERS : void															   */
 /* OUTPUT PARAMETERS : Matrice agrandie de 1 remplie de 0							   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void Matrice::growOneLOneC()
 {
 	double** buffer(new double*[_length + GROW1L1C]);
@@ -928,7 +887,6 @@ void Matrice::growOneLOneC()
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : operator<<																   */
 /* ROLE : Redéfinition de l'opérateur <<											   */
 /* ROLE : Envoi sur le ostream (std::cout, ...) une forme textuelle ...				   */
@@ -938,7 +896,6 @@ void Matrice::growOneLOneC()
 /* OUTPUT PARAMETERS : affichage textuelle de la Matrice sur la console				   */
 /* RETURNED VALUE    : std::ostream& : std::cout, ...								   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 std::ostream& operator<<
 (
 	std::ostream& os,
@@ -950,7 +907,6 @@ std::ostream& operator<<
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : printOn																	   */
 /* ROLE : Création d'une représentation visuelle de la Matrice						   */
 /* INPUT  PARAMETERS : bool on = true : si true -> affichage direct ... 			   */
@@ -958,7 +914,6 @@ std::ostream& operator<<
 /* OUTPUT PARAMETERS : chaine de caratères représentant de la Matrice				   */
 /* RETURNED VALUE    : std::string : chaine de caratères							   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 const std::string Matrice::printOn(bool on)const
 {
 	std::ostringstream stream;
@@ -967,7 +922,19 @@ const std::string Matrice::printOn(bool on)const
 	{
 		stream << std::endl << "|";
 		for (unsigned int j = 0; j < _height; j++)
-			stream << "\t" << _tab[i][j];
+		{
+			if (_tab[i][j] >= 0.0)
+			{
+				/* space for "+" */
+				stream << "\t" << " " << std::fixed << std::setprecision(m_displayPrecision) << _tab[i][j];
+			}
+			else
+			{
+				stream << "\t" << std::fixed << std::setprecision(m_displayPrecision) << _tab[i][j];
+			}
+
+		}
+
 		stream << " |";
 	}
 	matrice = stream.str();
@@ -984,7 +951,6 @@ const std::string Matrice::printOn(bool on)const
 
 
 /* ----------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------- */
 /* NAME : testMatrice																   */
 /* ROLE : For DEV only																   */
 /* ROLE : Test des méthodes et fonctions de la classe Matrice						   */
@@ -992,7 +958,6 @@ const std::string Matrice::printOn(bool on)const
 /* OUTPUT PARAMETERS : Test de la classe											   */
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
-/* ----------------------------------------------------------------------------------- */
 void testMatrice()
 {
 	std::ostringstream stream;
@@ -1085,6 +1050,14 @@ void Matrice::SETthiscoef
 		_tab[i][j] = userValue;
 }
 
+void Matrice::SETprecision
+(
+	Uint8 precision
+)
+{
+	m_displayPrecision = precision;
+}
+
 double Matrice::GETthiscoef
 (
 	unsigned int i,
@@ -1103,6 +1076,11 @@ unsigned int Matrice::GETlength()const
 unsigned int Matrice::GETheight()const
 {
 	return _height;
+}
+
+Uint8 Matrice::GETprecision()const
+{
+	return m_displayPrecision;
 }
 
 /*

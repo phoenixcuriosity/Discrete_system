@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -27,7 +27,7 @@
 #define MAINMENU_SCREEN_INDEX 0
 #define FCT_SCREEN_INDEX 1
 #define BODE_SCREEN_INDEX 2
-#define GAMEPLAY_SCREEN_INDEX 3
+#define SYSETATDISCRET_SCREEN_INDEX 3
 #define CITY_SCREEN_INDEX 4
 
 #endif /* ScreenIndices_H */

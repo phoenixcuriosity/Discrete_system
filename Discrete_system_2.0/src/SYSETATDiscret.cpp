@@ -1,9 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2020 (robin.sauter@orange.fr)
-	last modification on this file on version:3.5
-	file version 2.1
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -157,20 +156,21 @@ bool operator ==
 /* ----------------------------------------------------------------------------------- */
 void SYSETATDiscret::calculABCD
 (
-	const FCTDiscret& fct
+	/* IN */
+	const FCTDiscret* const fct
 )
 {
-	if (fct.GETden()->GETorder() >= fct.GETnum()->GETorder())
+	if (fct->GETden()->GETorder() >= fct->GETnum()->GETorder())
 	{
-		_A->editSize(fct.GETden()->GETorder(), fct.GETden()->GETorder());
-		for (unsigned int i(0); i < fct.GETden()->GETorder(); i++)
+		_A->editSize(fct->GETden()->GETorder(), fct->GETden()->GETorder());
+		for (unsigned int i(0); i < fct->GETden()->GETorder(); i++)
 		{
-			_A->SETthiscoef(fct.GETden()->GETorder() - 1, i,
-				-(fct.GETden()->GETcoefTab(i) / fct.GETden()->GETcoefTab(fct.GETden()->GETorder())));
+			_A->SETthiscoef(fct->GETden()->GETorder() - 1, i,
+				-(fct->GETden()->GETcoefTab(i) / fct->GETden()->GETcoefTab(fct->GETden()->GETorder())));
 		}
-		for (unsigned int i(0); i < fct.GETden()->GETorder(); i++)
+		for (unsigned int i(0); i < fct->GETden()->GETorder(); i++)
 		{
-			for (unsigned int j(1); j < fct.GETden()->GETorder(); j++)
+			for (unsigned int j(1); j < fct->GETden()->GETorder(); j++)
 			{
 				_A->SETthiscoef(i, j, 1);
 				i++;
@@ -178,20 +178,20 @@ void SYSETATDiscret::calculABCD
 		}
 		
 
-		_B->editSize(fct.GETden()->GETorder(), 1);
-		_B->SETthiscoef(_B->GETlength() - 1, 0, 1 / fct.GETden()->GETcoefTab(fct.GETden()->GETorder()));
+		_B->editSize(fct->GETden()->GETorder(), 1);
+		_B->SETthiscoef(_B->GETlength() - 1, 0, 1 / fct->GETden()->GETcoefTab(fct->GETden()->GETorder()));
 		
 
-		_C->editSize(1, fct.GETden()->GETorder());
-		for (unsigned int i(0); i <= fct.GETnum()->GETorder(); i++)
-			_C->SETthiscoef(0, i, fct.GETnum()->GETcoefTab(i));
+		_C->editSize(1, fct->GETden()->GETorder());
+		for (unsigned int i(0); i <= fct->GETnum()->GETorder(); i++)
+			_C->SETthiscoef(0, i, fct->GETnum()->GETcoefTab(i));
 		
 		
 
 		_D->editSize(1, 1);
 	}
 	else
-		std::cout << std::endl << "______Order of Num = " << fct.GETden()->GETorder() << "  > Order of Den = " << fct.GETnum()->GETorder();
+		std::cout << std::endl << "______Order of Num = " << fct->GETden()->GETorder() << "  > Order of Den = " << fct->GETnum()->GETorder();
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -219,7 +219,7 @@ void SYSETATDiscret::simulation
 	std::ostringstream repy;
 	std::string rep;
 	Matrice dx(_A->GETlength(), 1), y(1, 1);
-	/*
+	
 	for (unsigned int i(0); i < signal.GETnbech(); i++)
 	{
 		dx = *_A * x0 + *_B * signal.GETthiscoef(i);
@@ -228,7 +228,7 @@ void SYSETATDiscret::simulation
 		x0 = dx;
 		repy << std::endl << signal.GETdeltaT() * i << " , " << signal.GETthiscoef(i) << " , " << y.GETthiscoef(0, 0);
 	}
-	*/
+
 	rep = repy.str();
 	std::cout << rep;
 	if (reponse)
@@ -277,13 +277,13 @@ std::string SYSETATDiscret::printOn(bool on)const
 	std::string equation;
 	std::ostringstream stream;
 
-	stream << std::endl << std::endl << "Forme Compagne de Commande";
+	stream << "Forme Compagne de Commande";
 	stream << std::endl << "Matrice Ac :" << *_A << std::endl
 						<< "Matrice Bc :" << *_B << std::endl
 						<< "Matrice Cc :" << *_C << std::endl
 						<< "Matrice D :" << *_D;
 
-	stream << std::endl << std::endl << "Forme Compagne d'Observabilite";
+	stream << "Forme Compagne d'Observabilite";
 	stream << std::endl << "Matrice Ao :" << transposition(*_A) << std::endl
 						<< "Matrice Bo :" << transposition(*_B) << std::endl
 						<< "Matrice Co :" << transposition(*_C) << std::endl
@@ -310,7 +310,7 @@ std::string SYSETATDiscret::printOn(bool on)const
 /* RETURNED VALUE    : void															   */
 /* ------------------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------------- */
-void testSYSETATDiscret()
+void SYSETATDiscret::testSYSETATDiscret()
 {
 	std::cout << std::endl << "___TEST SYSETATDiscret___";
 
@@ -330,7 +330,7 @@ void testSYSETATDiscret()
 	std::cout << std::endl << std::endl << std::endl << "fct = " << std::endl << fct;
 
 	SYSETATDiscret sys;
-	sys.calculABCD(fct);
+	sys.calculABCD(&fct);
 	sys.SETTe(100);
 	std::cout << std::endl << sys;
 	

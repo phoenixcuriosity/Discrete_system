@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0.1
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -29,8 +29,8 @@
 MainMenuScreen::MainMenuScreen
 (
 	File* file,
-	FCTDiscret* m_fctDiscret,
-	SYSETATDiscret* m_sysetatDiscret,
+	FCTDiscret* fctDiscret,
+	SYSETATDiscret* sysetatDiscret,
 	GUI_Parameters& parameters
 )
 : 
@@ -38,8 +38,8 @@ RealEngine2D::IGameScreen(),
 m_nextScreenIndexMenu(INIT_SCREEN_INDEX),
 m_gui(),
 m_file(file),
-m_fctDiscret(m_fctDiscret),
-m_sysetatDiscret(m_sysetatDiscret),
+m_fctDiscret(fctDiscret),
+m_sysetatDiscret(sysetatDiscret),
 m_isInitialize(false)
 {
 	build();
@@ -328,6 +328,8 @@ bool MainMenuScreen::onBodeDisplay(const CEGUI::EventArgs& /* e */)
 
 bool MainMenuScreen::onSYSETAT(const CEGUI::EventArgs& /* e */)
 {
+	m_nextScreenIndexMenu = SYSETATDISCRET_SCREEN_INDEX;
+	m_currentState = RealEngine2D::ScreenState::CHANGE_NEXT;
 	return true;
 }
 

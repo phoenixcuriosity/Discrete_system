@@ -147,6 +147,7 @@
     <ClCompile Include="src\Polynome.cpp" />
     <ClCompile Include="src\Signal.cpp" />
     <ClCompile Include="src\SYSETATDiscret.cpp" />
+    <ClCompile Include="src\SYSEtatDiscretMenuScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="src\ScreenIndices.h" />
     <ClInclude Include="src\Signal.h" />
     <ClInclude Include="src\SYSETATDiscret.h" />
+    <ClInclude Include="src\SYSEtatDiscretMenuScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

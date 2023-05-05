@@ -2,7 +2,7 @@
 
 	Discrete_system
 	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
-	file version 4.2.1
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -336,6 +336,18 @@ public:
 	/* RVALUE: Value at the index														   */
 	/* ------------------------------------------------------------------------------------*/
 	double& operator[]
+	(
+		/* IN */
+		const unsigned int index
+	);
+
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME : operator[]																   */
+	/* ROLE : Operator redifinition []													   */
+	/* ROLE : Access Polynome's values with []											   */
+	/* RVALUE: Value at the index														   */
+	/* ------------------------------------------------------------------------------------*/
+	const double& operator[]
 	(
 		/* IN */
 		const unsigned int index

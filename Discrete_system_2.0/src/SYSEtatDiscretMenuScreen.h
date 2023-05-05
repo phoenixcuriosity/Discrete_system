@@ -21,8 +21,8 @@
 
 */
 
-#ifndef MainMenuScreen_H
-#define MainMenuScreen_H
+#ifndef SYSEtatDiscretMenuScreen_H
+#define SYSEtatDiscretMenuScreen_H
 
 #include "LIB.h"
 
@@ -45,6 +45,10 @@
 struct File;
 struct GUI_Parameters;
 
+
+const unsigned int MIN_PRECISION_USER_INPUT = 0;
+const unsigned int MAX_PRECISION_USER_INPUT = 11;
+
 typedef struct
 {
 	RealEngine2D::GUI gui;
@@ -58,25 +62,25 @@ typedef struct
 
 	RealEngine2D::Window* window;
 
-	CEGUI::PushButton* fctButton;
-	CEGUI::PushButton* bodeButton;
-	CEGUI::PushButton* stateButton;
-	CEGUI::PushButton* SimulationButton;
-	CEGUI::PushButton* quitGame;
+	CEGUI::PushButton* returnMainMenu;
+	CEGUI::PushButton* calculABCDbutton;
+	CEGUI::PushButton* SetDisplayPrecisionButton;
 
-} MainMenuGUI;
+	CEGUI::Editbox* editBox;
 
-class MainMenuScreen : public RealEngine2D::IGameScreen
+} SYSEtatDiscretMenuGUI;
+
+class SYSEtatDiscretMenuScreen : public RealEngine2D::IGameScreen
 {
 public:
-	MainMenuScreen
+	SYSEtatDiscretMenuScreen
 	(
 		File* file,
+		SYSETATDiscret* sysEtatDiscret,
 		FCTDiscret* fctDiscret,
-		SYSETATDiscret* sysetatDiscret,
 		GUI_Parameters& parameters
 	);
-	~MainMenuScreen();
+	~SYSEtatDiscretMenuScreen();
 
 	virtual int getNextScreenIndex()const override;
 	virtual int getPreviousScreenIndex()const override;
@@ -89,22 +93,43 @@ public:
 
 private:
 
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: initHUDText																   */
+	/* ROLE: Shall display initial text													   */
+	/* IN: void			 																   */
+	/* OUT: void																		   */
+	/* RVALUE: void																		   */
+	/* ------------------------------------------------------------------------------------*/
 	virtual void initHUDText();
+
+	
 
 public:
 
 	virtual void update() override;
 	virtual void draw() override;
 
+	/* ----------------------------------------------------------------------------------- */
+	/* NAME: KeyMouseinput																   */
+	/* ROLE: Shall interprets user's inputs			 									   */
+	/* IN: ev : user input from SDL event												   */
+	/* OUT: void																		   */
+	/* RVALUE: void																		   */
+	/* ------------------------------------------------------------------------------------*/
+	virtual void KeyMouseinput(const SDL_Event& ev);
+
 
 private:
 
-	bool onCreateFCT(const CEGUI::EventArgs& e);
-	bool onBodeDisplay(const CEGUI::EventArgs& e);
-	bool onSYSETAT(const CEGUI::EventArgs& e);
-	bool onSimulation(const CEGUI::EventArgs& e);
-	bool onExitClicked(const CEGUI::EventArgs& e);
 
+	bool onCalculABCDClicked(const CEGUI::EventArgs& e);
+	bool onSetDisplayPrecisionClicked(const CEGUI::EventArgs& e);
+	bool onReturnMainMenuClicked(const CEGUI::EventArgs& e);
+
+
+private:
+
+	void splitComObs(const std::string& txt);
 
 public:
 
@@ -112,18 +137,20 @@ public:
 private:
 	int m_nextScreenIndexMenu = INIT_SCREEN_INDEX;
 
+	SYSEtatDiscretMenuGUI m_gui;
+
 	File* m_file;
 
-	MainMenuGUI m_gui;
-
 	/* Fonctionnal data */
+	SYSETATDiscret* m_sysEtatDiscret;
 	FCTDiscret* m_fctDiscret;
-	SYSETATDiscret* m_sysetatDiscret;
+	std::string m_sysPrintCom;
+	std::string m_sysPrintObs;
 
 	bool m_isInitialize;
 };
 
-#endif // !MainMenuScreen_H
+#endif // !SYSEtatDiscretMenuScreen_H
 
 
 

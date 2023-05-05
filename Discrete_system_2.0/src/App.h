@@ -1,8 +1,8 @@
 /*
 
 	Discrete_system
-	Copyright SAUTER Robin 2017-2022 (robin.sauter@orange.fr)
-	file version 4.0
+	Copyright SAUTER Robin 2017-2023 (robin.sauter@orange.fr)
+	file version 4.2.2
 
 	You can check for update on github.com -> https://github.com/phoenixcuriosity/Discret_system
 
@@ -34,6 +34,7 @@
 #include "MainMenuScreen.h"
 #include "FCTMenuScreen.h"
 #include "BodeMenuScreen.h"
+#include "SYSEtatDiscretMenuScreen.h"
 
 #include "FCTDiscret.h"
 #include "SYSETATDiscret.h"
@@ -156,6 +157,7 @@ private:
 	std::shared_ptr<MainMenuScreen> m_mainMenuScreen;
 	std::shared_ptr<FCTMenuScreen> m_FCTMenuScreen;
 	std::shared_ptr<BodeMenuScreen> m_BodeMenuScreen;
+	std::shared_ptr<SYSEtatDiscretMenuScreen> m_SYSEtatDiscretMenuScreen;
 
 	/* GUI */
 	std::shared_ptr<RealEngine2D::SpriteFont> m_spriteFont;
@@ -167,7 +169,7 @@ private:
 
 	/* Fonctionnal data */
 	FCTDiscret m_fctDiscret;
-	SYSETATDiscret* m_sysetatDiscret;
+	SYSETATDiscret m_sysetatDiscret;
 };
 
 
